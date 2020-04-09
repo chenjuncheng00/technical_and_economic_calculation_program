@@ -1,0 +1,626 @@
+﻿Imports Microsoft.Office.Interop.Excel
+
+Public Class 选择单因素敏感性分析内容
+    Private Sub 选择单因素敏感性分析内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        'Checkbox载入收入成本文字
+        '收入
+        Com技术经济分析计算程序.Form10.sr1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr12.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.sr13.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 18).Value, String) & "敏感性分析计算"
+        '成本
+        Com技术经济分析计算程序.Form10.cb1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(77, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(82, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(87, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(92, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(97, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(102, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(107, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(112, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(117, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(122, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(127, 18).Value, String) & "敏感性分析计算"
+        Com技术经济分析计算程序.Form10.cb12.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(132, 18).Value, String) & "敏感性分析计算"
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '根据输入的收入成本等内容，判断checkbox是否可以被勾选
+        '静态投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+            Com技术经济分析计算程序.Form10.jttz.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.jttz.Enabled = False
+        End If
+        '收入
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr1.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr1.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr2.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr2.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr3.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr3.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr4.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr4.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr5.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr5.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr6.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr6.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr7.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr7.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr8.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr8.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr9.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr9.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr10.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr10.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr11.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr11.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr12.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr12.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr13.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.sr13.Enabled = False
+        End If
+        '成本
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb1.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb1.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb2.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb2.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb3.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb3.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb4.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb4.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb5.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb5.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb6.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb6.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb7.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb7.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb8.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb8.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb9.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb9.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb10.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb10.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb11.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb11.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb12.Enabled = True
+        Else
+            Com技术经济分析计算程序.Form10.cb12.Enabled = False
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '根据之前的结果勾选
+        '静态投资
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+            Com技术经济分析计算程序.Form10.jttz.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.jttz.Checked = False
+        End If
+        '年运行小时数
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 1 Then
+            Com技术经济分析计算程序.Form10.nyxxss_check.Checked = True
+            '载入之前输入的年利用小时数
+            Com技术经济分析计算程序.Form10.nyxxss_text.Text = CType(ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value, String)
+        Else
+            Com技术经济分析计算程序.Form10.nyxxss_check.Checked = False
+            '年利用小时数为空
+            Com技术经济分析计算程序.Form10.nyxxss_text.Text = Nothing
+        End If
+        '收入
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr1.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr1.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr2.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr2.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr3.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr3.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr4.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr4.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr5.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr5.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr6.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr6.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr7.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr7.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr8.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr8.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr9.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr9.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr10.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr10.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr11.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr11.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr12.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr12.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 6).Value > 0 Then
+            Com技术经济分析计算程序.Form10.sr13.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.sr13.Checked = False
+        End If
+        '成本
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(77, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb1.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb1.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(82, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb2.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb2.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(87, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb3.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb3.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(92, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb4.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb4.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(97, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb5.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb5.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(102, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb6.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb6.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(107, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb7.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb7.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(112, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb8.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb8.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(117, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb9.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb9.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(122, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb10.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb10.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(127, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb11.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb11.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(132, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 14).Value > 0 Then
+            Com技术经济分析计算程序.Form10.cb12.Checked = True
+        Else
+            Com技术经济分析计算程序.Form10.cb12.Checked = False
+        End If
+        '绘制敏感性分析图
+        Com技术经济分析计算程序.Form10.hzzxt.Checked = True
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '敏感性分析变化率
+        Dim bhl = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(10, 9).Value * 100
+        Com技术经济分析计算程序.Form10.mgxfxbhl.Text = CType(bhl, String)
+    End Sub
+
+    Private Sub 开始计算_Click(sender As Object, e As EventArgs) Handles 开始计算.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
+        If XZ = vbOK Then
+            '解锁表格
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+            '————————————————————————————————————————————————————————————————————
+            Me.Hide() '隐藏窗体
+            '清空Excel内已有的输入
+            For i = 7 To 137 Step 5
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = 0
+            Next
+            '根据复选框的内容，将系数写入Excel，1代表计算，0代表不计算
+            '静态投资
+            If Com技术经济分析计算程序.Form10.jttz.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 29).Value = 0
+            End If
+            '年利用小时数
+            If CType(Com技术经济分析计算程序.Form10.nyxxss_text.Text, Double) > 0 Then '写入年利用小时数
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value = CType(Com技术经济分析计算程序.Form10.nyxxss_text.Text, Double)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value = Nothing
+            End If
+            If Com技术经济分析计算程序.Form10.nyxxss_check.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 0
+            End If
+            '收入
+            If Com技术经济分析计算程序.Form10.sr1.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr2.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr3.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr4.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr5.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr6.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr7.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr8.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr9.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.sr13.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 29).Value = 0
+            End If
+            '成本
+            If Com技术经济分析计算程序.Form10.cb1.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(77, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(77, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb2.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(82, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(82, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb3.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(87, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(87, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb4.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(92, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(92, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb5.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(97, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(97, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb6.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(102, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(102, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb7.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(107, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(107, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb8.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(112, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(112, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb9.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(117, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(117, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(122, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(122, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(127, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(127, 29).Value = 0
+            End If
+            If Com技术经济分析计算程序.Form10.cb12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(132, 29).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(132, 29).Value = 0
+            End If
+            '关闭窗体
+            Me.Close()
+            '————————————————————————————————————————————————————————————————————
+            '————————————————————————————————————————————————————————————————————
+            Dim mainprogram As New Com技术经济分析计算程序
+            '实例化计算进度显示窗体
+            Dim Form1 As New 计算进度显示
+            '清空已有的敏感性分析计算数据
+            '敏感性分析计算结果
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("K7:L141").ClearContents
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("H7:H136").ClearContents
+            '删除敏感性分析图表
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+            ExcelApp.ActiveChart.Parent.Delete
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '屏蔽屏幕更新
+            ExcelApp.Application.ScreenUpdating = False
+            '输入敏感性分析每次的计算步长
+            'Dim BHL = InputBox("请输入在进行敏感性分析计算时，每次计算的变化率百分比（%）", "请输入敏感性分析计算变化率（单位为%）", 5)
+            Dim BHL = CType(Com技术经济分析计算程序.Form10.mgxfxbhl.Text, Double)
+            Com技术经济分析计算程序.MGXFXBHL = BHL / 100
+            '判断输入的变化率是否为整数
+            Dim ZSJC1 As Integer = 0 '整数检测1
+            If BHL = Int(BHL) Then
+                ZSJC1 = 1
+            End If
+            Dim ZSJC2 As Integer = 0 '整数检测2
+            If BHL * 2 = Int(BHL * 2) Then
+                ZSJC2 = 1
+            End If
+            '手动计算，关闭excel的自动计算,提高计算速度
+            ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+            '将敏感性分析变化率写入表格中
+            For i = 7 To 137 Step 5
+                For j = 1 To 5
+                    ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).Value = Com技术经济分析计算程序.MGXFXBHL * j - 3 * Com技术经济分析计算程序.MGXFXBHL '从小往大排列
+                    If j = 2 Or j = 4 Then '变化率的1倍
+                        If ZSJC1 = 1 Then '一倍是整数
+                            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0%"
+                        Else
+                            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0.0%"
+                        End If
+                    End If
+                    If j = 1 Or j = 5 Then '变化率的2倍
+                        If ZSJC2 = 1 Then '2倍是整数
+                            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0%"
+                        Else
+                            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0.0%"
+                        End If
+                    End If
+                Next
+            Next
+            '重新打开excel自动计算
+            ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+            '敏感性计算
+            Call mainprogram.静态投资敏感性分析计算()
+            Call mainprogram.收入敏感性分析计算()
+            Call mainprogram.成本敏感性分析计算()
+            Call mainprogram.年运行小时数敏感性分析()
+            '绘制敏感性分析图并设置格式
+            Call mainprogram.绘制单因素敏感性分析图()
+            Call mainprogram.设置敏感性分析图格式()
+            '锁定表格
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
+            '打开事件
+            ExcelApp.Application.EnableEvents = True
+            '计算流动资金
+            Call mainprogram.流动资金相关计算()
+            '计算回收期
+            Call mainprogram.投资回收期计算()
+            '重新打开屏幕更新
+            ExcelApp.Application.ScreenUpdating = True
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate()
+            '提醒计算完成
+            Form1.Show()
+            Form1.Label1.Text = "敏感性分析已计算完成！"
+            Form1.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+    End Sub
+
+    Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否清空已选择的各项内容？", vbOKCancel)
+        If XZ = vbOK Then
+            '清空Excel内已有的输入
+            For i = 7 To 137 Step 5
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = 0
+            Next
+            '静态投资
+            Com技术经济分析计算程序.Form10.jttz.Checked = False
+            '收入
+            Com技术经济分析计算程序.Form10.sr1.Checked = False
+            Com技术经济分析计算程序.Form10.sr2.Checked = False
+            Com技术经济分析计算程序.Form10.sr3.Checked = False
+            Com技术经济分析计算程序.Form10.sr4.Checked = False
+            Com技术经济分析计算程序.Form10.sr5.Checked = False
+            Com技术经济分析计算程序.Form10.sr6.Checked = False
+            Com技术经济分析计算程序.Form10.sr7.Checked = False
+            Com技术经济分析计算程序.Form10.sr8.Checked = False
+            Com技术经济分析计算程序.Form10.sr9.Checked = False
+            Com技术经济分析计算程序.Form10.sr10.Checked = False
+            Com技术经济分析计算程序.Form10.sr11.Checked = False
+            Com技术经济分析计算程序.Form10.sr12.Checked = False
+            Com技术经济分析计算程序.Form10.sr13.Checked = False
+            '成本
+            Com技术经济分析计算程序.Form10.cb1.Checked = False
+            Com技术经济分析计算程序.Form10.cb2.Checked = False
+            Com技术经济分析计算程序.Form10.cb3.Checked = False
+            Com技术经济分析计算程序.Form10.cb4.Checked = False
+            Com技术经济分析计算程序.Form10.cb5.Checked = False
+            Com技术经济分析计算程序.Form10.cb6.Checked = False
+            Com技术经济分析计算程序.Form10.cb7.Checked = False
+            Com技术经济分析计算程序.Form10.cb8.Checked = False
+            Com技术经济分析计算程序.Form10.cb9.Checked = False
+            Com技术经济分析计算程序.Form10.cb10.Checked = False
+            Com技术经济分析计算程序.Form10.cb11.Checked = False
+            Com技术经济分析计算程序.Form10.cb12.Checked = False
+            '绘制敏感性分析图
+            Com技术经济分析计算程序.Form10.hzzxt.Checked = False
+            '敏感性分析变化率
+            Com技术经济分析计算程序.Form10.mgxfxbhl.Text = Nothing
+            '年利用小时数
+            Com技术经济分析计算程序.Form10.nyxxss_text.Text = Nothing
+        End If
+    End Sub
+End Class
