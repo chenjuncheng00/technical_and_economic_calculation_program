@@ -4318,7 +4318,10 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf jsnx > 31 Then
             MsgBox("项目计算年限不可以大于31年，请重新输入！")
-            '不进行任何操作，防止循环报错
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value = 31
+        ElseIf jsnx < 2 Then
+            MsgBox("项目计算年限不可以小于2年，请重新输入！")
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value = 2
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法四" Then
@@ -4326,7 +4329,7 @@ Public Class Com技术经济分析计算程序
                 Call 计算前基本处理()
                 '报错
                 MsgBox("输入的项目计算年限或第二次到第五次项目投资年份或项目长期贷款年限或固定资产折旧年限参数不合理，请重新输入！程序将自动修改项目计算年限！")
-                jsnx = tznfzdz + zjdknx '重置回默认值
+                '不进行任何操作，修改计算年限的操作在固定资产折旧年限、长期贷款年限、无形资产摊销年限中进行，防止死循环
             End If
         End If
     End Sub
@@ -4534,7 +4537,10 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf gdzczjnx < 1 Then
             MsgBox("折旧计算年限不可以小于1年，请重新输入！")
-            '不采取任何操作，防止无限报错
+            If jsnx >= 2 And jsnx <= 31 Then
+                '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value = 1 '重置回默认值
+            End If
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法四" Then
@@ -4542,7 +4548,10 @@ Public Class Com技术经济分析计算程序
                 Call 计算前基本处理()
                 '报错
                 MsgBox("输入的项目计算年限或第二次到第十次项目投资年份或固定资产折旧年限参数不合理，请重新输入！程序将自动修改固定资产折旧计算年限！")
-                gdzczjnx = jsnx - tznfzdz '重置回默认值
+                If jsnx >= 2 And jsnx <= 31 Then
+                    '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                    ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value = jsnx - tznfzdz '重置回默认值
+                End If
             End If
         End If
     End Sub
@@ -4780,7 +4789,10 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf cqdkhknx < 1 Then
             MsgBox("长期贷款计算年限不可以小于1年，请重新输入！")
-            '不采取任何操作，防止无限报错
+            If jsnx >= 2 And jsnx <= 31 Then
+                '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value = 1 '重置回默认值
+            End If
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法四" Then
@@ -4788,7 +4800,10 @@ Public Class Com技术经济分析计算程序
                 Call 计算前基本处理()
                 '报错
                 MsgBox("输入的项目计算年限或第二次到第十次项目投资年份或项目长期贷款年限参数不合理，请重新输入！程序将自动修改长期贷款计算年限！")
-                cqdkhknx = jsnx - tznfzdz '重置回默认值
+                If jsnx >= 2 And jsnx <= 31 Then
+                    '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                    ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value = jsnx - tznfzdz '重置回默认值
+                End If
             End If
         End If
     End Sub
@@ -4976,7 +4991,10 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf wxzctxnx < 1 Then
             MsgBox("无形资产摊销计算年限不可以小于1年，请重新输入！")
-            '不采取任何操作，防止无限报错
+            If jsnx >= 2 And jsnx <= 31 Then
+                '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value = 1
+            End If
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 9).Value = "方法四" Then
@@ -4984,7 +5002,10 @@ Public Class Com技术经济分析计算程序
                 Call 计算前基本处理()
                 '报错
                 MsgBox("输入的项目计算年限或第二次到第十次项目投资年份或无形资产摊销年限参数不合理，请重新输入！程序将自动修改无形资产摊销计算年限！")
-                wxzctxnx = jsnx - tznfzdz '重置回默认值
+                If jsnx >= 2 And jsnx <= 31 Then
+                    '只有在项目计算年限大于等于2年，小于等于31年时才进行操作，防止死循环
+                    ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value = jsnx - tznfzdz '重置回默认值
+                End If
             End If
         End If
     End Sub
