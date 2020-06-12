@@ -6634,8 +6634,8 @@ aaaaa：
         wmiObjSet = GetObject("winmgmts:{impersonationLevel=impersonate}").InstancesOf("Win32_NetworkAdapterConfiguration")
         For Each obj In wmiObjSet
             MAC = obj.MACAddress
-            'MAC地址白名单(孙依帆办公室台式机(笔记本的虚拟机内系统设置和台式机同样的MAC地址)、陆启亮笔记本、王朝龙笔记本，谢伟笔记本)
-            If MAC = "44:39:C4:8D:FD:4B" Or MAC = "14:2D:27:B4:7F:C7" Or MAC = "3C:91:80:40:48:BF" Or MAC = "F8:A2:D6:FE:06:9D" Then
+            'MAC地址白名单(随便写一个)
+            If MAC = "45:40:C1:8F:AD:4A" Then
                 MACTEST = 1
                 Exit For
             Else
@@ -6691,7 +6691,7 @@ aaaaa：
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #09/09/2020# Then '月/日/年，验证网络时间
+                If GetDate >= #01/01/2020# Then '月/日/年，验证网络时间
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
@@ -6709,7 +6709,7 @@ aaaaa：
             '进程暂停一段时间（2000分钟）
             Threading.Thread.Sleep(120000000)
             Dim Local_Time = Date.Now '获取系统本地时间
-            Dim Dead_Time = Convert.ToDateTime("2020/09/09 01:00:00") '设定程序有效期截止时间
+            Dim Dead_Time = Convert.ToDateTime("2020/01/01 01:00:00") '设定程序有效期截止时间
             If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
                 '保存表格的改动
                 ExcelApp.Application.DisplayAlerts = False
@@ -6735,7 +6735,7 @@ aaaaa：
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim Local_Time = Date.Now '获取系统本地时间
-        Dim Dead_Time = Convert.ToDateTime("2020/03/03 01:00:00") '设定程序有效期截止时间
+        Dim Dead_Time = Convert.ToDateTime("2020/01/01 01:00:00") '设定程序有效期截止时间
         If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
             '保存表格的改动
             ExcelApp.Application.DisplayAlerts = False
@@ -6774,7 +6774,7 @@ aaaaa：
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #03/03/2020# Then '月/日/年
+                If GetDate >= #01/01/2020# Then '月/日/年
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
