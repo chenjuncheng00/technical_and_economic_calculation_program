@@ -24,7 +24,7 @@
         For i = 3 To 21 Step 2
             '方法一的结果
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(176, i).Value = ZBJBL
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(177, i).Value = (1 + DKLL / jsqdkjxcs) ^ 4 - 1
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(177, i).Value = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
             '方法二的结果
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, i).Value = 0
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, i).Value = 0
@@ -117,7 +117,7 @@
             Dim ZBJBL_Tem As Double '资本金比例计算的过程量
             Dim ZBJBL_JT As Double '静态资本金比例系数
             '写入建设期贷款利率
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(177, 3).Value = (1 + DKLL / jsqdkjxcs) ^ 4 - 1
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(177, 3).Value = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
             '部分区域重新计算
             ExcelApp.ThisWorkbook.Worksheets("估算表").Calculate
             For i = 1 To 200 '每次变化千分之2
@@ -218,7 +218,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 3).Value = zbjbl1
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 3).Value = (1 + dkll1 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 3).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第2次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 5).Value > 0 And (zbjbl2 <= 0 Or dkll2 <= 0) Then
@@ -226,7 +226,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 5).Value = zbjbl2
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 5).Value = (1 + dkll2 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 5).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第3次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 7).Value > 0 And (zbjbl3 <= 0 Or dkll3 <= 0) Then
@@ -234,7 +234,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 7).Value = zbjbl3
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 7).Value = (1 + dkll3 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 7).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第4次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 9).Value > 0 And (zbjbl4 <= 0 Or dkll4 <= 0) Then
@@ -242,7 +242,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 9).Value = zbjbl4
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 9).Value = (1 + dkll4 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 9).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第5次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 11).Value > 0 And (zbjbl5 <= 0 Or dkll5 <= 0) Then
@@ -250,7 +250,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 11).Value = zbjbl5
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 11).Value = (1 + dkll5 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 11).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第6次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 3).Value > 0 And (zbjbl6 <= 0 Or dkll6 <= 0) Then
@@ -258,7 +258,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 13).Value = zbjbl6
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 13).Value = (1 + dkll6 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 13).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第7次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 5).Value > 0 And (zbjbl7 <= 0 Or dkll7 <= 0) Then
@@ -266,7 +266,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 15).Value = zbjbl7
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 15).Value = (1 + dkll7 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 15).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第8次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 7).Value > 0 And (zbjbl8 <= 0 Or dkll8 <= 0) Then
@@ -274,7 +274,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 17).Value = zbjbl8
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 17).Value = (1 + dkll8 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 17).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第9次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 9).Value > 0 And (zbjbl9 <= 0 Or dkll9 <= 0) Then
@@ -282,7 +282,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 19).Value = zbjbl9
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 19).Value = (1 + dkll9 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 19).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '第10次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 11).Value > 0 And (zbjbl10 <= 0 Or dkll10 <= 0) Then
@@ -290,7 +290,7 @@
                 Exit Sub
             Else
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 21).Value = zbjbl10
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 21).Value = (1 + dkll10 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 21).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
             '————————————————————————————————————————————————————————————————————————————————————————  
             '将设置次数计数器+1
@@ -398,7 +398,7 @@
                 Dim zbjbl1_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl1_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 3).Value = (1 + dkll1 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 3).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 3).Value = zbjbl1
                 '部分区域重新计算
@@ -440,7 +440,7 @@
                 Dim zbjbl2_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl2_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 5).Value = (1 + dkll2 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 5).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 5).Value = zbjbl2
                 '部分区域重新计算
@@ -482,7 +482,7 @@
                 Dim zbjbl3_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl3_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 7).Value = (1 + dkll3 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 7).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 7).Value = zbjbl3
                 '部分区域重新计算
@@ -524,7 +524,7 @@
                 Dim zbjbl4_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl4_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 9).Value = (1 + dkll4 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 9).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 9).Value = zbjbl4
                 '部分区域重新计算
@@ -566,7 +566,7 @@
                 Dim zbjbl5_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl5_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 11).Value = (1 + dkll5 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 11).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 11).Value = zbjbl5
                 '部分区域重新计算
@@ -608,7 +608,7 @@
                 Dim zbjbl6_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl6_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 13).Value = (1 + dkll6 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 13).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 13).Value = zbjbl6
                 '部分区域重新计算
@@ -650,7 +650,7 @@
                 Dim zbjbl7_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl7_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 15).Value = (1 + dkll7 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 15).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 15).Value = zbjbl7
                 '部分区域重新计算
@@ -692,7 +692,7 @@
                 Dim zbjbl8_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl8_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 17).Value = (1 + dkll8 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 17).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 17).Value = zbjbl8
                 '部分区域重新计算
@@ -734,7 +734,7 @@
                 Dim zbjbl9_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl9_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 19).Value = (1 + dkll9 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 19).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 19).Value = zbjbl9
                 '部分区域重新计算
@@ -776,7 +776,7 @@
                 Dim zbjbl10_Tem As Double '资本金比例计算的过程量
                 Dim zbjbl10_jt As Double '计算出的静态投资
                 '写入建设期贷款利率
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 21).Value = (1 + dkll10 / jsqdkjxcs) ^ 4 - 1
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(180, 21).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
                 '将动态投资比例写入
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(179, 21).Value = zbjbl10
                 '部分区域重新计算
