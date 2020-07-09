@@ -13,219 +13,219 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value '无形资产摊销年限
         '清空已有的全部数据
         '固定资产折旧年限
-        Com技术经济分析计算程序.Form8.gdzczjnx1.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx2.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx3.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx4.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx5.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx6.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx7.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx8.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx9.Clear()
-        Com技术经济分析计算程序.Form8.gdzczjnx10.Clear()
+        Me.gdzczjnx1.Clear()
+        Me.gdzczjnx2.Clear()
+        Me.gdzczjnx3.Clear()
+        Me.gdzczjnx4.Clear()
+        Me.gdzczjnx5.Clear()
+        Me.gdzczjnx6.Clear()
+        Me.gdzczjnx7.Clear()
+        Me.gdzczjnx8.Clear()
+        Me.gdzczjnx9.Clear()
+        Me.gdzczjnx10.Clear()
         '固定资产残值率
-        Com技术经济分析计算程序.Form8.gdzcczl1.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl2.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl3.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl4.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl5.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl6.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl7.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl8.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl9.Clear()
-        Com技术经济分析计算程序.Form8.gdzcczl10.Clear()
+        Me.gdzcczl1.Clear()
+        Me.gdzcczl2.Clear()
+        Me.gdzcczl3.Clear()
+        Me.gdzcczl4.Clear()
+        Me.gdzcczl5.Clear()
+        Me.gdzcczl6.Clear()
+        Me.gdzcczl7.Clear()
+        Me.gdzcczl8.Clear()
+        Me.gdzcczl9.Clear()
+        Me.gdzcczl10.Clear()
         '无形资产摊销年限
-        Com技术经济分析计算程序.Form8.wxzctxnx1.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx2.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx3.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx4.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx5.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx6.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx7.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx8.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx9.Clear()
-        Com技术经济分析计算程序.Form8.wxzctxnx10.Clear()
+        Me.wxzctxnx1.Clear()
+        Me.wxzctxnx2.Clear()
+        Me.wxzctxnx3.Clear()
+        Me.wxzctxnx4.Clear()
+        Me.wxzctxnx5.Clear()
+        Me.wxzctxnx6.Clear()
+        Me.wxzctxnx7.Clear()
+        Me.wxzctxnx8.Clear()
+        Me.wxzctxnx9.Clear()
+        Me.wxzctxnx10.Clear()
         '——————————————————————————————————————————————————————————————————————————————
         '载入默认值
         '根据已经输入的投资情况，载入默认值
         '第1次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 22).Value, String)
+                Me.gdzczjnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx1.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx1.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value * 100, String)
+                Me.gdzcczl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl1.Text = CType(gdzcczl, String)
+                Me.gdzcczl1.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 26).Value, String)
+                Me.wxzctxnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx1.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx1.Text = CType(wxzctxnx, String)
             End If
         End If
         '第2次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 22).Value, String)
+                Me.gdzczjnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx2.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx2.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value * 100, String)
+                Me.gdzcczl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl2.Text = CType(gdzcczl, String)
+                Me.gdzcczl2.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 26).Value, String)
+                Me.wxzctxnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx2.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx2.Text = CType(wxzctxnx, String)
             End If
         End If
         '第3次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 22).Value, String)
+                Me.gdzczjnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx3.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx3.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value * 100, String)
+                Me.gdzcczl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl3.Text = CType(gdzcczl, String)
+                Me.gdzcczl3.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 26).Value, String)
+                Me.wxzctxnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx3.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx3.Text = CType(wxzctxnx, String)
             End If
         End If
         '第4次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 22).Value, String)
+                Me.gdzczjnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx4.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx4.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value * 100, String)
+                Me.gdzcczl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl4.Text = CType(gdzcczl, String)
+                Me.gdzcczl4.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 26).Value, String)
+                Me.wxzctxnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx4.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx4.Text = CType(wxzctxnx, String)
             End If
         End If
         '第5次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 22).Value, String)
+                Me.gdzczjnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx5.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx5.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value * 100, String)
+                Me.gdzcczl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl5.Text = CType(gdzcczl, String)
+                Me.gdzcczl5.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 26).Value, String)
+                Me.wxzctxnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx5.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx5.Text = CType(wxzctxnx, String)
             End If
         End If
         '第6次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 22).Value, String)
+                Me.gdzczjnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx6.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx6.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value * 100, String)
+                Me.gdzcczl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl6.Text = CType(gdzcczl, String)
+                Me.gdzcczl6.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 26).Value, String)
+                Me.wxzctxnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx6.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx6.Text = CType(wxzctxnx, String)
             End If
         End If
         '第7次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 22).Value, String)
+                Me.gdzczjnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx7.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx7.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value * 100, String)
+                Me.gdzcczl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl7.Text = CType(gdzcczl, String)
+                Me.gdzcczl7.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 26).Value, String)
+                Me.wxzctxnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx7.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx7.Text = CType(wxzctxnx, String)
             End If
         End If
         '第8次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 22).Value, String)
+                Me.gdzczjnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx8.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx8.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value * 100, String)
+                Me.gdzcczl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl8.Text = CType(gdzcczl, String)
+                Me.gdzcczl8.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 26).Value, String)
+                Me.wxzctxnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx8.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx8.Text = CType(wxzctxnx, String)
             End If
         End If
         '第9次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 22).Value, String)
+                Me.gdzczjnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx9.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx9.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value * 100, String)
+                Me.gdzcczl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl9.Text = CType(gdzcczl, String)
+                Me.gdzcczl9.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 26).Value, String)
+                Me.wxzctxnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx9.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx9.Text = CType(wxzctxnx, String)
             End If
         End If
         '第10次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 22).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzczjnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 22).Value, String)
+                Me.gdzczjnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 22).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzczjnx10.Text = CType(gdzczjnx, String)
+                Me.gdzczjnx10.Text = CType(gdzczjnx, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 23).Value > 0 Then
-                Com技术经济分析计算程序.Form8.gdzcczl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value * 100, String)
+                Me.gdzcczl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value * 100, String)
             Else
-                Com技术经济分析计算程序.Form8.gdzcczl10.Text = CType(gdzcczl, String)
+                Me.gdzcczl10.Text = CType(gdzcczl, String)
             End If
             If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value > 0 Then
-                Com技术经济分析计算程序.Form8.wxzctxnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 26).Value, String)
+                Me.wxzctxnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 26).Value, String)
             Else
-                Com技术经济分析计算程序.Form8.wxzctxnx10.Text = CType(wxzctxnx, String)
+                Me.wxzctxnx10.Text = CType(wxzctxnx, String)
             End If
         End If
     End Sub
@@ -235,38 +235,38 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         If XZ = vbOK Then
             '清空已有的全部数据
             '固定资产折旧年限
-            Com技术经济分析计算程序.Form8.gdzczjnx1.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx2.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx3.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx4.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx5.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx6.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx7.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx8.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx9.Clear()
-            Com技术经济分析计算程序.Form8.gdzczjnx10.Clear()
+            Me.gdzczjnx1.Clear()
+            Me.gdzczjnx2.Clear()
+            Me.gdzczjnx3.Clear()
+            Me.gdzczjnx4.Clear()
+            Me.gdzczjnx5.Clear()
+            Me.gdzczjnx6.Clear()
+            Me.gdzczjnx7.Clear()
+            Me.gdzczjnx8.Clear()
+            Me.gdzczjnx9.Clear()
+            Me.gdzczjnx10.Clear()
             '固定资产残值率
-            Com技术经济分析计算程序.Form8.gdzcczl1.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl2.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl3.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl4.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl5.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl6.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl7.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl8.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl9.Clear()
-            Com技术经济分析计算程序.Form8.gdzcczl10.Clear()
+            Me.gdzcczl1.Clear()
+            Me.gdzcczl2.Clear()
+            Me.gdzcczl3.Clear()
+            Me.gdzcczl4.Clear()
+            Me.gdzcczl5.Clear()
+            Me.gdzcczl6.Clear()
+            Me.gdzcczl7.Clear()
+            Me.gdzcczl8.Clear()
+            Me.gdzcczl9.Clear()
+            Me.gdzcczl10.Clear()
             '无形资产摊销年限
-            Com技术经济分析计算程序.Form8.wxzctxnx1.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx2.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx3.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx4.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx5.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx6.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx7.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx8.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx9.Clear()
-            Com技术经济分析计算程序.Form8.wxzctxnx10.Clear()
+            Me.wxzctxnx1.Clear()
+            Me.wxzctxnx2.Clear()
+            Me.wxzctxnx3.Clear()
+            Me.wxzctxnx4.Clear()
+            Me.wxzctxnx5.Clear()
+            Me.wxzctxnx6.Clear()
+            Me.wxzctxnx7.Clear()
+            Me.wxzctxnx8.Clear()
+            Me.wxzctxnx9.Clear()
+            Me.wxzctxnx10.Clear()
         End If
     End Sub
 
@@ -279,38 +279,38 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '固定资产折旧年限
-        Dim gdzczjnx1 = CType(Com技术经济分析计算程序.Form8.gdzczjnx1.Text, Integer)
-        Dim gdzczjnx2 = CType(Com技术经济分析计算程序.Form8.gdzczjnx2.Text, Integer)
-        Dim gdzczjnx3 = CType(Com技术经济分析计算程序.Form8.gdzczjnx3.Text, Integer)
-        Dim gdzczjnx4 = CType(Com技术经济分析计算程序.Form8.gdzczjnx4.Text, Integer)
-        Dim gdzczjnx5 = CType(Com技术经济分析计算程序.Form8.gdzczjnx5.Text, Integer)
-        Dim gdzczjnx6 = CType(Com技术经济分析计算程序.Form8.gdzczjnx6.Text, Integer)
-        Dim gdzczjnx7 = CType(Com技术经济分析计算程序.Form8.gdzczjnx7.Text, Integer)
-        Dim gdzczjnx8 = CType(Com技术经济分析计算程序.Form8.gdzczjnx8.Text, Integer)
-        Dim gdzczjnx9 = CType(Com技术经济分析计算程序.Form8.gdzczjnx9.Text, Integer)
-        Dim gdzczjnx10 = CType(Com技术经济分析计算程序.Form8.gdzczjnx10.Text, Integer)
+        Dim gdzczjnx1 = CType(Me.gdzczjnx1.Text, Integer)
+        Dim gdzczjnx2 = CType(Me.gdzczjnx2.Text, Integer)
+        Dim gdzczjnx3 = CType(Me.gdzczjnx3.Text, Integer)
+        Dim gdzczjnx4 = CType(Me.gdzczjnx4.Text, Integer)
+        Dim gdzczjnx5 = CType(Me.gdzczjnx5.Text, Integer)
+        Dim gdzczjnx6 = CType(Me.gdzczjnx6.Text, Integer)
+        Dim gdzczjnx7 = CType(Me.gdzczjnx7.Text, Integer)
+        Dim gdzczjnx8 = CType(Me.gdzczjnx8.Text, Integer)
+        Dim gdzczjnx9 = CType(Me.gdzczjnx9.Text, Integer)
+        Dim gdzczjnx10 = CType(Me.gdzczjnx10.Text, Integer)
         '固定资产残值率
-        Dim gdzcczl1 = CType(Com技术经济分析计算程序.Form8.gdzcczl1.Text, Double) / 100
-        Dim gdzcczl2 = CType(Com技术经济分析计算程序.Form8.gdzcczl2.Text, Double) / 100
-        Dim gdzcczl3 = CType(Com技术经济分析计算程序.Form8.gdzcczl3.Text, Double) / 100
-        Dim gdzcczl4 = CType(Com技术经济分析计算程序.Form8.gdzcczl4.Text, Double) / 100
-        Dim gdzcczl5 = CType(Com技术经济分析计算程序.Form8.gdzcczl5.Text, Double) / 100
-        Dim gdzcczl6 = CType(Com技术经济分析计算程序.Form8.gdzcczl6.Text, Double) / 100
-        Dim gdzcczl7 = CType(Com技术经济分析计算程序.Form8.gdzcczl7.Text, Double) / 100
-        Dim gdzcczl8 = CType(Com技术经济分析计算程序.Form8.gdzcczl8.Text, Double) / 100
-        Dim gdzcczl9 = CType(Com技术经济分析计算程序.Form8.gdzcczl9.Text, Double) / 100
-        Dim gdzcczl10 = CType(Com技术经济分析计算程序.Form8.gdzcczl10.Text, Double) / 100
+        Dim gdzcczl1 = CType(Me.gdzcczl1.Text, Double) / 100
+        Dim gdzcczl2 = CType(Me.gdzcczl2.Text, Double) / 100
+        Dim gdzcczl3 = CType(Me.gdzcczl3.Text, Double) / 100
+        Dim gdzcczl4 = CType(Me.gdzcczl4.Text, Double) / 100
+        Dim gdzcczl5 = CType(Me.gdzcczl5.Text, Double) / 100
+        Dim gdzcczl6 = CType(Me.gdzcczl6.Text, Double) / 100
+        Dim gdzcczl7 = CType(Me.gdzcczl7.Text, Double) / 100
+        Dim gdzcczl8 = CType(Me.gdzcczl8.Text, Double) / 100
+        Dim gdzcczl9 = CType(Me.gdzcczl9.Text, Double) / 100
+        Dim gdzcczl10 = CType(Me.gdzcczl10.Text, Double) / 100
         '无形资产摊销年限
-        Dim wxzctxnx1 = CType(Com技术经济分析计算程序.Form8.wxzctxnx1.Text, Integer)
-        Dim wxzctxnx2 = CType(Com技术经济分析计算程序.Form8.wxzctxnx2.Text, Integer)
-        Dim wxzctxnx3 = CType(Com技术经济分析计算程序.Form8.wxzctxnx3.Text, Integer)
-        Dim wxzctxnx4 = CType(Com技术经济分析计算程序.Form8.wxzctxnx4.Text, Integer)
-        Dim wxzctxnx5 = CType(Com技术经济分析计算程序.Form8.wxzctxnx5.Text, Integer)
-        Dim wxzctxnx6 = CType(Com技术经济分析计算程序.Form8.wxzctxnx6.Text, Integer)
-        Dim wxzctxnx7 = CType(Com技术经济分析计算程序.Form8.wxzctxnx7.Text, Integer)
-        Dim wxzctxnx8 = CType(Com技术经济分析计算程序.Form8.wxzctxnx8.Text, Integer)
-        Dim wxzctxnx9 = CType(Com技术经济分析计算程序.Form8.wxzctxnx9.Text, Integer)
-        Dim wxzctxnx10 = CType(Com技术经济分析计算程序.Form8.wxzctxnx10.Text, Integer)
+        Dim wxzctxnx1 = CType(Me.wxzctxnx1.Text, Integer)
+        Dim wxzctxnx2 = CType(Me.wxzctxnx2.Text, Integer)
+        Dim wxzctxnx3 = CType(Me.wxzctxnx3.Text, Integer)
+        Dim wxzctxnx4 = CType(Me.wxzctxnx4.Text, Integer)
+        Dim wxzctxnx5 = CType(Me.wxzctxnx5.Text, Integer)
+        Dim wxzctxnx6 = CType(Me.wxzctxnx6.Text, Integer)
+        Dim wxzctxnx7 = CType(Me.wxzctxnx7.Text, Integer)
+        Dim wxzctxnx8 = CType(Me.wxzctxnx8.Text, Integer)
+        Dim wxzctxnx9 = CType(Me.wxzctxnx9.Text, Integer)
+        Dim wxzctxnx10 = CType(Me.wxzctxnx10.Text, Integer)
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————
         '读取项目总的计算年限

@@ -1,5 +1,5 @@
 ﻿Public Class 建设期资金运用方式设置
-    Public Sub 建设期默认资金运用模式(ZBJBL As Double, DKLL As Double)
+    Sub 建设期默认资金运用模式(ZBJBL As Double, DKLL As Double)
         '每次投资的资本金比例和建设期贷款利率均相同，资本金比例为占动态投资比例
         On Error Resume Next
         '定义Excel对象
@@ -38,8 +38,8 @@
     Private Sub 资本金比例为占动态投资比例_统一设置_Click(sender As Object, e As EventArgs) Handles 资本金比例为占动态投资比例_统一设置.Click
         Dim XZ = MsgBox("是否需要将资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同？", vbOKCancel)
         If XZ = vbOK Then
-            Dim ZBJBL = CType(Com技术经济分析计算程序.Form5.zbjbl_a.Text, Double) / 100
-            Dim DKLL = CType(Com技术经济分析计算程序.Form5.dkll_a.Text, Double) / 100
+            Dim ZBJBL = CType(Me.zbjbl_a.Text, Double) / 100
+            Dim DKLL = CType(Me.dkll_a.Text, Double) / 100
             Call 建设期默认资金运用模式(ZBJBL, DKLL)
             MsgBox("已经将资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！")
             Me.Close()
@@ -54,8 +54,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '读取资本金(动态)比例，建设期贷款利率
-        Dim ZBJBL = CType(Com技术经济分析计算程序.Form5.zbjbl_a.Text, Double) / 100
-        Dim DKLL = CType(Com技术经济分析计算程序.Form5.dkll_a.Text, Double) / 100
+        Dim ZBJBL = CType(Me.zbjbl_a.Text, Double) / 100
+        Dim DKLL = CType(Me.dkll_a.Text, Double) / 100
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -172,27 +172,27 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
         '读取输入的资本金(动态)比例
-        zbjbl1 = CType(Com技术经济分析计算程序.Form5.zbjbl1.Text, Double) / 100
-        zbjbl2 = CType(Com技术经济分析计算程序.Form5.zbjbl2.Text, Double) / 100
-        zbjbl3 = CType(Com技术经济分析计算程序.Form5.zbjbl3.Text, Double) / 100
-        zbjbl4 = CType(Com技术经济分析计算程序.Form5.zbjbl4.Text, Double) / 100
-        zbjbl5 = CType(Com技术经济分析计算程序.Form5.zbjbl5.Text, Double) / 100
-        zbjbl6 = CType(Com技术经济分析计算程序.Form5.zbjbl6.Text, Double) / 100
-        zbjbl7 = CType(Com技术经济分析计算程序.Form5.zbjbl7.Text, Double) / 100
-        zbjbl8 = CType(Com技术经济分析计算程序.Form5.zbjbl8.Text, Double) / 100
-        zbjbl9 = CType(Com技术经济分析计算程序.Form5.zbjbl9.Text, Double) / 100
-        zbjbl10 = CType(Com技术经济分析计算程序.Form5.zbjbl10.Text, Double) / 100
+        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
+        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
+        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
+        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
+        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
+        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
+        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
+        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
+        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
+        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
         '读取输入的建设期贷款利率
-        dkll1 = CType(Com技术经济分析计算程序.Form5.dkll1.Text, Double) / 100
-        dkll2 = CType(Com技术经济分析计算程序.Form5.dkll2.Text, Double) / 100
-        dkll3 = CType(Com技术经济分析计算程序.Form5.dkll3.Text, Double) / 100
-        dkll4 = CType(Com技术经济分析计算程序.Form5.dkll4.Text, Double) / 100
-        dkll5 = CType(Com技术经济分析计算程序.Form5.dkll5.Text, Double) / 100
-        dkll6 = CType(Com技术经济分析计算程序.Form5.dkll6.Text, Double) / 100
-        dkll7 = CType(Com技术经济分析计算程序.Form5.dkll7.Text, Double) / 100
-        dkll8 = CType(Com技术经济分析计算程序.Form5.dkll8.Text, Double) / 100
-        dkll9 = CType(Com技术经济分析计算程序.Form5.dkll9.Text, Double) / 100
-        dkll10 = CType(Com技术经济分析计算程序.Form5.dkll10.Text, Double) / 100
+        dkll1 = CType(Me.dkll1.Text, Double) / 100
+        dkll2 = CType(Me.dkll2.Text, Double) / 100
+        dkll3 = CType(Me.dkll3.Text, Double) / 100
+        dkll4 = CType(Me.dkll4.Text, Double) / 100
+        dkll5 = CType(Me.dkll5.Text, Double) / 100
+        dkll6 = CType(Me.dkll6.Text, Double) / 100
+        dkll7 = CType(Me.dkll7.Text, Double) / 100
+        dkll8 = CType(Me.dkll8.Text, Double) / 100
+        dkll9 = CType(Me.dkll9.Text, Double) / 100
+        dkll10 = CType(Me.dkll10.Text, Double) / 100
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '———————————————————————————————————————————————————————————————————————————————————————— 
@@ -317,27 +317,27 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
         '读取输入的资本金(动态)比例
-        zbjbl1 = CType(Com技术经济分析计算程序.Form5.zbjbl1.Text, Double) / 100
-        zbjbl2 = CType(Com技术经济分析计算程序.Form5.zbjbl2.Text, Double) / 100
-        zbjbl3 = CType(Com技术经济分析计算程序.Form5.zbjbl3.Text, Double) / 100
-        zbjbl4 = CType(Com技术经济分析计算程序.Form5.zbjbl4.Text, Double) / 100
-        zbjbl5 = CType(Com技术经济分析计算程序.Form5.zbjbl5.Text, Double) / 100
-        zbjbl6 = CType(Com技术经济分析计算程序.Form5.zbjbl6.Text, Double) / 100
-        zbjbl7 = CType(Com技术经济分析计算程序.Form5.zbjbl7.Text, Double) / 100
-        zbjbl8 = CType(Com技术经济分析计算程序.Form5.zbjbl8.Text, Double) / 100
-        zbjbl9 = CType(Com技术经济分析计算程序.Form5.zbjbl9.Text, Double) / 100
-        zbjbl10 = CType(Com技术经济分析计算程序.Form5.zbjbl10.Text, Double) / 100
+        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
+        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
+        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
+        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
+        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
+        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
+        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
+        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
+        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
+        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
         '读取输入的建设期贷款利率
-        dkll1 = CType(Com技术经济分析计算程序.Form5.dkll1.Text, Double) / 100
-        dkll2 = CType(Com技术经济分析计算程序.Form5.dkll2.Text, Double) / 100
-        dkll3 = CType(Com技术经济分析计算程序.Form5.dkll3.Text, Double) / 100
-        dkll4 = CType(Com技术经济分析计算程序.Form5.dkll4.Text, Double) / 100
-        dkll5 = CType(Com技术经济分析计算程序.Form5.dkll5.Text, Double) / 100
-        dkll6 = CType(Com技术经济分析计算程序.Form5.dkll6.Text, Double) / 100
-        dkll7 = CType(Com技术经济分析计算程序.Form5.dkll7.Text, Double) / 100
-        dkll8 = CType(Com技术经济分析计算程序.Form5.dkll8.Text, Double) / 100
-        dkll9 = CType(Com技术经济分析计算程序.Form5.dkll9.Text, Double) / 100
-        dkll10 = CType(Com技术经济分析计算程序.Form5.dkll10.Text, Double) / 100
+        dkll1 = CType(Me.dkll1.Text, Double) / 100
+        dkll2 = CType(Me.dkll2.Text, Double) / 100
+        dkll3 = CType(Me.dkll3.Text, Double) / 100
+        dkll4 = CType(Me.dkll4.Text, Double) / 100
+        dkll5 = CType(Me.dkll5.Text, Double) / 100
+        dkll6 = CType(Me.dkll6.Text, Double) / 100
+        dkll7 = CType(Me.dkll7.Text, Double) / 100
+        dkll8 = CType(Me.dkll8.Text, Double) / 100
+        dkll9 = CType(Me.dkll9.Text, Double) / 100
+        dkll10 = CType(Me.dkll10.Text, Double) / 100
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '———————————————————————————————————————————————————————————————————————————————————————— 
@@ -843,26 +843,26 @@
     Private Sub 清空数据_Click(sender As Object, e As EventArgs) Handles 清空数据.Click
         Dim XZ = MsgBox("确定要清空本窗体输入的的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form5.zbjbl1.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl2.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl3.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl4.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl5.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl6.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl7.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl8.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl9.Clear()
-            Com技术经济分析计算程序.Form5.zbjbl10.Clear()
-            Com技术经济分析计算程序.Form5.dkll1.Clear()
-            Com技术经济分析计算程序.Form5.dkll2.Clear()
-            Com技术经济分析计算程序.Form5.dkll3.Clear()
-            Com技术经济分析计算程序.Form5.dkll4.Clear()
-            Com技术经济分析计算程序.Form5.dkll5.Clear()
-            Com技术经济分析计算程序.Form5.dkll6.Clear()
-            Com技术经济分析计算程序.Form5.dkll7.Clear()
-            Com技术经济分析计算程序.Form5.dkll8.Clear()
-            Com技术经济分析计算程序.Form5.dkll9.Clear()
-            Com技术经济分析计算程序.Form5.dkll10.Clear()
+            Me.zbjbl1.Clear()
+            Me.zbjbl2.Clear()
+            Me.zbjbl3.Clear()
+            Me.zbjbl4.Clear()
+            Me.zbjbl5.Clear()
+            Me.zbjbl6.Clear()
+            Me.zbjbl7.Clear()
+            Me.zbjbl8.Clear()
+            Me.zbjbl9.Clear()
+            Me.zbjbl10.Clear()
+            Me.dkll1.Clear()
+            Me.dkll2.Clear()
+            Me.dkll3.Clear()
+            Me.dkll4.Clear()
+            Me.dkll5.Clear()
+            Me.dkll6.Clear()
+            Me.dkll7.Clear()
+            Me.dkll8.Clear()
+            Me.dkll9.Clear()
+            Me.dkll10.Clear()
             MsgBox("清空窗体已完成！")
         End If
     End Sub
@@ -873,26 +873,26 @@
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '清空已有的全部数据
-        Com技术经济分析计算程序.Form5.zbjbl1.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl2.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl3.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl4.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl5.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl6.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl7.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl8.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl9.Clear()
-        Com技术经济分析计算程序.Form5.zbjbl10.Clear()
-        Com技术经济分析计算程序.Form5.dkll1.Clear()
-        Com技术经济分析计算程序.Form5.dkll2.Clear()
-        Com技术经济分析计算程序.Form5.dkll3.Clear()
-        Com技术经济分析计算程序.Form5.dkll4.Clear()
-        Com技术经济分析计算程序.Form5.dkll5.Clear()
-        Com技术经济分析计算程序.Form5.dkll6.Clear()
-        Com技术经济分析计算程序.Form5.dkll7.Clear()
-        Com技术经济分析计算程序.Form5.dkll8.Clear()
-        Com技术经济分析计算程序.Form5.dkll9.Clear()
-        Com技术经济分析计算程序.Form5.dkll10.Clear()
+        Me.zbjbl1.Clear()
+        Me.zbjbl2.Clear()
+        Me.zbjbl3.Clear()
+        Me.zbjbl4.Clear()
+        Me.zbjbl5.Clear()
+        Me.zbjbl6.Clear()
+        Me.zbjbl7.Clear()
+        Me.zbjbl8.Clear()
+        Me.zbjbl9.Clear()
+        Me.zbjbl10.Clear()
+        Me.dkll1.Clear()
+        Me.dkll2.Clear()
+        Me.dkll3.Clear()
+        Me.dkll4.Clear()
+        Me.dkll5.Clear()
+        Me.dkll6.Clear()
+        Me.dkll7.Clear()
+        Me.dkll8.Clear()
+        Me.dkll9.Clear()
+        Me.dkll10.Clear()
         '根据已经输入的投资情况，载入默认值
         '读取逐次设置的次数
         Dim SZCS As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(170, 11).Value
@@ -902,108 +902,108 @@
             '读取上次修改后的数据
             '第1次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 3).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll1.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 3).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 3).Value * 100, String)
+                Me.dkll1.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 3).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第2次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 5).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll2.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 5).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 5).Value * 100, String)
+                Me.dkll2.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 5).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第3次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll3.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 7).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 7).Value * 100, String)
+                Me.dkll3.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 7).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第4次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 9).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll4.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 9).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 9).Value * 100, String)
+                Me.dkll4.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 9).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第5次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 11).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll5.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 11).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 11).Value * 100, String)
+                Me.dkll5.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 11).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第6次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 13).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll6.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 13).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 13).Value * 100, String)
+                Me.dkll6.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 13).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第7次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 15).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll7.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 15).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 15).Value * 100, String)
+                Me.dkll7.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 15).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第8次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 17).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll8.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 17).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 17).Value * 100, String)
+                Me.dkll8.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 17).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第9次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 19).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll9.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 19).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 19).Value * 100, String)
+                Me.dkll9.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 19).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第10次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 21).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll10.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 21).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 21).Value * 100, String)
+                Me.dkll10.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 21).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
         Else
             '载入默认值
             '每次的资本金(动态)比例和建设期贷款利率均一致的情况
-            Com技术经济分析计算程序.Form5.zbjbl_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-            Com技术经济分析计算程序.Form5.dkll_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+            Me.zbjbl_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+            Me.dkll_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             '第1次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第2次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第3次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第4次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第5次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第6次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第7次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第8次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第9次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
             '第10次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
-                Com技术经济分析计算程序.Form5.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Com技术经济分析计算程序.Form5.dkll10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
+                Me.dkll10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
             End If
         End If
     End Sub

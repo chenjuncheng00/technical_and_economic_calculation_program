@@ -12,27 +12,27 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         Dim kxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value '长期贷款宽限年限
         '清空已有的全部数据
         '长期贷款还款年限
-        Com技术经济分析计算程序.Form9.cqdkhknx1.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx2.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx3.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx4.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx5.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx6.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx7.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx8.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx9.Clear()
-        Com技术经济分析计算程序.Form9.cqdkhknx10.Clear()
+        Me.cqdkhknx1.Clear()
+        Me.cqdkhknx2.Clear()
+        Me.cqdkhknx3.Clear()
+        Me.cqdkhknx4.Clear()
+        Me.cqdkhknx5.Clear()
+        Me.cqdkhknx6.Clear()
+        Me.cqdkhknx7.Clear()
+        Me.cqdkhknx8.Clear()
+        Me.cqdkhknx9.Clear()
+        Me.cqdkhknx10.Clear()
         '长期贷款宽限年限
-        Com技术经济分析计算程序.Form9.kxnx1.Clear()
-        Com技术经济分析计算程序.Form9.kxnx2.Clear()
-        Com技术经济分析计算程序.Form9.kxnx3.Clear()
-        Com技术经济分析计算程序.Form9.kxnx4.Clear()
-        Com技术经济分析计算程序.Form9.kxnx5.Clear()
-        Com技术经济分析计算程序.Form9.kxnx6.Clear()
-        Com技术经济分析计算程序.Form9.kxnx7.Clear()
-        Com技术经济分析计算程序.Form9.kxnx8.Clear()
-        Com技术经济分析计算程序.Form9.kxnx9.Clear()
-        Com技术经济分析计算程序.Form9.kxnx10.Clear()
+        Me.kxnx1.Clear()
+        Me.kxnx2.Clear()
+        Me.kxnx3.Clear()
+        Me.kxnx4.Clear()
+        Me.kxnx5.Clear()
+        Me.kxnx6.Clear()
+        Me.kxnx7.Clear()
+        Me.kxnx8.Clear()
+        Me.kxnx9.Clear()
+        Me.kxnx10.Clear()
         '——————————————————————————————————————————————————————————————————————————————
         '载入默认值
         '根据已经输入的投资情况，载入默认值
@@ -40,150 +40,150 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(23, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(23, 39).Value, String)
+                Me.cqdkhknx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(23, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx1.Text = CType(cqdknx, String)
+                Me.cqdkhknx1.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(34, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(34, 39).Value, String)
+                Me.kxnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(34, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx1.Text = CType(kxnx, String)
+                Me.kxnx1.Text = CType(kxnx, String)
             End If
         End If
         '第2次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(24, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(24, 39).Value, String)
+                Me.cqdkhknx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(24, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx2.Text = CType(cqdknx, String)
+                Me.cqdkhknx2.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(35, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(35, 39).Value, String)
+                Me.kxnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(35, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx2.Text = CType(kxnx, String)
+                Me.kxnx2.Text = CType(kxnx, String)
             End If
         End If
         '第3次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 39).Value, String)
+                Me.cqdkhknx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx3.Text = CType(cqdknx, String)
+                Me.cqdkhknx3.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 39).Value, String)
+                Me.kxnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx3.Text = CType(kxnx, String)
+                Me.kxnx3.Text = CType(kxnx, String)
             End If
         End If
         '第4次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(26, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(26, 39).Value, String)
+                Me.cqdkhknx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(26, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx4.Text = CType(cqdknx, String)
+                Me.cqdkhknx4.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, 39).Value, String)
+                Me.kxnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx4.Text = CType(kxnx, String)
+                Me.kxnx4.Text = CType(kxnx, String)
             End If
         End If
         '第5次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(27, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(27, 39).Value, String)
+                Me.cqdkhknx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(27, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx5.Text = CType(cqdknx, String)
+                Me.cqdkhknx5.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, 39).Value, String)
+                Me.kxnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx5.Text = CType(kxnx, String)
+                Me.kxnx5.Text = CType(kxnx, String)
             End If
         End If
         '第6次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(28, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(28, 39).Value, String)
+                Me.cqdkhknx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(28, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx6.Text = CType(cqdknx, String)
+                Me.cqdkhknx6.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, 39).Value, String)
+                Me.kxnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx6.Text = CType(kxnx, String)
+                Me.kxnx6.Text = CType(kxnx, String)
             End If
         End If
         '第7次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(29, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(29, 39).Value, String)
+                Me.cqdkhknx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(29, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx7.Text = CType(cqdknx, String)
+                Me.cqdkhknx7.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, 39).Value, String)
+                Me.kxnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx7.Text = CType(kxnx, String)
+                Me.kxnx7.Text = CType(kxnx, String)
             End If
         End If
         '第8次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(30, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(30, 39).Value, String)
+                Me.cqdkhknx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(30, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx8.Text = CType(cqdknx, String)
+                Me.cqdkhknx8.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, 39).Value, String)
+                Me.kxnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx8.Text = CType(kxnx, String)
+                Me.kxnx8.Text = CType(kxnx, String)
             End If
         End If
         '第9次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(31, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(31, 39).Value, String)
+                Me.cqdkhknx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(31, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx9.Text = CType(cqdknx, String)
+                Me.cqdkhknx9.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(42, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(42, 39).Value, String)
+                Me.kxnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(42, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx9.Text = CType(kxnx, String)
+                Me.kxnx9.Text = CType(kxnx, String)
             End If
         End If
         '第10次投资
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
             '长期贷款还款年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(32, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.cqdkhknx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(32, 39).Value, String)
+                Me.cqdkhknx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(32, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.cqdkhknx10.Text = CType(cqdknx, String)
+                Me.cqdkhknx10.Text = CType(cqdknx, String)
             End If
             '长期贷款宽限年限
             If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(43, 39).Value > 0 Then
-                Com技术经济分析计算程序.Form9.kxnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(43, 39).Value, String)
+                Me.kxnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(43, 39).Value, String)
             Else
-                Com技术经济分析计算程序.Form9.kxnx10.Text = CType(kxnx, String)
+                Me.kxnx10.Text = CType(kxnx, String)
             End If
         End If
     End Sub
@@ -192,27 +192,27 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         Dim XZ = MsgBox("确定要清空本窗体输入的的全部内容？", vbOKCancel)
         If XZ = vbOK Then
             '长期贷款还款年限
-            Com技术经济分析计算程序.Form9.cqdkhknx1.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx2.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx3.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx4.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx5.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx6.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx7.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx8.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx9.Clear()
-            Com技术经济分析计算程序.Form9.cqdkhknx10.Clear()
+            Me.cqdkhknx1.Clear()
+            Me.cqdkhknx2.Clear()
+            Me.cqdkhknx3.Clear()
+            Me.cqdkhknx4.Clear()
+            Me.cqdkhknx5.Clear()
+            Me.cqdkhknx6.Clear()
+            Me.cqdkhknx7.Clear()
+            Me.cqdkhknx8.Clear()
+            Me.cqdkhknx9.Clear()
+            Me.cqdkhknx10.Clear()
             '长期贷款宽限年限
-            Com技术经济分析计算程序.Form9.kxnx1.Clear()
-            Com技术经济分析计算程序.Form9.kxnx2.Clear()
-            Com技术经济分析计算程序.Form9.kxnx3.Clear()
-            Com技术经济分析计算程序.Form9.kxnx4.Clear()
-            Com技术经济分析计算程序.Form9.kxnx5.Clear()
-            Com技术经济分析计算程序.Form9.kxnx6.Clear()
-            Com技术经济分析计算程序.Form9.kxnx7.Clear()
-            Com技术经济分析计算程序.Form9.kxnx8.Clear()
-            Com技术经济分析计算程序.Form9.kxnx9.Clear()
-            Com技术经济分析计算程序.Form9.kxnx10.Clear()
+            Me.kxnx1.Clear()
+            Me.kxnx2.Clear()
+            Me.kxnx3.Clear()
+            Me.kxnx4.Clear()
+            Me.kxnx5.Clear()
+            Me.kxnx6.Clear()
+            Me.kxnx7.Clear()
+            Me.kxnx8.Clear()
+            Me.kxnx9.Clear()
+            Me.kxnx10.Clear()
         End If
     End Sub
 
@@ -225,27 +225,27 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '长期贷款还款年限
-        Dim cqdkhknx1 = CType(Com技术经济分析计算程序.Form9.cqdkhknx1.Text, Integer)
-        Dim cqdkhknx2 = CType(Com技术经济分析计算程序.Form9.cqdkhknx2.Text, Integer)
-        Dim cqdkhknx3 = CType(Com技术经济分析计算程序.Form9.cqdkhknx3.Text, Integer)
-        Dim cqdkhknx4 = CType(Com技术经济分析计算程序.Form9.cqdkhknx4.Text, Integer)
-        Dim cqdkhknx5 = CType(Com技术经济分析计算程序.Form9.cqdkhknx5.Text, Integer)
-        Dim cqdkhknx6 = CType(Com技术经济分析计算程序.Form9.cqdkhknx6.Text, Integer)
-        Dim cqdkhknx7 = CType(Com技术经济分析计算程序.Form9.cqdkhknx7.Text, Integer)
-        Dim cqdkhknx8 = CType(Com技术经济分析计算程序.Form9.cqdkhknx8.Text, Integer)
-        Dim cqdkhknx9 = CType(Com技术经济分析计算程序.Form9.cqdkhknx9.Text, Integer)
-        Dim cqdkhknx10 = CType(Com技术经济分析计算程序.Form9.cqdkhknx10.Text, Integer)
+        Dim cqdkhknx1 = CType(Me.cqdkhknx1.Text, Integer)
+        Dim cqdkhknx2 = CType(Me.cqdkhknx2.Text, Integer)
+        Dim cqdkhknx3 = CType(Me.cqdkhknx3.Text, Integer)
+        Dim cqdkhknx4 = CType(Me.cqdkhknx4.Text, Integer)
+        Dim cqdkhknx5 = CType(Me.cqdkhknx5.Text, Integer)
+        Dim cqdkhknx6 = CType(Me.cqdkhknx6.Text, Integer)
+        Dim cqdkhknx7 = CType(Me.cqdkhknx7.Text, Integer)
+        Dim cqdkhknx8 = CType(Me.cqdkhknx8.Text, Integer)
+        Dim cqdkhknx9 = CType(Me.cqdkhknx9.Text, Integer)
+        Dim cqdkhknx10 = CType(Me.cqdkhknx10.Text, Integer)
         '长期贷款宽限年限
-        Dim kxnx1 = CType(Com技术经济分析计算程序.Form9.kxnx1.Text, Integer)
-        Dim kxnx2 = CType(Com技术经济分析计算程序.Form9.kxnx2.Text, Integer)
-        Dim kxnx3 = CType(Com技术经济分析计算程序.Form9.kxnx3.Text, Integer)
-        Dim kxnx4 = CType(Com技术经济分析计算程序.Form9.kxnx4.Text, Integer)
-        Dim kxnx5 = CType(Com技术经济分析计算程序.Form9.kxnx5.Text, Integer)
-        Dim kxnx6 = CType(Com技术经济分析计算程序.Form9.kxnx6.Text, Integer)
-        Dim kxnx7 = CType(Com技术经济分析计算程序.Form9.kxnx7.Text, Integer)
-        Dim kxnx8 = CType(Com技术经济分析计算程序.Form9.kxnx8.Text, Integer)
-        Dim kxnx9 = CType(Com技术经济分析计算程序.Form9.kxnx9.Text, Integer)
-        Dim kxnx10 = CType(Com技术经济分析计算程序.Form9.kxnx10.Text, Integer)
+        Dim kxnx1 = CType(Me.kxnx1.Text, Integer)
+        Dim kxnx2 = CType(Me.kxnx2.Text, Integer)
+        Dim kxnx3 = CType(Me.kxnx3.Text, Integer)
+        Dim kxnx4 = CType(Me.kxnx4.Text, Integer)
+        Dim kxnx5 = CType(Me.kxnx5.Text, Integer)
+        Dim kxnx6 = CType(Me.kxnx6.Text, Integer)
+        Dim kxnx7 = CType(Me.kxnx7.Text, Integer)
+        Dim kxnx8 = CType(Me.kxnx8.Text, Integer)
+        Dim kxnx9 = CType(Me.kxnx9.Text, Integer)
+        Dim kxnx10 = CType(Me.kxnx10.Text, Integer)
         '——————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认输入的逐次投资的长期贷款还款和宽限年限？？", vbOKCancel)
         If XZ = vbOK Then

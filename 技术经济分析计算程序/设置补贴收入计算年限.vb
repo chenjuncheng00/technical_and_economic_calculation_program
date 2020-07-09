@@ -10,12 +10,12 @@
         Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
         Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
         '读取数据
-        ksnf1 = CType(Com技术经济分析计算程序.Form7.ksnf1.Text, Integer)
-        ksnf2 = CType(Com技术经济分析计算程序.Form7.ksnf2.Text, Integer)
-        ksnf3 = CType(Com技术经济分析计算程序.Form7.ksnf3.Text, Integer)
-        jsnf1 = CType(Com技术经济分析计算程序.Form7.jsnf1.Text, Integer)
-        jsnf2 = CType(Com技术经济分析计算程序.Form7.jsnf2.Text, Integer)
-        jsnf3 = CType(Com技术经济分析计算程序.Form7.jsnf3.Text, Integer)
+        ksnf1 = CType(Me.ksnf1.Text, Integer)
+        ksnf2 = CType(Me.ksnf2.Text, Integer)
+        ksnf3 = CType(Me.ksnf3.Text, Integer)
+        jsnf1 = CType(Me.jsnf1.Text, Integer)
+        jsnf2 = CType(Me.jsnf2.Text, Integer)
+        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '添加报错功能
@@ -45,15 +45,15 @@
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
         '3个勾选框不可以同时被选择
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True And Com技术经济分析计算程序.Form7.CheckBox2.Checked = True Then
+        If Me.CheckBox1.Checked = True And Me.CheckBox2.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True And Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        If Me.CheckBox1.Checked = True And Me.CheckBox3.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
-        If Com技术经济分析计算程序.Form7.CheckBox2.Checked = True And Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        If Me.CheckBox2.Checked = True And Me.CheckBox3.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
@@ -64,7 +64,7 @@
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
         '按照逐年达产率进行计算
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = True Then
             '前15年
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnx Then
@@ -93,7 +93,7 @@
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '按照逐年达产率增加值进行计算
-        ElseIf Com技术经济分析计算程序.Form7.CheckBox2.Checked = True Then
+        ElseIf Me.CheckBox2.Checked = True Then
             '第1年
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
             '第2-15年
@@ -132,7 +132,7 @@
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '按照逐年投产月份比例计算
-        ElseIf Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        ElseIf Me.CheckBox3.Checked = True Then
             For i = 3 To 33
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnx Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
@@ -164,8 +164,8 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form7.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form7.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示补贴收入计算结果
         Dim btsrbl1 As Double
         Dim nf As Integer
@@ -174,10 +174,10 @@
             If i - 2 <= jsnx Then
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value '年份序号
                 btsrbl1 = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value) * 100, 2) '读取补贴收入负荷率
-                Com技术经济分析计算程序.Form7.RichTextBox1.Text = Com技术经济分析计算程序.Form7.RichTextBox1.Text & btsrbl1 & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & btsrbl1 & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Com技术经济分析计算程序.Form7.RichTextBox1.Text = bq1 & "逐年负荷率：" & Com技术经济分析计算程序.Form7.RichTextBox1.Text
+        Me.RichTextBox1.Text = bq1 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
 
     Private Sub 补贴收入2_Click(sender As Object, e As EventArgs) Handles 补贴收入2.Click
@@ -191,12 +191,12 @@
         Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
         Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
         '读取数据
-        ksnf1 = CType(Com技术经济分析计算程序.Form7.ksnf1.Text, Integer)
-        ksnf2 = CType(Com技术经济分析计算程序.Form7.ksnf2.Text, Integer)
-        ksnf3 = CType(Com技术经济分析计算程序.Form7.ksnf3.Text, Integer)
-        jsnf1 = CType(Com技术经济分析计算程序.Form7.jsnf1.Text, Integer)
-        jsnf2 = CType(Com技术经济分析计算程序.Form7.jsnf2.Text, Integer)
-        jsnf3 = CType(Com技术经济分析计算程序.Form7.jsnf3.Text, Integer)
+        ksnf1 = CType(Me.ksnf1.Text, Integer)
+        ksnf2 = CType(Me.ksnf2.Text, Integer)
+        ksnf3 = CType(Me.ksnf3.Text, Integer)
+        jsnf1 = CType(Me.jsnf1.Text, Integer)
+        jsnf2 = CType(Me.jsnf2.Text, Integer)
+        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '添加报错功能
@@ -226,15 +226,15 @@
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
         '3个勾选框不可以同时被选择
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True And Com技术经济分析计算程序.Form7.CheckBox2.Checked = True Then
+        If Me.CheckBox1.Checked = True And Me.CheckBox2.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True And Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        If Me.CheckBox1.Checked = True And Me.CheckBox3.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
-        If Com技术经济分析计算程序.Form7.CheckBox2.Checked = True And Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        If Me.CheckBox2.Checked = True And Me.CheckBox3.Checked = True Then
             MsgBox("补贴收入逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
@@ -245,7 +245,7 @@
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '写入数值
         '按照逐年达产率进行计算
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = True Then
             '前15年
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnx Then
@@ -274,7 +274,7 @@
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '按照逐年达产率增加值进行计算
-        ElseIf Com技术经济分析计算程序.Form7.CheckBox2.Checked = True Then
+        ElseIf Me.CheckBox2.Checked = True Then
             '第1年
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
             '第2-15年
@@ -313,7 +313,7 @@
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '按照逐年投产月份比例计算
-        ElseIf Com技术经济分析计算程序.Form7.CheckBox3.Checked = True Then
+        ElseIf Me.CheckBox3.Checked = True Then
             For i = 3 To 33
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value <= jsnx Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
@@ -345,8 +345,8 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form7.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form7.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示补贴收入计算结果
         Dim btsrbl2 As Double
         Dim nf As Integer
@@ -355,10 +355,10 @@
             If i - 2 <= jsnx Then
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value '年份序号
                 btsrbl2 = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value) * 100, 2) '读取补贴收入负荷率
-                Com技术经济分析计算程序.Form7.RichTextBox1.Text = Com技术经济分析计算程序.Form7.RichTextBox1.Text & btsrbl2 & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & btsrbl2 & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Com技术经济分析计算程序.Form7.RichTextBox1.Text = bq2 & "逐年负荷率：" & Com技术经济分析计算程序.Form7.RichTextBox1.Text
+        Me.RichTextBox1.Text = bq2 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
     Private Sub 光伏补贴收入_Click(sender As Object, e As EventArgs) Handles 光伏补贴收入.Click
         On Error Resume Next
@@ -371,12 +371,12 @@
         Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
         Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
         '读取数据
-        ksnf1 = CType(Com技术经济分析计算程序.Form7.ksnf1.Text, Integer)
-        ksnf2 = CType(Com技术经济分析计算程序.Form7.ksnf2.Text, Integer)
-        ksnf3 = CType(Com技术经济分析计算程序.Form7.ksnf3.Text, Integer)
-        jsnf1 = CType(Com技术经济分析计算程序.Form7.jsnf1.Text, Integer)
-        jsnf2 = CType(Com技术经济分析计算程序.Form7.jsnf2.Text, Integer)
-        jsnf3 = CType(Com技术经济分析计算程序.Form7.jsnf3.Text, Integer)
+        ksnf1 = CType(Me.ksnf1.Text, Integer)
+        ksnf2 = CType(Me.ksnf2.Text, Integer)
+        ksnf3 = CType(Me.ksnf3.Text, Integer)
+        jsnf1 = CType(Me.jsnf1.Text, Integer)
+        jsnf2 = CType(Me.jsnf2.Text, Integer)
+        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '添加报错功能
@@ -406,7 +406,7 @@
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
         '两个勾选框都不可以被选择
-        If Com技术经济分析计算程序.Form7.CheckBox1.Checked = True Or Com技术经济分析计算程序.Form7.CheckBox2.Checked = True Then
+        If Me.CheckBox1.Checked = True Or Me.CheckBox2.Checked = True Then
             MsgBox("光伏补贴收入逐年计算比例不可以按照逐年达产率计算或者按照逐年达产率增加值计算，请重新选择！")
             Exit Sub
         End If
@@ -429,8 +429,8 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form7.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form7.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示补贴收入计算结果
         Dim gfbtsr As Double
         Dim nf As Integer
@@ -438,26 +438,26 @@
             If i - 2 <= jsnx Then
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(162, i).Value '年份序号
                 gfbtsr = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(165, i).Value) * 100, 2) '读取补贴收入负荷率
-                Com技术经济分析计算程序.Form7.RichTextBox1.Text = Com技术经济分析计算程序.Form7.RichTextBox1.Text & gfbtsr & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & gfbtsr & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Com技术经济分析计算程序.Form7.RichTextBox1.Text = "光伏补贴计算年份(显示100%的年份表示有光伏补贴，显示0%的表示没有光伏补贴)：" & Com技术经济分析计算程序.Form7.RichTextBox1.Text
+        Me.RichTextBox1.Text = "光伏补贴计算年份(显示100%的年份表示有光伏补贴，显示0%的表示没有光伏补贴)：" & Me.RichTextBox1.Text
     End Sub
 
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("确定要清空本窗体输入的的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form7.ksnf1.Clear()
-            Com技术经济分析计算程序.Form7.ksnf2.Clear()
-            Com技术经济分析计算程序.Form7.ksnf3.Clear()
-            Com技术经济分析计算程序.Form7.jsnf1.Clear()
-            Com技术经济分析计算程序.Form7.jsnf2.Clear()
-            Com技术经济分析计算程序.Form7.jsnf3.Clear()
-            Com技术经济分析计算程序.Form7.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form7.RichTextBox1.Clear()
-            Com技术经济分析计算程序.Form7.CheckBox1.Checked = False
-            Com技术经济分析计算程序.Form7.CheckBox2.Checked = False
-            Com技术经济分析计算程序.Form7.CheckBox3.Checked = False
+            Me.ksnf1.Clear()
+            Me.ksnf2.Clear()
+            Me.ksnf3.Clear()
+            Me.jsnf1.Clear()
+            Me.jsnf2.Clear()
+            Me.jsnf3.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
+            Me.CheckBox1.Checked = False
+            Me.CheckBox2.Checked = False
+            Me.CheckBox3.Checked = False
             MsgBox("清空窗体已完成！")
         End If
     End Sub
@@ -470,22 +470,22 @@
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '清空窗体
-        Com技术经济分析计算程序.Form7.ksnf1.Clear()
-        Com技术经济分析计算程序.Form7.ksnf2.Clear()
-        Com技术经济分析计算程序.Form7.ksnf3.Clear()
-        Com技术经济分析计算程序.Form7.jsnf1.Clear()
-        Com技术经济分析计算程序.Form7.jsnf2.Clear()
-        Com技术经济分析计算程序.Form7.jsnf3.Clear()
-        Com技术经济分析计算程序.Form7.补贴收入1.Text = Nothing
-        Com技术经济分析计算程序.Form7.补贴收入2.Text = Nothing
-        Com技术经济分析计算程序.Form7.CheckBox1.Checked = False
-        Com技术经济分析计算程序.Form7.CheckBox2.Checked = False
-        Com技术经济分析计算程序.Form7.CheckBox3.Checked = False
-        Com技术经济分析计算程序.Form7.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form7.RichTextBox1.Clear()
+        Me.ksnf1.Clear()
+        Me.ksnf2.Clear()
+        Me.ksnf3.Clear()
+        Me.jsnf1.Clear()
+        Me.jsnf2.Clear()
+        Me.jsnf3.Clear()
+        Me.补贴收入1.Text = Nothing
+        Me.补贴收入2.Text = Nothing
+        Me.CheckBox1.Checked = False
+        Me.CheckBox2.Checked = False
+        Me.CheckBox3.Checked = False
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '载入按钮文本
-        Com技术经济分析计算程序.Form7.补贴收入1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 2).Value, String)
-        Com技术经济分析计算程序.Form7.补贴收入2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 2).Value, String)
+        Me.补贴收入1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 2).Value, String)
+        Me.补贴收入2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 2).Value, String)
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
@@ -495,7 +495,7 @@
                 Exit For
             End If
         Next
-        Com技术经济分析计算程序.Form7.ksnf1.Text = CType(JSKSNF, String)
-        Com技术经济分析计算程序.Form7.jsnf1.Text = CType(jsnx, String)
+        Me.ksnf1.Text = CType(JSKSNF, String)
+        Me.jsnf1.Text = CType(jsnx, String)
     End Sub
 End Class

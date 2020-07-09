@@ -12,23 +12,23 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         If XZ = vbOK Then
             '读取输入的参数
             '出资比例
-            Dim czbl1 = CType(Com技术经济分析计算程序.Form14.czbl1.Text, Double)
-            Dim czbl2 = CType(Com技术经济分析计算程序.Form14.czbl2.Text, Double)
-            Dim czbl3 = CType(Com技术经济分析计算程序.Form14.czbl3.Text, Double)
-            Dim czbl4 = CType(Com技术经济分析计算程序.Form14.czbl4.Text, Double)
-            Dim czbl5 = CType(Com技术经济分析计算程序.Form14.czbl5.Text, Double)
+            Dim czbl1 = CType(Me.czbl1.Text, Double)
+            Dim czbl2 = CType(Me.czbl2.Text, Double)
+            Dim czbl3 = CType(Me.czbl3.Text, Double)
+            Dim czbl4 = CType(Me.czbl4.Text, Double)
+            Dim czbl5 = CType(Me.czbl5.Text, Double)
             '资产处置比例
-            Dim zcczbl1 = CType(Com技术经济分析计算程序.Form14.zcczbl1.Text, Double)
-            Dim zcczbl2 = CType(Com技术经济分析计算程序.Form14.zcczbl2.Text, Double)
-            Dim zcczbl3 = CType(Com技术经济分析计算程序.Form14.zcczbl3.Text, Double)
-            Dim zcczbl4 = CType(Com技术经济分析计算程序.Form14.zcczbl4.Text, Double)
-            Dim zcczbl5 = CType(Com技术经济分析计算程序.Form14.zcczbl5.Text, Double)
+            Dim zcczbl1 = CType(Me.zcczbl1.Text, Double)
+            Dim zcczbl2 = CType(Me.zcczbl2.Text, Double)
+            Dim zcczbl3 = CType(Me.zcczbl3.Text, Double)
+            Dim zcczbl4 = CType(Me.zcczbl4.Text, Double)
+            Dim zcczbl5 = CType(Me.zcczbl5.Text, Double)
             '利润分配比例
-            Dim lrfpbl1 = CType(Com技术经济分析计算程序.Form14.lrfpbl1.Text, Double)
-            Dim lrfpbl2 = CType(Com技术经济分析计算程序.Form14.lrfpbl2.Text, Double)
-            Dim lrfpbl3 = CType(Com技术经济分析计算程序.Form14.lrfpbl3.Text, Double)
-            Dim lrfpbl4 = CType(Com技术经济分析计算程序.Form14.lrfpbl4.Text, Double)
-            Dim lrfpbl5 = CType(Com技术经济分析计算程序.Form14.lrfpbl5.Text, Double)
+            Dim lrfpbl1 = CType(Me.lrfpbl1.Text, Double)
+            Dim lrfpbl2 = CType(Me.lrfpbl2.Text, Double)
+            Dim lrfpbl3 = CType(Me.lrfpbl3.Text, Double)
+            Dim lrfpbl4 = CType(Me.lrfpbl4.Text, Double)
+            Dim lrfpbl5 = CType(Me.lrfpbl5.Text, Double)
             '检查输入的各种参数是否正确
             '输入的参数之和必须等于100
             If czbl1 + czbl2 + czbl3 + czbl4 + czbl5 <> 100 Then
@@ -159,23 +159,23 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
             '清空已有的全部数据
             '清空已有的全部数据
             '出资比例
-            Com技术经济分析计算程序.Form14.czbl1.Clear()
-            Com技术经济分析计算程序.Form14.czbl2.Clear()
-            Com技术经济分析计算程序.Form14.czbl3.Clear()
-            Com技术经济分析计算程序.Form14.czbl4.Clear()
-            Com技术经济分析计算程序.Form14.czbl5.Clear()
+            Me.czbl1.Clear()
+            Me.czbl2.Clear()
+            Me.czbl3.Clear()
+            Me.czbl4.Clear()
+            Me.czbl5.Clear()
             '资产处置比例
-            Com技术经济分析计算程序.Form14.zcczbl1.Clear()
-            Com技术经济分析计算程序.Form14.zcczbl2.Clear()
-            Com技术经济分析计算程序.Form14.zcczbl3.Clear()
-            Com技术经济分析计算程序.Form14.zcczbl4.Clear()
-            Com技术经济分析计算程序.Form14.zcczbl5.Clear()
+            Me.zcczbl1.Clear()
+            Me.zcczbl2.Clear()
+            Me.zcczbl3.Clear()
+            Me.zcczbl4.Clear()
+            Me.zcczbl5.Clear()
             '利润分配比例
-            Com技术经济分析计算程序.Form14.lrfpbl1.Clear()
-            Com技术经济分析计算程序.Form14.lrfpbl2.Clear()
-            Com技术经济分析计算程序.Form14.lrfpbl3.Clear()
-            Com技术经济分析计算程序.Form14.lrfpbl4.Clear()
-            Com技术经济分析计算程序.Form14.lrfpbl5.Clear()
+            Me.lrfpbl1.Clear()
+            Me.lrfpbl2.Clear()
+            Me.lrfpbl3.Clear()
+            Me.lrfpbl4.Clear()
+            Me.lrfpbl5.Clear()
         End If
     End Sub
 
@@ -268,44 +268,44 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '清空已有的全部数据
         '出资比例
-        Com技术经济分析计算程序.Form14.czbl1.Clear()
-        Com技术经济分析计算程序.Form14.czbl2.Clear()
-        Com技术经济分析计算程序.Form14.czbl3.Clear()
-        Com技术经济分析计算程序.Form14.czbl4.Clear()
-        Com技术经济分析计算程序.Form14.czbl5.Clear()
+        Me.czbl1.Clear()
+        Me.czbl2.Clear()
+        Me.czbl3.Clear()
+        Me.czbl4.Clear()
+        Me.czbl5.Clear()
         '资产处置比例
-        Com技术经济分析计算程序.Form14.zcczbl1.Clear()
-        Com技术经济分析计算程序.Form14.zcczbl2.Clear()
-        Com技术经济分析计算程序.Form14.zcczbl3.Clear()
-        Com技术经济分析计算程序.Form14.zcczbl4.Clear()
-        Com技术经济分析计算程序.Form14.zcczbl5.Clear()
+        Me.zcczbl1.Clear()
+        Me.zcczbl2.Clear()
+        Me.zcczbl3.Clear()
+        Me.zcczbl4.Clear()
+        Me.zcczbl5.Clear()
         '利润分配比例
-        Com技术经济分析计算程序.Form14.lrfpbl1.Clear()
-        Com技术经济分析计算程序.Form14.lrfpbl2.Clear()
-        Com技术经济分析计算程序.Form14.lrfpbl3.Clear()
-        Com技术经济分析计算程序.Form14.lrfpbl4.Clear()
-        Com技术经济分析计算程序.Form14.lrfpbl5.Clear()
+        Me.lrfpbl1.Clear()
+        Me.lrfpbl2.Clear()
+        Me.lrfpbl3.Clear()
+        Me.lrfpbl4.Clear()
+        Me.lrfpbl5.Clear()
         '载入默认值
         '投资方1
-        Com技术经济分析计算程序.Form14.czbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
-        Com技术经济分析计算程序.Form14.zcczbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
-        Com技术经济分析计算程序.Form14.lrfpbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
+        Me.czbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
+        Me.zcczbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
+        Me.lrfpbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value, String)
         '投资方2
-        Com技术经济分析计算程序.Form14.czbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
-        Com技术经济分析计算程序.Form14.zcczbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
-        Com技术经济分析计算程序.Form14.lrfpbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
+        Me.czbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
+        Me.zcczbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
+        Me.lrfpbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value, String)
         '投资方3
-        Com技术经济分析计算程序.Form14.czbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
-        Com技术经济分析计算程序.Form14.zcczbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
-        Com技术经济分析计算程序.Form14.lrfpbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
+        Me.czbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
+        Me.zcczbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
+        Me.lrfpbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value, String)
         '投资方4
-        Com技术经济分析计算程序.Form14.czbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
-        Com技术经济分析计算程序.Form14.zcczbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
-        Com技术经济分析计算程序.Form14.lrfpbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
+        Me.czbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
+        Me.zcczbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
+        Me.lrfpbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value, String)
         '投资方5
-        Com技术经济分析计算程序.Form14.czbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
-        Com技术经济分析计算程序.Form14.zcczbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
-        Com技术经济分析计算程序.Form14.lrfpbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
+        Me.czbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
+        Me.zcczbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
+        Me.lrfpbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
 
     End Sub
 

@@ -2,27 +2,27 @@
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form4.ksnf1.Clear()
-            Com技术经济分析计算程序.Form4.ksnf2.Clear()
-            Com技术经济分析计算程序.Form4.ksnf3.Clear()
-            Com技术经济分析计算程序.Form4.ksnf4.Clear()
-            Com技术经济分析计算程序.Form4.ksnf5.Clear()
-            Com技术经济分析计算程序.Form4.jsnf1.Clear()
-            Com技术经济分析计算程序.Form4.jsnf2.Clear()
-            Com技术经济分析计算程序.Form4.jsnf3.Clear()
-            Com技术经济分析计算程序.Form4.jsnf4.Clear()
-            Com技术经济分析计算程序.Form4.jsnf5.Clear()
-            Com技术经济分析计算程序.Form4.ksfl1.Clear()
-            Com技术经济分析计算程序.Form4.ksfl2.Clear()
-            Com技术经济分析计算程序.Form4.ksfl3.Clear()
-            Com技术经济分析计算程序.Form4.ksfl4.Clear()
-            Com技术经济分析计算程序.Form4.ksfl5.Clear()
-            Com技术经济分析计算程序.Form4.jsfl1.Clear()
-            Com技术经济分析计算程序.Form4.jsfl2.Clear()
-            Com技术经济分析计算程序.Form4.jsfl3.Clear()
-            Com技术经济分析计算程序.Form4.jsfl4.Clear()
-            Com技术经济分析计算程序.Form4.jsfl5.Clear()
-            Com技术经济分析计算程序.Form4.RichTextBox1.Rtf = Nothing
+            Me.ksnf1.Clear()
+            Me.ksnf2.Clear()
+            Me.ksnf3.Clear()
+            Me.ksnf4.Clear()
+            Me.ksnf5.Clear()
+            Me.jsnf1.Clear()
+            Me.jsnf2.Clear()
+            Me.jsnf3.Clear()
+            Me.jsnf4.Clear()
+            Me.jsnf5.Clear()
+            Me.ksfl1.Clear()
+            Me.ksfl2.Clear()
+            Me.ksfl3.Clear()
+            Me.ksfl4.Clear()
+            Me.ksfl5.Clear()
+            Me.jsfl1.Clear()
+            Me.jsfl2.Clear()
+            Me.jsfl3.Clear()
+            Me.jsfl4.Clear()
+            Me.jsfl5.Clear()
+            Me.RichTextBox1.Rtf = Nothing
         End If
     End Sub
 
@@ -41,26 +41,26 @@
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
-        KSNF1 = CType(Com技术经济分析计算程序.Form4.ksnf1.Text, Integer)
-        KSNF2 = CType(Com技术经济分析计算程序.Form4.ksnf2.Text, Integer)
-        KSNF3 = CType(Com技术经济分析计算程序.Form4.ksnf3.Text, Integer)
-        KSNF4 = CType(Com技术经济分析计算程序.Form4.ksnf4.Text, Integer)
-        KSNF5 = CType(Com技术经济分析计算程序.Form4.ksnf5.Text, Integer)
-        JSNF1 = CType(Com技术经济分析计算程序.Form4.jsnf1.Text, Integer)
-        JSNF2 = CType(Com技术经济分析计算程序.Form4.jsnf2.Text, Integer)
-        JSNF3 = CType(Com技术经济分析计算程序.Form4.jsnf3.Text, Integer)
-        JSNF4 = CType(Com技术经济分析计算程序.Form4.jsnf4.Text, Integer)
-        JSNF5 = CType(Com技术经济分析计算程序.Form4.jsnf5.Text, Integer)
-        KSNFFL1 = CType(Com技术经济分析计算程序.Form4.ksfl1.Text, Double)
-        KSNFFL2 = CType(Com技术经济分析计算程序.Form4.ksfl2.Text, Double)
-        KSNFFL3 = CType(Com技术经济分析计算程序.Form4.ksfl3.Text, Double)
-        KSNFFL4 = CType(Com技术经济分析计算程序.Form4.ksfl4.Text, Double)
-        KSNFFL5 = CType(Com技术经济分析计算程序.Form4.ksfl5.Text, Double)
-        JSNFFL1 = CType(Com技术经济分析计算程序.Form4.jsfl1.Text, Double)
-        JSNFFL2 = CType(Com技术经济分析计算程序.Form4.jsfl2.Text, Double)
-        JSNFFL3 = CType(Com技术经济分析计算程序.Form4.jsfl3.Text, Double)
-        JSNFFL4 = CType(Com技术经济分析计算程序.Form4.jsfl4.Text, Double)
-        JSNFFL5 = CType(Com技术经济分析计算程序.Form4.jsfl5.Text, Double)
+        KSNF1 = CType(Me.ksnf1.Text, Integer)
+        KSNF2 = CType(Me.ksnf2.Text, Integer)
+        KSNF3 = CType(Me.ksnf3.Text, Integer)
+        KSNF4 = CType(Me.ksnf4.Text, Integer)
+        KSNF5 = CType(Me.ksnf5.Text, Integer)
+        JSNF1 = CType(Me.jsnf1.Text, Integer)
+        JSNF2 = CType(Me.jsnf2.Text, Integer)
+        JSNF3 = CType(Me.jsnf3.Text, Integer)
+        JSNF4 = CType(Me.jsnf4.Text, Integer)
+        JSNF5 = CType(Me.jsnf5.Text, Integer)
+        KSNFFL1 = CType(Me.ksfl1.Text, Double)
+        KSNFFL2 = CType(Me.ksfl2.Text, Double)
+        KSNFFL3 = CType(Me.ksfl3.Text, Double)
+        KSNFFL4 = CType(Me.ksfl4.Text, Double)
+        KSNFFL5 = CType(Me.ksfl5.Text, Double)
+        JSNFFL1 = CType(Me.jsfl1.Text, Double)
+        JSNFFL2 = CType(Me.jsfl2.Text, Double)
+        JSNFFL3 = CType(Me.jsfl3.Text, Double)
+        JSNFFL4 = CType(Me.jsfl4.Text, Double)
+        JSNFFL5 = CType(Me.jsfl5.Text, Double)
         '————————————————————————————————————————————————————————————————————————————————————————  
         Dim ZDJSNF1 As Integer = Math.Max(JSNF1, JSNF2)
         Dim ZDJSNF2 As Integer = Math.Max(JSNF3, JSNF4)
@@ -111,7 +111,7 @@
             '解锁表格
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
             '清空窗体
-            Com技术经济分析计算程序.Form4.RichTextBox1.Clear()
+            Me.RichTextBox1.Clear()
             For i = 3 To 33 '清空已有的修理费率，防止出错
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
             Next
@@ -196,9 +196,9 @@
             For i = 3 To 33  '根据数组中的元素数量循环
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value '年份序号
                 SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value) * 100, 2)
-                Com技术经济分析计算程序.Form4.RichTextBox1.Text = Com技术经济分析计算程序.Form4.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
             Next
-            Com技术经济分析计算程序.Form4.RichTextBox1.Text = "逐年设备修理费率：" & Com技术经济分析计算程序.Form4.RichTextBox1.Text
+            Me.RichTextBox1.Text = "逐年设备修理费率：" & Me.RichTextBox1.Text
             MsgBox("修理费系数设置完成！")
         End If
     End Sub
@@ -211,27 +211,27 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空表格
-        Com技术经济分析计算程序.Form4.ksnf1.Clear()
-        Com技术经济分析计算程序.Form4.ksnf2.Clear()
-        Com技术经济分析计算程序.Form4.ksnf3.Clear()
-        Com技术经济分析计算程序.Form4.ksnf4.Clear()
-        Com技术经济分析计算程序.Form4.ksnf5.Clear()
-        Com技术经济分析计算程序.Form4.jsnf1.Clear()
-        Com技术经济分析计算程序.Form4.jsnf2.Clear()
-        Com技术经济分析计算程序.Form4.jsnf3.Clear()
-        Com技术经济分析计算程序.Form4.jsnf4.Clear()
-        Com技术经济分析计算程序.Form4.jsnf5.Clear()
-        Com技术经济分析计算程序.Form4.ksfl1.Clear()
-        Com技术经济分析计算程序.Form4.ksfl2.Clear()
-        Com技术经济分析计算程序.Form4.ksfl3.Clear()
-        Com技术经济分析计算程序.Form4.ksfl4.Clear()
-        Com技术经济分析计算程序.Form4.ksfl5.Clear()
-        Com技术经济分析计算程序.Form4.jsfl1.Clear()
-        Com技术经济分析计算程序.Form4.jsfl2.Clear()
-        Com技术经济分析计算程序.Form4.jsfl3.Clear()
-        Com技术经济分析计算程序.Form4.jsfl4.Clear()
-        Com技术经济分析计算程序.Form4.jsfl5.Clear()
-        Com技术经济分析计算程序.Form4.RichTextBox1.Rtf = Nothing
+        Me.ksnf1.Clear()
+        Me.ksnf2.Clear()
+        Me.ksnf3.Clear()
+        Me.ksnf4.Clear()
+        Me.ksnf5.Clear()
+        Me.jsnf1.Clear()
+        Me.jsnf2.Clear()
+        Me.jsnf3.Clear()
+        Me.jsnf4.Clear()
+        Me.jsnf5.Clear()
+        Me.ksfl1.Clear()
+        Me.ksfl2.Clear()
+        Me.ksfl3.Clear()
+        Me.ksfl4.Clear()
+        Me.ksfl5.Clear()
+        Me.jsfl1.Clear()
+        Me.jsfl2.Clear()
+        Me.jsfl3.Clear()
+        Me.jsfl4.Clear()
+        Me.jsfl5.Clear()
+        Me.RichTextBox1.Rtf = Nothing
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
@@ -241,11 +241,11 @@
                 Exit For
             End If
         Next
-        Com技术经济分析计算程序.Form4.ksnf1.Text = JSKSNF
+        Me.ksnf1.Text = JSKSNF
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        Com技术经济分析计算程序.Form4.jsnf1.Text = jsnx
-        Com技术经济分析计算程序.Form4.ksfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 7).Value * 100
-        Com技术经济分析计算程序.Form4.jsfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 7).Value * 100
+        Me.jsnf1.Text = jsnx
+        Me.ksfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 7).Value * 100
+        Me.jsfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 7).Value * 100
 
     End Sub
 End Class

@@ -7,16 +7,16 @@
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '清空窗体
-        Com技术经济分析计算程序.Form12.ksnf1.Clear()
-        Com技术经济分析计算程序.Form12.ksnf2.Clear()
-        Com技术经济分析计算程序.Form12.ksnf3.Clear()
-        Com技术经济分析计算程序.Form12.jsnf1.Clear()
-        Com技术经济分析计算程序.Form12.jsnf2.Clear()
-        Com技术经济分析计算程序.Form12.jsnf3.Clear()
-        Com技术经济分析计算程序.Form12.CheckBox1.Checked = False
-        Com技术经济分析计算程序.Form12.CheckBox2.Checked = False
-        Com技术经济分析计算程序.Form12.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form12.RichTextBox1.Clear()
+        Me.ksnf1.Clear()
+        Me.ksnf2.Clear()
+        Me.ksnf3.Clear()
+        Me.jsnf1.Clear()
+        Me.jsnf2.Clear()
+        Me.jsnf3.Clear()
+        Me.CheckBox1.Checked = False
+        Me.CheckBox2.Checked = False
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
@@ -26,23 +26,23 @@
                 Exit For
             End If
         Next
-        Com技术经济分析计算程序.Form12.ksnf1.Text = CType(JSKSNF, String)
-        Com技术经济分析计算程序.Form12.jsnf1.Text = CType(jsnx, String)
+        Me.ksnf1.Text = CType(JSKSNF, String)
+        Me.jsnf1.Text = CType(jsnx, String)
     End Sub
 
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("确定要清空本窗体输入的的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form12.ksnf1.Clear()
-            Com技术经济分析计算程序.Form12.ksnf2.Clear()
-            Com技术经济分析计算程序.Form12.ksnf3.Clear()
-            Com技术经济分析计算程序.Form12.jsnf1.Clear()
-            Com技术经济分析计算程序.Form12.jsnf2.Clear()
-            Com技术经济分析计算程序.Form12.jsnf3.Clear()
-            Com技术经济分析计算程序.Form12.CheckBox1.Checked = False
-            Com技术经济分析计算程序.Form12.CheckBox2.Checked = False
-            Com技术经济分析计算程序.Form12.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form12.RichTextBox1.Clear()
+            Me.ksnf1.Clear()
+            Me.ksnf2.Clear()
+            Me.ksnf3.Clear()
+            Me.jsnf1.Clear()
+            Me.jsnf2.Clear()
+            Me.jsnf3.Clear()
+            Me.CheckBox1.Checked = False
+            Me.CheckBox2.Checked = False
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
             MsgBox("清空窗体已完成！")
         End If
     End Sub
@@ -58,12 +58,12 @@
         Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
         Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
         '读取数据
-        ksnf1 = CType(Com技术经济分析计算程序.Form12.ksnf1.Text, Integer)
-        ksnf2 = CType(Com技术经济分析计算程序.Form12.ksnf2.Text, Integer)
-        ksnf3 = CType(Com技术经济分析计算程序.Form12.ksnf3.Text, Integer)
-        jsnf1 = CType(Com技术经济分析计算程序.Form12.jsnf1.Text, Integer)
-        jsnf2 = CType(Com技术经济分析计算程序.Form12.jsnf2.Text, Integer)
-        jsnf3 = CType(Com技术经济分析计算程序.Form12.jsnf3.Text, Integer)
+        ksnf1 = CType(Me.ksnf1.Text, Integer)
+        ksnf2 = CType(Me.ksnf2.Text, Integer)
+        ksnf3 = CType(Me.ksnf3.Text, Integer)
+        jsnf1 = CType(Me.jsnf1.Text, Integer)
+        jsnf2 = CType(Me.jsnf2.Text, Integer)
+        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '添加报错功能
@@ -93,7 +93,7 @@
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
         '不可以两个都勾选
-        If Com技术经济分析计算程序.Form12.CheckBox1.Checked = True And Com技术经济分析计算程序.Form12.CheckBox2.Checked = True Then
+        If Me.CheckBox1.Checked = True And Me.CheckBox2.Checked = True Then
             MsgBox("接入费逐年计算比例仅可以勾选一种计算模式，请重新选择！")
             Exit Sub
         End If
@@ -104,7 +104,7 @@
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
         '按照逐年达产率进行计算
-        If Com技术经济分析计算程序.Form12.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = True Then
             '前15年
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
@@ -132,7 +132,7 @@
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率"
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        ElseIf Com技术经济分析计算程序.Form12.CheckBox2.Checked = True Then
+        ElseIf Me.CheckBox2.Checked = True Then
             '逐年投产月份比例
             For i = 3 To 33
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
@@ -164,8 +164,8 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form12.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form12.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示补贴收入计算结果
         Dim jrfbl As Double
         Dim nf As Integer
@@ -173,10 +173,10 @@
             If i - 2 <= jsnx Then
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value '年份序号
                 jrfbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value) * 100, 2) '读取接入费收入负荷率
-                Com技术经济分析计算程序.Form12.RichTextBox1.Text = Com技术经济分析计算程序.Form12.RichTextBox1.Text & jrfbl & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & jrfbl & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Com技术经济分析计算程序.Form12.RichTextBox1.Text = "接入费收入逐年负荷率：" & Com技术经济分析计算程序.Form12.RichTextBox1.Text
+        Me.RichTextBox1.Text = "接入费收入逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
 
     Private Sub 默认方式_Click(sender As Object, e As EventArgs) Handles 默认方式.Click
@@ -190,12 +190,12 @@
         Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
         Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
         '读取数据
-        ksnf1 = CType(Com技术经济分析计算程序.Form12.ksnf1.Text, Integer)
-        ksnf2 = CType(Com技术经济分析计算程序.Form12.ksnf2.Text, Integer)
-        ksnf3 = CType(Com技术经济分析计算程序.Form12.ksnf3.Text, Integer)
-        jsnf1 = CType(Com技术经济分析计算程序.Form12.jsnf1.Text, Integer)
-        jsnf2 = CType(Com技术经济分析计算程序.Form12.jsnf2.Text, Integer)
-        jsnf3 = CType(Com技术经济分析计算程序.Form12.jsnf3.Text, Integer)
+        ksnf1 = CType(Me.ksnf1.Text, Integer)
+        ksnf2 = CType(Me.ksnf2.Text, Integer)
+        ksnf3 = CType(Me.ksnf3.Text, Integer)
+        jsnf1 = CType(Me.jsnf1.Text, Integer)
+        jsnf2 = CType(Me.jsnf2.Text, Integer)
+        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '添加报错功能
@@ -267,8 +267,8 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form12.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form12.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示补贴收入计算结果
         Dim jrfbl As Double
         Dim nf As Integer
@@ -276,9 +276,9 @@
             If i - 2 <= jsnx Then
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value '年份序号
                 jrfbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value) * 100, 2) '读取接入费收入负荷率
-                Com技术经济分析计算程序.Form12.RichTextBox1.Text = Com技术经济分析计算程序.Form12.RichTextBox1.Text & jrfbl & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & jrfbl & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Com技术经济分析计算程序.Form12.RichTextBox1.Text = "接入费收入逐年负荷率：" & Com技术经济分析计算程序.Form12.RichTextBox1.Text
+        Me.RichTextBox1.Text = "接入费收入逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
 End Class

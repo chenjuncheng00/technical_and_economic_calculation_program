@@ -13,14 +13,14 @@ Public Class Com技术经济分析计算程序
     Public Const InterfaceId As String = "f9f114d5-c79c-462b-a470-00ede680b72f"
     Public Const EventsId As String = "a84fa039-2e81-4ccd-a62a-cc28e28fc11a"
 #End Region
-    ' 可创建的 COM 类必须具有一个不带参数的 Public Sub New() 
+    ' 可创建的 COM 类必须具有一个不带参数的 Sub New() 
     ' 否则， 将不会在 
     ' COM 注册表中注册此类，且无法通过
     ' CreateObject 创建此类。
-    Public Sub New()
+    Sub New()
         MyBase.New()
     End Sub
-    Public Sub 一键出表()
+    Sub 一键出表()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -35,6 +35,7 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
+        Dim Form11 As New 经济评价表格导出
         Form11.ShowDialog() '窗口显示
         Form11.TopMost = True
         System.Windows.Forms.Application.DoEvents()
@@ -42,7 +43,7 @@ Public Class Com技术经济分析计算程序
         '———————————————————————————————————————————————————————————————————————————————————————— 
         Call 锁定表格()
     End Sub
-    Public Sub 估算表年限修改后系数计算()
+    Sub 估算表年限修改后系数计算()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -97,7 +98,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 直接输入综合负荷率()
+    Sub 直接输入综合负荷率()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -196,7 +197,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 分投资逐次输入负荷率()
+    Sub 分投资逐次输入负荷率()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -429,7 +430,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 清空输入的收入和成本数据()
+    Sub 清空输入的收入和成本数据()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -519,7 +520,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 反算临界点()
+    Sub 反算临界点()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -538,7 +539,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.EnableEvents = False
         '屏蔽屏幕更新
         ExcelApp.Application.ScreenUpdating = False
-        FSLJDJSCSMax = InputBox("请输入反算临界点功能的最大计算次数，输入的数字越大，计算次数越多，计算速度越慢，计算精度越高。", "输入反算临界点最大计算次数", 200)
+        Dim FSLJDJSCSMax As Integer = InputBox("请输入反算临界点功能的最大计算次数，输入的数字越大，计算次数越多，计算速度越慢，计算精度越高。", "输入反算临界点最大计算次数", 200)
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
@@ -547,15 +548,15 @@ Public Class Com技术经济分析计算程序
         '确定选择的需要反算的内部收益率类型
         '如果是资本金所得税后内部收益率，进行下列计算
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 5).Value = "资本金所得税后内部收益率" Then
-            Call 资本金税后收益率反算静态投资()
-            Call 资本金税后收益率反算收入单价()
-            Call 资本金税后收益率反算成本单价()
+            Call 资本金税后收益率反算静态投资(FSLJDJSCSMax)
+            Call 资本金税后收益率反算收入单价(FSLJDJSCSMax)
+            Call 资本金税后收益率反算成本单价(FSLJDJSCSMax)
         End If
         '如果是全投资所得税后内部收益率，进行下列计算
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 5).Value = "全投资所得税后内部收益率" Then
-            Call 全投资税后收益率反算静态投资()
-            Call 全投资税后收益率反算收入单价()
-            Call 全投资税后收益率反算成本单价()
+            Call 全投资税后收益率反算静态投资(FSLJDJSCSMax)
+            Call 全投资税后收益率反算收入单价(FSLJDJSCSMax)
+            Call 全投资税后收益率反算成本单价(FSLJDJSCSMax)
         End If
         '锁定表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
@@ -574,7 +575,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 清空反算临界点数据()
+    Sub 清空反算临界点数据()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -592,7 +593,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
         MsgBox("反算临界点数据已清空！")
     End Sub
-    Public Sub 敏感性分析计算()
+    Sub 敏感性分析计算()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -607,12 +608,13 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————       
+        Dim Form10 As New 选择单因素敏感性分析内容
         '显示敏感性分析选择窗口
         Form10.ShowDialog() '窗口显示
         Form10.TopMost = True
         System.Windows.Forms.Application.DoEvents()
     End Sub
-    Public Sub 盈亏平衡点计算()
+    Sub 盈亏平衡点计算()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -679,7 +681,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
         MsgBox("盈亏平衡点（BEP）已计算完成！")
     End Sub
-    Public Sub 复制敏感性分析图()
+    Sub 复制敏感性分析图()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -699,7 +701,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ActiveChart.ChartArea.Copy()
         MsgBox("复制完成！")
     End Sub
-    Public Sub 复制盈亏平衡分析图()
+    Sub 复制盈亏平衡分析图()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -719,7 +721,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ActiveChart.ChartArea.Copy()
         MsgBox("复制完成！")
     End Sub
-    Public Sub 清空敏感性分析和盈亏平衡分析计算数据()
+    Sub 清空敏感性分析和盈亏平衡分析计算数据()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -755,7 +757,7 @@ Public Class Com技术经济分析计算程序
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
     End Sub
-    Public Sub 清空时间计划表数据()
+    Sub 清空时间计划表数据()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -941,7 +943,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
         MsgBox("清空建设期时间计划完成！")
     End Sub
-    Public Sub 确定建设期时间计划()
+    Sub 确定建设期时间计划()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1532,7 +1534,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
         MsgBox("确定建设期时间计划完成！")
     End Sub
-    Public Sub 将部分设置重置回默认状态()
+    Sub 将部分设置重置回默认状态()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1807,7 +1809,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
-    Public Sub 打开表格自动运行()
+    Sub 打开表格自动运行()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1830,7 +1832,7 @@ Public Class Com技术经济分析计算程序
         Call 投资各方收益率表格操作()
         Call 自保护程序()
     End Sub
-    Public Sub Excel版本号验证()
+    Sub Excel版本号验证()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1844,7 +1846,7 @@ Public Class Com技术经济分析计算程序
         End If
         Call 自保护程序()
     End Sub
-    Public Sub 资本金税后收益率反算收入单价()
+    Sub 资本金税后收益率反算收入单价(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1991,7 +1993,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 资本金税后收益率反算成本单价()
+    Sub 资本金税后收益率反算成本单价(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2138,7 +2140,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 资本金税后收益率反算静态投资()
+    Sub 资本金税后收益率反算静态投资(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2347,7 +2349,7 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Public Sub 全投资税后收益率反算收入单价()
+    Sub 全投资税后收益率反算收入单价(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2494,7 +2496,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 全投资税后收益率反算成本单价()
+    Sub 全投资税后收益率反算成本单价(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2641,7 +2643,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 全投资税后收益率反算静态投资()
+    Sub 全投资税后收益率反算静态投资(FSLJDJSCSMax As Integer)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2850,7 +2852,7 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Public Sub 静态投资敏感性分析计算()
+    Sub 静态投资敏感性分析计算(MGXFXBHL As Double)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2931,7 +2933,7 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Public Sub 收入敏感性分析计算()
+    Sub 收入敏感性分析计算(MGXFXBHL As Double)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -2980,7 +2982,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 成本敏感性分析计算()
+    Sub 成本敏感性分析计算(MGXFXBHL As Double)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3029,7 +3031,7 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Public Sub 年运行小时数敏感性分析()
+    Sub 年运行小时数敏感性分析(MGXFXBHL As Double)
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3142,13 +3144,14 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Public Sub 绘制单因素敏感性分析图()
+    Sub 绘制单因素敏感性分析图()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
+        Dim Form10 As New 选择单因素敏感性分析内容
         If Form10.hzzxt.Checked = True Then
             '绘制单因素敏感性分析图
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes.AddChart.Name = "单因素敏感性分析图" '创建图表并重命名
@@ -3515,7 +3518,7 @@ Public Class Com技术经济分析计算程序
             Next
         Next
     End Sub
-    Public Sub 投资回收期计算()
+    Sub 投资回收期计算()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3650,7 +3653,7 @@ Public Class Com技术经济分析计算程序
         Next
     End Sub
 
-    Public Sub 设置所得税减免和增值税退税包含内容()
+    Sub 设置所得税减免和增值税退税包含内容()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3670,6 +3673,7 @@ Public Class Com技术经济分析计算程序
         '屏蔽事件
         ExcelApp.Application.EnableEvents = False
         Dim XZ = MsgBox("是否需要设置所得税减免和增值税退税包含内容?", vbOKCancel)
+        Dim Form6 As New 设置所得税减免和增值税退税包含内容
         If XZ = vbOK Then
             Form6.ShowDialog() '窗口显示
             Form6.TopMost = True
@@ -3690,7 +3694,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
-    Public Sub 设置部分销售收入和经营成本计算年限()
+    Sub 设置部分销售收入和经营成本计算年限()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3712,6 +3716,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要设置部分销售收入和经营成本计算年限?", vbOKCancel)
+        Dim Form13 As New 设置部分销售收入和经营成本计算年限
         If XZ = vbOK Then
             Form13.ShowDialog() '窗口显示
             Form13.TopMost = True
@@ -3739,7 +3744,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
-    Public Sub 设置接入费收入计算方式()
+    Sub 设置接入费收入计算方式()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3761,6 +3766,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要设置接入费收入计算方式?", vbOKCancel)
+        Dim Form12 As New 设置接入费计算方式
         If XZ = vbOK Then
             Form12.ShowDialog() '窗口显示
             Form12.TopMost = True
@@ -3790,7 +3796,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
-    Public Sub 设置补贴收入计算年限()
+    Sub 设置补贴收入计算年限()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3812,6 +3818,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要设置补贴收入的计算年限?", vbOKCancel)
+        Dim Form7 As New 设置补贴收入计算年限
         If XZ = vbOK Then
             Form7.ShowDialog() '窗口显示
             Form7.TopMost = True
@@ -3842,7 +3849,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
-    Public Sub 逐年衰减系数输入()
+    Sub 逐年衰减系数输入()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3864,6 +3871,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要修改程序内置的默认光伏发电逐年衰减效率或者蓄电池逐年衰减效率?", vbOKCancel)
+        Dim Form2 As New 逐年衰减系数设置
         If XZ = vbOK Then
             '读取输入的衰减开始年份和衰减率（%）
             Form2.ShowDialog() '窗口显示
@@ -3900,7 +3908,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
-    Public Sub 修理费率逐年变化设置()
+    Sub 修理费率逐年变化设置()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3922,6 +3930,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要设置逐年动态变化的修理费率?", vbOKCancel)
+        Dim Form4 As New 修理费率逐年变化设置
         If XZ = vbOK Then
             '读取输入的修理费率变化率（%）
             Form4.ShowDialog() '窗口显示
@@ -3965,7 +3974,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
-    Public Sub 建设期资金运用方式设置()
+    Sub 建设期资金运用方式设置()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -3987,6 +3996,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要设置建设期资金运用方式?包括每次投资的资本金比例系数取值方式和建设期贷款利率。", vbOKCancel)
+        Dim Form5 As New 建设期资金运用方式设置
         If XZ = vbOK Then
             Form5.ShowDialog() '窗口显示
             Form5.TopMost = True
@@ -4029,7 +4039,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 建设期逐次设置折旧摊销计算方式()
+    Sub 建设期逐次设置折旧摊销计算方式()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4051,6 +4061,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要每次投资设置不同的固定资产折旧和无形资产摊销计算方式？", vbOKCancel)
+        Dim Form8 As New 每次投资设置不同的折旧摊销计算方式
         If XZ = vbOK Then
             Form8.ShowDialog() '窗口显示
             Form8.TopMost = True
@@ -4107,7 +4118,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 逐次设置长期贷款还款和宽限年限()
+    Sub 逐次设置长期贷款还款和宽限年限()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4129,6 +4140,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要每次投资设置不同的长期贷款还款年限和宽限年限？", vbOKCancel)
+        Dim Form9 As New 每次投资设置不同的长期贷款还款和宽限年限
         If XZ = vbOK Then
             Form9.ShowDialog() '窗口显示
             Form9.TopMost = True
@@ -4172,7 +4184,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 分别设置投资各方收益计算参数()
+    Sub 分别设置投资各方收益计算参数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4194,6 +4206,7 @@ Public Class Com技术经济分析计算程序
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         Dim XZ = MsgBox("是否需要分别设置投资各方收益计算参数？", vbOKCancel)
+        Dim Form14 As New 投资各方设置不同的出资比例资产处置比例和利润分配比例
         If XZ = vbOK Then
             Form14.ShowDialog() '窗口显示
             Form14.TopMost = True
@@ -4234,7 +4247,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 项目计算年限变化后改变相关系数()
+    Sub 项目计算年限变化后改变相关系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4361,7 +4374,7 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Public Sub 折旧计算年限变化后改变相关系数()
+    Sub 折旧计算年限变化后改变相关系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4581,7 +4594,7 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Public Sub 长期贷款计算年限变化后改变相关系数()
+    Sub 长期贷款计算年限变化后改变相关系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -4831,7 +4844,7 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Public Sub 无形资产摊销年限变化后改变相关系数()
+    Sub 无形资产摊销年限变化后改变相关系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5031,7 +5044,7 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Public Sub 第二至第五次投资年份改变后修改相关计算系数()
+    Sub 第二至第五次投资年份改变后修改相关计算系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5206,7 +5219,7 @@ Public Class Com技术经济分析计算程序
             'End If
         End If
     End Sub
-    Public Sub 第六至第十次投资年份改变后修改相关计算系数()
+    Sub 第六至第十次投资年份改变后修改相关计算系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5428,7 +5441,7 @@ Public Class Com技术经济分析计算程序
             'End If
         End If
     End Sub
-    Public Sub 年数总和法逐年折旧摊销系数()
+    Sub 年数总和法逐年折旧摊销系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5526,7 +5539,7 @@ Public Class Com技术经济分析计算程序
             End If
         Next
     End Sub
-    Public Sub 建设期增值税抵扣系数()
+    Sub 建设期增值税抵扣系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5572,7 +5585,7 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 7).Value = 2
         End If
     End Sub
-    Public Sub 是否处于长期贷款宽限期()
+    Sub 是否处于长期贷款宽限期()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5622,7 +5635,7 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = 1
         End If
     End Sub
-    Public Sub 隐藏收入税收表中收入为0的行()
+    Sub 隐藏收入税收表中收入为0的行()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5780,7 +5793,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 隐藏总成本表中成本为0的行()
+    Sub 隐藏总成本表中成本为0的行()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5844,7 +5857,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 逐年判断是否有收入以及所得税减免计算系数()
+    Sub 逐年判断是否有收入以及所得税减免计算系数()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -5938,7 +5951,7 @@ Public Class Com技术经济分析计算程序
             ExcelApp.Application.ScreenUpdating = True
         End If
     End Sub
-    Public Sub 流动资金相关计算()
+    Sub 流动资金相关计算()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6196,7 +6209,7 @@ Public Class Com技术经济分析计算程序
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
     End Sub
-    Public Sub 进入维护模式()
+    Sub 进入维护模式()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6215,6 +6228,7 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取计数
+        Dim Form3 As New 进入维护模式
         If (ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value < 3 And ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value >= 0) Then '最多只可以连续错3次。单元格Z2
             Form3.ShowDialog() '窗口显示
             Form3.TopMost = True
@@ -6228,7 +6242,7 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Public Sub 计算前基本处理()
+    Sub 计算前基本处理()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6245,7 +6259,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Unprotect(Password:="wscjc")
     End Sub
-    Public Sub 投资各方收益率表格操作()
+    Sub 投资各方收益率表格操作()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6473,7 +6487,7 @@ aaaaa：
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Public Sub 解锁表格()
+    Sub 解锁表格()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6512,7 +6526,7 @@ aaaaa：
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
     End Sub
-    Public Sub 锁定表格()
+    Sub 锁定表格()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6544,7 +6558,7 @@ aaaaa：
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
-    Public Sub 自保护程序()
+    Sub 自保护程序()
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -6575,7 +6589,7 @@ aaaaa：
             Exit Sub
         End Try
     End Sub
-    Public Sub 获取本地服务器版本信息并验证()
+    Sub 获取本地服务器版本信息并验证()
         'On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6623,7 +6637,7 @@ aaaaa：
             Exit Sub
         End Try
     End Sub
-    Public Sub 获取本机MAC地址并验证()
+    Sub 获取本机MAC地址并验证()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6664,7 +6678,7 @@ aaaaa：
             ExcelApp.Application.DisplayAlerts = True
         End If
     End Sub
-    Public Sub 网络时间和本地时间交替验证()
+    Sub 网络时间和本地时间交替验证()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6731,7 +6745,7 @@ aaaaa：
             End If
         End If
     End Sub
-    Public Sub 获取系统时间并验证()
+    Sub 获取系统时间并验证()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6756,7 +6770,7 @@ aaaaa：
             ExcelApp.Application.DisplayAlerts = True
         End If
     End Sub
-    Public Sub 程序联网验证()
+    Sub 程序联网验证()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -6813,21 +6827,19 @@ aaaaa：
     '————————————————————————————————————————————————————————————————————————————————————————
     '————————————————————————————————————————————————————————————————————————————————————————        
     Public ZTJC '状态监测
-    Public Shared MGXFXBHL '敏感性分析计算变化率
-    Public FSLJDJSCSMax '反算临界点最大计算次数
     'Form1是计算进度显示，在每个有需要的Sub内单独实例化
-    Public Shared Form2 As New 逐年衰减系数设置
-    Public Shared Form3 As New 进入维护模式
-    Public Shared Form4 As New 修理费率逐年变化设置
-    Public Shared Form5 As New 建设期资金运用方式设置
-    Public Shared Form6 As New 设置所得税减免和增值税退税包含内容
-    Public Shared Form7 As New 设置补贴收入计算年限
-    Public Shared Form8 As New 每次投资设置不同的折旧摊销计算方式
-    Public Shared Form9 As New 每次投资设置不同的长期贷款还款和宽限年限
-    Public Shared Form10 As New 选择单因素敏感性分析内容
-    Public Shared Form11 As New 经济评价表格导出
-    Public Shared Form12 As New 设置接入费计算方式
-    Public Shared Form13 As New 设置部分销售收入和经营成本计算年限
-    Public Shared Form14 As New 投资各方设置不同的出资比例资产处置比例和利润分配比例
+    'Public Shared Form2 As New 逐年衰减系数设置
+    'Public Shared Form3 As New 进入维护模式
+    'Public Shared Form4 As New 修理费率逐年变化设置
+    'Public Shared Form5 As New 建设期资金运用方式设置
+    'Public Shared Form6 As New 设置所得税减免和增值税退税包含内容
+    'Public Shared Form7 As New 设置补贴收入计算年限
+    'Public Shared Form8 As New 每次投资设置不同的折旧摊销计算方式
+    'Public Shared Form9 As New 每次投资设置不同的长期贷款还款和宽限年限
+    'Public Shared Form10 As New 选择单因素敏感性分析内容
+    'Public Shared Form11 As New 经济评价表格导出
+    'Public Shared Form12 As New 设置接入费计算方式
+    'Public Shared Form13 As New 设置部分销售收入和经营成本计算年限
+    'Public Shared Form14 As New 投资各方设置不同的出资比例资产处置比例和利润分配比例
 
 End Class

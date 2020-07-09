@@ -10,420 +10,420 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '清空全部已选
         '收入
-        Com技术经济分析计算程序.Form6.收入1.Checked = False
-        Com技术经济分析计算程序.Form6.收入2.Checked = False
-        Com技术经济分析计算程序.Form6.收入3.Checked = False
-        Com技术经济分析计算程序.Form6.收入4.Checked = False
-        Com技术经济分析计算程序.Form6.收入5.Checked = False
-        Com技术经济分析计算程序.Form6.收入6.Checked = False
-        Com技术经济分析计算程序.Form6.收入7.Checked = False
-        Com技术经济分析计算程序.Form6.收入8.Checked = False
-        Com技术经济分析计算程序.Form6.收入9.Checked = False
+        Me.收入1.Checked = False
+        Me.收入2.Checked = False
+        Me.收入3.Checked = False
+        Me.收入4.Checked = False
+        Me.收入5.Checked = False
+        Me.收入6.Checked = False
+        Me.收入7.Checked = False
+        Me.收入8.Checked = False
+        Me.收入9.Checked = False
         '清空已有投资
-        Com技术经济分析计算程序.Form6.投资1.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资2.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资3.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资4.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资5.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资6.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资7.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资8.Text = Nothing
-        Com技术经济分析计算程序.Form6.投资9.Text = Nothing
+        Me.投资1.Text = Nothing
+        Me.投资2.Text = Nothing
+        Me.投资3.Text = Nothing
+        Me.投资4.Text = Nothing
+        Me.投资5.Text = Nothing
+        Me.投资6.Text = Nothing
+        Me.投资7.Text = Nothing
+        Me.投资8.Text = Nothing
+        Me.投资9.Text = Nothing
         '成本
-        Com技术经济分析计算程序.Form6.成本1.Checked = False
-        Com技术经济分析计算程序.Form6.成本2.Checked = False
-        Com技术经济分析计算程序.Form6.成本3.Checked = False
-        Com技术经济分析计算程序.Form6.成本4.Checked = False
-        Com技术经济分析计算程序.Form6.成本5.Checked = False
-        Com技术经济分析计算程序.Form6.成本6.Checked = False
-        Com技术经济分析计算程序.Form6.成本7.Checked = False
-        Com技术经济分析计算程序.Form6.成本8.Checked = False
-        Com技术经济分析计算程序.Form6.成本9.Checked = False
-        Com技术经济分析计算程序.Form6.成本10.Checked = False
-        Com技术经济分析计算程序.Form6.成本11.Checked = False
+        Me.成本1.Checked = False
+        Me.成本2.Checked = False
+        Me.成本3.Checked = False
+        Me.成本4.Checked = False
+        Me.成本5.Checked = False
+        Me.成本6.Checked = False
+        Me.成本7.Checked = False
+        Me.成本8.Checked = False
+        Me.成本9.Checked = False
+        Me.成本10.Checked = False
+        Me.成本11.Checked = False
         '清空已有收入比例
-        Com技术经济分析计算程序.Form6.收入比例1.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例2.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例3.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例4.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例5.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例6.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例7.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例8.Text = Nothing
-        Com技术经济分析计算程序.Form6.收入比例9.Text = Nothing
+        Me.收入比例1.Text = Nothing
+        Me.收入比例2.Text = Nothing
+        Me.收入比例3.Text = Nothing
+        Me.收入比例4.Text = Nothing
+        Me.收入比例5.Text = Nothing
+        Me.收入比例6.Text = Nothing
+        Me.收入比例7.Text = Nothing
+        Me.收入比例8.Text = Nothing
+        Me.收入比例9.Text = Nothing
         '清空已有成本比例
-        Com技术经济分析计算程序.Form6.成本比例1.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例2.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例3.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例4.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例5.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例6.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例7.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例8.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例9.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例10.Text = Nothing
-        Com技术经济分析计算程序.Form6.成本比例11.Text = Nothing
+        Me.成本比例1.Text = Nothing
+        Me.成本比例2.Text = Nothing
+        Me.成本比例3.Text = Nothing
+        Me.成本比例4.Text = Nothing
+        Me.成本比例5.Text = Nothing
+        Me.成本比例6.Text = Nothing
+        Me.成本比例7.Text = Nothing
+        Me.成本比例8.Text = Nothing
+        Me.成本比例9.Text = Nothing
+        Me.成本比例10.Text = Nothing
+        Me.成本比例11.Text = Nothing
         '专项投资和年量
-        Com技术经济分析计算程序.Form6.专项投资1.Checked = False
-        Com技术经济分析计算程序.Form6.专项投资2.Checked = False
-        Com技术经济分析计算程序.Form6.专项投资3.Checked = False
-        Com技术经济分析计算程序.Form6.专项年量1.Checked = False
-        Com技术经济分析计算程序.Form6.专项年量2.Checked = False
-        Com技术经济分析计算程序.Form6.专项年量3.Checked = False
-        Com技术经济分析计算程序.Form6.专项年量4.Checked = False
-        Com技术经济分析计算程序.Form6.专项年量5.Checked = False
+        Me.专项投资1.Checked = False
+        Me.专项投资2.Checked = False
+        Me.专项投资3.Checked = False
+        Me.专项年量1.Checked = False
+        Me.专项年量2.Checked = False
+        Me.专项年量3.Checked = False
+        Me.专项年量4.Checked = False
+        Me.专项年量5.Checked = False
         '专项投资和年量减去比例
-        Com技术经济分析计算程序.Form6.专项投资减去比例1.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项投资减去比例2.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项投资减去比例3.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项年量减去比例1.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项年量减去比例2.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项年量减去比例3.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项年量减去比例4.Text = Nothing
-        Com技术经济分析计算程序.Form6.专项年量减去比例5.Text = Nothing
+        Me.专项投资减去比例1.Text = Nothing
+        Me.专项投资减去比例2.Text = Nothing
+        Me.专项投资减去比例3.Text = Nothing
+        Me.专项年量减去比例1.Text = Nothing
+        Me.专项年量减去比例2.Text = Nothing
+        Me.专项年量减去比例3.Text = Nothing
+        Me.专项年量减去比例4.Text = Nothing
+        Me.专项年量减去比例5.Text = Nothing
         '光伏和风电所得税减免参数
-        Com技术经济分析计算程序.Form6.光伏所得税免征年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电所得税免征年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.光伏所得税减少年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电所得税减少年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.光伏所得税减少比例.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电所得税减少比例.Text = Nothing
+        Me.光伏所得税免征年限.Text = Nothing
+        Me.风电所得税免征年限.Text = Nothing
+        Me.光伏所得税减少年限.Text = Nothing
+        Me.风电所得税减少年限.Text = Nothing
+        Me.光伏所得税减少比例.Text = Nothing
+        Me.风电所得税减少比例.Text = Nothing
         '光伏和风电增值税退税参数
-        Com技术经济分析计算程序.Form6.光伏增值税退税年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电增值税退税年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.光伏增值税退税比例.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电增值税退税比例.Text = Nothing
+        Me.光伏增值税退税年限.Text = Nothing
+        Me.风电增值税退税年限.Text = Nothing
+        Me.光伏增值税退税比例.Text = Nothing
+        Me.风电增值税退税比例.Text = Nothing
         '光伏和风电人员工资
-        Com技术经济分析计算程序.Form6.光伏人员工资.Text = Nothing
-        Com技术经济分析计算程序.Form6.风电人员工资.Text = Nothing
+        Me.光伏人员工资.Text = Nothing
+        Me.风电人员工资.Text = Nothing
         '其它所得税减免和增值税退税参数
-        Com技术经济分析计算程序.Form6.其它所得税免征年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.其它所得税减少年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.其它所得税减少比例.Text = Nothing
-        Com技术经济分析计算程序.Form6.其它增值税退税年限.Text = Nothing
-        Com技术经济分析计算程序.Form6.其它增值税退税比例.Text = Nothing
+        Me.其它所得税免征年限.Text = Nothing
+        Me.其它所得税减少年限.Text = Nothing
+        Me.其它所得税减少比例.Text = Nothing
+        Me.其它增值税退税年限.Text = Nothing
+        Me.其它增值税退税比例.Text = Nothing
         '清空计算结果
-        Com技术经济分析计算程序.Form6.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form6.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '载入文字
         '收入
-        Com技术经济分析计算程序.Form6.收入4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 2).Value, String) '工业蒸汽收入
-        Com技术经济分析计算程序.Form6.收入1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 2).Value, String) '供电收入
-        Com技术经济分析计算程序.Form6.收入2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 2).Value, String) '供冷收入
-        Com技术经济分析计算程序.Form6.收入3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 2).Value, String) '供热收入        
-        Com技术经济分析计算程序.Form6.收入5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 2).Value, String) '光伏发电收入
-        Com技术经济分析计算程序.Form6.收入6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 2).Value, String) '光伏补贴收入
-        Com技术经济分析计算程序.Form6.收入7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 2).Value, String) '风力发电收入
-        Com技术经济分析计算程序.Form6.收入8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 2).Value, String) '垃圾处理补贴收入
-        Com技术经济分析计算程序.Form6.收入9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 2).Value, String) '生物质补贴收入
+        Me.收入4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 2).Value, String) '工业蒸汽收入
+        Me.收入1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 2).Value, String) '供电收入
+        Me.收入2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 2).Value, String) '供冷收入
+        Me.收入3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 2).Value, String) '供热收入        
+        Me.收入5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 2).Value, String) '光伏发电收入
+        Me.收入6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 2).Value, String) '光伏补贴收入
+        Me.收入7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 2).Value, String) '风力发电收入
+        Me.收入8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 2).Value, String) '垃圾处理补贴收入
+        Me.收入9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 2).Value, String) '生物质补贴收入
         '成本
-        Com技术经济分析计算程序.Form6.成本1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 9).Value, String) '天然气成本
-        Com技术经济分析计算程序.Form6.成本2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 9).Value, String) '煤炭成本
-        Com技术经济分析计算程序.Form6.成本3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 9).Value, String) '购电成本
-        Com技术经济分析计算程序.Form6.成本10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 9).Value, String) '外购蒸汽
-        Com技术经济分析计算程序.Form6.成本11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String) '购电容量费
-        Com技术经济分析计算程序.Form6.成本4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 9).Value, String) '补水成本
-        Com技术经济分析计算程序.Form6.成本5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 9).Value, String) '石灰石
-        Com技术经济分析计算程序.Form6.成本6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 9).Value, String) '生石灰
-        Com技术经济分析计算程序.Form6.成本7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 9).Value, String) '尿素
-        Com技术经济分析计算程序.Form6.成本9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String) '城市管廊
-        Com技术经济分析计算程序.Form6.成本8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 9).Value, String) '人员工资
+        Me.成本1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 9).Value, String) '天然气成本
+        Me.成本2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 9).Value, String) '煤炭成本
+        Me.成本3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 9).Value, String) '购电成本
+        Me.成本10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 9).Value, String) '外购蒸汽
+        Me.成本11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String) '购电容量费
+        Me.成本4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 9).Value, String) '补水成本
+        Me.成本5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 9).Value, String) '石灰石
+        Me.成本6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 9).Value, String) '生石灰
+        Me.成本7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 9).Value, String) '尿素
+        Me.成本9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String) '城市管廊
+        Me.成本8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 9).Value, String) '人员工资
         '载入光伏发电和风力发电投资（如果有的话）
-        Com技术经济分析计算程序.Form6.投资5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
-        Com技术经济分析计算程序.Form6.投资6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
-        Com技术经济分析计算程序.Form6.投资7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value, String) '风力发电
+        Me.投资5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
+        Me.投资6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
+        Me.投资7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value, String) '风力发电
         '载入光伏风电所得税减免参数默认值
-        Com技术经济分析计算程序.Form6.光伏所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
-        Com技术经济分析计算程序.Form6.风电所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
-        Com技术经济分析计算程序.Form6.光伏所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
-        Com技术经济分析计算程序.Form6.风电所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
-        Com技术经济分析计算程序.Form6.光伏所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
-        Com技术经济分析计算程序.Form6.风电所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
+        Me.光伏所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
+        Me.风电所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
+        Me.光伏所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
+        Me.风电所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
+        Me.光伏所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
+        Me.风电所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
         '载入光伏和风电增值税退税参数默认值
-        Com技术经济分析计算程序.Form6.光伏增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
-        Com技术经济分析计算程序.Form6.风电增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
-        Com技术经济分析计算程序.Form6.光伏增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
-        Com技术经济分析计算程序.Form6.风电增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
+        Me.光伏增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
+        Me.风电增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
+        Me.光伏增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
+        Me.风电增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
         '载入其它所得税减免和增值税退税参数默认值
-        Com技术经济分析计算程序.Form6.其它所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
-        Com技术经济分析计算程序.Form6.其它所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
-        Com技术经济分析计算程序.Form6.其它所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
-        Com技术经济分析计算程序.Form6.其它增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
-        Com技术经济分析计算程序.Form6.其它增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
+        Me.其它所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
+        Me.其它所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
+        Me.其它所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
+        Me.其它增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
+        Me.其它增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
         '设置存在收入的可以选择
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入4.Enabled = True
-            Com技术经济分析计算程序.Form6.投资4.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例4.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例4.Text = 100 '比例默认值
+            Me.收入4.Enabled = True
+            Me.投资4.Enabled = True
+            Me.收入比例4.Enabled = True
+            Me.收入比例4.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入4.Enabled = False
-            Com技术经济分析计算程序.Form6.投资4.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例4.Enabled = False
+            Me.收入4.Enabled = False
+            Me.投资4.Enabled = False
+            Me.收入比例4.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入1.Enabled = True
-            Com技术经济分析计算程序.Form6.投资1.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例1.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例1.Text = 100 '比例默认值
+            Me.收入1.Enabled = True
+            Me.投资1.Enabled = True
+            Me.收入比例1.Enabled = True
+            Me.收入比例1.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入1.Enabled = False
-            Com技术经济分析计算程序.Form6.投资1.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例1.Enabled = False
+            Me.收入1.Enabled = False
+            Me.投资1.Enabled = False
+            Me.收入比例1.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入2.Enabled = True
-            Com技术经济分析计算程序.Form6.投资2.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例2.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例2.Text = 100 '比例默认值
+            Me.收入2.Enabled = True
+            Me.投资2.Enabled = True
+            Me.收入比例2.Enabled = True
+            Me.收入比例2.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入2.Enabled = False
-            Com技术经济分析计算程序.Form6.投资2.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例2.Enabled = False
+            Me.收入2.Enabled = False
+            Me.投资2.Enabled = False
+            Me.收入比例2.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入3.Enabled = True
-            Com技术经济分析计算程序.Form6.投资3.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例3.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例3.Text = 100 '比例默认值
+            Me.收入3.Enabled = True
+            Me.投资3.Enabled = True
+            Me.收入比例3.Enabled = True
+            Me.收入比例3.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入3.Enabled = False
-            Com技术经济分析计算程序.Form6.投资3.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例3.Enabled = False
+            Me.收入3.Enabled = False
+            Me.投资3.Enabled = False
+            Me.收入比例3.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入5.Enabled = True
-            Com技术经济分析计算程序.Form6.投资5.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例5.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例5.Text = 100 '比例默认值
+            Me.收入5.Enabled = True
+            Me.投资5.Enabled = True
+            Me.收入比例5.Enabled = True
+            Me.收入比例5.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入5.Enabled = False
-            Com技术经济分析计算程序.Form6.投资5.Enabled = False
-            Com技术经济分析计算程序.Form6.投资5.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例5.Enabled = False
+            Me.收入5.Enabled = False
+            Me.投资5.Enabled = False
+            Me.投资5.Text = Nothing
+            Me.收入比例5.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入6.Enabled = True
-            Com技术经济分析计算程序.Form6.投资6.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例6.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例6.Text = 100 '比例默认值
+            Me.收入6.Enabled = True
+            Me.投资6.Enabled = True
+            Me.收入比例6.Enabled = True
+            Me.收入比例6.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入6.Enabled = False
-            Com技术经济分析计算程序.Form6.投资6.Enabled = False
-            Com技术经济分析计算程序.Form6.投资6.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例6.Enabled = False
+            Me.收入6.Enabled = False
+            Me.投资6.Enabled = False
+            Me.投资6.Text = Nothing
+            Me.收入比例6.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 7).Value > 0 Or ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.光伏所得税免征年限.Enabled = True
-            Com技术经济分析计算程序.Form6.光伏所得税减少年限.Enabled = True
-            Com技术经济分析计算程序.Form6.光伏所得税减少比例.Enabled = True
-            Com技术经济分析计算程序.Form6.光伏增值税退税年限.Enabled = True
-            Com技术经济分析计算程序.Form6.光伏增值税退税比例.Enabled = True
-            Com技术经济分析计算程序.Form6.光伏人员工资.Enabled = True
+            Me.光伏所得税免征年限.Enabled = True
+            Me.光伏所得税减少年限.Enabled = True
+            Me.光伏所得税减少比例.Enabled = True
+            Me.光伏增值税退税年限.Enabled = True
+            Me.光伏增值税退税比例.Enabled = True
+            Me.光伏人员工资.Enabled = True
         Else
-            Com技术经济分析计算程序.Form6.光伏所得税免征年限.Enabled = False
-            Com技术经济分析计算程序.Form6.光伏所得税减少年限.Enabled = False
-            Com技术经济分析计算程序.Form6.光伏所得税减少比例.Enabled = False
-            Com技术经济分析计算程序.Form6.光伏增值税退税年限.Enabled = False
-            Com技术经济分析计算程序.Form6.光伏增值税退税比例.Enabled = False
-            Com技术经济分析计算程序.Form6.光伏人员工资.Enabled = False
+            Me.光伏所得税免征年限.Enabled = False
+            Me.光伏所得税减少年限.Enabled = False
+            Me.光伏所得税减少比例.Enabled = False
+            Me.光伏增值税退税年限.Enabled = False
+            Me.光伏增值税退税比例.Enabled = False
+            Me.光伏人员工资.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入7.Enabled = True
-            Com技术经济分析计算程序.Form6.投资7.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例7.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例7.Text = 100 '比例默认值
-            Com技术经济分析计算程序.Form6.风电所得税免征年限.Enabled = True
-            Com技术经济分析计算程序.Form6.风电所得税减少年限.Enabled = True
-            Com技术经济分析计算程序.Form6.风电所得税减少比例.Enabled = True
-            Com技术经济分析计算程序.Form6.风电增值税退税年限.Enabled = True
-            Com技术经济分析计算程序.Form6.风电增值税退税比例.Enabled = True
-            Com技术经济分析计算程序.Form6.风电人员工资.Enabled = True
+            Me.收入7.Enabled = True
+            Me.投资7.Enabled = True
+            Me.收入比例7.Enabled = True
+            Me.收入比例7.Text = 100 '比例默认值
+            Me.风电所得税免征年限.Enabled = True
+            Me.风电所得税减少年限.Enabled = True
+            Me.风电所得税减少比例.Enabled = True
+            Me.风电增值税退税年限.Enabled = True
+            Me.风电增值税退税比例.Enabled = True
+            Me.风电人员工资.Enabled = True
         Else
-            Com技术经济分析计算程序.Form6.收入7.Enabled = False
-            Com技术经济分析计算程序.Form6.投资7.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例7.Enabled = False
-            Com技术经济分析计算程序.Form6.风电所得税免征年限.Enabled = False
-            Com技术经济分析计算程序.Form6.风电所得税减少年限.Enabled = False
-            Com技术经济分析计算程序.Form6.风电所得税减少比例.Enabled = False
-            Com技术经济分析计算程序.Form6.风电增值税退税年限.Enabled = False
-            Com技术经济分析计算程序.Form6.风电增值税退税比例.Enabled = False
-            Com技术经济分析计算程序.Form6.风电人员工资.Enabled = False
+            Me.收入7.Enabled = False
+            Me.投资7.Enabled = False
+            Me.收入比例7.Enabled = False
+            Me.风电所得税免征年限.Enabled = False
+            Me.风电所得税减少年限.Enabled = False
+            Me.风电所得税减少比例.Enabled = False
+            Me.风电增值税退税年限.Enabled = False
+            Me.风电增值税退税比例.Enabled = False
+            Me.风电人员工资.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入8.Enabled = True
-            Com技术经济分析计算程序.Form6.投资8.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例8.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例8.Text = 100 '比例默认值
+            Me.收入8.Enabled = True
+            Me.投资8.Enabled = True
+            Me.收入比例8.Enabled = True
+            Me.收入比例8.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入8.Enabled = False
-            Com技术经济分析计算程序.Form6.投资8.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例8.Enabled = False
+            Me.收入8.Enabled = False
+            Me.投资8.Enabled = False
+            Me.收入比例8.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 7).Value > 0 Then
-            Com技术经济分析计算程序.Form6.收入9.Enabled = True
-            Com技术经济分析计算程序.Form6.投资9.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例9.Enabled = True
-            Com技术经济分析计算程序.Form6.收入比例9.Text = 100 '比例默认值
+            Me.收入9.Enabled = True
+            Me.投资9.Enabled = True
+            Me.收入比例9.Enabled = True
+            Me.收入比例9.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.收入9.Enabled = False
-            Com技术经济分析计算程序.Form6.投资9.Enabled = False
-            Com技术经济分析计算程序.Form6.收入比例9.Enabled = False
+            Me.收入9.Enabled = False
+            Me.投资9.Enabled = False
+            Me.收入比例9.Enabled = False
         End If
         '设置存在成本的可以选择
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本1.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例1.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例1.Text = 100 '比例默认值
+            Me.成本1.Enabled = True
+            Me.成本比例1.Enabled = True
+            Me.成本比例1.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本1.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例1.Enabled = False
+            Me.成本1.Enabled = False
+            Me.成本比例1.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本2.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例2.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例2.Text = 100 '比例默认值
+            Me.成本2.Enabled = True
+            Me.成本比例2.Enabled = True
+            Me.成本比例2.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本2.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例2.Enabled = False
+            Me.成本2.Enabled = False
+            Me.成本比例2.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本3.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例3.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例3.Text = 100 '比例默认值
+            Me.成本3.Enabled = True
+            Me.成本比例3.Enabled = True
+            Me.成本比例3.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本3.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例3.Enabled = False
+            Me.成本3.Enabled = False
+            Me.成本比例3.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本10.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例10.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例10.Text = 100 '比例默认值
+            Me.成本10.Enabled = True
+            Me.成本比例10.Enabled = True
+            Me.成本比例10.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本10.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例10.Enabled = False
+            Me.成本10.Enabled = False
+            Me.成本比例10.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本11.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例11.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例11.Text = 100 '比例默认值
+            Me.成本11.Enabled = True
+            Me.成本比例11.Enabled = True
+            Me.成本比例11.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本11.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例11.Enabled = False
+            Me.成本11.Enabled = False
+            Me.成本比例11.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本4.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例4.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例4.Text = 100 '比例默认值
+            Me.成本4.Enabled = True
+            Me.成本比例4.Enabled = True
+            Me.成本比例4.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本4.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例4.Enabled = False
+            Me.成本4.Enabled = False
+            Me.成本比例4.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本5.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例5.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例5.Text = 100 '比例默认值
+            Me.成本5.Enabled = True
+            Me.成本比例5.Enabled = True
+            Me.成本比例5.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本5.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例5.Enabled = False
+            Me.成本5.Enabled = False
+            Me.成本比例5.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本6.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例6.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例6.Text = 100 '比例默认值
+            Me.成本6.Enabled = True
+            Me.成本比例6.Enabled = True
+            Me.成本比例6.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本6.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例6.Enabled = False
+            Me.成本6.Enabled = False
+            Me.成本比例6.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本7.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例7.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例7.Text = 100 '比例默认值
+            Me.成本7.Enabled = True
+            Me.成本比例7.Enabled = True
+            Me.成本比例7.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本7.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例7.Enabled = False
+            Me.成本7.Enabled = False
+            Me.成本比例7.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本9.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例9.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例9.Text = 100 '比例默认值
+            Me.成本9.Enabled = True
+            Me.成本比例9.Enabled = True
+            Me.成本比例9.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本9.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例9.Enabled = False
+            Me.成本9.Enabled = False
+            Me.成本比例9.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 14).Value > 0 Then
-            Com技术经济分析计算程序.Form6.成本8.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例8.Enabled = True
-            Com技术经济分析计算程序.Form6.成本比例8.Text = 100 '比例默认值
+            Me.成本8.Enabled = True
+            Me.成本比例8.Enabled = True
+            Me.成本比例8.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.成本8.Enabled = False
-            Com技术经济分析计算程序.Form6.成本比例8.Enabled = False
+            Me.成本8.Enabled = False
+            Me.成本比例8.Enabled = False
         End If
         '设置专项投资是否可以勾选
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项投资1.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例1.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例1.Text = 100 '比例默认值
+            Me.专项投资1.Enabled = True
+            Me.专项投资减去比例1.Enabled = True
+            Me.专项投资减去比例1.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项投资1.Enabled = False
-            Com技术经济分析计算程序.Form6.专项投资减去比例1.Enabled = False
+            Me.专项投资1.Enabled = False
+            Me.专项投资减去比例1.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项投资2.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例2.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例2.Text = 100 '比例默认值
+            Me.专项投资2.Enabled = True
+            Me.专项投资减去比例2.Enabled = True
+            Me.专项投资减去比例2.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项投资2.Enabled = False
-            Com技术经济分析计算程序.Form6.专项投资减去比例2.Enabled = False
+            Me.专项投资2.Enabled = False
+            Me.专项投资减去比例2.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项投资3.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例3.Enabled = True
-            Com技术经济分析计算程序.Form6.专项投资减去比例3.Text = 100 '比例默认值
+            Me.专项投资3.Enabled = True
+            Me.专项投资减去比例3.Enabled = True
+            Me.专项投资减去比例3.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项投资3.Enabled = False
-            Com技术经济分析计算程序.Form6.专项投资减去比例3.Enabled = False
+            Me.专项投资3.Enabled = False
+            Me.专项投资减去比例3.Enabled = False
         End If
         '设置专项年量是否可选
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项年量1.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例1.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例1.Text = 100 '比例默认值
+            Me.专项年量1.Enabled = True
+            Me.专项年量减去比例1.Enabled = True
+            Me.专项年量减去比例1.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项年量1.Enabled = False
-            Com技术经济分析计算程序.Form6.专项年量减去比例1.Enabled = False
+            Me.专项年量1.Enabled = False
+            Me.专项年量减去比例1.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(45, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项年量2.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例2.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例2.Text = 100 '比例默认值
+            Me.专项年量2.Enabled = True
+            Me.专项年量减去比例2.Enabled = True
+            Me.专项年量减去比例2.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项年量2.Enabled = False
-            Com技术经济分析计算程序.Form6.专项年量减去比例2.Enabled = False
+            Me.专项年量2.Enabled = False
+            Me.专项年量减去比例2.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(49, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项年量3.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例3.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例3.Text = 100 '比例默认值
+            Me.专项年量3.Enabled = True
+            Me.专项年量减去比例3.Enabled = True
+            Me.专项年量减去比例3.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项年量3.Enabled = False
-            Com技术经济分析计算程序.Form6.专项年量减去比例3.Enabled = False
+            Me.专项年量3.Enabled = False
+            Me.专项年量减去比例3.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(52, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项年量4.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例4.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例4.Text = 100 '比例默认值
+            Me.专项年量4.Enabled = True
+            Me.专项年量减去比例4.Enabled = True
+            Me.专项年量减去比例4.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项年量4.Enabled = False
-            Com技术经济分析计算程序.Form6.专项年量减去比例4.Enabled = False
+            Me.专项年量4.Enabled = False
+            Me.专项年量减去比例4.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(55, 1).Value > 0 Then
-            Com技术经济分析计算程序.Form6.专项年量5.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例5.Enabled = True
-            Com技术经济分析计算程序.Form6.专项年量减去比例5.Text = 100 '比例默认值
+            Me.专项年量5.Enabled = True
+            Me.专项年量减去比例5.Enabled = True
+            Me.专项年量减去比例5.Text = 100 '比例默认值
         Else
-            Com技术经济分析计算程序.Form6.专项年量5.Enabled = False
-            Com技术经济分析计算程序.Form6.专项年量减去比例5.Enabled = False
+            Me.专项年量5.Enabled = False
+            Me.专项年量减去比例5.Enabled = False
         End If
     End Sub
 
@@ -435,65 +435,65 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的投资
-        Dim srtz1 As Double = CType(Com技术经济分析计算程序.Form6.投资1.Text, Double)
-        Dim srtz2 As Double = CType(Com技术经济分析计算程序.Form6.投资2.Text, Double)
-        Dim srtz3 As Double = CType(Com技术经济分析计算程序.Form6.投资3.Text, Double)
-        Dim srtz4 As Double = CType(Com技术经济分析计算程序.Form6.投资4.Text, Double)
-        Dim srtz5 As Double = CType(Com技术经济分析计算程序.Form6.投资5.Text, Double)
-        Dim srtz6 As Double = CType(Com技术经济分析计算程序.Form6.投资6.Text, Double)
-        Dim srtz7 As Double = CType(Com技术经济分析计算程序.Form6.投资7.Text, Double)
-        Dim srtz8 As Double = CType(Com技术经济分析计算程序.Form6.投资8.Text, Double)
-        Dim srtz9 As Double = CType(Com技术经济分析计算程序.Form6.投资9.Text, Double)
+        Dim srtz1 As Double = CType(Me.投资1.Text, Double)
+        Dim srtz2 As Double = CType(Me.投资2.Text, Double)
+        Dim srtz3 As Double = CType(Me.投资3.Text, Double)
+        Dim srtz4 As Double = CType(Me.投资4.Text, Double)
+        Dim srtz5 As Double = CType(Me.投资5.Text, Double)
+        Dim srtz6 As Double = CType(Me.投资6.Text, Double)
+        Dim srtz7 As Double = CType(Me.投资7.Text, Double)
+        Dim srtz8 As Double = CType(Me.投资8.Text, Double)
+        Dim srtz9 As Double = CType(Me.投资9.Text, Double)
         '读取输入的专项投资和年量减去比例
-        Dim zxtzjqbl1 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例1.Text, Double) / 100
-        Dim zxtzjqbl2 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例2.Text, Double) / 100
-        Dim zxtzjqbl3 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例3.Text, Double) / 100
-        Dim zxzljqbl1 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例1.Text, Double) / 100
-        Dim zxzljqbl2 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例2.Text, Double) / 100
-        Dim zxzljqbl3 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例3.Text, Double) / 100
-        Dim zxzljqbl4 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例4.Text, Double) / 100
-        Dim zxzljqbl5 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例5.Text, Double) / 100
+        Dim zxtzjqbl1 As Double = CType(Me.专项投资减去比例1.Text, Double) / 100
+        Dim zxtzjqbl2 As Double = CType(Me.专项投资减去比例2.Text, Double) / 100
+        Dim zxtzjqbl3 As Double = CType(Me.专项投资减去比例3.Text, Double) / 100
+        Dim zxzljqbl1 As Double = CType(Me.专项年量减去比例1.Text, Double) / 100
+        Dim zxzljqbl2 As Double = CType(Me.专项年量减去比例2.Text, Double) / 100
+        Dim zxzljqbl3 As Double = CType(Me.专项年量减去比例3.Text, Double) / 100
+        Dim zxzljqbl4 As Double = CType(Me.专项年量减去比例4.Text, Double) / 100
+        Dim zxzljqbl5 As Double = CType(Me.专项年量减去比例5.Text, Double) / 100
         '读取输入的各个收入占比比例
-        Dim srbl1 As Double = CType(Com技术经济分析计算程序.Form6.收入比例1.Text, Double) / 100
-        Dim srbl2 As Double = CType(Com技术经济分析计算程序.Form6.收入比例2.Text, Double) / 100
-        Dim srbl3 As Double = CType(Com技术经济分析计算程序.Form6.收入比例3.Text, Double) / 100
-        Dim srbl4 As Double = CType(Com技术经济分析计算程序.Form6.收入比例4.Text, Double) / 100
-        Dim srbl5 As Double = CType(Com技术经济分析计算程序.Form6.收入比例5.Text, Double) / 100
-        Dim srbl6 As Double = CType(Com技术经济分析计算程序.Form6.收入比例6.Text, Double) / 100
-        Dim srbl7 As Double = CType(Com技术经济分析计算程序.Form6.收入比例7.Text, Double) / 100
-        Dim srbl8 As Double = CType(Com技术经济分析计算程序.Form6.收入比例8.Text, Double) / 100
-        Dim srbl9 As Double = CType(Com技术经济分析计算程序.Form6.收入比例9.Text, Double) / 100
+        Dim srbl1 As Double = CType(Me.收入比例1.Text, Double) / 100
+        Dim srbl2 As Double = CType(Me.收入比例2.Text, Double) / 100
+        Dim srbl3 As Double = CType(Me.收入比例3.Text, Double) / 100
+        Dim srbl4 As Double = CType(Me.收入比例4.Text, Double) / 100
+        Dim srbl5 As Double = CType(Me.收入比例5.Text, Double) / 100
+        Dim srbl6 As Double = CType(Me.收入比例6.Text, Double) / 100
+        Dim srbl7 As Double = CType(Me.收入比例7.Text, Double) / 100
+        Dim srbl8 As Double = CType(Me.收入比例8.Text, Double) / 100
+        Dim srbl9 As Double = CType(Me.收入比例9.Text, Double) / 100
         '读取输入的各个成本占比比例
-        Dim cbbl1 As Double = CType(Com技术经济分析计算程序.Form6.成本比例1.Text, Double) / 100
-        Dim cbbl2 As Double = CType(Com技术经济分析计算程序.Form6.成本比例2.Text, Double) / 100
-        Dim cbbl3 As Double = CType(Com技术经济分析计算程序.Form6.成本比例3.Text, Double) / 100
-        Dim cbbl4 As Double = CType(Com技术经济分析计算程序.Form6.成本比例4.Text, Double) / 100
-        Dim cbbl5 As Double = CType(Com技术经济分析计算程序.Form6.成本比例5.Text, Double) / 100
-        Dim cbbl6 As Double = CType(Com技术经济分析计算程序.Form6.成本比例6.Text, Double) / 100
-        Dim cbbl7 As Double = CType(Com技术经济分析计算程序.Form6.成本比例7.Text, Double) / 100
-        Dim cbbl8 As Double = CType(Com技术经济分析计算程序.Form6.成本比例8.Text, Double) / 100
-        Dim cbbl9 As Double = CType(Com技术经济分析计算程序.Form6.成本比例9.Text, Double) / 100
-        Dim cbbl10 As Double = CType(Com技术经济分析计算程序.Form6.成本比例10.Text, Double) / 100
-        Dim cbbl11 As Double = CType(Com技术经济分析计算程序.Form6.成本比例11.Text, Double) / 100
+        Dim cbbl1 As Double = CType(Me.成本比例1.Text, Double) / 100
+        Dim cbbl2 As Double = CType(Me.成本比例2.Text, Double) / 100
+        Dim cbbl3 As Double = CType(Me.成本比例3.Text, Double) / 100
+        Dim cbbl4 As Double = CType(Me.成本比例4.Text, Double) / 100
+        Dim cbbl5 As Double = CType(Me.成本比例5.Text, Double) / 100
+        Dim cbbl6 As Double = CType(Me.成本比例6.Text, Double) / 100
+        Dim cbbl7 As Double = CType(Me.成本比例7.Text, Double) / 100
+        Dim cbbl8 As Double = CType(Me.成本比例8.Text, Double) / 100
+        Dim cbbl9 As Double = CType(Me.成本比例9.Text, Double) / 100
+        Dim cbbl10 As Double = CType(Me.成本比例10.Text, Double) / 100
+        Dim cbbl11 As Double = CType(Me.成本比例11.Text, Double) / 100
         '读取设置的光伏和风力发电所得税减免参数、增值税退税参数等
-        Dim gfsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.光伏所得税免征年限.Text, Integer)
-        Dim gfsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.光伏所得税减少年限.Text, Integer)
-        Dim gfsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.光伏所得税减少比例.Text, Double) / 100
-        Dim gfzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.光伏增值税退税年限.Text, Integer)
-        Dim gfzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.光伏增值税退税比例.Text, Double) / 100
-        Dim gfrygz As Double = CType(Com技术经济分析计算程序.Form6.光伏人员工资.Text, Double)
-        Dim fdsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.风电所得税免征年限.Text, Integer)
-        Dim fdsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.风电所得税减少年限.Text, Integer)
-        Dim fdsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.风电所得税减少比例.Text, Double) / 100
-        Dim fdzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.风电增值税退税年限.Text, Integer)
-        Dim fdzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.风电增值税退税比例.Text, Double) / 100
-        Dim fdrygz As Double = CType(Com技术经济分析计算程序.Form6.风电人员工资.Text, Double)
+        Dim gfsdsmznx As Integer = CType(Me.光伏所得税免征年限.Text, Integer)
+        Dim gfsdsjsnx As Integer = CType(Me.光伏所得税减少年限.Text, Integer)
+        Dim gfsdsjsbl As Double = CType(Me.光伏所得税减少比例.Text, Double) / 100
+        Dim gfzzstsnx As Integer = CType(Me.光伏增值税退税年限.Text, Integer)
+        Dim gfzzstsbl As Double = CType(Me.光伏增值税退税比例.Text, Double) / 100
+        Dim gfrygz As Double = CType(Me.光伏人员工资.Text, Double)
+        Dim fdsdsmznx As Integer = CType(Me.风电所得税免征年限.Text, Integer)
+        Dim fdsdsjsnx As Integer = CType(Me.风电所得税减少年限.Text, Integer)
+        Dim fdsdsjsbl As Double = CType(Me.风电所得税减少比例.Text, Double) / 100
+        Dim fdzzstsnx As Integer = CType(Me.风电增值税退税年限.Text, Integer)
+        Dim fdzzstsbl As Double = CType(Me.风电增值税退税比例.Text, Double) / 100
+        Dim fdrygz As Double = CType(Me.风电人员工资.Text, Double)
         '读取输入的其它部分所得税减免和增值税退税参数
-        Dim qtsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.其它所得税免征年限.Text, Integer)
-        Dim qtsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.其它所得税减少年限.Text, Integer)
-        Dim qtsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.其它所得税减少比例.Text, Double) / 100
-        Dim qtzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.其它增值税退税年限.Text, Integer)
-        Dim qtzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.其它增值税退税比例.Text, Double) / 100
+        Dim qtsdsmznx As Integer = CType(Me.其它所得税免征年限.Text, Integer)
+        Dim qtsdsjsnx As Integer = CType(Me.其它所得税减少年限.Text, Integer)
+        Dim qtsdsjsbl As Double = CType(Me.其它所得税减少比例.Text, Double) / 100
+        Dim qtzzstsnx As Integer = CType(Me.其它增值税退税年限.Text, Integer)
+        Dim qtzzstsbl As Double = CType(Me.其它增值税退税比例.Text, Double) / 100
         '记录目前各个收入的单价
         Dim srdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value, Double)
         Dim srdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value, Double)
@@ -519,7 +519,7 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————
         '针对输入和选择的内容，添加报错功能
         '光伏
-        If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+        If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
             If gfsdsmznx + gfsdsjsnx = 0 Then
                 MsgBox("光伏所得税免征年限和光伏所得税减征年限不可以都是0，请重新输入！")
                 Exit Sub
@@ -530,7 +530,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
         End If
         '风电
-        If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+        If Me.收入7.Checked = True Then
             If fdsdsmznx + fdsdsjsnx = 0 Then
                 MsgBox("风电所得税免征年限和风电所得税减征年限不可以都是0，请重新输入！")
                 Exit Sub
@@ -541,7 +541,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
         End If
         '其它
-        If Com技术经济分析计算程序.Form6.收入5.Checked = False And Com技术经济分析计算程序.Form6.收入6.Checked = False And Com技术经济分析计算程序.Form6.收入7.Checked = False Then
+        If Me.收入5.Checked = False And Me.收入6.Checked = False And Me.收入7.Checked = False Then
             If qtsdsmznx + qtsdsjsnx = 0 Then
                 MsgBox("其它所得税免征年限和其它所得税减征年限不可以都是0，请重新输入！")
                 Exit Sub
@@ -661,16 +661,16 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '减去光伏发电和光伏补贴的收入
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+            If Me.收入5.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = srdj5 * (1 - srbl5)
             End If
-            If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入6.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = srdj6 * (1 - srbl6)
             End If
             '减去光伏专项人员工资
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 - gfrygz
             End If
             '————————————————————————————————————————————————————————————————————————————————————
@@ -678,7 +678,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '记录逐年所得税金额减少值
             Dim ZNSDS_gf_js(50) As Double
             '收入5或者收入6被勾选时
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
                 '将估算表中输入的光伏投资和装机规模减小
                 Dim JS_gftz As Integer = 0 '投资年份计数
                 Dim GFTZBL_1 As Double = Math.Max(srtz5, srtz6) / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value
@@ -723,14 +723,14 @@ Public Class 设置所得税减免和增值税退税包含内容
                     Next
                 Next
                 '收入
-                If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+                If Me.收入5.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = srdj5
                 End If
-                If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+                If Me.收入6.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = srdj6
                 End If
                 '人员工资
-                If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+                If Me.成本8.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
@@ -755,12 +755,12 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '减去风力发电的收入
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7 * (1 - srbl7)
             End If
             '减去风电专项人员工资
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 - fdrygz
             End If
             '————————————————————————————————————————————————————————————————————————————————————
@@ -768,7 +768,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '记录逐年所得税金额减少值
             Dim ZNSDS_fd_js(50) As Double
             '收入7被勾选时
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '将估算表中输入的风电投资和装机规模减少
                 Dim FDTZBL_1 As Double = srtz7 / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value
                 Dim JS_fdtz As Integer = 0 '投资年份计数
@@ -812,11 +812,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     Next
                 Next
                 '收入
-                If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+                If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7
                 End If
                 '人员工资
-                If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+                If Me.成本8.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
@@ -843,88 +843,88 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '收入1
-            If Com技术经济分析计算程序.Form6.收入1.Checked = True Then
+            If Me.收入1.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value = srdj1 * (1 - srbl1)
             End If
             '收入2
-            If Com技术经济分析计算程序.Form6.收入2.Checked = True Then
+            If Me.收入2.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value = srdj2 * (1 - srbl2)
             End If
             '收入3
-            If Com技术经济分析计算程序.Form6.收入3.Checked = True Then
+            If Me.收入3.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3 * (1 - srbl3)
             End If
             '收入4
-            If Com技术经济分析计算程序.Form6.收入4.Checked = True Then
+            If Me.收入4.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
             End If
             '收入8
-            If Com技术经济分析计算程序.Form6.收入8.Checked = True Then
+            If Me.收入8.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8 * (1 - srbl8)
             End If
             '收入9
-            If Com技术经济分析计算程序.Form6.收入9.Checked = True Then
+            If Me.收入9.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value = srdj9 * (1 - srbl9)
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '成本1
-            If Com技术经济分析计算程序.Form6.成本1.Checked = True Then
+            If Me.成本1.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value = cbdj1 * (1 - cbbl1)
             End If
             '成本2
-            If Com技术经济分析计算程序.Form6.成本2.Checked = True Then
+            If Me.成本2.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value = cbdj2 * (1 - cbbl2)
             End If
             '成本3
-            If Com技术经济分析计算程序.Form6.成本3.Checked = True Then
+            If Me.成本3.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3 * (1 - cbbl3)
             End If
             '成本4
-            If Com技术经济分析计算程序.Form6.成本4.Checked = True Then
+            If Me.成本4.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value = cbdj4 * (1 - cbbl4)
             End If
             '成本5
-            If Com技术经济分析计算程序.Form6.成本5.Checked = True Then
+            If Me.成本5.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value = cbdj5 * (1 - cbbl5)
             End If
             '成本6
-            If Com技术经济分析计算程序.Form6.成本6.Checked = True Then
+            If Me.成本6.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 12).Value = cbdj6 * (1 - cbbl6)
             End If
             '成本7
-            If Com技术经济分析计算程序.Form6.成本7.Checked = True Then
+            If Me.成本7.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7 * (1 - cbbl7)
             End If
             '成本8
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
             End If
             '成本9
-            If Com技术经济分析计算程序.Form6.成本9.Checked = True Then
+            If Me.成本9.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9 * (1 - cbbl9)
             End If
             '成本10
-            If Com技术经济分析计算程序.Form6.成本10.Checked = True Then
+            If Me.成本10.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
             End If
             '成本11
-            If Com技术经济分析计算程序.Form6.成本11.Checked = True Then
+            If Me.成本11.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
             End If
@@ -932,7 +932,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '减去专项投资和年总量
             '投资
             Dim JS_zxtz1 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资1.Checked = True Then
+            If Me.专项投资1.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz1 = JS_zxtz1 + 1
@@ -943,7 +943,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxtz2 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资2.Checked = True Then
+            If Me.专项投资2.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz2 = JS_zxtz2 + 1
@@ -954,7 +954,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxtz3 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资3.Checked = True Then
+            If Me.专项投资3.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz3 = JS_zxtz3 + 1
@@ -966,7 +966,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '年量
             Dim JS_zxzl1 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量1.Checked = True Then
+            If Me.专项年量1.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl1 = JS_zxzl1 + 1
@@ -977,7 +977,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl2 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量2.Checked = True Then
+            If Me.专项年量2.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl2 = JS_zxzl2 + 1
@@ -988,7 +988,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl3 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量3.Checked = True Then
+            If Me.专项年量3.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl3 = JS_zxzl3 + 1
@@ -999,7 +999,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl4 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量4.Checked = True Then
+            If Me.专项年量4.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl4 = JS_zxzl4 + 1
@@ -1010,7 +1010,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl5 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量5.Checked = True Then
+            If Me.专项年量5.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl5 = JS_zxzl5 + 1
@@ -1060,68 +1060,68 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             Next
             '各种收入单价
-            If Com技术经济分析计算程序.Form6.收入4.Checked = True Then
+            If Me.收入4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4
             End If
-            If Com技术经济分析计算程序.Form6.收入1.Checked = True Then
+            If Me.收入1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value = srdj1
             End If
-            If Com技术经济分析计算程序.Form6.收入2.Checked = True Then
+            If Me.收入2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value = srdj2
             End If
-            If Com技术经济分析计算程序.Form6.收入3.Checked = True Then
+            If Me.收入3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3
             End If
-            If Com技术经济分析计算程序.Form6.收入8.Checked = True Then
+            If Me.收入8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8
             End If
 
-            If Com技术经济分析计算程序.Form6.收入9.Checked = True Then
+            If Me.收入9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value = srdj9
             End If
             '各项成本单价
             '成本1
-            If Com技术经济分析计算程序.Form6.成本1.Checked = True Then
+            If Me.成本1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value = cbdj1
             End If
             '成本2
-            If Com技术经济分析计算程序.Form6.成本2.Checked = True Then
+            If Me.成本2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value = cbdj2
             End If
             '成本3
-            If Com技术经济分析计算程序.Form6.成本3.Checked = True Then
+            If Me.成本3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3
             End If
             '成本4
-            If Com技术经济分析计算程序.Form6.成本4.Checked = True Then
+            If Me.成本4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value = cbdj4
             End If
             '成本5
-            If Com技术经济分析计算程序.Form6.成本5.Checked = True Then
+            If Me.成本5.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value = cbdj5
             End If
             '成本6
-            If Com技术经济分析计算程序.Form6.成本6.Checked = True Then
+            If Me.成本6.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 12).Value = cbdj6
             End If
             '成本7
-            If Com技术经济分析计算程序.Form6.成本7.Checked = True Then
+            If Me.成本7.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7
             End If
             '成本8
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
             End If
             '成本9
-            If Com技术经济分析计算程序.Form6.成本9.Checked = True Then
+            If Me.成本9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9
             End If
             '成本10
-            If Com技术经济分析计算程序.Form6.成本10.Checked = True Then
+            If Me.成本10.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
             End If
             '成本11
-            If Com技术经济分析计算程序.Form6.成本11.Checked = True Then
+            If Me.成本11.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
             '计算一次流动资金
@@ -1134,7 +1134,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 SDS_JS(i) = 0 '初始化数组，都是0
             Next
             '光伏每年减少的所得税金额
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
                 '寻找有光伏收入的第一年的年份序号
                 Dim GFSRNF_No1 As Integer = 0
                 '前15年（1-15）
@@ -1162,7 +1162,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '风电每年减少的所得税金额
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '寻找有风电收入的第一年的年份序号
                 Dim FDSRNF_No1 As Integer = 0
                 '前15年（1-15）
@@ -1193,14 +1193,14 @@ Public Class 设置所得税减免和增值税退税包含内容
             If SRTZ_sum > 0 Then
                 '将光伏发电收入、光伏补贴收入、风电收入归零，从而找出其它收入第一年的年份序号
                 '光伏发电和光伏补贴收入
-                If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+                If Me.收入5.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = 0
                 End If
-                If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+                If Me.收入6.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = 0
                 End If
                 '风力发电收入
-                If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+                If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = 0
                 End If
                 '计算一次流动资金
@@ -1222,14 +1222,14 @@ Public Class 设置所得税减免和增值税退税包含内容
                     End If
                 Next
                 '返回光伏收入、光伏补贴、风电收入原始值
-                If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+                If Me.收入5.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = srdj5
                 End If
-                If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+                If Me.收入6.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = srdj6
                 End If
                 '风力发电收入
-                If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+                If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7
                 End If
                 '计算一次流动资金
@@ -1269,8 +1269,8 @@ Public Class 设置所得税减免和增值税退税包含内容
             '计算一次Excel
             ExcelApp.Calculate()
             '清空已有内容
-            Com技术经济分析计算程序.Form6.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form6.RichTextBox1.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
             '显示补贴收入计算结果
             Dim sdszsbl As Double '所得税征收比例
             Dim sdsl As Double '实际所得税率
@@ -1279,18 +1279,18 @@ Public Class 设置所得税减免和增值税退税包含内容
                 If i - 3 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
                     sdszsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value) * 100, 2) '读取所得税征收比例
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = "逐年所得税实际征收比例：" & Com技术经济分析计算程序.Form6.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
+            Me.RichTextBox1.Text = "逐年所得税实际征收比例：" & Me.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
             For i = 4 To 34  '根据数组中的元素数量循环
                 If i - 3 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
                     sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(50, i).Value) * 100, 2) '读取所得税率
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & sdsl & "%(" & nf & ") " '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdsl & "%(" & nf & ") " '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text
         End If
     End Sub
 
@@ -1299,101 +1299,101 @@ Public Class 设置所得税减免和增值税退税包含内容
         If XZ = vbOK Then
             '清空全部已选
             '收入
-            Com技术经济分析计算程序.Form6.收入1.Checked = False
-            Com技术经济分析计算程序.Form6.收入2.Checked = False
-            Com技术经济分析计算程序.Form6.收入3.Checked = False
-            Com技术经济分析计算程序.Form6.收入4.Checked = False
-            Com技术经济分析计算程序.Form6.收入5.Checked = False
-            Com技术经济分析计算程序.Form6.收入6.Checked = False
-            Com技术经济分析计算程序.Form6.收入7.Checked = False
-            Com技术经济分析计算程序.Form6.收入8.Checked = False
-            Com技术经济分析计算程序.Form6.收入9.Checked = False
+            Me.收入1.Checked = False
+            Me.收入2.Checked = False
+            Me.收入3.Checked = False
+            Me.收入4.Checked = False
+            Me.收入5.Checked = False
+            Me.收入6.Checked = False
+            Me.收入7.Checked = False
+            Me.收入8.Checked = False
+            Me.收入9.Checked = False
             '成本
-            Com技术经济分析计算程序.Form6.成本1.Checked = False
-            Com技术经济分析计算程序.Form6.成本2.Checked = False
-            Com技术经济分析计算程序.Form6.成本3.Checked = False
-            Com技术经济分析计算程序.Form6.成本4.Checked = False
-            Com技术经济分析计算程序.Form6.成本5.Checked = False
-            Com技术经济分析计算程序.Form6.成本6.Checked = False
-            Com技术经济分析计算程序.Form6.成本7.Checked = False
-            Com技术经济分析计算程序.Form6.成本8.Checked = False
-            Com技术经济分析计算程序.Form6.成本9.Checked = False
-            Com技术经济分析计算程序.Form6.成本10.Checked = False
-            Com技术经济分析计算程序.Form6.成本11.Checked = False
+            Me.成本1.Checked = False
+            Me.成本2.Checked = False
+            Me.成本3.Checked = False
+            Me.成本4.Checked = False
+            Me.成本5.Checked = False
+            Me.成本6.Checked = False
+            Me.成本7.Checked = False
+            Me.成本8.Checked = False
+            Me.成本9.Checked = False
+            Me.成本10.Checked = False
+            Me.成本11.Checked = False
             '专项投资和年量
-            Com技术经济分析计算程序.Form6.专项投资1.Checked = False
-            Com技术经济分析计算程序.Form6.专项投资2.Checked = False
-            Com技术经济分析计算程序.Form6.专项投资3.Checked = False
-            Com技术经济分析计算程序.Form6.专项年量1.Checked = False
-            Com技术经济分析计算程序.Form6.专项年量2.Checked = False
-            Com技术经济分析计算程序.Form6.专项年量3.Checked = False
-            Com技术经济分析计算程序.Form6.专项年量4.Checked = False
-            Com技术经济分析计算程序.Form6.专项年量5.Checked = False
+            Me.专项投资1.Checked = False
+            Me.专项投资2.Checked = False
+            Me.专项投资3.Checked = False
+            Me.专项年量1.Checked = False
+            Me.专项年量2.Checked = False
+            Me.专项年量3.Checked = False
+            Me.专项年量4.Checked = False
+            Me.专项年量5.Checked = False
             '专项投资和年量减去比例
-            Com技术经济分析计算程序.Form6.专项投资减去比例1.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项投资减去比例2.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项投资减去比例3.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项年量减去比例1.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项年量减去比例2.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项年量减去比例3.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项年量减去比例4.Text = Nothing
-            Com技术经济分析计算程序.Form6.专项年量减去比例5.Text = Nothing
+            Me.专项投资减去比例1.Text = Nothing
+            Me.专项投资减去比例2.Text = Nothing
+            Me.专项投资减去比例3.Text = Nothing
+            Me.专项年量减去比例1.Text = Nothing
+            Me.专项年量减去比例2.Text = Nothing
+            Me.专项年量减去比例3.Text = Nothing
+            Me.专项年量减去比例4.Text = Nothing
+            Me.专项年量减去比例5.Text = Nothing
             '清空已有投资
-            Com技术经济分析计算程序.Form6.投资1.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资2.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资3.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资4.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资5.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资6.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资7.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资8.Text = Nothing
-            Com技术经济分析计算程序.Form6.投资9.Text = Nothing
+            Me.投资1.Text = Nothing
+            Me.投资2.Text = Nothing
+            Me.投资3.Text = Nothing
+            Me.投资4.Text = Nothing
+            Me.投资5.Text = Nothing
+            Me.投资6.Text = Nothing
+            Me.投资7.Text = Nothing
+            Me.投资8.Text = Nothing
+            Me.投资9.Text = Nothing
             '清空已有收入比例
-            Com技术经济分析计算程序.Form6.收入比例1.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例2.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例3.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例4.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例5.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例6.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例7.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例8.Text = Nothing
-            Com技术经济分析计算程序.Form6.收入比例9.Text = Nothing
+            Me.收入比例1.Text = Nothing
+            Me.收入比例2.Text = Nothing
+            Me.收入比例3.Text = Nothing
+            Me.收入比例4.Text = Nothing
+            Me.收入比例5.Text = Nothing
+            Me.收入比例6.Text = Nothing
+            Me.收入比例7.Text = Nothing
+            Me.收入比例8.Text = Nothing
+            Me.收入比例9.Text = Nothing
             '清空已有成本比例
-            Com技术经济分析计算程序.Form6.成本比例1.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例2.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例3.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例4.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例5.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例6.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例7.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例8.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例9.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例10.Text = Nothing
-            Com技术经济分析计算程序.Form6.成本比例11.Text = Nothing
+            Me.成本比例1.Text = Nothing
+            Me.成本比例2.Text = Nothing
+            Me.成本比例3.Text = Nothing
+            Me.成本比例4.Text = Nothing
+            Me.成本比例5.Text = Nothing
+            Me.成本比例6.Text = Nothing
+            Me.成本比例7.Text = Nothing
+            Me.成本比例8.Text = Nothing
+            Me.成本比例9.Text = Nothing
+            Me.成本比例10.Text = Nothing
+            Me.成本比例11.Text = Nothing
             '光伏和风电所得税减免参数
-            Com技术经济分析计算程序.Form6.光伏所得税免征年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电所得税免征年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.光伏所得税减少年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电所得税减少年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.光伏所得税减少比例.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电所得税减少比例.Text = Nothing
+            Me.光伏所得税免征年限.Text = Nothing
+            Me.风电所得税免征年限.Text = Nothing
+            Me.光伏所得税减少年限.Text = Nothing
+            Me.风电所得税减少年限.Text = Nothing
+            Me.光伏所得税减少比例.Text = Nothing
+            Me.风电所得税减少比例.Text = Nothing
             '光伏和风电增值税退税参数
-            Com技术经济分析计算程序.Form6.光伏增值税退税年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电增值税退税年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.光伏增值税退税比例.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电增值税退税比例.Text = Nothing
+            Me.光伏增值税退税年限.Text = Nothing
+            Me.风电增值税退税年限.Text = Nothing
+            Me.光伏增值税退税比例.Text = Nothing
+            Me.风电增值税退税比例.Text = Nothing
             '光伏和风电人员工资
-            Com技术经济分析计算程序.Form6.光伏人员工资.Text = Nothing
-            Com技术经济分析计算程序.Form6.风电人员工资.Text = Nothing
+            Me.光伏人员工资.Text = Nothing
+            Me.风电人员工资.Text = Nothing
             '其它所得税减免和增值税退税参数
-            Com技术经济分析计算程序.Form6.其它所得税免征年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.其它所得税减少年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.其它所得税减少比例.Text = Nothing
-            Com技术经济分析计算程序.Form6.其它增值税退税年限.Text = Nothing
-            Com技术经济分析计算程序.Form6.其它增值税退税比例.Text = Nothing
+            Me.其它所得税免征年限.Text = Nothing
+            Me.其它所得税减少年限.Text = Nothing
+            Me.其它所得税减少比例.Text = Nothing
+            Me.其它增值税退税年限.Text = Nothing
+            Me.其它增值税退税比例.Text = Nothing
             '清空计算结果
-            Com技术经济分析计算程序.Form6.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form6.RichTextBox1.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
         End If
     End Sub
 
@@ -1405,65 +1405,65 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的投资
-        Dim srtz1 As Double = CType(Com技术经济分析计算程序.Form6.投资1.Text, Double)
-        Dim srtz2 As Double = CType(Com技术经济分析计算程序.Form6.投资2.Text, Double)
-        Dim srtz3 As Double = CType(Com技术经济分析计算程序.Form6.投资3.Text, Double)
-        Dim srtz4 As Double = CType(Com技术经济分析计算程序.Form6.投资4.Text, Double)
-        Dim srtz5 As Double = CType(Com技术经济分析计算程序.Form6.投资5.Text, Double)
-        Dim srtz6 As Double = CType(Com技术经济分析计算程序.Form6.投资6.Text, Double)
-        Dim srtz7 As Double = CType(Com技术经济分析计算程序.Form6.投资7.Text, Double)
-        Dim srtz8 As Double = CType(Com技术经济分析计算程序.Form6.投资8.Text, Double)
-        Dim srtz9 As Double = CType(Com技术经济分析计算程序.Form6.投资9.Text, Double)
+        Dim srtz1 As Double = CType(Me.投资1.Text, Double)
+        Dim srtz2 As Double = CType(Me.投资2.Text, Double)
+        Dim srtz3 As Double = CType(Me.投资3.Text, Double)
+        Dim srtz4 As Double = CType(Me.投资4.Text, Double)
+        Dim srtz5 As Double = CType(Me.投资5.Text, Double)
+        Dim srtz6 As Double = CType(Me.投资6.Text, Double)
+        Dim srtz7 As Double = CType(Me.投资7.Text, Double)
+        Dim srtz8 As Double = CType(Me.投资8.Text, Double)
+        Dim srtz9 As Double = CType(Me.投资9.Text, Double)
         '读取输入的专项投资和年量减去比例
-        Dim zxtzjqbl1 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例1.Text, Double) / 100
-        Dim zxtzjqbl2 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例2.Text, Double) / 100
-        Dim zxtzjqbl3 As Double = CType(Com技术经济分析计算程序.Form6.专项投资减去比例3.Text, Double) / 100
-        Dim zxzljqbl1 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例1.Text, Double) / 100
-        Dim zxzljqbl2 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例2.Text, Double) / 100
-        Dim zxzljqbl3 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例3.Text, Double) / 100
-        Dim zxzljqbl4 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例4.Text, Double) / 100
-        Dim zxzljqbl5 As Double = CType(Com技术经济分析计算程序.Form6.专项年量减去比例5.Text, Double) / 100
+        Dim zxtzjqbl1 As Double = CType(Me.专项投资减去比例1.Text, Double) / 100
+        Dim zxtzjqbl2 As Double = CType(Me.专项投资减去比例2.Text, Double) / 100
+        Dim zxtzjqbl3 As Double = CType(Me.专项投资减去比例3.Text, Double) / 100
+        Dim zxzljqbl1 As Double = CType(Me.专项年量减去比例1.Text, Double) / 100
+        Dim zxzljqbl2 As Double = CType(Me.专项年量减去比例2.Text, Double) / 100
+        Dim zxzljqbl3 As Double = CType(Me.专项年量减去比例3.Text, Double) / 100
+        Dim zxzljqbl4 As Double = CType(Me.专项年量减去比例4.Text, Double) / 100
+        Dim zxzljqbl5 As Double = CType(Me.专项年量减去比例5.Text, Double) / 100
         '读取输入的各个收入占比比例
-        Dim srbl1 As Double = CType(Com技术经济分析计算程序.Form6.收入比例1.Text, Double) / 100
-        Dim srbl2 As Double = CType(Com技术经济分析计算程序.Form6.收入比例2.Text, Double) / 100
-        Dim srbl3 As Double = CType(Com技术经济分析计算程序.Form6.收入比例3.Text, Double) / 100
-        Dim srbl4 As Double = CType(Com技术经济分析计算程序.Form6.收入比例4.Text, Double) / 100
-        Dim srbl5 As Double = CType(Com技术经济分析计算程序.Form6.收入比例5.Text, Double) / 100
-        Dim srbl6 As Double = CType(Com技术经济分析计算程序.Form6.收入比例6.Text, Double) / 100
-        Dim srbl7 As Double = CType(Com技术经济分析计算程序.Form6.收入比例7.Text, Double) / 100
-        Dim srbl8 As Double = CType(Com技术经济分析计算程序.Form6.收入比例8.Text, Double) / 100
-        Dim srbl9 As Double = CType(Com技术经济分析计算程序.Form6.收入比例9.Text, Double) / 100
+        Dim srbl1 As Double = CType(Me.收入比例1.Text, Double) / 100
+        Dim srbl2 As Double = CType(Me.收入比例2.Text, Double) / 100
+        Dim srbl3 As Double = CType(Me.收入比例3.Text, Double) / 100
+        Dim srbl4 As Double = CType(Me.收入比例4.Text, Double) / 100
+        Dim srbl5 As Double = CType(Me.收入比例5.Text, Double) / 100
+        Dim srbl6 As Double = CType(Me.收入比例6.Text, Double) / 100
+        Dim srbl7 As Double = CType(Me.收入比例7.Text, Double) / 100
+        Dim srbl8 As Double = CType(Me.收入比例8.Text, Double) / 100
+        Dim srbl9 As Double = CType(Me.收入比例9.Text, Double) / 100
         '读取输入的各个成本占比比例
-        Dim cbbl1 As Double = CType(Com技术经济分析计算程序.Form6.成本比例1.Text, Double) / 100
-        Dim cbbl2 As Double = CType(Com技术经济分析计算程序.Form6.成本比例2.Text, Double) / 100
-        Dim cbbl3 As Double = CType(Com技术经济分析计算程序.Form6.成本比例3.Text, Double) / 100
-        Dim cbbl4 As Double = CType(Com技术经济分析计算程序.Form6.成本比例4.Text, Double) / 100
-        Dim cbbl5 As Double = CType(Com技术经济分析计算程序.Form6.成本比例5.Text, Double) / 100
-        Dim cbbl6 As Double = CType(Com技术经济分析计算程序.Form6.成本比例6.Text, Double) / 100
-        Dim cbbl7 As Double = CType(Com技术经济分析计算程序.Form6.成本比例7.Text, Double) / 100
-        Dim cbbl8 As Double = CType(Com技术经济分析计算程序.Form6.成本比例8.Text, Double) / 100
-        Dim cbbl9 As Double = CType(Com技术经济分析计算程序.Form6.成本比例9.Text, Double) / 100
-        Dim cbbl10 As Double = CType(Com技术经济分析计算程序.Form6.成本比例10.Text, Double) / 100
-        Dim cbbl11 As Double = CType(Com技术经济分析计算程序.Form6.成本比例11.Text, Double) / 100
+        Dim cbbl1 As Double = CType(Me.成本比例1.Text, Double) / 100
+        Dim cbbl2 As Double = CType(Me.成本比例2.Text, Double) / 100
+        Dim cbbl3 As Double = CType(Me.成本比例3.Text, Double) / 100
+        Dim cbbl4 As Double = CType(Me.成本比例4.Text, Double) / 100
+        Dim cbbl5 As Double = CType(Me.成本比例5.Text, Double) / 100
+        Dim cbbl6 As Double = CType(Me.成本比例6.Text, Double) / 100
+        Dim cbbl7 As Double = CType(Me.成本比例7.Text, Double) / 100
+        Dim cbbl8 As Double = CType(Me.成本比例8.Text, Double) / 100
+        Dim cbbl9 As Double = CType(Me.成本比例9.Text, Double) / 100
+        Dim cbbl10 As Double = CType(Me.成本比例10.Text, Double) / 100
+        Dim cbbl11 As Double = CType(Me.成本比例11.Text, Double) / 100
         '读取设置的光伏和风力发电所得税减免参数、增值税退税参数等
-        Dim gfsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.光伏所得税免征年限.Text, Integer)
-        Dim gfsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.光伏所得税减少年限.Text, Integer)
-        Dim gfsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.光伏所得税减少比例.Text, Double) / 100
-        Dim gfzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.光伏增值税退税年限.Text, Integer)
-        Dim gfzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.光伏增值税退税比例.Text, Double) / 100
-        Dim gfrygz As Double = CType(Com技术经济分析计算程序.Form6.光伏人员工资.Text, Double)
-        Dim fdsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.风电所得税免征年限.Text, Integer)
-        Dim fdsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.风电所得税减少年限.Text, Integer)
-        Dim fdsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.风电所得税减少比例.Text, Double) / 100
-        Dim fdzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.风电增值税退税年限.Text, Integer)
-        Dim fdzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.风电增值税退税比例.Text, Double) / 100
-        Dim fdrygz As Double = CType(Com技术经济分析计算程序.Form6.风电人员工资.Text, Double)
+        Dim gfsdsmznx As Integer = CType(Me.光伏所得税免征年限.Text, Integer)
+        Dim gfsdsjsnx As Integer = CType(Me.光伏所得税减少年限.Text, Integer)
+        Dim gfsdsjsbl As Double = CType(Me.光伏所得税减少比例.Text, Double) / 100
+        Dim gfzzstsnx As Integer = CType(Me.光伏增值税退税年限.Text, Integer)
+        Dim gfzzstsbl As Double = CType(Me.光伏增值税退税比例.Text, Double) / 100
+        Dim gfrygz As Double = CType(Me.光伏人员工资.Text, Double)
+        Dim fdsdsmznx As Integer = CType(Me.风电所得税免征年限.Text, Integer)
+        Dim fdsdsjsnx As Integer = CType(Me.风电所得税减少年限.Text, Integer)
+        Dim fdsdsjsbl As Double = CType(Me.风电所得税减少比例.Text, Double) / 100
+        Dim fdzzstsnx As Integer = CType(Me.风电增值税退税年限.Text, Integer)
+        Dim fdzzstsbl As Double = CType(Me.风电增值税退税比例.Text, Double) / 100
+        Dim fdrygz As Double = CType(Me.风电人员工资.Text, Double)
         '读取输入的其它部分所得税减免和增值税退税参数
-        Dim qtsdsmznx As Integer = CType(Com技术经济分析计算程序.Form6.其它所得税免征年限.Text, Integer)
-        Dim qtsdsjsnx As Integer = CType(Com技术经济分析计算程序.Form6.其它所得税减少年限.Text, Integer)
-        Dim qtsdsjsbl As Double = CType(Com技术经济分析计算程序.Form6.其它所得税减少比例.Text, Double) / 100
-        Dim qtzzstsnx As Integer = CType(Com技术经济分析计算程序.Form6.其它增值税退税年限.Text, Integer)
-        Dim qtzzstsbl As Double = CType(Com技术经济分析计算程序.Form6.其它增值税退税比例.Text, Double) / 100
+        Dim qtsdsmznx As Integer = CType(Me.其它所得税免征年限.Text, Integer)
+        Dim qtsdsjsnx As Integer = CType(Me.其它所得税减少年限.Text, Integer)
+        Dim qtsdsjsbl As Double = CType(Me.其它所得税减少比例.Text, Double) / 100
+        Dim qtzzstsnx As Integer = CType(Me.其它增值税退税年限.Text, Integer)
+        Dim qtzzstsbl As Double = CType(Me.其它增值税退税比例.Text, Double) / 100
         '记录目前各个收入的单价
         Dim srdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value, Double)
         Dim srdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value, Double)
@@ -1489,7 +1489,7 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————
         '针对输入和选择的内容，添加报错功能
         '光伏
-        If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+        If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
             If gfzzstsnx = 0 Then
                 MsgBox("光伏增值税退税年限不可以是0，请重新输入！")
                 Exit Sub
@@ -1500,7 +1500,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
         End If
         '风电
-        If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+        If Me.收入7.Checked = True Then
             If fdzzstsnx = 0 Then
                 MsgBox("风电增值税退税年限不可以是0，请重新输入！")
                 Exit Sub
@@ -1511,7 +1511,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
         End If
         '其它
-        If Com技术经济分析计算程序.Form6.收入5.Checked = False And Com技术经济分析计算程序.Form6.收入6.Checked = False And Com技术经济分析计算程序.Form6.收入7.Checked = False Then
+        If Me.收入5.Checked = False And Me.收入6.Checked = False And Me.收入7.Checked = False Then
             If qtzzstsnx = 0 Then
                 MsgBox("其它增值税退税年限不可以是0，请重新输入！")
                 Exit Sub
@@ -1616,16 +1616,16 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '减去光伏发电和光伏补贴的收入
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+            If Me.收入5.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = srdj5 * (1 - srbl5)
             End If
-            If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入6.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = srdj6 * (1 - srbl6)
             End If
             '减去光伏专项人员工资
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 - gfrygz
             End If
             '————————————————————————————————————————————————————————————————————————————————————
@@ -1633,7 +1633,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '记录逐年增值税金额减少值
             Dim ZZS_gf_js(50) As Double
             '收入5或者收入6被勾选时
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
                 '将估算表中输入的光伏投资和装机规模减小
                 Dim JS_gftz As Integer = 0 '投资年份计数
                 Dim GFTZBL_1 As Double = Math.Max(srtz5, srtz6) / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value
@@ -1678,14 +1678,14 @@ Public Class 设置所得税减免和增值税退税包含内容
                     Next
                 Next
                 '收入
-                If Com技术经济分析计算程序.Form6.收入5.Checked = True Then
+                If Me.收入5.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value = srdj5
                 End If
-                If Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+                If Me.收入6.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value = srdj6
                 End If
                 '人员工资
-                If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+                If Me.成本8.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
@@ -1710,12 +1710,12 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '减去风力发电的收入
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7 * (1 - srbl7)
             End If
             '减去风电专项人员工资
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 - fdrygz
             End If
             '————————————————————————————————————————————————————————————————————————————————————
@@ -1723,7 +1723,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '记录逐年增值税金额减少值
             Dim ZZS_fd_js(50) As Double
             '收入7被勾选时
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '将估算表中输入的风电投资和装机规模减少
                 Dim FDTZBL_1 As Double = srtz7 / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value
                 Dim JS_fdtz As Integer = 0 '投资年份计数
@@ -1767,11 +1767,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     Next
                 Next
                 '收入
-                If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+                If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7
                 End If
                 '人员工资
-                If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+                If Me.成本8.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
@@ -1798,88 +1798,88 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '收入1
-            If Com技术经济分析计算程序.Form6.收入1.Checked = True Then
+            If Me.收入1.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value = srdj1 * (1 - srbl1)
             End If
             '收入2
-            If Com技术经济分析计算程序.Form6.收入2.Checked = True Then
+            If Me.收入2.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value = srdj2 * (1 - srbl2)
             End If
             '收入3
-            If Com技术经济分析计算程序.Form6.收入3.Checked = True Then
+            If Me.收入3.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3 * (1 - srbl3)
             End If
             '收入4
-            If Com技术经济分析计算程序.Form6.收入4.Checked = True Then
+            If Me.收入4.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
             End If
             '收入8
-            If Com技术经济分析计算程序.Form6.收入8.Checked = True Then
+            If Me.收入8.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8 * (1 - srbl8)
             End If
             '收入9
-            If Com技术经济分析计算程序.Form6.收入9.Checked = True Then
+            If Me.收入9.Checked = True Then
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value = srdj9 * (1 - srbl9)
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '成本1
-            If Com技术经济分析计算程序.Form6.成本1.Checked = True Then
+            If Me.成本1.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value = cbdj1 * (1 - cbbl1)
             End If
             '成本2
-            If Com技术经济分析计算程序.Form6.成本2.Checked = True Then
+            If Me.成本2.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value = cbdj2 * (1 - cbbl2)
             End If
             '成本3
-            If Com技术经济分析计算程序.Form6.成本3.Checked = True Then
+            If Me.成本3.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3 * (1 - cbbl3)
             End If
             '成本4
-            If Com技术经济分析计算程序.Form6.成本4.Checked = True Then
+            If Me.成本4.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value = cbdj4 * (1 - cbbl4)
             End If
             '成本5
-            If Com技术经济分析计算程序.Form6.成本5.Checked = True Then
+            If Me.成本5.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value = cbdj5 * (1 - cbbl5)
             End If
             '成本6
-            If Com技术经济分析计算程序.Form6.成本6.Checked = True Then
+            If Me.成本6.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 12).Value = cbdj6 * (1 - cbbl6)
             End If
             '成本7
-            If Com技术经济分析计算程序.Form6.成本7.Checked = True Then
+            If Me.成本7.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7 * (1 - cbbl7)
             End If
             '成本8
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
             End If
             '成本9
-            If Com技术经济分析计算程序.Form6.成本9.Checked = True Then
+            If Me.成本9.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9 * (1 - cbbl9)
             End If
             '成本10
-            If Com技术经济分析计算程序.Form6.成本10.Checked = True Then
+            If Me.成本10.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
             End If
             '成本11
-            If Com技术经济分析计算程序.Form6.成本11.Checked = True Then
+            If Me.成本11.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
             End If
@@ -1887,7 +1887,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             '减去专项投资和年总量
             '投资
             Dim JS_zxtz1 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资1.Checked = True Then
+            If Me.专项投资1.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz1 = JS_zxtz1 + 1
@@ -1898,7 +1898,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxtz2 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资2.Checked = True Then
+            If Me.专项投资2.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz2 = JS_zxtz2 + 1
@@ -1909,7 +1909,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxtz3 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项投资3.Checked = True Then
+            If Me.专项投资3.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz3 = JS_zxtz3 + 1
@@ -1921,7 +1921,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '年量
             Dim JS_zxzl1 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量1.Checked = True Then
+            If Me.专项年量1.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl1 = JS_zxzl1 + 1
@@ -1932,7 +1932,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl2 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量2.Checked = True Then
+            If Me.专项年量2.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl2 = JS_zxzl2 + 1
@@ -1943,7 +1943,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl3 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量3.Checked = True Then
+            If Me.专项年量3.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl3 = JS_zxzl3 + 1
@@ -1954,7 +1954,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl4 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量4.Checked = True Then
+            If Me.专项年量4.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl4 = JS_zxzl4 + 1
@@ -1965,7 +1965,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             Dim JS_zxzl5 As Integer = 0
-            If Com技术经济分析计算程序.Form6.专项年量5.Checked = True Then
+            If Me.专项年量5.Checked = True Then
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl5 = JS_zxzl5 + 1
@@ -2015,68 +2015,68 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             Next
             '各种收入单价
-            If Com技术经济分析计算程序.Form6.收入4.Checked = True Then
+            If Me.收入4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4
             End If
-            If Com技术经济分析计算程序.Form6.收入1.Checked = True Then
+            If Me.收入1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value = srdj1
             End If
-            If Com技术经济分析计算程序.Form6.收入2.Checked = True Then
+            If Me.收入2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value = srdj2
             End If
-            If Com技术经济分析计算程序.Form6.收入3.Checked = True Then
+            If Me.收入3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3
             End If
-            If Com技术经济分析计算程序.Form6.收入8.Checked = True Then
+            If Me.收入8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8
             End If
 
-            If Com技术经济分析计算程序.Form6.收入9.Checked = True Then
+            If Me.收入9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value = srdj9
             End If
             '各项成本单价
             '成本1
-            If Com技术经济分析计算程序.Form6.成本1.Checked = True Then
+            If Me.成本1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value = cbdj1
             End If
             '成本2
-            If Com技术经济分析计算程序.Form6.成本2.Checked = True Then
+            If Me.成本2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value = cbdj2
             End If
             '成本3
-            If Com技术经济分析计算程序.Form6.成本3.Checked = True Then
+            If Me.成本3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3
             End If
             '成本4
-            If Com技术经济分析计算程序.Form6.成本4.Checked = True Then
+            If Me.成本4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value = cbdj4
             End If
             '成本5
-            If Com技术经济分析计算程序.Form6.成本5.Checked = True Then
+            If Me.成本5.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value = cbdj5
             End If
             '成本6
-            If Com技术经济分析计算程序.Form6.成本6.Checked = True Then
+            If Me.成本6.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 12).Value = cbdj6
             End If
             '成本7
-            If Com技术经济分析计算程序.Form6.成本7.Checked = True Then
+            If Me.成本7.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7
             End If
             '成本8
-            If Com技术经济分析计算程序.Form6.成本8.Checked = True Then
+            If Me.成本8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
             End If
             '成本9
-            If Com技术经济分析计算程序.Form6.成本9.Checked = True Then
+            If Me.成本9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9
             End If
             '成本10
-            If Com技术经济分析计算程序.Form6.成本10.Checked = True Then
+            If Me.成本10.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
             End If
             '成本11
-            If Com技术经济分析计算程序.Form6.成本11.Checked = True Then
+            If Me.成本11.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
             '计算一次流动资金
@@ -2090,7 +2090,7 @@ Public Class 设置所得税减免和增值税退税包含内容
                 ZZS_TS(i) = 0 '初始化数组，都是0
             Next
             '光伏每年减少的增值税金额
-            If Com技术经济分析计算程序.Form6.收入5.Checked = True Or Com技术经济分析计算程序.Form6.收入6.Checked = True Then
+            If Me.收入5.Checked = True Or Me.收入6.Checked = True Then
                 '计算逐年光伏发电增值税退税金额
                 For i = 1 To 31
                     If i <= jsnx And i <= gfzzstsnx Then
@@ -2100,7 +2100,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '风电每年减少的增值税金额
-            If Com技术经济分析计算程序.Form6.收入7.Checked = True Then
+            If Me.收入7.Checked = True Then
                 '计算逐年风力发电发电增值税减少金额
                 For i = 1 To 31
                     If i <= jsnx And i <= fdzzstsnx Then
@@ -2157,8 +2157,8 @@ Public Class 设置所得税减免和增值税退税包含内容
             '计算一次Excel
             ExcelApp.Calculate()
             '清空已有内容
-            Com技术经济分析计算程序.Form6.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form6.RichTextBox1.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
             '显示增值税退税计算结果
             Dim zzstsbl As Double '增值税退税比例
             Dim nf As Integer
@@ -2166,10 +2166,10 @@ Public Class 设置所得税减免和增值税退税包含内容
                 If i - 2 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(171, i).Value '年份序号
                     zzstsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value) * 100, 2) '读取增值税退税比例
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & zzstsbl & "%(" & nf & ") " '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & zzstsbl & "%(" & nf & ") " '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = "逐年增值税实际退税比例：" & Com技术经济分析计算程序.Form6.RichTextBox1.Text
+            Me.RichTextBox1.Text = "逐年增值税实际退税比例：" & Me.RichTextBox1.Text
         End If
     End Sub
 
@@ -2233,8 +2233,8 @@ Public Class 设置所得税减免和增值税退税包含内容
             '计算一次Excel
             ExcelApp.Calculate()
             '清空已有内容
-            Com技术经济分析计算程序.Form6.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form6.RichTextBox1.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
             '显示所得税减免计算结果
             Dim sdszsbl As Double '所得税征收比例
             Dim sdsl As Double '实际所得税率
@@ -2243,28 +2243,28 @@ Public Class 设置所得税减免和增值税退税包含内容
                 If i - 3 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
                     sdszsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value) * 100, 2) '读取所得税征收比例
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = "逐年所得税实际征收比例：" & Com技术经济分析计算程序.Form6.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
+            Me.RichTextBox1.Text = "逐年所得税实际征收比例：" & Me.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
             For i = 4 To 34  '根据数组中的元素数量循环
                 If i - 3 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
                     sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(50, i).Value) * 100, 2) '读取所得税率
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & sdsl & "%(" & nf & ") "  '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdsl & "%(" & nf & ") "  '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & vbCrLf & "逐年增值税退税比例："
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & vbCrLf & "逐年增值税退税比例："
             '显示增值税退税计算结果
             Dim zzstsbl As Double '增值税退税比例
             For i = 3 To 33  '根据数组中的元素数量循环
                 If i - 2 <= jsnx Then
                     nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(171, i).Value '年份序号
                     zzstsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value) * 100, 2) '读取增值税退税比例
-                    Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text & zzstsbl & "%(" & nf & ") " '输出到RichTextBox1
+                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & zzstsbl & "%(" & nf & ") " '输出到RichTextBox1
                 End If
             Next
-            Com技术经济分析计算程序.Form6.RichTextBox1.Text = Com技术经济分析计算程序.Form6.RichTextBox1.Text
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text
         End If
     End Sub
 

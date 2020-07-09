@@ -9,23 +9,23 @@
         '定义局部变量
         Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
         Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Com技术经济分析计算程序.Form2.gfjsnf.Text, Integer) '光伏计算结束年份
-        Dim ksnf = CType(Com技术经济分析计算程序.Form2.gfksnf.Text, Integer) '光伏计算开始年份
+        Dim jsnx = CType(Me.gfjsnf.Text, Integer) '光伏计算结束年份
+        Dim ksnf = CType(Me.gfksnf.Text, Integer) '光伏计算开始年份
         '读取项目计算年限
         Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(51, 1).Value > 0 Then '当光伏总发电量大于0，激活功能的条件
-            SJKSNF1 = CType(Com技术经济分析计算程序.Form2.TextBox1.Text, Integer)
-            SJKSNF2 = CType(Com技术经济分析计算程序.Form2.TextBox2.Text, Integer)
-            SJKSNF3 = CType(Com技术经济分析计算程序.Form2.TextBox3.Text, Integer)
-            SJKSNF4 = CType(Com技术经济分析计算程序.Form2.TextBox7.Text, Integer)
-            SJKSNF5 = CType(Com技术经济分析计算程序.Form2.TextBox9.Text, Integer)
-            SJL1 = CType(Com技术经济分析计算程序.Form2.TextBox4.Text, Double)
-            SJL2 = CType(Com技术经济分析计算程序.Form2.TextBox5.Text, Double)
-            SJL3 = CType(Com技术经济分析计算程序.Form2.TextBox6.Text, Double)
-            SJL4 = CType(Com技术经济分析计算程序.Form2.TextBox8.Text, Double)
-            SJL5 = CType(Com技术经济分析计算程序.Form2.TextBox10.Text, Double)
+            SJKSNF1 = CType(Me.TextBox1.Text, Integer)
+            SJKSNF2 = CType(Me.TextBox2.Text, Integer)
+            SJKSNF3 = CType(Me.TextBox3.Text, Integer)
+            SJKSNF4 = CType(Me.TextBox7.Text, Integer)
+            SJKSNF5 = CType(Me.TextBox9.Text, Integer)
+            SJL1 = CType(Me.TextBox4.Text, Double)
+            SJL2 = CType(Me.TextBox5.Text, Double)
+            SJL3 = CType(Me.TextBox6.Text, Double)
+            SJL4 = CType(Me.TextBox8.Text, Double)
+            SJL5 = CType(Me.TextBox10.Text, Double)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '输入的光伏计算年限不可以大于项目计算年限
             If jsnx > xmjsnx Then
@@ -122,7 +122,7 @@
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
             '————————————————————————————————————————————————————————————————————————————————————————        
-            Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+            Me.RichTextBox1.Clear()
             For i = 3 To 33 '清空已有的负荷率，防止出错
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 0
             Next
@@ -312,7 +312,7 @@
             '计算光伏逐年装机量累加值
             Dim js As Integer = 0
             '按照逐年投产月份数量比例计算
-            If Com技术经济分析计算程序.Form2.CheckBox1.Checked = True Then
+            If Me.CheckBox1.Checked = True Then
                 For i = 109 To 139 '行号
                     js = js + 1
                     For j = 3 + js - 1 To 33 '列号
@@ -352,17 +352,17 @@
             '计算一次Excle
             ExcelApp.Calculate()
             '清空已有内容
-            Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
             '显示此时的光伏逐年负荷率
             Dim SJ As Double
             Dim nf
             For i = 3 To 33  '根据数组中的元素数量循环
                 nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value '年份序号
                 SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value) * 100, 2) '读取综合负荷率
-                Com技术经济分析计算程序.Form2.RichTextBox1.Text = Com技术经济分析计算程序.Form2.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
             Next
-            Com技术经济分析计算程序.Form2.RichTextBox1.Text = "光伏发电逐年负荷率：" & Com技术经济分析计算程序.Form2.RichTextBox1.Text
+            Me.RichTextBox1.Text = "光伏发电逐年负荷率：" & Me.RichTextBox1.Text
         Else
             MsgBox("估算表中输入的光伏装机规模为0，请检查！")
         End If
@@ -385,27 +385,27 @@
         '————————————————————————————————————————————————————————————————————————————————————————————        
         MyBase.KeyPreview = True
         '清空文本框中已有的各种数据
-        Com技术经济分析计算程序.Form2.TextBox1.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox2.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox3.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox4.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox5.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox6.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox7.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox8.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox9.Text = Nothing
-        Com技术经济分析计算程序.Form2.TextBox10.Text = Nothing
-        Com技术经济分析计算程序.Form2.gfksnf.Text = Nothing
-        Com技术经济分析计算程序.Form2.xdcksnf.Text = Nothing
-        Com技术经济分析计算程序.Form2.gfjsnf.Text = Nothing
-        Com技术经济分析计算程序.Form2.xdcjsnf.Text = Nothing
-        Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+        Me.TextBox1.Text = Nothing
+        Me.TextBox2.Text = Nothing
+        Me.TextBox3.Text = Nothing
+        Me.TextBox4.Text = Nothing
+        Me.TextBox5.Text = Nothing
+        Me.TextBox6.Text = Nothing
+        Me.TextBox7.Text = Nothing
+        Me.TextBox8.Text = Nothing
+        Me.TextBox9.Text = Nothing
+        Me.TextBox10.Text = Nothing
+        Me.gfksnf.Text = Nothing
+        Me.xdcksnf.Text = Nothing
+        Me.gfjsnf.Text = Nothing
+        Me.xdcjsnf.Text = Nothing
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '是否勾选按照逐年投产月份数折算
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 11).Value = "折算" Then
-            Com技术经济分析计算程序.Form2.CheckBox1.Checked = True
+            Me.CheckBox1.Checked = True
         Else
-            Com技术经济分析计算程序.Form2.CheckBox1.Checked = False
+            Me.CheckBox1.Checked = False
         End If
     End Sub
     Private Sub 蓄电池供电_Click(sender As Object, e As EventArgs) Handles 蓄电池供电.Click
@@ -418,22 +418,22 @@
         '定义局部变量
         Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
         Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Com技术经济分析计算程序.Form2.xdcjsnf.Text, Integer) '蓄电池计算年限
-        Dim ksnf = CType(Com技术经济分析计算程序.Form2.xdcksnf.Text, Integer) '蓄电池计算开始年份
+        Dim jsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
+        Dim ksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
         '读取项目计算年限
         Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        SJKSNF1 = CType(Com技术经济分析计算程序.Form2.TextBox1.Text, Integer)
-        SJKSNF2 = CType(Com技术经济分析计算程序.Form2.TextBox2.Text, Integer)
-        SJKSNF3 = CType(Com技术经济分析计算程序.Form2.TextBox3.Text, Integer)
-        SJKSNF4 = CType(Com技术经济分析计算程序.Form2.TextBox7.Text, Integer)
-        SJKSNF5 = CType(Com技术经济分析计算程序.Form2.TextBox9.Text, Integer)
-        SJL1 = CType(Com技术经济分析计算程序.Form2.TextBox4.Text, Double)
-        SJL2 = CType(Com技术经济分析计算程序.Form2.TextBox5.Text, Double)
-        SJL3 = CType(Com技术经济分析计算程序.Form2.TextBox6.Text, Double)
-        SJL4 = CType(Com技术经济分析计算程序.Form2.TextBox8.Text, Double)
-        SJL5 = CType(Com技术经济分析计算程序.Form2.TextBox10.Text, Double)
+        SJKSNF1 = CType(Me.TextBox1.Text, Integer)
+        SJKSNF2 = CType(Me.TextBox2.Text, Integer)
+        SJKSNF3 = CType(Me.TextBox3.Text, Integer)
+        SJKSNF4 = CType(Me.TextBox7.Text, Integer)
+        SJKSNF5 = CType(Me.TextBox9.Text, Integer)
+        SJL1 = CType(Me.TextBox4.Text, Double)
+        SJL2 = CType(Me.TextBox5.Text, Double)
+        SJL3 = CType(Me.TextBox6.Text, Double)
+        SJL4 = CType(Me.TextBox8.Text, Double)
+        SJL5 = CType(Me.TextBox10.Text, Double)
         '————————————————————————————————————————————————————————————————————————————————————————  
         '输入的蓄电池计算年限不可以大于项目计算年限
         If jsnx > xmjsnx Then
@@ -530,7 +530,7 @@
         ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '————————————————————————————————————————————————————————————————————————————————————————      
-        Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+        Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 0
         Next
@@ -716,7 +716,7 @@
             End If
         Next
         '是否需要根据逐年投产月份数量折算
-        If Com技术经济分析计算程序.Form2.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = True Then
             For i = 3 To 33
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
             Next
@@ -728,35 +728,35 @@
         '计算一次Excle
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示此时的蓄电池逐年负荷率
         Dim SJ As Double
         Dim nf
         For i = 3 To 33  '根据数组中的元素数量循环
             SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value) * 100, 2)
             nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value
-            Com技术经济分析计算程序.Form2.RichTextBox1.Text = Com技术经济分析计算程序.Form2.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
-        Com技术经济分析计算程序.Form2.RichTextBox1.Text = "蓄电池供电逐年负荷率：" & Com技术经济分析计算程序.Form2.RichTextBox1.Text
+        Me.RichTextBox1.Text = "蓄电池供电逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form2.TextBox1.Clear()
-            Com技术经济分析计算程序.Form2.TextBox2.Clear()
-            Com技术经济分析计算程序.Form2.TextBox3.Clear()
-            Com技术经济分析计算程序.Form2.TextBox4.Clear()
-            Com技术经济分析计算程序.Form2.TextBox5.Clear()
-            Com技术经济分析计算程序.Form2.TextBox6.Clear()
-            Com技术经济分析计算程序.Form2.TextBox7.Clear()
-            Com技术经济分析计算程序.Form2.TextBox8.Clear()
-            Com技术经济分析计算程序.Form2.TextBox9.Clear()
-            Com技术经济分析计算程序.Form2.TextBox10.Clear()
-            Com技术经济分析计算程序.Form2.gfjsnf.Clear()
-            Com技术经济分析计算程序.Form2.xdcjsnf.Clear()
-            Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+            Me.TextBox1.Clear()
+            Me.TextBox2.Clear()
+            Me.TextBox3.Clear()
+            Me.TextBox4.Clear()
+            Me.TextBox5.Clear()
+            Me.TextBox6.Clear()
+            Me.TextBox7.Clear()
+            Me.TextBox8.Clear()
+            Me.TextBox9.Clear()
+            Me.TextBox10.Clear()
+            Me.gfjsnf.Clear()
+            Me.xdcjsnf.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
         End If
     End Sub
     Private Sub 光伏发电默认系数_Click(sender As Object, e As EventArgs) Handles 光伏发电默认系数.Click
@@ -771,25 +771,25 @@
         '————————————————————————————————————————————————————————————————————————————————————————————     
         Dim XZ = MsgBox("是否加载光伏发电的默认逐年衰减系数和计算年限？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form2.TextBox1.Clear()
-            Com技术经济分析计算程序.Form2.TextBox2.Clear()
-            Com技术经济分析计算程序.Form2.TextBox3.Clear()
-            Com技术经济分析计算程序.Form2.TextBox4.Clear()
-            Com技术经济分析计算程序.Form2.TextBox5.Clear()
-            Com技术经济分析计算程序.Form2.TextBox6.Clear()
-            Com技术经济分析计算程序.Form2.TextBox7.Clear()
-            Com技术经济分析计算程序.Form2.TextBox8.Clear()
-            Com技术经济分析计算程序.Form2.TextBox9.Clear()
-            Com技术经济分析计算程序.Form2.TextBox10.Clear()
-            Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
-            Com技术经济分析计算程序.Form2.TextBox1.Text = 2
-            Com技术经济分析计算程序.Form2.TextBox2.Text = 3
-            Com技术经济分析计算程序.Form2.TextBox4.Text = 2.5
-            Com技术经济分析计算程序.Form2.TextBox5.Text = 0.7
-            Com技术经济分析计算程序.Form2.gfjsnf.Text = CType(xmjsnx, String)
-            Com技术经济分析计算程序.Form2.xdcksnf.Clear()
-            Com技术经济分析计算程序.Form2.xdcjsnf.Clear()
+            Me.TextBox1.Clear()
+            Me.TextBox2.Clear()
+            Me.TextBox3.Clear()
+            Me.TextBox4.Clear()
+            Me.TextBox5.Clear()
+            Me.TextBox6.Clear()
+            Me.TextBox7.Clear()
+            Me.TextBox8.Clear()
+            Me.TextBox9.Clear()
+            Me.TextBox10.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
+            Me.TextBox1.Text = 2
+            Me.TextBox2.Text = 3
+            Me.TextBox4.Text = 2.5
+            Me.TextBox5.Text = 0.7
+            Me.gfjsnf.Text = CType(xmjsnx, String)
+            Me.xdcksnf.Clear()
+            Me.xdcjsnf.Clear()
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
             Dim JSKSNF As Integer = 0
@@ -799,7 +799,7 @@
                     Exit For
                 End If
             Next
-            Com技术经济分析计算程序.Form2.gfksnf.Text = CType(JSKSNF, String)
+            Me.gfksnf.Text = CType(JSKSNF, String)
         End If
     End Sub
     Private Sub 蓄电池默认系数_Click(sender As Object, e As EventArgs) Handles 蓄电池默认系数.Click
@@ -811,23 +811,23 @@
         '————————————————————————————————————————————————————————————————————————————————————————————               
         Dim XZ = MsgBox("是否加载蓄电池的默认逐年衰减系数和计算年限？", vbOKCancel)
         If XZ = vbOK Then
-            Com技术经济分析计算程序.Form2.TextBox1.Clear()
-            Com技术经济分析计算程序.Form2.TextBox2.Clear()
-            Com技术经济分析计算程序.Form2.TextBox3.Clear()
-            Com技术经济分析计算程序.Form2.TextBox4.Clear()
-            Com技术经济分析计算程序.Form2.TextBox5.Clear()
-            Com技术经济分析计算程序.Form2.TextBox6.Clear()
-            Com技术经济分析计算程序.Form2.TextBox7.Clear()
-            Com技术经济分析计算程序.Form2.TextBox8.Clear()
-            Com技术经济分析计算程序.Form2.TextBox9.Clear()
-            Com技术经济分析计算程序.Form2.TextBox10.Clear()
-            Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-            Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
-            Com技术经济分析计算程序.Form2.TextBox1.Text = 3
-            Com技术经济分析计算程序.Form2.TextBox4.Text = 1
-            Com技术经济分析计算程序.Form2.xdcjsnf.Text = 11
-            Com技术经济分析计算程序.Form2.gfksnf.Clear()
-            Com技术经济分析计算程序.Form2.gfjsnf.Clear()
+            Me.TextBox1.Clear()
+            Me.TextBox2.Clear()
+            Me.TextBox3.Clear()
+            Me.TextBox4.Clear()
+            Me.TextBox5.Clear()
+            Me.TextBox6.Clear()
+            Me.TextBox7.Clear()
+            Me.TextBox8.Clear()
+            Me.TextBox9.Clear()
+            Me.TextBox10.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.RichTextBox1.Clear()
+            Me.TextBox1.Text = 3
+            Me.TextBox4.Text = 1
+            Me.xdcjsnf.Text = 11
+            Me.gfksnf.Clear()
+            Me.gfjsnf.Clear()
             '——————————————————————————————————————————————————————————————————————————————————————————————
             Dim JSKSNF As Integer = 0
             For i = 3 To 33
@@ -836,7 +836,7 @@
                     Exit For
                 End If
             Next
-            Com技术经济分析计算程序.Form2.xdcksnf.Text = CType(JSKSNF, String)
+            Me.xdcksnf.Text = CType(JSKSNF, String)
         End If
     End Sub
 
@@ -850,22 +850,22 @@
         '定义局部变量
         Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
         Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Com技术经济分析计算程序.Form2.xdcjsnf.Text, Integer) '蓄电池计算年限
-        Dim ksnf = CType(Com技术经济分析计算程序.Form2.xdcksnf.Text, Integer) '蓄电池计算开始年份
+        Dim jsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
+        Dim ksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
         '读取项目计算年限
         Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        SJKSNF1 = CType(Com技术经济分析计算程序.Form2.TextBox1.Text, Integer)
-        SJKSNF2 = CType(Com技术经济分析计算程序.Form2.TextBox2.Text, Integer)
-        SJKSNF3 = CType(Com技术经济分析计算程序.Form2.TextBox3.Text, Integer)
-        SJKSNF4 = CType(Com技术经济分析计算程序.Form2.TextBox7.Text, Integer)
-        SJKSNF5 = CType(Com技术经济分析计算程序.Form2.TextBox9.Text, Integer)
-        SJL1 = CType(Com技术经济分析计算程序.Form2.TextBox4.Text, Double)
-        SJL2 = CType(Com技术经济分析计算程序.Form2.TextBox5.Text, Double)
-        SJL3 = CType(Com技术经济分析计算程序.Form2.TextBox6.Text, Double)
-        SJL4 = CType(Com技术经济分析计算程序.Form2.TextBox8.Text, Double)
-        SJL5 = CType(Com技术经济分析计算程序.Form2.TextBox10.Text, Double)
+        SJKSNF1 = CType(Me.TextBox1.Text, Integer)
+        SJKSNF2 = CType(Me.TextBox2.Text, Integer)
+        SJKSNF3 = CType(Me.TextBox3.Text, Integer)
+        SJKSNF4 = CType(Me.TextBox7.Text, Integer)
+        SJKSNF5 = CType(Me.TextBox9.Text, Integer)
+        SJL1 = CType(Me.TextBox4.Text, Double)
+        SJL2 = CType(Me.TextBox5.Text, Double)
+        SJL3 = CType(Me.TextBox6.Text, Double)
+        SJL4 = CType(Me.TextBox8.Text, Double)
+        SJL5 = CType(Me.TextBox10.Text, Double)
         '————————————————————————————————————————————————————————————————————————————————————————  
         '输入的蓄电池计算年限不可以大于项目计算年限
         If jsnx > xmjsnx Then
@@ -962,7 +962,7 @@
         ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '————————————————————————————————————————————————————————————————————————————————————————      
-        Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+        Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 0
         Next
@@ -1148,7 +1148,7 @@
             End If
         Next
         '是否需要根据逐年投产月份数量折算
-        If Com技术经济分析计算程序.Form2.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = True Then
             For i = 3 To 33
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
             Next
@@ -1160,16 +1160,16 @@
         '计算一次Excle
         ExcelApp.Calculate()
         '清空已有内容
-        Com技术经济分析计算程序.Form2.RichTextBox1.Rtf = Nothing
-        Com技术经济分析计算程序.Form2.RichTextBox1.Clear()
+        Me.RichTextBox1.Rtf = Nothing
+        Me.RichTextBox1.Clear()
         '显示此时的蓄电池逐年负荷率
         Dim SJ As Double
         Dim nf
         For i = 3 To 33  '根据数组中的元素数量循环
             SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value) * 100, 2)
             nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value
-            Com技术经济分析计算程序.Form2.RichTextBox1.Text = Com技术经济分析计算程序.Form2.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
-        Com技术经济分析计算程序.Form2.RichTextBox1.Text = "蓄电池购电逐年负荷率：" & Com技术经济分析计算程序.Form2.RichTextBox1.Text
+        Me.RichTextBox1.Text = "蓄电池购电逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
 End Class

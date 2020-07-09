@@ -20,7 +20,7 @@ Public Class 经济评价表格导出
         Dim Wordname As String = WordAppGetname.ActiveDocument.Name
         If Wordname = Nothing Then
             '清除全部表格的批注
-            If Com技术经济分析计算程序.Form11.Checkbox1.Checked = True Then
+            If Me.Checkbox1.Checked = True Then
                 Call mainprogram.解锁表格()
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells.Select
@@ -172,7 +172,7 @@ Public Class 经济评价表格导出
             '————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————
             '导出所有的经济评价详细表格
-            If Com技术经济分析计算程序.Form11.CheckBox2.Checked = True Then
+            If Me.CheckBox2.Checked = True Then
                 If WordDoc.Selection.PageSetup.Orientation = Word.WdOrientation.wdOrientPortrait Then '将word设置为横向
                     WordDoc.Selection.PageSetup.Orientation = Word.WdOrientation.wdOrientLandscape
                 Else
@@ -553,7 +553,7 @@ Public Class 经济评价表格导出
             '————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————
             '导出财务评价指标一览表
-            If Com技术经济分析计算程序.Form11.CheckBox5.Checked = True Then
+            If Me.CheckBox5.Checked = True Then
                 '纸张设置为A4，纵向
                 With WordDoc.Selection.PageSetup
                     .LineNumbering.Active = False
@@ -643,7 +643,7 @@ Public Class 经济评价表格导出
             '————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————
             '导出敏感性分析表和敏感性分析图
-            If Com技术经济分析计算程序.Form11.CheckBox3.Checked = True Then
+            If Me.CheckBox3.Checked = True Then
                 '指标数据表
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc") '解锁表格
@@ -687,7 +687,7 @@ Public Class 经济评价表格导出
             '————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————
             '导出盈亏平衡分析表和盈亏平衡分析图
-            If Com技术经济分析计算程序.Form11.CheckBox4.Checked = True Then
+            If Me.CheckBox4.Checked = True Then
                 '指标数据表
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc") '解锁表格
@@ -735,10 +735,10 @@ Public Class 经济评价表格导出
     End Sub
 
     Private Sub 经济评价表格导出_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Com技术经济分析计算程序.Form11.Checkbox1.Checked = True
-        Com技术经济分析计算程序.Form11.CheckBox2.Checked = True
-        Com技术经济分析计算程序.Form11.CheckBox3.Checked = True
-        Com技术经济分析计算程序.Form11.CheckBox4.Checked = True
+        Me.Checkbox1.Checked = True
+        Me.CheckBox2.Checked = True
+        Me.CheckBox3.Checked = True
+        Me.CheckBox4.Checked = True
     End Sub
 
 End Class
