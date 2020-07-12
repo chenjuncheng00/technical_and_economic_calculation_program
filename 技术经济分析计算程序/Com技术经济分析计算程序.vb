@@ -1824,13 +1824,17 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.EnableEvents = True
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
+        '锁定表格
+        Call 锁定表格()
+        '自保护程序
+        Call 自保护程序()
         '验证Excel表格的更新时间
         If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20191203 Then
             MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
+            '跳过投资各方收益表格操作，防止多次报错
+            Exit Sub
         End If
-        Call 锁定表格()
         Call 投资各方收益率表格操作()
-        Call 自保护程序()
     End Sub
     Function Excel版本号验证()
         On Error Resume Next
