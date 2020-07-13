@@ -631,7 +631,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————        
         '本方法为，按照总成本最大年份进行计算
         '定义局部变量
-        Dim nfxh
+        Dim nfxh As Integer = 0
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
         '寻找总成本费用最大值的年份序号，并记录下年固定成本和可变成本
@@ -962,7 +962,9 @@ Public Class Com技术经济分析计算程序
         '解锁建设期时间计划表
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
         '定义局部变量
-        Dim j1, j2, j3
+        Dim j1 As Integer = 0
+        Dim j2 As Integer = 0
+        Dim j3 As Integer = 0
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————     
         '添加一些报错功能
@@ -1427,7 +1429,7 @@ Public Class Com技术经济分析计算程序
             CFNFXH_1(i) = CFNFXH(i + 1)
         Next
         '将自动计算出的建设期投产月份数与手动输入的建设期投产月份数重复的年份序号显示出来
-        Dim XianShi_1 As String
+        Dim XianShi_1 As String = Nothing
         For Each XXX In CFNFXH_1
             XianShi_1 = XianShi_1 & XXX.ToString & "   "
         Next
@@ -1457,7 +1459,7 @@ Public Class Com技术经济分析计算程序
             MYTCYFNF_1(i) = MYTCYFNF(i + 1)
         Next
         '将建设期中存在没有生产月份数的年份序号显示出来
-        Dim XianShi_2 As String
+        Dim XianShi_2 As String = Nothing
         For Each XXX In MYTCYFNF_1
             If XXX > 0 Then
                 XianShi_2 = XianShi_2 & XXX.ToString & "   "
@@ -1477,7 +1479,7 @@ Public Class Com技术经济分析计算程序
             ZNTCYFS(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 3).Value
             ZNTCYFS_NFXH(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i + 3).Value
         Next
-        Dim XianShi_3 As String
+        Dim XianShi_3 As String = Nothing
         For i = 0 To jsnx - 1
             XianShi_3 = XianShi_3 & ZNTCYFS(i).ToString & "(" & ZNTCYFS_NFXH(i).ToString & ")  "
         Next
@@ -1868,7 +1870,7 @@ Public Class Com技术经济分析计算程序
         Dim Form1 As New 计算进度显示
         Dim SRBH As Integer '收入编号
         Dim SRDJ '收入单价
-        Dim SRDJWT '收入单价微调（用于修正计算结果的误差）
+        Dim SRDJWT As Double = 0 '收入单价微调（用于修正计算结果的误差）
         Dim SRZL '收入总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
@@ -2015,7 +2017,7 @@ Public Class Com技术经济分析计算程序
         Dim Form1 As New 计算进度显示
         Dim CBBH As Integer '成本编号
         Dim CBDJ '成本单价
-        Dim CBDJWT '成本单价微调（用于修正计算结果的误差）
+        Dim CBDJWT As Double = 0 '成本单价微调（用于修正计算结果的误差）
         Dim CBZL '成本总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
@@ -2162,7 +2164,7 @@ Public Class Com技术经济分析计算程序
         Dim TZHHJS As Integer = 0 '投资行号计数
         Dim TZJECC(200) '数组，储存各种投资金额
         Dim JTTZWT(200) '数组，静态投资微调
-        Dim JTTZZEWT '静态投资总额微调
+        Dim JTTZZEWT As Double = 0 '静态投资总额微调
         Dim WTJSBC As Integer '微调计算步长
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         For i = 30 To 110 '检索估算表中投资编号，投资编号都是1表示
@@ -2371,7 +2373,7 @@ Public Class Com技术经济分析计算程序
         Dim Form1 As New 计算进度显示
         Dim SRBH As Integer '收入编号
         Dim SRDJ '收入单价
-        Dim SRDJWT '收入单价微调（用于修正计算结果的误差）
+        Dim SRDJWT As Double = 0 '收入单价微调（用于修正计算结果的误差）
         Dim SRZL '收入总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
@@ -2518,7 +2520,7 @@ Public Class Com技术经济分析计算程序
         Dim Form1 As New 计算进度显示
         Dim CBBH As Integer '成本编号
         Dim CBDJ '成本单价
-        Dim CBDJWT '成本单价微调（用于修正计算结果的误差）
+        Dim CBDJWT As Double = 0 '成本单价微调（用于修正计算结果的误差）
         Dim CBZL '成本总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
@@ -2665,7 +2667,7 @@ Public Class Com技术经济分析计算程序
         Dim TZHHJS As Integer = 0 '投资行号计数
         Dim TZJECC(200) '数组，储存各种投资金额
         Dim JTTZWT(200) '数组，静态投资微调
-        Dim JTTZZEWT '静态投资总额微调
+        Dim JTTZZEWT As Double = 0 '静态投资总额微调
         Dim WTJSBC As Integer '微调计算步长
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         For i = 30 To 110 '检索估算表中投资编号，投资编号都是1表示
