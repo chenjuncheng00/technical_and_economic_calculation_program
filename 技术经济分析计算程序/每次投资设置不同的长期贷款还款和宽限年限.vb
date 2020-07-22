@@ -670,7 +670,7 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 7).Value = "不相同"
-            MsgBox("每次投资设置不同的长期贷款还款和宽限年限完成，请选择计算方法二！")
+            MsgBox("每次投资设置不同的长期贷款还款和宽限年限完成，请选择计算方法三或者方法四！")
             Me.Close()
         End If
     End Sub

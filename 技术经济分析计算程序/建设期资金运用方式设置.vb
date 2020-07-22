@@ -830,8 +830,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '读取资本金(动态)比例，建设期贷款利率
-        Dim ZBJBL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value
-        Dim DKLL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value
+        Dim ZBJBL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+        Dim DKLL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
         Dim XZ = MsgBox("确定要重置回默认计算模式？默认计算模式为每次投资的资本金比例和建设期贷款利率均相同,资本金比例为占动态投资的比例。", vbOKCancel)
         If XZ = vbOK Then
             Call 建设期默认资金运用模式(ZBJBL, DKLL)
@@ -953,57 +953,57 @@
         Else
             '载入默认值
             '每次的资本金(动态)比例和建设期贷款利率均一致的情况
-            Me.zbjbl_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-            Me.dkll_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+            Me.zbjbl_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+            Me.dkll_a.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             '第1次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
-                Me.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第2次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
-                Me.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第3次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
-                Me.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第4次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
-                Me.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第5次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
-                Me.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第6次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
-                Me.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第7次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
-                Me.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第8次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
-                Me.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第9次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
-                Me.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
             '第10次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
-                Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value * 100, String)
-                Me.dkll10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value * 100, String)
+                Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value * 100, String)
+                Me.dkll10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value * 100, String)
             End If
         End If
     End Sub

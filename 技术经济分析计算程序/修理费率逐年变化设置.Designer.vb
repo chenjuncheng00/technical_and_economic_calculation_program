@@ -68,6 +68,38 @@ Partial Class 修理费率逐年变化设置
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.ksnf5 = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.TZ1 = New System.Windows.Forms.CheckBox()
+        Me.TZ2 = New System.Windows.Forms.CheckBox()
+        Me.TZ3 = New System.Windows.Forms.CheckBox()
+        Me.TZ4 = New System.Windows.Forms.CheckBox()
+        Me.TZ5 = New System.Windows.Forms.CheckBox()
+        Me.TZ6 = New System.Windows.Forms.CheckBox()
+        Me.TZ7 = New System.Windows.Forms.CheckBox()
+        Me.TZ8 = New System.Windows.Forms.CheckBox()
+        Me.TZ9 = New System.Windows.Forms.CheckBox()
+        Me.TZ10 = New System.Windows.Forms.CheckBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TZBL1 = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.TZBL2 = New System.Windows.Forms.TextBox()
+        Me.TZBL3 = New System.Windows.Forms.TextBox()
+        Me.TZBL4 = New System.Windows.Forms.TextBox()
+        Me.TZBL5 = New System.Windows.Forms.TextBox()
+        Me.TZBL10 = New System.Windows.Forms.TextBox()
+        Me.TZBL9 = New System.Windows.Forms.TextBox()
+        Me.TZBL8 = New System.Windows.Forms.TextBox()
+        Me.TZBL7 = New System.Windows.Forms.TextBox()
+        Me.TZBL6 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label8
@@ -415,7 +447,7 @@ Partial Class 修理费率逐年变化设置
         'Label19
         '
         Me.Label19.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(184, 716)
+        Me.Label19.Location = New System.Drawing.Point(184, 710)
         Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(582, 50)
@@ -437,7 +469,7 @@ Partial Class 修理费率逐年变化设置
         '
         Me.清空窗体.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空窗体.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空窗体.Location = New System.Drawing.Point(544, 984)
+        Me.清空窗体.Location = New System.Drawing.Point(1430, 808)
         Me.清空窗体.Margin = New System.Windows.Forms.Padding(6)
         Me.清空窗体.Name = "清空窗体"
         Me.清空窗体.Size = New System.Drawing.Size(224, 82)
@@ -449,7 +481,7 @@ Partial Class 修理费率逐年变化设置
         '
         Me.确定.BackColor = System.Drawing.SystemColors.ControlLight
         Me.确定.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.确定.Location = New System.Drawing.Point(164, 984)
+        Me.确定.Location = New System.Drawing.Point(1050, 808)
         Me.确定.Margin = New System.Windows.Forms.Padding(6)
         Me.确定.Name = "确定"
         Me.确定.Size = New System.Drawing.Size(224, 82)
@@ -537,11 +569,365 @@ Partial Class 修理费率逐年变化设置
         Me.ksnf5.TabIndex = 55
         Me.ksnf5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'Label24
+        '
+        Me.Label24.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label24.Location = New System.Drawing.Point(992, 92)
+        Me.Label24.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(731, 50)
+        Me.Label24.TabIndex = 63
+        Me.Label24.Text = "输入每次投资用于计算修理费的比例"
+        Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TZ1
+        '
+        Me.TZ1.AutoSize = True
+        Me.TZ1.Location = New System.Drawing.Point(992, 165)
+        Me.TZ1.Name = "TZ1"
+        Me.TZ1.Size = New System.Drawing.Size(150, 28)
+        Me.TZ1.TabIndex = 64
+        Me.TZ1.Text = "第1次投资"
+        Me.TZ1.UseVisualStyleBackColor = True
+        '
+        'TZ2
+        '
+        Me.TZ2.AutoSize = True
+        Me.TZ2.Location = New System.Drawing.Point(992, 219)
+        Me.TZ2.Name = "TZ2"
+        Me.TZ2.Size = New System.Drawing.Size(150, 28)
+        Me.TZ2.TabIndex = 65
+        Me.TZ2.Text = "第2次投资"
+        Me.TZ2.UseVisualStyleBackColor = True
+        '
+        'TZ3
+        '
+        Me.TZ3.AutoSize = True
+        Me.TZ3.Location = New System.Drawing.Point(992, 271)
+        Me.TZ3.Name = "TZ3"
+        Me.TZ3.Size = New System.Drawing.Size(150, 28)
+        Me.TZ3.TabIndex = 66
+        Me.TZ3.Text = "第3次投资"
+        Me.TZ3.UseVisualStyleBackColor = True
+        '
+        'TZ4
+        '
+        Me.TZ4.AutoSize = True
+        Me.TZ4.Location = New System.Drawing.Point(992, 325)
+        Me.TZ4.Name = "TZ4"
+        Me.TZ4.Size = New System.Drawing.Size(150, 28)
+        Me.TZ4.TabIndex = 67
+        Me.TZ4.Text = "第4次投资"
+        Me.TZ4.UseVisualStyleBackColor = True
+        '
+        'TZ5
+        '
+        Me.TZ5.AutoSize = True
+        Me.TZ5.Location = New System.Drawing.Point(992, 381)
+        Me.TZ5.Name = "TZ5"
+        Me.TZ5.Size = New System.Drawing.Size(150, 28)
+        Me.TZ5.TabIndex = 68
+        Me.TZ5.Text = "第5次投资"
+        Me.TZ5.UseVisualStyleBackColor = True
+        '
+        'TZ6
+        '
+        Me.TZ6.AutoSize = True
+        Me.TZ6.Location = New System.Drawing.Point(992, 435)
+        Me.TZ6.Name = "TZ6"
+        Me.TZ6.Size = New System.Drawing.Size(150, 28)
+        Me.TZ6.TabIndex = 69
+        Me.TZ6.Text = "第6次投资"
+        Me.TZ6.UseVisualStyleBackColor = True
+        '
+        'TZ7
+        '
+        Me.TZ7.AutoSize = True
+        Me.TZ7.Location = New System.Drawing.Point(992, 491)
+        Me.TZ7.Name = "TZ7"
+        Me.TZ7.Size = New System.Drawing.Size(150, 28)
+        Me.TZ7.TabIndex = 70
+        Me.TZ7.Text = "第7次投资"
+        Me.TZ7.UseVisualStyleBackColor = True
+        '
+        'TZ8
+        '
+        Me.TZ8.AutoSize = True
+        Me.TZ8.Location = New System.Drawing.Point(992, 545)
+        Me.TZ8.Name = "TZ8"
+        Me.TZ8.Size = New System.Drawing.Size(150, 28)
+        Me.TZ8.TabIndex = 71
+        Me.TZ8.Text = "第8次投资"
+        Me.TZ8.UseVisualStyleBackColor = True
+        '
+        'TZ9
+        '
+        Me.TZ9.AutoSize = True
+        Me.TZ9.Location = New System.Drawing.Point(992, 603)
+        Me.TZ9.Name = "TZ9"
+        Me.TZ9.Size = New System.Drawing.Size(150, 28)
+        Me.TZ9.TabIndex = 72
+        Me.TZ9.Text = "第9次投资"
+        Me.TZ9.UseVisualStyleBackColor = True
+        '
+        'TZ10
+        '
+        Me.TZ10.AutoSize = True
+        Me.TZ10.Location = New System.Drawing.Point(992, 657)
+        Me.TZ10.Name = "TZ10"
+        Me.TZ10.Size = New System.Drawing.Size(162, 28)
+        Me.TZ10.TabIndex = 73
+        Me.TZ10.Text = "第10次投资"
+        Me.TZ10.UseVisualStyleBackColor = True
+        '
+        'Label25
+        '
+        Me.Label25.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label25.Location = New System.Drawing.Point(992, 28)
+        Me.Label25.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(731, 50)
+        Me.Label25.TabIndex = 74
+        Me.Label25.Text = "勾选作为修理费计算基数的投资"
+        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label26
+        '
+        Me.Label26.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label26.Location = New System.Drawing.Point(1164, 149)
+        Me.Label26.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(404, 56)
+        Me.Label26.TabIndex = 75
+        Me.Label26.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TZBL1
+        '
+        Me.TZBL1.Location = New System.Drawing.Point(1583, 159)
+        Me.TZBL1.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL1.Name = "TZBL1"
+        Me.TZBL1.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL1.TabIndex = 76
+        Me.TZBL1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label27
+        '
+        Me.Label27.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label27.Location = New System.Drawing.Point(1164, 203)
+        Me.Label27.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(404, 56)
+        Me.Label27.TabIndex = 77
+        Me.Label27.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label28
+        '
+        Me.Label28.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label28.Location = New System.Drawing.Point(1164, 254)
+        Me.Label28.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(404, 56)
+        Me.Label28.TabIndex = 78
+        Me.Label28.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label29
+        '
+        Me.Label29.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label29.Location = New System.Drawing.Point(1164, 308)
+        Me.Label29.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(404, 56)
+        Me.Label29.TabIndex = 79
+        Me.Label29.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label30
+        '
+        Me.Label30.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label30.Location = New System.Drawing.Point(1164, 365)
+        Me.Label30.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(404, 56)
+        Me.Label30.TabIndex = 80
+        Me.Label30.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label31
+        '
+        Me.Label31.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label31.Location = New System.Drawing.Point(1164, 641)
+        Me.Label31.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(404, 56)
+        Me.Label31.TabIndex = 85
+        Me.Label31.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label32
+        '
+        Me.Label32.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label32.Location = New System.Drawing.Point(1164, 584)
+        Me.Label32.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(404, 56)
+        Me.Label32.TabIndex = 84
+        Me.Label32.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label33
+        '
+        Me.Label33.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label33.Location = New System.Drawing.Point(1164, 530)
+        Me.Label33.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(404, 56)
+        Me.Label33.TabIndex = 83
+        Me.Label33.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label34
+        '
+        Me.Label34.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label34.Location = New System.Drawing.Point(1164, 478)
+        Me.Label34.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(404, 56)
+        Me.Label34.TabIndex = 82
+        Me.Label34.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label35
+        '
+        Me.Label35.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label35.Location = New System.Drawing.Point(1164, 420)
+        Me.Label35.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(404, 56)
+        Me.Label35.TabIndex = 81
+        Me.Label35.Text = "投资中用于修理费计算的百分比(%)"
+        Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TZBL2
+        '
+        Me.TZBL2.Location = New System.Drawing.Point(1583, 212)
+        Me.TZBL2.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL2.Name = "TZBL2"
+        Me.TZBL2.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL2.TabIndex = 86
+        Me.TZBL2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL3
+        '
+        Me.TZBL3.Location = New System.Drawing.Point(1583, 266)
+        Me.TZBL3.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL3.Name = "TZBL3"
+        Me.TZBL3.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL3.TabIndex = 87
+        Me.TZBL3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL4
+        '
+        Me.TZBL4.Location = New System.Drawing.Point(1583, 321)
+        Me.TZBL4.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL4.Name = "TZBL4"
+        Me.TZBL4.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL4.TabIndex = 88
+        Me.TZBL4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL5
+        '
+        Me.TZBL5.Location = New System.Drawing.Point(1583, 376)
+        Me.TZBL5.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL5.Name = "TZBL5"
+        Me.TZBL5.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL5.TabIndex = 89
+        Me.TZBL5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL10
+        '
+        Me.TZBL10.Location = New System.Drawing.Point(1583, 650)
+        Me.TZBL10.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL10.Name = "TZBL10"
+        Me.TZBL10.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL10.TabIndex = 94
+        Me.TZBL10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL9
+        '
+        Me.TZBL9.Location = New System.Drawing.Point(1583, 595)
+        Me.TZBL9.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL9.Name = "TZBL9"
+        Me.TZBL9.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL9.TabIndex = 93
+        Me.TZBL9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL8
+        '
+        Me.TZBL8.Location = New System.Drawing.Point(1583, 540)
+        Me.TZBL8.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL8.Name = "TZBL8"
+        Me.TZBL8.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL8.TabIndex = 92
+        Me.TZBL8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL7
+        '
+        Me.TZBL7.Location = New System.Drawing.Point(1583, 486)
+        Me.TZBL7.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL7.Name = "TZBL7"
+        Me.TZBL7.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL7.TabIndex = 91
+        Me.TZBL7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'TZBL6
+        '
+        Me.TZBL6.Location = New System.Drawing.Point(1583, 433)
+        Me.TZBL6.Margin = New System.Windows.Forms.Padding(6)
+        Me.TZBL6.Name = "TZBL6"
+        Me.TZBL6.Size = New System.Drawing.Size(142, 35)
+        Me.TZBL6.TabIndex = 90
+        Me.TZBL6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         '修理费率逐年变化设置
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(936, 1096)
+        Me.ClientSize = New System.Drawing.Size(1758, 980)
+        Me.Controls.Add(Me.TZBL10)
+        Me.Controls.Add(Me.TZBL9)
+        Me.Controls.Add(Me.TZBL8)
+        Me.Controls.Add(Me.TZBL7)
+        Me.Controls.Add(Me.TZBL6)
+        Me.Controls.Add(Me.TZBL5)
+        Me.Controls.Add(Me.TZBL4)
+        Me.Controls.Add(Me.TZBL3)
+        Me.Controls.Add(Me.TZBL2)
+        Me.Controls.Add(Me.Label31)
+        Me.Controls.Add(Me.Label32)
+        Me.Controls.Add(Me.Label33)
+        Me.Controls.Add(Me.Label34)
+        Me.Controls.Add(Me.Label35)
+        Me.Controls.Add(Me.Label30)
+        Me.Controls.Add(Me.Label29)
+        Me.Controls.Add(Me.Label28)
+        Me.Controls.Add(Me.Label27)
+        Me.Controls.Add(Me.TZBL1)
+        Me.Controls.Add(Me.Label26)
+        Me.Controls.Add(Me.Label25)
+        Me.Controls.Add(Me.TZ10)
+        Me.Controls.Add(Me.TZ9)
+        Me.Controls.Add(Me.TZ8)
+        Me.Controls.Add(Me.TZ7)
+        Me.Controls.Add(Me.TZ6)
+        Me.Controls.Add(Me.TZ5)
+        Me.Controls.Add(Me.TZ4)
+        Me.Controls.Add(Me.TZ3)
+        Me.Controls.Add(Me.TZ2)
+        Me.Controls.Add(Me.TZ1)
+        Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.jsfl5)
         Me.Controls.Add(Me.ksfl5)
         Me.Controls.Add(Me.Label20)
@@ -643,4 +1029,36 @@ Partial Class 修理费率逐年变化设置
     Friend WithEvents Label22 As System.Windows.Forms.Label
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents ksnf5 As System.Windows.Forms.TextBox
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents TZ1 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ2 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ3 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ4 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ5 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ6 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ7 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ8 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ9 As System.Windows.Forms.CheckBox
+    Friend WithEvents TZ10 As System.Windows.Forms.CheckBox
+    Friend WithEvents Label25 As System.Windows.Forms.Label
+    Friend WithEvents Label26 As System.Windows.Forms.Label
+    Friend WithEvents TZBL1 As System.Windows.Forms.TextBox
+    Friend WithEvents Label27 As System.Windows.Forms.Label
+    Friend WithEvents Label28 As System.Windows.Forms.Label
+    Friend WithEvents Label29 As System.Windows.Forms.Label
+    Friend WithEvents Label30 As System.Windows.Forms.Label
+    Friend WithEvents Label31 As System.Windows.Forms.Label
+    Friend WithEvents Label32 As System.Windows.Forms.Label
+    Friend WithEvents Label33 As System.Windows.Forms.Label
+    Friend WithEvents Label34 As System.Windows.Forms.Label
+    Friend WithEvents Label35 As System.Windows.Forms.Label
+    Friend WithEvents TZBL2 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL3 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL4 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL5 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL10 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL9 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL8 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL7 As System.Windows.Forms.TextBox
+    Friend WithEvents TZBL6 As System.Windows.Forms.TextBox
 End Class

@@ -402,7 +402,7 @@
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
         '是否勾选按照逐年投产月份数折算
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 11).Value = "折算" Then
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
             Me.CheckBox1.Checked = True
         Else
             Me.CheckBox1.Checked = False

@@ -9,7 +9,7 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         '————————————————————————————————————————————————————————————————————
         '读取输入的默认值
         Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value '固定资产折旧年限
-        Dim gdzcczl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 5).Value * 100 '固定资产残值率
+        Dim gdzcczl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value * 100 '固定资产残值率
         Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value '无形资产摊销年限
         '清空已有的全部数据
         '固定资产折旧年限
@@ -1229,7 +1229,7 @@ Public Class 每次投资设置不同的折旧摊销计算方式
                 '固定资产折旧年限
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
                 '固定资产残值率
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
                 '无形资产摊销年限
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
             Next

@@ -458,7 +458,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("L14:M19").Value = 0
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("L21:M25").Value = 0
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("L27:M27").Value = 0
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 19).Value = "直接输入" Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
             '直接输入的逐年负荷系数
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(95, 3).Value = 0
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(95, 4).Value = 0.35
@@ -1574,7 +1574,7 @@ Public Class Com技术经济分析计算程序
             '固定资产折旧年限
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
             '固定资产残值率
-            ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 5).Value
+            ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
             '无形资产摊销年限
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
         Next
@@ -1597,8 +1597,8 @@ Public Class Com技术经济分析计算程序
         '将资本金比例和建设期贷款利率设置为默认情况（每次投资均相同，占动态投资比例，根据估算表中的参数进行设置、增值税退税计算）
         Dim JSQZJYYFSSZ As New 建设期资金运用方式设置
         '读取资本金(动态)比例，建设期贷款利率
-        Dim ZBJBL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value
-        Dim DKLL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 9).Value
+        Dim ZBJBL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+        Dim DKLL = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
         Call JSQZJYYFSSZ.建设期默认资金运用模式(ZBJBL, DKLL)
         '将逐次设置资本金运用方式计数次数重置回0
         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(170, 11).Value = 0
@@ -1670,7 +1670,7 @@ Public Class Com技术经济分析计算程序
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         For i = 3 To 33
             If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(171, i).Value <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = 0
             End If
@@ -1765,7 +1765,7 @@ Public Class Com技术经济分析计算程序
             If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(142, i).Value >= JSKSNF And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(142, i).Value <= jsnx Then
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 '充电桩收入
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(148, i).Value = 1 '常规设备修理费成本
-                If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 11).Value = "折算" Then
+                If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(143, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12 '风电收入
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12 '购电容量费成本
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12 '城市管廊费成本
@@ -1795,6 +1795,15 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(148, i).Value = 0
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '逐年修理费率，重置为每年都是定值，按照<估算表>中设置的参数
+        For i = 3 To 33
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
             End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -1831,7 +1840,7 @@ Public Class Com技术经济分析计算程序
         '自保护程序
         Call 自保护程序()
         '验证Excel表格的更新时间
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20191203 Then
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20200722 Then
             MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
             '跳过投资各方收益表格操作，防止多次报错
             Exit Sub
@@ -1847,7 +1856,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim ZTJC As Integer
         '验证Excel表格的更新时间
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20191203 Then
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20200722 Then
             MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
             ZTJC = 1
         Else
@@ -3543,6 +3552,7 @@ Public Class Com技术经济分析计算程序
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
         '自有资金
         '资本金现金流量表
         For iii = 1 To 31 '年份1至31年
@@ -3569,6 +3579,7 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
         '全投资
         '项目投资现金流量表
         For iii = 1 To 31 '年份1至31年
@@ -3596,6 +3607,7 @@ Public Class Com技术经济分析计算程序
             End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
         '投资各方所得税后回收年限计算
         '投资方1        
         For iii = 1 To 31 '年份1至31年
@@ -3610,6 +3622,7 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
         '投资方2        
         For iii = 1 To 31 '年份1至31年
             '所得税后累计净现金流量
@@ -3623,6 +3636,7 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
         '投资方3        
         For iii = 1 To 31 '年份1至31年
             '所得税后累计净现金流量
@@ -3636,6 +3650,7 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
         '投资方4        
         For iii = 1 To 31 '年份1至31年
             '所得税后累计净现金流量
@@ -3649,6 +3664,7 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
         '投资方5       
         For iii = 1 To 31 '年份1至31年
             '所得税后累计净现金流量
@@ -3662,6 +3678,96 @@ Public Class Com技术经济分析计算程序
                 Exit For
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '————————————————————————————————————————————————————————————————————————————————————————              
+        '针对投资回收年限添加报错功能：如果累计净现金流量出现了先从负到正然后又变成负的情况，则报错，弹框提醒
+        '自有资金
+        Dim ZT_ZBJSDSH As Integer = 0 '资本金所得税后状态检测
+        Dim Year_ZBJSDSH As Integer = 0 '资本金所得税后累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '资本金所得税后累计净现值
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value > 0 Then
+                ZT_ZBJSDSH = ZT_ZBJSDSH + 1
+                Year_ZBJSDSH = i
+                Exit For
+            End If
+        Next
+        If ZT_ZBJSDSH = 1 Then
+            For i = Year_ZBJSDSH + 1 To 31 '年份序号
+                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value < 0 Then
+                    ZT_ZBJSDSH = ZT_ZBJSDSH + 1
+                    Exit For
+                End If
+            Next
+        End If
+        Dim ZT_ZBJSDSQ As Integer = 0 '资本金所得税前状态检测
+        Dim Year_ZBJSDSQ As Integer = 0 '资本金所得税前累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '资本金所得税前累计净现值
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value > 0 Then
+                ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
+                Year_ZBJSDSQ = i
+                Exit For
+            End If
+        Next
+        If ZT_ZBJSDSQ = 1 Then
+            For i = Year_ZBJSDSQ + 1 To 31 '年份序号
+                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value < 0 Then
+                    ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
+                    Exit For
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————    
+        '全投资
+        Dim ZT_QTZSDSH As Integer = 0 '全投资所得税后状态检测
+        Dim Year_QTZSDSH As Integer = 0 '全投资所得税后累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '全投资所得税后
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value > 0 Then
+                ZT_QTZSDSH = ZT_QTZSDSH + 1
+                Year_QTZSDSH = i
+                Exit For
+            End If
+        Next
+        If ZT_QTZSDSH = 1 Then
+            For i = Year_QTZSDSH + 1 To 31
+                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value < 0 Then
+                    ZT_QTZSDSH = ZT_QTZSDSH + 1
+                    Exit For
+                End If
+            Next
+        End If
+        Dim ZT_QTZSDSQ As Integer = 0 '全投资所得税前状态检测
+        Dim Year_QTZSDSQ As Integer = 0 '全投资所得税前累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value > 0 Then
+                ZT_QTZSDSQ = ZT_QTZSDSQ + 1
+                Year_QTZSDSQ = i
+                Exit For
+            End If
+        Next
+        If ZT_QTZSDSQ = 1 Then
+            For i = Year_QTZSDSQ + 1 To 31
+                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value < 0 Then
+                    ZT_QTZSDSQ = ZT_QTZSDSQ + 1
+                    Exit For
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '判断结果写入Excel
+        '解锁Excel
+        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+        '写入结果
+        If ZT_QTZSDSH = 2 Or ZT_QTZSDSQ = 2 Or ZT_ZBJSDSH = 2 Or ZT_ZBJSDSQ = 2 Then
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "不正确"
+        Else
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "正确"
+        End If
+        '锁定Excel
+        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
     End Sub
 
     Sub 设置所得税减免和增值税退税包含内容()
@@ -4280,8 +4386,8 @@ Public Class Com技术经济分析计算程序
         zjdknx = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Range("G6:G8").Value)
         '项目计算年数改变后改变的计算用系数
         '读取输入的10次投资发生年份的最大值
-        '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
+        '如果贷款计算方法是方法一或者方法二，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
+        If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
             '添加报错
             If tznfzdz + zjdknx > jsnx Then
@@ -4366,8 +4472,8 @@ Public Class Com技术经济分析计算程序
             MsgBox("项目计算年限不可以小于2年，请重新输入！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value = 2
         Else
-            '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+            '如果贷款的计算方法中为方法三或者方法四，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
+            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
                 '报错（只在这里报错一次，折旧摊销贷款第二到第十次投资年份模块里就不写了，防止重复报错）
                 MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！程序将自动重置不合理的数值！！！")
                 '固定资产折旧年限
@@ -4406,8 +4512,8 @@ Public Class Com技术经济分析计算程序
         '读取输入的项目计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
-        '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
+        '如果贷款计算方法是方法一或者方法二，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
+        If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
             tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
@@ -4594,8 +4700,8 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value = 1 '重置回默认值
             End If
         Else
-            '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+            '如果贷款的计算方法中为方法三或者方法四，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
+            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
                 '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
                 'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
                 'If jsnx >= 2 And jsnx <= 31 Then
@@ -4628,7 +4734,7 @@ Public Class Com技术经济分析计算程序
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
+        If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
             tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
@@ -4845,7 +4951,7 @@ Public Class Com技术经济分析计算程序
             End If
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
                 '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
                 'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
                 'If jsnx >= 2 And jsnx <= 31 Then
@@ -4877,7 +4983,7 @@ Public Class Com技术经济分析计算程序
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
+        If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
             tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
@@ -5045,7 +5151,7 @@ Public Class Com技术经济分析计算程序
             End If
         Else
             '如果贷款的计算方法中为方法二，或者折旧和摊销的计算方法为方法三或者方法四，进行下列计算
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
                 '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
                 'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
                 'If jsnx >= 2 And jsnx <= 31 Then
@@ -5101,7 +5207,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(147, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value = 2 '重置回默认值
@@ -5138,7 +5244,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(155, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf2 <> 0 Then
@@ -5179,7 +5285,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(163, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf3 <> 0 Then
@@ -5220,7 +5326,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(171, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf4 <> 0 Then
@@ -5278,7 +5384,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(243, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf5 <> 0 Then
@@ -5319,7 +5425,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(251, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf6 <> 0 Then
@@ -5360,7 +5466,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(259, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf7 <> 0 Then
@@ -5401,7 +5507,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(267, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf8 <> 0 Then
@@ -5442,7 +5548,7 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(275, i).Value = 0
             Next
             '如果贷款OR折旧摊销计算方法中有一个为方法二，进行下列计算
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '报错（全部在项目计算年限修改模块内报错，这里不再重复报错）
             'MsgBox("输入的<项目计算年限、第二次到第十次项目投资年份、长期贷款年限、固定资产折旧年限、无形资产摊销年限>之中的某一项或者某几项参数不合理，请重新核对！！！为防止计算异常，程序不会自动修改，请重新手动输入！！！")
             'If tznf9 <> 0 Then
@@ -5879,7 +5985,7 @@ Public Class Com技术经济分析计算程序
         Dim SDSMC As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value '所得税免除年分数
         Dim SDSJZ As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value '所得税减征年分数
         Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        If SDSMC + SDSJZ > 0 Then
+        If SDSMC + SDSJZ >= 0 Then
             '屏蔽屏幕更新，防止屏闪
             ExcelApp.Application.ScreenUpdating = False
             '手动计算，关闭excel的自动计算
@@ -5929,7 +6035,7 @@ Public Class Com技术经济分析计算程序
                         ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 0
                         '所得税减征收
                     ElseIf ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1 - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1 - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value
                     Else
                         ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1
                     End If

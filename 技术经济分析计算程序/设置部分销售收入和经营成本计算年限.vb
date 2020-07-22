@@ -29,7 +29,7 @@
         Me.购电容量费成本.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String)
         Me.城市管廊成本.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String)
         '是否勾选按照逐年投产月份数折算
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(17, 11).Value = "折算" Then
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
             Me.CheckBox2.Checked = True
         End If
         '载入默认值

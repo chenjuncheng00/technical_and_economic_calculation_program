@@ -137,19 +137,19 @@ Public Class 设置所得税减免和增值税退税包含内容
         Me.风电所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
         Me.光伏所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
         Me.风电所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
-        Me.光伏所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
-        Me.风电所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
+        Me.光伏所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value, String) * 100
+        Me.风电所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value, String) * 100
         '载入光伏和风电增值税退税参数默认值
         Me.光伏增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
         Me.风电增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
-        Me.光伏增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
-        Me.风电增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
+        Me.光伏增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value, String) * 100
+        Me.风电增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value, String) * 100
         '载入其它所得税减免和增值税退税参数默认值
         Me.其它所得税免征年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value, String)
         Me.其它所得税减少年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value, String)
-        Me.其它所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(16, 5).Value, String) * 100
+        Me.其它所得税减少比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value, String) * 100
         Me.其它增值税退税年限.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value, String)
-        Me.其它增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value, String) * 100
+        Me.其它增值税退税比例.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value, String) * 100
         '设置存在收入的可以选择
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 7).Value > 0 Then
             Me.收入4.Enabled = True
@@ -2201,7 +2201,7 @@ Public Class 设置所得税减免和增值税退税包含内容
             Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
             For i = 3 To 33
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(171, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = 0
                 End If
