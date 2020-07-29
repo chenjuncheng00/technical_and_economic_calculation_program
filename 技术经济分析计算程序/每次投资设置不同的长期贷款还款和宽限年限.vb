@@ -703,16 +703,16 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim mainprogram As New Com技术经济分析计算程序
         '长期贷款还款年数改变后改变的计算用系数
-        Call mainprogram.长期贷款计算年限变化后改变相关系数()
+        Call mainprogram.长期贷款计算年限变化后改变相关系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次Excel
         ExcelApp.Calculate()
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()

@@ -27,9 +27,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -41,7 +41,7 @@ Public Class Com技术经济分析计算程序
         System.Windows.Forms.Application.DoEvents()
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        Call 锁定表格()
+        Call 锁定表格(ExcelApp)
     End Sub
     Sub 估算表年限修改后系数计算()
         On Error Resume Next
@@ -50,9 +50,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -63,35 +63,31 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '项目计算年数改变后改变的计算用系数
-        Call 项目计算年限变化后改变相关系数()
+        Call 项目计算年限变化后改变相关系数(ExcelApp)
         '折旧年数改变后改变的计算用系数
-        Call 折旧计算年限变化后改变相关系数()
+        Call 折旧计算年限变化后改变相关系数(ExcelApp)
         '无形资产摊销年限改变后改变的计算用系数
-        Call 无形资产摊销年限变化后改变相关系数()
+        Call 无形资产摊销年限变化后改变相关系数(ExcelApp)
         '年数总和法逐年折旧摊销系数
-        Call 年数总和法逐年折旧摊销系数()
+        Call 年数总和法逐年折旧摊销系数(ExcelApp)
         '长期贷款还款年数改变后改变的计算用系数
-        Call 长期贷款计算年限变化后改变相关系数()
+        Call 长期贷款计算年限变化后改变相关系数(ExcelApp)
         '判断是否处于长期贷款宽限期
-        Call 是否处于长期贷款宽限期()
+        Call 是否处于长期贷款宽限期(ExcelApp)
         '建设期可抵扣增值税计算系数
-        Call 建设期增值税抵扣系数()
+        Call 建设期增值税抵扣系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '将部分设置重置回默认状态
-        Call 将部分设置重置回默认状态()
+        Call 将部分设置重置回默认状态(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+        Call 锁定表格(ExcelApp)
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '重新打开屏幕更新
@@ -100,14 +96,15 @@ Public Class Com技术经济分析计算程序
 
     Sub 直接输入综合负荷率()
         On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -116,7 +113,7 @@ Public Class Com技术经济分析计算程序
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-        Call 计算前基本处理()
+        Call 计算前基本处理(ExcelApp)
         '重新打开excel自动计算，仅部分区域
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("C3:R9").Calculate
         For i = 3 To 17
@@ -185,13 +182,11 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+        Call 锁定表格(ExcelApp)
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '重新打开屏幕更新
@@ -199,14 +194,15 @@ Public Class Com技术经济分析计算程序
     End Sub
     Sub 分投资逐次输入负荷率()
         On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -215,7 +211,7 @@ Public Class Com技术经济分析计算程序
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-        Call 计算前基本处理()
+        Call 计算前基本处理(ExcelApp)
         '计算年限改变后，改变相应的逐年达产系数（前15年）
         For i = 3 To 17
             '第1次投资负荷率
@@ -418,12 +414,11 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        Call 锁定表格(ExcelApp)
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '重新打开屏幕更新
@@ -437,9 +432,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -508,9 +503,11 @@ Public Class Com技术经济分析计算程序
         Call 隐藏总成本表中成本为0的行()
         Call 隐藏收入税收表中收入为0的行()
         '计算一次流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '计算一次回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '打开事件
         ExcelApp.Application.EnableEvents = True
@@ -527,9 +524,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -548,25 +545,24 @@ Public Class Com技术经济分析计算程序
         '确定选择的需要反算的内部收益率类型
         '如果是资本金所得税后内部收益率，进行下列计算
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 5).Value = "资本金所得税后内部收益率" Then
-            Call 资本金税后收益率反算静态投资(FSLJDJSCSMax)
-            Call 资本金税后收益率反算收入单价(FSLJDJSCSMax)
-            Call 资本金税后收益率反算成本单价(FSLJDJSCSMax)
+            Call 资本金税后收益率反算静态投资(ExcelApp, FSLJDJSCSMax)
+            Call 资本金税后收益率反算收入单价(ExcelApp, FSLJDJSCSMax)
+            Call 资本金税后收益率反算成本单价(ExcelApp, FSLJDJSCSMax)
         End If
         '如果是全投资所得税后内部收益率，进行下列计算
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 5).Value = "全投资所得税后内部收益率" Then
-            Call 全投资税后收益率反算静态投资(FSLJDJSCSMax)
-            Call 全投资税后收益率反算收入单价(FSLJDJSCSMax)
-            Call 全投资税后收益率反算成本单价(FSLJDJSCSMax)
+            Call 全投资税后收益率反算静态投资(ExcelApp, FSLJDJSCSMax)
+            Call 全投资税后收益率反算收入单价(ExcelApp, FSLJDJSCSMax)
+            Call 全投资税后收益率反算成本单价(ExcelApp, FSLJDJSCSMax)
         End If
-        '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '计算回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '提醒计算完成
         Form1.Show()
         Form1.Label1.Text = "反算临界点已计算完成！"
@@ -582,6 +578,14 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
@@ -600,9 +604,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -613,6 +617,8 @@ Public Class Com技术经济分析计算程序
         Form10.ShowDialog() '窗口显示
         Form10.TopMost = True
         System.Windows.Forms.Application.DoEvents()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
     End Sub
     Sub 盈亏平衡点计算()
         On Error Resume Next
@@ -621,9 +627,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -688,17 +694,21 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+        '复制
         ExcelApp.ActiveChart.ChartArea.Copy()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         MsgBox("复制完成！")
     End Sub
     Sub 复制盈亏平衡分析图()
@@ -708,17 +718,21 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("盈亏平衡分析图").Activate
+        '复制
         ExcelApp.ActiveChart.ChartArea.Copy()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         MsgBox("复制完成！")
     End Sub
     Sub 清空敏感性分析和盈亏平衡分析计算数据()
@@ -728,6 +742,14 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
         '敏感性分析计算结果
@@ -764,6 +786,14 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————    
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
         '屏蔽事件
         ExcelApp.Application.EnableEvents = False
         '屏蔽excel自动计算
@@ -898,43 +928,39 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Calculate()
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '项目计算年数改变后改变的计算用系数
-        Call 项目计算年限变化后改变相关系数()
+        Call 项目计算年限变化后改变相关系数(ExcelApp)
         '折旧年数改变后改变的计算用系数
-        Call 折旧计算年限变化后改变相关系数()
+        Call 折旧计算年限变化后改变相关系数(ExcelApp)
         '无形资产摊销年限改变后改变的计算用系数
-        Call 无形资产摊销年限变化后改变相关系数()
+        Call 无形资产摊销年限变化后改变相关系数(ExcelApp)
         '长期贷款还款年数改变后改变的计算用系数
-        Call 长期贷款计算年限变化后改变相关系数()
+        Call 长期贷款计算年限变化后改变相关系数(ExcelApp)
         '年数总和法逐年折旧摊销系数
-        Call 年数总和法逐年折旧摊销系数()
+        Call 年数总和法逐年折旧摊销系数(ExcelApp)
         '计算长期贷款是否处于宽限期
-        Call 是否处于长期贷款宽限期()
+        Call 是否处于长期贷款宽限期(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '第2到第10次投资年份输入发生变化时修改计算系数
-        Call 第二至第五次投资年份改变后修改相关计算系数()
-        Call 第六至第十次投资年份改变后修改相关计算系数()
+        Call 第二至第五次投资年份改变后修改相关计算系数(ExcelApp)
+        Call 第六至第十次投资年份改变后修改相关计算系数(ExcelApp)
         '建设期可抵扣增值税计算系数
-        Call 建设期增值税抵扣系数()
+        Call 建设期增值税抵扣系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
         Call 直接输入综合负荷率()
         Call 分投资逐次输入负荷率()
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        Call 将部分设置重置回默认状态()
+        Call 将部分设置重置回默认状态(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次
         ExcelApp.Calculate()
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Protect(Password:="wscjc")
+        Call 锁定表格(ExcelApp)
         '开启事件触发
         ExcelApp.Application.EnableEvents = True
         '重新打开excel自动计算
@@ -950,15 +976,15 @@ Public Class Com技术经济分析计算程序
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Call 计算前基本处理()
+        Call 计算前基本处理(ExcelApp)
         '解锁建设期时间计划表
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
         '定义局部变量
@@ -1487,24 +1513,24 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '项目计算年数改变后改变的计算用系数
-        Call 项目计算年限变化后改变相关系数()
+        Call 项目计算年限变化后改变相关系数(ExcelApp)
         '折旧年数改变后改变的计算用系数
-        Call 折旧计算年限变化后改变相关系数()
+        Call 折旧计算年限变化后改变相关系数(ExcelApp)
         '无形资产摊销年限改变后改变的计算用系数
-        Call 无形资产摊销年限变化后改变相关系数()
+        Call 无形资产摊销年限变化后改变相关系数(ExcelApp)
         '长期贷款还款年数改变后改变的计算用系数
-        Call 长期贷款计算年限变化后改变相关系数()
+        Call 长期贷款计算年限变化后改变相关系数(ExcelApp)
         '年数总和法逐年折旧摊销系数
-        Call 年数总和法逐年折旧摊销系数()
+        Call 年数总和法逐年折旧摊销系数(ExcelApp)
         '计算长期贷款是否处于宽限期
-        Call 是否处于长期贷款宽限期()
+        Call 是否处于长期贷款宽限期(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————       
         '第2到第10次投资年份输入发生变化时修改计算系数
-        Call 第二至第五次投资年份改变后修改相关计算系数()
-        Call 第六至第十次投资年份改变后修改相关计算系数()
+        Call 第二至第五次投资年份改变后修改相关计算系数(ExcelApp)
+        Call 第六至第十次投资年份改变后修改相关计算系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '建设期可抵扣增值税计算系数
-        Call 建设期增值税抵扣系数()
+        Call 建设期增值税抵扣系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
         Call 直接输入综合负荷率()
@@ -1512,43 +1538,83 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '将部分设置重置回默认状态
-        Call 将部分设置重置回默认状态()
+        Call 将部分设置重置回默认状态(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次工作簿
         ExcelApp.Calculate()
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+        Call 锁定表格(ExcelApp)
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         MsgBox("确定建设期时间计划完成！")
     End Sub
-    Sub 将部分设置重置回默认状态()
+
+    Sub 打开表格自动运行()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '启动迭代计算
+        ExcelApp.Application.Iteration = True
+        '打开自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件触发
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        '自保护程序
+        Call 自保护程序(ExcelApp)
+        '验证Excel表格的更新时间
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20200722 Then
+            MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
+            '跳过投资各方收益表格操作，防止多次报错
+            Exit Sub
+        End If
+        '投资各方收益
+        Call 投资各方收益率表格操作(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+    End Sub
+
+    Sub 投资回收期和流动资金计算()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Call 投资回收期计算(ExcelApp)
+        Call 流动资金相关计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+    End Sub
+    Sub 将部分设置重置回默认状态(ExcelApp As Object)
+        On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '解锁表格
@@ -1820,39 +1886,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
-    Sub 打开表格自动运行()
+
+    Function Excel版本号验证(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '启动迭代计算
-        ExcelApp.Application.Iteration = True
-        '打开自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件触发
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        '锁定表格
-        Call 锁定表格()
-        '自保护程序
-        Call 自保护程序()
-        '验证Excel表格的更新时间
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20200722 Then
-            MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
-            '跳过投资各方收益表格操作，防止多次报错
-            Exit Sub
-        End If
-        Call 投资各方收益率表格操作()
-    End Sub
-    Function Excel版本号验证()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim ZTJC As Integer
         '验证Excel表格的更新时间
@@ -1862,16 +1898,12 @@ Public Class Com技术经济分析计算程序
         Else
             ZTJC = 0
         End If
-        Call 自保护程序()
+        Call 自保护程序(ExcelApp)
         '返回结果
         Return ZTJC
     End Function
-    Sub 资本金税后收益率反算收入单价(FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '资本金税后收益率，资本金税后收益率，资本金税后收益率，
         '反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入
@@ -1915,7 +1947,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -1924,7 +1956,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -1937,7 +1969,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT + WTJSBC * m '每次增加WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value '将反算出来的单价记在表格中
@@ -1950,7 +1982,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -1965,7 +1997,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -1974,7 +2006,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况， 进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -1987,7 +2019,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT - WTJSBC * m '每次减少WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value  '将反算出来的单价记在表格中
@@ -2003,7 +2035,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -2013,12 +2045,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 资本金税后收益率反算成本单价(FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '资本金税后收益率，资本金税后收益率，资本金税后收益率，
         '反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本
@@ -2062,7 +2090,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 - m / JSCSMax)
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -2071,7 +2099,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2084,7 +2112,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT + WTJSBC * m '每次增加WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value  '将反算出来的单价记在表格中
@@ -2100,7 +2128,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -2115,7 +2143,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -2124,7 +2152,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2137,7 +2165,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT - WTJSBC * m '每次减少WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -2150,7 +2178,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -2160,12 +2188,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 资本金税后收益率反算静态投资(FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -2215,7 +2239,7 @@ Public Class Com技术经济分析计算程序
                         If TZJECC(JS) > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS) * (1 - i / JSCSMax)
                             '计算流动资金
-                            'Call 流动资金相关计算()
+                            'Call 流动资金相关计算(ExcelApp)
                         End If
                     Next
                 Next
@@ -2235,7 +2259,7 @@ Public Class Com技术经济分析计算程序
                 End If
             Next
             '计算流动资金
-            Call 流动资金相关计算()
+            Call 流动资金相关计算(ExcelApp)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -2253,7 +2277,7 @@ Public Class Com技术经济分析计算程序
                                 'ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) + WTJSBC * i '每次增加WTJSBC
                                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) * (1 + i / (JSCSMax * 25))
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                             End If
                         Next
                     Next
@@ -2278,7 +2302,7 @@ Public Class Com技术经济分析计算程序
                     If TZJECC(JS) > 0 Then
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS)
                         '计算流动资金
-                        Call 流动资金相关计算()
+                        Call 流动资金相关计算(ExcelApp)
                     End If
                 Next
             Next
@@ -2299,7 +2323,7 @@ Public Class Com技术经济分析计算程序
                         If TZJECC(JS) > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS) * (1 + i / JSCSMax)
                             '计算流动资金
-                            'Call 流动资金相关计算()
+                            'Call 流动资金相关计算(ExcelApp)
                         End If
                     Next
                 Next
@@ -2319,7 +2343,7 @@ Public Class Com技术经济分析计算程序
                 End If
             Next
             '计算流动资金
-            Call 流动资金相关计算()
+            Call 流动资金相关计算(ExcelApp)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -2337,7 +2361,7 @@ Public Class Com技术经济分析计算程序
                                 'ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) - WTJSBC * i '每次减少WTJSBC
                                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) * (1 - i / (JSCSMax * 25))
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                             End If
                         Next
                     Next
@@ -2358,7 +2382,7 @@ Public Class Com技术经济分析计算程序
                     If TZJECC(JS) > 0 Then
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS)
                         '计算流动资金
-                        Call 流动资金相关计算()
+                        Call 流动资金相关计算(ExcelApp)
                     End If
                 Next
             Next
@@ -2369,12 +2393,8 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算收入单价(FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '全投资税后收益率，全投资税后收益率，全投资税后收益率，
         '反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入
@@ -2418,7 +2438,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -2427,7 +2447,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2440,7 +2460,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT + WTJSBC * m '每次增加WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value '将反算出来的单价记在表格中
@@ -2453,7 +2473,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -2468,7 +2488,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -2477,7 +2497,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2490,7 +2510,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT - WTJSBC * m '每次减小WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value  '将反算出来的单价记在表格中
@@ -2506,7 +2526,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -2516,12 +2536,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算成本单价(FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '全投资税后收益率，全投资税后收益率，全投资税后收益率，
         '反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本
@@ -2565,7 +2581,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -2574,7 +2590,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2587,7 +2603,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT + WTJSBC * m '每次增加WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -2603,7 +2619,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -2618,7 +2634,7 @@ Public Class Com技术经济分析计算程序
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '计算流动资金
-                                'Call 流动资金相关计算()
+                                'Call 流动资金相关计算(ExcelApp)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -2627,7 +2643,7 @@ Public Class Com技术经济分析计算程序
                                 End If
                             Next
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -2640,7 +2656,7 @@ Public Class Com技术经济分析计算程序
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT - WTJSBC * m '每次减小WTJSBC
                                     '计算流动资金
-                                    Call 流动资金相关计算()
+                                    Call 流动资金相关计算(ExcelApp)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -2653,7 +2669,7 @@ Public Class Com技术经济分析计算程序
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -2663,12 +2679,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算静态投资(FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -2718,7 +2730,7 @@ Public Class Com技术经济分析计算程序
                         If TZJECC(JS) > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS) * (1 - i / JSCSMax)
                             '计算流动资金
-                            'Call 流动资金相关计算()
+                            'Call 流动资金相关计算(ExcelApp)
                         End If
                     Next
                 Next
@@ -2738,7 +2750,7 @@ Public Class Com技术经济分析计算程序
                 End If
             Next
             '计算流动资金
-            Call 流动资金相关计算()
+            Call 流动资金相关计算(ExcelApp)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -2756,7 +2768,7 @@ Public Class Com技术经济分析计算程序
                                 'ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) + WTJSBC * i '每次增加WTJSBC
                                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) * (1 + i / (JSCSMax * 25))
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                             End If
                         Next
                     Next
@@ -2781,7 +2793,7 @@ Public Class Com技术经济分析计算程序
                     If TZJECC(JS) > 0 Then
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS)
                         '计算流动资金
-                        Call 流动资金相关计算()
+                        Call 流动资金相关计算(ExcelApp)
                     End If
                 Next
             Next
@@ -2802,7 +2814,7 @@ Public Class Com技术经济分析计算程序
                         If TZJECC(JS) > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS) * (1 + i / JSCSMax)
                             '计算流动资金
-                            'Call 流动资金相关计算()
+                            'Call 流动资金相关计算(ExcelApp)
                         End If
                     Next
                 Next
@@ -2822,7 +2834,7 @@ Public Class Com技术经济分析计算程序
                 End If
             Next
             '计算流动资金
-            Call 流动资金相关计算()
+            Call 流动资金相关计算(ExcelApp)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -2840,7 +2852,7 @@ Public Class Com技术经济分析计算程序
                                 'ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) - WTJSBC * i '每次减少WTJSBC
                                 ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = JTTZWT(JS) * (1 - i / (JSCSMax * 25))
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                             End If
                         Next
                     Next
@@ -2861,7 +2873,7 @@ Public Class Com技术经济分析计算程序
                     If TZJECC(JS) > 0 Then
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(j), m).Value = TZJECC(JS)
                         '计算流动资金
-                        Call 流动资金相关计算()
+                        Call 流动资金相关计算(ExcelApp)
                     End If
                 Next
             Next
@@ -2872,12 +2884,8 @@ Public Class Com技术经济分析计算程序
         End If
         Form1.Close()
     End Sub
-    Sub 静态投资敏感性分析计算(MGXFXBHL As Double)
+    Sub 静态投资敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -2924,9 +2932,9 @@ Public Class Com技术经济分析计算程序
                     Next
                 Next
                 '计算流动资金
-                Call 流动资金相关计算()
+                Call 流动资金相关计算(ExcelApp)
                 '计算投资回收期
-                Call 投资回收期计算()
+                Call 投资回收期计算(ExcelApp)
                 '读取计算的结果，内部收益率和回收年限
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
@@ -2947,18 +2955,14 @@ Public Class Com技术经济分析计算程序
                 Next
             Next
             '计算流动资金
-            Call 流动资金相关计算()
+            Call 流动资金相关计算(ExcelApp)
             '计算投资回收期
-            Call 投资回收期计算()
+            Call 投资回收期计算(ExcelApp)
         End If
         Form1.Close()
     End Sub
-    Sub 收入敏感性分析计算(MGXFXBHL As Double)
+    Sub 收入敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -2983,18 +2987,18 @@ Public Class Com技术经济分析计算程序
                                 '敏感性分析
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (（1 - 2 * MGXFXBHL） + (m - 1) * MGXFXBHL)
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                                 '计算投资回收期
-                                Call 投资回收期计算()
+                                Call 投资回收期计算(ExcelApp)
                                 '读取收益率和回收期
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
                             Next
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ '收入单价初始值返回
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算投资回收期
-                            Call 投资回收期计算()
+                            Call 投资回收期计算(ExcelApp)
                         End If
                     End If
                 Next
@@ -3002,12 +3006,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 成本敏感性分析计算(MGXFXBHL As Double)
+    Sub 成本敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -3032,18 +3032,18 @@ Public Class Com技术经济分析计算程序
                                 '敏感性分析
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (（1 - 2 * MGXFXBHL） + (m - 1) * MGXFXBHL)
                                 '计算流动资金
-                                Call 流动资金相关计算()
+                                Call 流动资金相关计算(ExcelApp)
                                 '计算投资回收期
-                                Call 投资回收期计算()
+                                Call 投资回收期计算(ExcelApp)
                                 '读取收益率和回收期
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
                             Next
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ '成本单价返回初始值
                             '计算流动资金
-                            Call 流动资金相关计算()
+                            Call 流动资金相关计算(ExcelApp)
                             '计算投资回收期
-                            Call 投资回收期计算()
+                            Call 投资回收期计算(ExcelApp)
                         End If
                     End If
                 Next
@@ -3051,12 +3051,8 @@ Public Class Com技术经济分析计算程序
         Next
         Form1.Close()
     End Sub
-    Sub 年运行小时数敏感性分析(MGXFXBHL As Double)
+    Sub 年运行小时数敏感性分析(ExcelApp As Object, MGXFXBHL As Double)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -3123,9 +3119,9 @@ Public Class Com技术经济分析计算程序
                         End If
                     Next
                     '计算流动资金
-                    Call 流动资金相关计算()
+                    Call 流动资金相关计算(ExcelApp)
                     '计算投资回收期
-                    Call 投资回收期计算()
+                    Call 投资回收期计算(ExcelApp)
                     '读取计算的结果，内部收益率和回收年限
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(136 + i, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(136 + i, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
@@ -3157,19 +3153,15 @@ Public Class Com技术经济分析计算程序
                     End If
                 Next
                 '计算流动资金
-                Call 流动资金相关计算()
+                Call 流动资金相关计算(ExcelApp)
                 '计算投资回收期
-                Call 投资回收期计算()
+                Call 投资回收期计算(ExcelApp)
             End If
         End If
         Form1.Close()
     End Sub
-    Sub 绘制单因素敏感性分析图()
+    Sub 绘制单因素敏感性分析图(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim Form10 As New 选择单因素敏感性分析内容
         If Form10.hzzxt.Checked = True Then
@@ -3375,12 +3367,8 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Sub 设置敏感性分析图格式()
+    Sub 设置敏感性分析图格式(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '求取计算出的内部收益率中的最小值和最大值
         Dim NBSYLmin = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 11).Value '内部收益率最小值
@@ -3538,237 +3526,6 @@ Public Class Com技术经济分析计算程序
             Next
         Next
     End Sub
-    Sub 投资回收期计算()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '自有资金
-        '资本金现金流量表
-        For iii = 1 To 31 '年份1至31年
-            '所得税前累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + iii).Value >= 0 Then
-                '将所得税前累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(45, 22).Value = iii
-                '将所得税前累计净现金流量第一个大于等于0的年份，之前一年的所得税前累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(49, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + iii - 1).Value
-                '将所得税前累计净现金流量第一个大于等于0的年份，当年的所得税前净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(52, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(24, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        For jjj = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + jjj).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(46, 22).Value = jjj
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(50, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + jjj - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(53, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(22, 4 + jjj).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '全投资
-        '项目投资现金流量表
-        For iii = 1 To 31 '年份1至31年
-            '所得税前累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + iii).Value >= 0 Then
-                '将所得税前累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(41, 22).Value = iii
-                '将所得税前累计净现金流量第一个大于等于0的年份，之前一年的所得税前累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(44, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + iii - 1).Value
-                '将所得税前累计净现金流量第一个大于等于0的年份，当年的所得税前净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(47, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(16, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        For jjj = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + jjj).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(42, 22).Value = jjj
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(45, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + jjj - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(48, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(19, 4 + jjj).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '投资各方所得税后回收年限计算
-        '投资方1        
-        For iii = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(16, 4 + iii).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(30, 22).Value = iii
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(16, 4 + iii - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(15, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '投资方2        
-        For iii = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(16, 4 + iii).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(30, 22).Value = iii
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(16, 4 + iii - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(15, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '投资方3        
-        For iii = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(16, 4 + iii).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(30, 22).Value = iii
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(16, 4 + iii - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(15, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '投资方4        
-        For iii = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(16, 4 + iii).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(30, 22).Value = iii
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(16, 4 + iii - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(15, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '投资方5       
-        For iii = 1 To 31 '年份1至31年
-            '所得税后累计净现金流量
-            If ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(16, 4 + iii).Value >= 0 Then
-                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(30, 22).Value = iii
-                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(16, 4 + iii - 1).Value
-                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
-                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(15, 4 + iii).Value
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '————————————————————————————————————————————————————————————————————————————————————————              
-        '针对投资回收年限添加报错功能：如果累计净现金流量出现了先从负到正然后又变成负的情况，则报错，弹框提醒
-        '自有资金
-        Dim ZT_ZBJSDSH As Integer = 0 '资本金所得税后状态检测
-        Dim Year_ZBJSDSH As Integer = 0 '资本金所得税后累计净现值第一次大于0时候年份序号
-        For i = 1 To 31 '年份1至31年
-            '资本金所得税后累计净现值
-            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value > 0 Then
-                ZT_ZBJSDSH = ZT_ZBJSDSH + 1
-                Year_ZBJSDSH = i
-                Exit For
-            End If
-        Next
-        If ZT_ZBJSDSH = 1 Then
-            For i = Year_ZBJSDSH + 1 To 31 '年份序号
-                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value < 0 Then
-                    ZT_ZBJSDSH = ZT_ZBJSDSH + 1
-                    Exit For
-                End If
-            Next
-        End If
-        Dim ZT_ZBJSDSQ As Integer = 0 '资本金所得税前状态检测
-        Dim Year_ZBJSDSQ As Integer = 0 '资本金所得税前累计净现值第一次大于0时候年份序号
-        For i = 1 To 31 '年份1至31年
-            '资本金所得税前累计净现值
-            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value > 0 Then
-                ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
-                Year_ZBJSDSQ = i
-                Exit For
-            End If
-        Next
-        If ZT_ZBJSDSQ = 1 Then
-            For i = Year_ZBJSDSQ + 1 To 31 '年份序号
-                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value < 0 Then
-                    ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
-                    Exit For
-                End If
-            Next
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————    
-        '全投资
-        Dim ZT_QTZSDSH As Integer = 0 '全投资所得税后状态检测
-        Dim Year_QTZSDSH As Integer = 0 '全投资所得税后累计净现值第一次大于0时候年份序号
-        For i = 1 To 31 '年份1至31年
-            '全投资所得税后
-            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value > 0 Then
-                ZT_QTZSDSH = ZT_QTZSDSH + 1
-                Year_QTZSDSH = i
-                Exit For
-            End If
-        Next
-        If ZT_QTZSDSH = 1 Then
-            For i = Year_QTZSDSH + 1 To 31
-                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value < 0 Then
-                    ZT_QTZSDSH = ZT_QTZSDSH + 1
-                    Exit For
-                End If
-            Next
-        End If
-        Dim ZT_QTZSDSQ As Integer = 0 '全投资所得税前状态检测
-        Dim Year_QTZSDSQ As Integer = 0 '全投资所得税前累计净现值第一次大于0时候年份序号
-        For i = 1 To 31 '年份1至31年
-            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value > 0 Then
-                ZT_QTZSDSQ = ZT_QTZSDSQ + 1
-                Year_QTZSDSQ = i
-                Exit For
-            End If
-        Next
-        If ZT_QTZSDSQ = 1 Then
-            For i = Year_QTZSDSQ + 1 To 31
-                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value < 0 Then
-                    ZT_QTZSDSQ = ZT_QTZSDSQ + 1
-                    Exit For
-                End If
-            Next
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '判断结果写入Excel
-        '解锁Excel
-        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
-        '写入结果
-        If ZT_QTZSDSH = 2 Or ZT_QTZSDSQ = 2 Or ZT_ZBJSDSH = 2 Or ZT_ZBJSDSQ = 2 Then
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "不正确"
-        Else
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "正确"
-        End If
-        '锁定Excel
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-    End Sub
 
     Sub 设置所得税减免和增值税退税包含内容()
         On Error Resume Next
@@ -3778,9 +3535,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -3796,14 +3553,12 @@ Public Class Com技术经济分析计算程序
             Form6.TopMost = True
             System.Windows.Forms.Application.DoEvents()
         End If
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '重新打开屏幕更新
@@ -3819,9 +3574,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -3847,12 +3602,11 @@ Public Class Com技术经济分析计算程序
         Form13.jsnf2.Clear()
         Form13.jsnf3.Clear()
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '打开事件
@@ -3869,9 +3623,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -3898,12 +3652,11 @@ Public Class Com技术经济分析计算程序
         Form12.jsnf3.Clear()
         Form12.CheckBox1.Checked = False
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '重新打开excel自动计算
@@ -3921,9 +3674,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -3951,12 +3704,11 @@ Public Class Com技术经济分析计算程序
         Form7.CheckBox1.Checked = False
         Form7.CheckBox2.Checked = False
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '重新打开excel自动计算
@@ -3974,9 +3726,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4010,12 +3762,11 @@ Public Class Com技术经济分析计算程序
         Form2.RichTextBox1.Rtf = Nothing
         Form2.RichTextBox1.Clear()
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '重新打开excel自动计算
@@ -4033,9 +3784,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4077,11 +3828,11 @@ Public Class Com技术经济分析计算程序
         Form4.jsfl4.Clear()
         Form4.RichTextBox1.Rtf = Nothing
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call 投资回收期计算()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '打开事件
         ExcelApp.Application.EnableEvents = True
         '重新打开excel自动计算
@@ -4099,9 +3850,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4143,9 +3894,8 @@ Public Class Com技术经济分析计算程序
         Form5.dkll8.Clear()
         Form5.dkll9.Clear()
         Form5.dkll10.Clear()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
         '重新打开excel自动计算
@@ -4164,9 +3914,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4219,12 +3969,8 @@ Public Class Com技术经济分析计算程序
         Form8.wxzctxnx8.Clear()
         Form8.wxzctxnx9.Clear()
         Form8.wxzctxnx10.Clear()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Protect(Password:="wscjc")
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
         '重新打开excel自动计算
@@ -4243,9 +3989,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4286,11 +4032,8 @@ Public Class Com技术经济分析计算程序
         Form9.kxnx8.Clear()
         Form9.kxnx9.Clear()
         Form9.kxnx10.Clear()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("估算表").protect(Password:="wscjc")
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
         '重新打开excel自动计算
@@ -4309,9 +4052,9 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -4348,13 +4091,8 @@ Public Class Com技术经济分析计算程序
         Form14.lrfpbl3.Clear()
         Form14.lrfpbl4.Clear()
         Form14.lrfpbl5.Clear()
-        '重新锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
+        '锁定表格
+        Call 锁定表格(ExcelApp)
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
         '重新打开excel自动计算
@@ -4364,24 +4102,12 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Sub 项目计算年限变化后改变相关系数()
+    Sub 项目计算年限变化后改变相关系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         Dim tznfzdz, zjdknx '投资年份最大值、折旧贷款年限中较大的值
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '折旧贷款年限中的最大值
         zjdknx = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Range("G6:G8").Value)
         '项目计算年数改变后改变的计算用系数
@@ -4413,7 +4139,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需为从2到31的整数，同时要大于等于项目投资年份最大值与折旧和贷款年限的较大值的和
         If jsnx >= 2 And jsnx <= 31 And jsnx >= tznfzdz + zjdknx And Int(jsnx) = jsnx Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的计算年数，修改相关计算系数
             '前15年
             For i = 3 To 17
@@ -4491,20 +4217,8 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Sub 折旧计算年限变化后改变相关系数()
+    Sub 折旧计算年限变化后改变相关系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
         Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value '固定资产折旧年限
@@ -4521,7 +4235,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If gdzczjnx >= 1 And gdzczjnx <= 30 And gdzczjnx <= jsnx - tznfzdz And Int(gdzczjnx) = gdzczjnx Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '第1次投资发生后，折旧计算系数，默认第一次投资发生在第一年且不可以修改
             '根据输入的折旧计算年数，修改相关计算系数
             '前15年
@@ -4711,20 +4425,8 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Sub 长期贷款计算年限变化后改变相关系数()
+    Sub 长期贷款计算年限变化后改变相关系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         'cqdkhknx 长期贷款还款年限
         '定义局部变量
@@ -4742,7 +4444,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If cqdkhknx >= 1 And cqdkhknx <= 30 And cqdkhknx <= jsnx - tznfzdz And Int(cqdkhknx) = cqdkhknx Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的长期贷款还款计算年数，修改相关计算系数
             '第1次投资发生后，长期贷款计算系数，默认第一次投资发生在第一年且不可以修改
             For i = 3 To 17
@@ -4961,20 +4663,8 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Sub 无形资产摊销年限变化后改变相关系数()
+    Sub 无形资产摊销年限变化后改变相关系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
         Dim tznfzdz
@@ -4991,7 +4681,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If wxzctxnx >= 1 And wxzctxnx <= 30 And wxzctxnx <= jsnx - tznfzdz And Int(wxzctxnx) = wxzctxnx Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '第1次投资发生后，无形资产摊销计算系数，默认第一次投资发生在第一年且不可以修改
             '根据输入的无形资产摊销计算年数，修改相关计算系数
             For i = 3 To 17
@@ -5161,12 +4851,8 @@ Public Class Com技术经济分析计算程序
             End If
         End If
     End Sub
-    Sub 第二至第五次投资年份改变后修改相关计算系数()
+    Sub 第二至第五次投资年份改变后修改相关计算系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
         Dim jsnx, zjdknx, tzzdnf '项目计算年限、折旧贷款年限中的较大值
@@ -5181,7 +4867,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于等于2，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第二次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(143, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value Then
@@ -5199,7 +4885,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(144, i).Value = 0
             Next
@@ -5218,7 +4904,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第二次投资年份，，且第二次投资年份不为0，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > tznf2 And tznf2 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第3次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(151, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value Then
@@ -5236,7 +4922,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(152, i).Value = 0
             Next
@@ -5259,7 +4945,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第三次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > tznf3 And tznf3 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第4次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(159, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value Then
@@ -5277,7 +4963,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(160, i).Value = 0
             Next
@@ -5300,7 +4986,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第四次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > tznf4 And tznf4 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第5次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(167, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value Then
@@ -5318,7 +5004,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(168, i).Value = 0
             Next
@@ -5336,12 +5022,8 @@ Public Class Com技术经济分析计算程序
             'End If
         End If
     End Sub
-    Sub 第六至第十次投资年份改变后修改相关计算系数()
+    Sub 第六至第十次投资年份改变后修改相关计算系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
         Dim jsnx, zjdknx, tzzdnf '项目计算年限、折旧贷款年限中的较大值
@@ -5358,7 +5040,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第5次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > tznf5 And tznf5 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第6次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(239, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value Then
@@ -5376,7 +5058,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(240, i).Value = 0
             Next
@@ -5399,7 +5081,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第6次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > tznf6 And tznf6 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第6次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(247, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value Then
@@ -5417,7 +5099,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(248, i).Value = 0
             Next
@@ -5440,7 +5122,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第7次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > tznf7 And tznf7 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第6次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(255, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value Then
@@ -5458,7 +5140,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(256, i).Value = 0
             Next
@@ -5481,7 +5163,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第8次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > tznf8 And tznf8 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第6次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(263, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value Then
@@ -5499,7 +5181,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(264, i).Value = 0
             Next
@@ -5522,7 +5204,7 @@ Public Class Com技术经济分析计算程序
         '输入的数字必需大于项目第9次投资年份，小于等于允许输入的最大年份的整数，且不为0
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > tznf9 And tznf9 <> 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value <= tzzdnf And Int(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value <> 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             '根据输入的项目第6次投资年份，修改相关计算系数
             For i = 3 To 17
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(271, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value Then
@@ -5540,7 +5222,7 @@ Public Class Com技术经济分析计算程序
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value = 0 Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             For i = 3 To 17
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(272, i).Value = 0
             Next
@@ -5558,17 +5240,13 @@ Public Class Com技术经济分析计算程序
             'End If
         End If
     End Sub
-    Sub 年数总和法逐年折旧摊销系数()
+    Sub 年数总和法逐年折旧摊销系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         Dim GDZCZJNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value '固定资产折旧年限
         Dim WXZCTXNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value '无形资产摊销年限        
-        Call 计算前基本处理()
+        Call 计算前基本处理(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————        
         '折旧摊销计算方法四采用的逐年折旧率摊销率计算
         Dim JS1 As Integer = 0 '投资年份计数
@@ -5656,18 +5334,14 @@ Public Class Com技术经济分析计算程序
             End If
         Next
     End Sub
-    Sub 建设期增值税抵扣系数()
+    Sub 建设期增值税抵扣系数(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim JSQZZSDKNS As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 7).Value '建设期增值税抵扣年数
         Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '输入的数字必需为从0到31的整数，同时要大于等于项目投资年份最大值与折旧和贷款年限的较大值的和
         If JSQZZSDKNS >= 0 And JSQZZSDKNS <= XMJSNX And Int(JSQZZSDKNS) = JSQZZSDKNS Then
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             Dim JS As Integer = 0 '投资年份计数
             '第一到第十次投资发生年份
             For i = 28 To 71 Step 43 '估算表行号
@@ -5689,25 +5363,21 @@ Public Class Com技术经济分析计算程序
                 Next
             Next
         ElseIf JSQZZSDKNS < 0 Then '如果输入的年份小于0
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的建设期增值税抵扣年限不可以小于0，程序将自动修改年限为0！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 7).Value = 0
         ElseIf JSQZZSDKNS > XMJSNX - 1 Then
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的建设期增值税抵扣年限不可以大于项目计算年限，程序将自动修改年限！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 7).Value = XMJSNX
         ElseIf JSQZZSDKNS >= 0 And JSQZZSDKNS <= XMJSNX And Int(JSQZZSDKNS) <> JSQZZSDKNS Then
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的建设期增值税抵扣年限必需为0到项目计算年限减一之间的正整数，程序将自动修改年限！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 7).Value = 2
         End If
     End Sub
-    Sub 是否处于长期贷款宽限期()
+    Sub 是否处于长期贷款宽限期(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim DKKXQNS As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value '贷款宽限期年数
         Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
@@ -5717,7 +5387,7 @@ Public Class Com技术经济分析计算程序
             Dim JS1 As Integer = 0
             For i = 100 To 600 '遍历借款还本付息计划表的行号
                 If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 7777 Then '标签是7777
-                    Call 计算前基本处理()
+                    Call 计算前基本处理(ExcelApp)
                     For j = 28 To 71 Step 43 '估算表行号
                         For k = 3 To 11 Step 2 '估算表列号
                             JS1 = JS1 + 1
@@ -5739,24 +5409,33 @@ Public Class Com技术经济分析计算程序
                 End If
             Next
         ElseIf DKKXQNS < 1 Then '如果输入的年份小于0
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的长期贷款宽限期年限不可以小于1，程序将自动修改年限为1！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = 1
         ElseIf DKKXQNS > XMJSNX Then
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的长期贷款宽限期年限不可以大于项目计算年限，程序将自动修改年限！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = XMJSNX
         ElseIf Int(DKKXQNS) <> DKKXQNS Then
-            Call 计算前基本处理()
+            Call 计算前基本处理(ExcelApp)
             MsgBox("输入的长期贷款宽限期年限必需为1到项目计算年限之间的正整数，程序将自动修改年限！")
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = 1
         End If
     End Sub
     Sub 隐藏收入税收表中收入为0的行()
         On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
@@ -5912,9 +5591,18 @@ Public Class Com技术经济分析计算程序
     End Sub
     Sub 隐藏总成本表中成本为0的行()
         On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
@@ -5979,6 +5667,14 @@ Public Class Com技术经济分析计算程序
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim DYGSRNF As Integer = 0 '第一个有收入的年份
@@ -6068,22 +5764,230 @@ Public Class Com技术经济分析计算程序
             ExcelApp.Application.ScreenUpdating = True
         End If
     End Sub
-    Sub 流动资金相关计算()
+
+    Sub 投资回收期计算(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '自有资金
+        '资本金现金流量表
+        For iii = 1 To 31 '年份1至31年
+            '所得税前累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + iii).Value >= 0 Then
+                '将所得税前累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(45, 22).Value = iii
+                '将所得税前累计净现金流量第一个大于等于0的年份，之前一年的所得税前累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(49, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + iii - 1).Value
+                '将所得税前累计净现金流量第一个大于等于0的年份，当年的所得税前净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(52, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(24, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        For jjj = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + jjj).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(46, 22).Value = jjj
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(50, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + jjj - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(53, 22).Value = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(22, 4 + jjj).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '全投资
+        '项目投资现金流量表
+        For iii = 1 To 31 '年份1至31年
+            '所得税前累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + iii).Value >= 0 Then
+                '将所得税前累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(41, 22).Value = iii
+                '将所得税前累计净现金流量第一个大于等于0的年份，之前一年的所得税前累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(44, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + iii - 1).Value
+                '将所得税前累计净现金流量第一个大于等于0的年份，当年的所得税前净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(47, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(16, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        For jjj = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + jjj).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(42, 22).Value = jjj
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(45, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + jjj - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(48, 22).Value = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(19, 4 + jjj).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资各方所得税后回收年限计算
+        '投资方1        
+        For iii = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(16, 4 + iii).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(30, 22).Value = iii
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(16, 4 + iii - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(15, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方2        
+        For iii = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(16, 4 + iii).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(30, 22).Value = iii
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(16, 4 + iii - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(15, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方3        
+        For iii = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(16, 4 + iii).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(30, 22).Value = iii
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(16, 4 + iii - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(15, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方4        
+        For iii = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(16, 4 + iii).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(30, 22).Value = iii
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(16, 4 + iii - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(15, 4 + iii).Value
+                Exit For
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方5       
+        For iii = 1 To 31 '年份1至31年
+            '所得税后累计净现金流量
+            If ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(16, 4 + iii).Value >= 0 Then
+                '将所得税后累计净现金流量第一个大于等于0的年份记录在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(30, 22).Value = iii
+                '将所得税后累计净现金流量第一个大于等于0的年份，之前一年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(33, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(16, 4 + iii - 1).Value
+                '将所得税后累计净现金流量第一个大于等于0的年份，当年的所得税后累计净现金流量储存在表格中
+                ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(35, 22).Value = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(15, 4 + iii).Value
+                Exit For
+            End If
+        Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
+        '————————————————————————————————————————————————————————————————————————————————————————              
+        '针对投资回收年限添加报错功能：如果累计净现金流量出现了先从负到正然后又变成负的情况，则报错，弹框提醒
+        '自有资金
+        Dim ZT_ZBJSDSH As Integer = 0 '资本金所得税后状态检测
+        Dim Year_ZBJSDSH As Integer = 0 '资本金所得税后累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '资本金所得税后累计净现值
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value > 0 Then
+                ZT_ZBJSDSH = ZT_ZBJSDSH + 1
+                Year_ZBJSDSH = i
+                Exit For
+            End If
+        Next
+        If ZT_ZBJSDSH = 1 Then
+            For i = Year_ZBJSDSH + 1 To 31 '年份序号
+                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(23, 4 + i).Value < 0 Then
+                    ZT_ZBJSDSH = ZT_ZBJSDSH + 1
+                    Exit For
+                End If
+            Next
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————
+        Dim ZT_ZBJSDSQ As Integer = 0 '资本金所得税前状态检测
+        Dim Year_ZBJSDSQ As Integer = 0 '资本金所得税前累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '资本金所得税前累计净现值
+            If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value > 0 Then
+                ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
+                Year_ZBJSDSQ = i
+                Exit For
+            End If
+        Next
+        If ZT_ZBJSDSQ = 1 Then
+            For i = Year_ZBJSDSQ + 1 To 31 '年份序号
+                If ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(25, 4 + i).Value < 0 Then
+                    ZT_ZBJSDSQ = ZT_ZBJSDSQ + 1
+                    Exit For
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————    
+        '全投资
+        Dim ZT_QTZSDSH As Integer = 0 '全投资所得税后状态检测
+        Dim Year_QTZSDSH As Integer = 0 '全投资所得税后累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            '全投资所得税后
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value > 0 Then
+                ZT_QTZSDSH = ZT_QTZSDSH + 1
+                Year_QTZSDSH = i
+                Exit For
+            End If
+        Next
+        If ZT_QTZSDSH = 1 Then
+            For i = Year_QTZSDSH + 1 To 31
+                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(20, 4 + i).Value < 0 Then
+                    ZT_QTZSDSH = ZT_QTZSDSH + 1
+                    Exit For
+                End If
+            Next
+        End If
+        Dim ZT_QTZSDSQ As Integer = 0 '全投资所得税前状态检测
+        Dim Year_QTZSDSQ As Integer = 0 '全投资所得税前累计净现值第一次大于0时候年份序号
+        For i = 1 To 31 '年份1至31年
+            If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value > 0 Then
+                ZT_QTZSDSQ = ZT_QTZSDSQ + 1
+                Year_QTZSDSQ = i
+                Exit For
+            End If
+        Next
+        If ZT_QTZSDSQ = 1 Then
+            For i = Year_QTZSDSQ + 1 To 31
+                If ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(17, 4 + i).Value < 0 Then
+                    ZT_QTZSDSQ = ZT_QTZSDSQ + 1
+                    Exit For
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '判断结果写入Excel
+        '解锁Excel
+        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+        '写入结果
+        If ZT_QTZSDSH = 2 Or ZT_QTZSDSQ = 2 Or ZT_ZBJSDSH = 2 Or ZT_ZBJSDSQ = 2 Then
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "不正确"
+        Else
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "正确"
+        End If
+        '锁定Excel
+        ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
+    End Sub
+
+    Sub 流动资金相关计算(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").unProtect(Password:="wscjc")
@@ -6337,9 +6241,9 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
         If ZTJC = 1 Then
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
             ZTJC = 0
             Exit Sub
         End If
@@ -6354,17 +6258,13 @@ Public Class Com技术经济分析计算程序
         Else
             MsgBox("已超过最大尝试次数，不可以再尝试输入密码！")
             '锁定表格
-            Call 锁定表格()
+            Call 锁定表格(ExcelApp)
         End If
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Sub 计算前基本处理()
+    Sub 计算前基本处理(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽屏幕更新，防止屏闪
         ExcelApp.Application.ScreenUpdating = False
@@ -6376,12 +6276,8 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Unprotect(Password:="wscjc")
     End Sub
-    Sub 投资各方收益率表格操作()
+    Sub 投资各方收益率表格操作(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '屏蔽屏幕更新，防止屏闪
         ExcelApp.Application.ScreenUpdating = False
@@ -6597,26 +6493,15 @@ aaaaa：
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算()
+        Call 流动资金相关计算(ExcelApp)
         '计算回收期
-        Call 投资回收期计算()
+        Call 投资回收期计算(ExcelApp)
         '开启屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Sub 解锁表格()
+    Sub 解锁表格(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证()
-        If ZTJC = 1 Then
-            Call 锁定表格()
-            ZTJC = 0
-            Exit Sub
-        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
@@ -6643,12 +6528,8 @@ aaaaa：
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
     End Sub
-    Sub 锁定表格()
+    Sub 锁定表格(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '锁定表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
@@ -6675,12 +6556,7 @@ aaaaa：
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
-    Sub 自保护程序()
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
+    Sub 自保护程序(ExcelApp As Object)
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '程序开始
@@ -6694,25 +6570,19 @@ aaaaa：
             sr.Close()
             fs.Close()
             If WhiteList_PC <> "WhiteList_PC" Then '如果不是合格的白名单文件，验证失败，则进行自保护验证
-                'Call 获取本地服务器版本信息并验证()
-                Call 获取本机MAC地址并验证()
-                Call 网络时间和本地时间交替验证()
+                'Call 获取本地服务器版本信息并验证(ExcelApp)
+                Call 获取本机MAC地址并验证(ExcelApp)
+                Call 网络时间和本地时间交替验证(ExcelApp)
             End If
         Catch ex As Exception
             '发生任何异常，则进行自保护验证
-            'Call 获取本地服务器版本信息并验证()
-            Call 获取本机MAC地址并验证()
-            Call 网络时间和本地时间交替验证()
+            'Call 获取本地服务器版本信息并验证(ExcelApp)
+            Call 获取本机MAC地址并验证(ExcelApp)
+            Call 网络时间和本地时间交替验证(ExcelApp)
             Exit Sub
         End Try
     End Sub
-    Sub 获取本地服务器版本信息并验证()
-        'On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
+    Sub 获取本地服务器版本信息并验证(ExcelApp As Object)
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '程序开始
@@ -6754,12 +6624,8 @@ aaaaa：
             Exit Sub
         End Try
     End Sub
-    Sub 获取本机MAC地址并验证()
+    Sub 获取本机MAC地址并验证(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
@@ -6795,12 +6661,8 @@ aaaaa：
             ExcelApp.Application.DisplayAlerts = True
         End If
     End Sub
-    Sub 网络时间和本地时间交替验证()
+    Sub 网络时间和本地时间交替验证(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
@@ -6862,12 +6724,8 @@ aaaaa：
             End If
         End If
     End Sub
-    Sub 获取系统时间并验证()
+    Sub 获取系统时间并验证(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
@@ -6887,12 +6745,8 @@ aaaaa：
             ExcelApp.Application.DisplayAlerts = True
         End If
     End Sub
-    Sub 程序联网验证()
+    Sub 程序联网验证(ExcelApp As Object)
         On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled

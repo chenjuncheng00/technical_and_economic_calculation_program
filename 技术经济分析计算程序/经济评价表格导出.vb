@@ -21,7 +21,7 @@ Public Class 经济评价表格导出
         If Wordname = Nothing Then
             '清除全部表格的批注
             If Me.Checkbox1.Checked = True Then
-                Call mainprogram.解锁表格()
+                Call mainprogram.解锁表格(ExcelApp)
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells.Select
                 ExcelApp.Selection.ClearComments
@@ -76,7 +76,7 @@ Public Class 经济评价表格导出
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells.Select
                 ExcelApp.Selection.ClearComments
-                Call mainprogram.锁定表格()
+                Call mainprogram.锁定表格(ExcelApp)
                 '激活表格
                 ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate
             End If

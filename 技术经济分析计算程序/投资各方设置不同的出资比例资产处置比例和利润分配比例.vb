@@ -144,9 +144,9 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         '重新计算投资回收期
         Dim mainprogram As New Com技术经济分析计算程序
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '计算回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()
@@ -251,9 +251,9 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         '重新计算投资回收期
         Dim mainprogram As New Com技术经济分析计算程序
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '计算回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()

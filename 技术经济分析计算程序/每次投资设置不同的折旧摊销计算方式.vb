@@ -1204,9 +1204,9 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         '重新计算投资回收期
         Dim mainprogram As New Com技术经济分析计算程序
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '计算回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()
@@ -1241,20 +1241,20 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim mainprogram As New Com技术经济分析计算程序
         '折旧年数改变后改变的计算用系数
-        Call mainprogram.折旧计算年限变化后改变相关系数()
+        Call mainprogram.折旧计算年限变化后改变相关系数(ExcelApp)
         '无形资产摊销年限改变后改变的计算用系数
-        Call mainprogram.无形资产摊销年限变化后改变相关系数()
+        Call mainprogram.无形资产摊销年限变化后改变相关系数(ExcelApp)
         '年数总和法逐年折旧摊销系数
-        Call mainprogram.年数总和法逐年折旧摊销系数()
+        Call mainprogram.年数总和法逐年折旧摊销系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次Excel
         ExcelApp.Calculate()
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()
@@ -1315,9 +1315,9 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()
@@ -1357,9 +1357,9 @@ Public Class 每次投资设置不同的折旧摊销计算方式
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
         '计算流动资金
-        Call mainprogram.流动资金相关计算()
+        Call mainprogram.流动资金相关计算(ExcelApp)
         '重新计算投资回收期
-        Call mainprogram.投资回收期计算()
+        Call mainprogram.投资回收期计算(ExcelApp)
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         Me.Close()

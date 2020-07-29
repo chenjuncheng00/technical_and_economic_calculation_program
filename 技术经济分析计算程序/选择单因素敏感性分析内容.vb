@@ -546,13 +546,13 @@ Public Class 选择单因素敏感性分析内容
             '重新打开excel自动计算
             ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
             '敏感性计算
-            Call mainprogram.静态投资敏感性分析计算(MGXFXBHL)
-            Call mainprogram.收入敏感性分析计算(MGXFXBHL)
-            Call mainprogram.成本敏感性分析计算(MGXFXBHL)
-            Call mainprogram.年运行小时数敏感性分析(MGXFXBHL)
+            Call mainprogram.静态投资敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call mainprogram.收入敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call mainprogram.成本敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call mainprogram.年运行小时数敏感性分析(ExcelApp, MGXFXBHL)
             '绘制敏感性分析图并设置格式
-            Call mainprogram.绘制单因素敏感性分析图()
-            Call mainprogram.设置敏感性分析图格式()
+            Call mainprogram.绘制单因素敏感性分析图(ExcelApp)
+            Call mainprogram.设置敏感性分析图格式(ExcelApp)
             '锁定表格
             ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
@@ -560,9 +560,9 @@ Public Class 选择单因素敏感性分析内容
             '打开事件
             ExcelApp.Application.EnableEvents = True
             '计算流动资金
-            Call mainprogram.流动资金相关计算()
+            Call mainprogram.流动资金相关计算(ExcelApp)
             '计算回收期
-            Call mainprogram.投资回收期计算()
+            Call mainprogram.投资回收期计算(ExcelApp)
             '重新打开屏幕更新
             ExcelApp.Application.ScreenUpdating = True
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate()
