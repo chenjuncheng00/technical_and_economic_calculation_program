@@ -1231,6 +1231,718 @@ Public Class Com技术经济分析计算程序
         MsgBox("确定建设期时间计划完成！")
     End Sub
 
+    Sub 逐年判断是否有收入以及所得税减免计算系数()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim DYGSRNF As Integer = 0 '第一个有收入的年份
+        Dim SDSMC As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value '所得税免除年分数
+        Dim SDSJZ As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value '所得税减征年分数
+        Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        If SDSMC + SDSJZ >= 0 Then
+            '屏蔽屏幕更新，防止屏闪
+            ExcelApp.Application.ScreenUpdating = False
+            '手动计算，关闭excel的自动计算
+            ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+            '解锁表格
+            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+            ExcelApp.Calculate() '计算一次
+            '输入的所得税免除和减征年数必需为整数，大于等于0且相加小于等于项目计算年数
+            If SDSMC >= 0 And SDSJZ >= 0 And Int(SDSMC) = SDSMC And Int(SDSJZ) = SDSJZ And SDSMC + SDSJZ <= XMJSNX Then
+                '逐年判断该年是否有收入
+                For i = 5 To 35
+                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i).Value > 0 Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i - 2).Value = 1
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i - 2).Value = 0
+                    End If
+                Next
+                '查找第一个有收入的年份序号
+                For i = 5 To 35
+                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i - 1).Value = 0 Then
+                        DYGSRNF = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(4, i).Value
+                        Exit For
+                    End If
+                Next
+                '所得税免除
+                For i = 4 To 34
+                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value >= DYGSRNF And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value <= DYGSRNF + SDSMC - 1 Then
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 1
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 0
+                    End If
+                Next
+                '所得税减征
+                For i = 4 To 34
+                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value >= DYGSRNF + SDSMC And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value <= DYGSRNF + SDSMC + SDSJZ - 1 Then
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 1
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 0
+                    End If
+                Next
+                '写入所得税征收比例
+                For i = 4 To 34
+                    '所得税免除
+                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 0 Then
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 0
+                        '所得税减征收
+                    ElseIf ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 1 Then
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1 - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1
+                    End If
+                Next
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "常规设置"
+            ElseIf SDSMC < 0 Then
+                MsgBox("输入的所得税免除年限不可以小于0，程序将自动修改年限为0！")
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
+            ElseIf SDSJZ < 0 Then
+                MsgBox("输入的所得税减征年限不可以小于0，程序将自动修改年限为0！")
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
+            ElseIf Int(SDSMC) <> SDSMC Then
+                MsgBox("输入的所得税免除年限必须为整数，程序将自动修改年限为0！")
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
+            ElseIf Int(SDSJZ) <> SDSJZ Then
+                MsgBox("输入的所得税减征年限必须为整数，程序将自动修改年限为0！")
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
+            ElseIf SDSMC + SDSJZ > XMJSNX Then
+                MsgBox("输入的所得税免除年限和所得税减征年限之和必须为小于等于项目计算总年限，程序将自动修改年限！")
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
+            End If
+            '锁定收入税收表
+            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+            '重新打开excel自动计算
+            ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+            '重新打开屏幕更新
+            ExcelApp.Application.ScreenUpdating = True
+        End If
+    End Sub
+
+    Sub 设置所得税减免和增值税退税包含内容()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        Dim XZ = MsgBox("是否需要设置所得税减免和增值税退税包含内容?", vbOKCancel)
+        Dim Form6 As New 设置所得税减免和增值税退税包含内容
+        If XZ = vbOK Then
+            Form6.ShowDialog() '窗口显示
+            Form6.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+
+    Sub 设置部分销售收入和经营成本计算年限()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要设置部分销售收入和经营成本计算年限?", vbOKCancel)
+        Dim Form13 As New 设置部分销售收入和经营成本计算年限
+        If XZ = vbOK Then
+            Form13.ShowDialog() '窗口显示
+            Form13.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+        '清空窗体中已有的数据
+        Form13.ksnf1.Clear()
+        Form13.ksnf2.Clear()
+        Form13.ksnf3.Clear()
+        Form13.jsnf1.Clear()
+        Form13.jsnf2.Clear()
+        Form13.jsnf3.Clear()
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+    Sub 设置接入费收入计算方式()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要设置接入费收入计算方式?", vbOKCancel)
+        Dim Form12 As New 设置接入费计算方式
+        If XZ = vbOK Then
+            Form12.ShowDialog() '窗口显示
+            Form12.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+        '清空窗体中已有的数据
+        Form12.ksnf1.Clear()
+        Form12.ksnf2.Clear()
+        Form12.ksnf3.Clear()
+        Form12.jsnf1.Clear()
+        Form12.jsnf2.Clear()
+        Form12.jsnf3.Clear()
+        Form12.CheckBox1.Checked = False
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+
+    Sub 设置补贴收入计算年限()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要设置补贴收入的计算年限?", vbOKCancel)
+        Dim Form7 As New 设置补贴收入计算年限
+        If XZ = vbOK Then
+            Form7.ShowDialog() '窗口显示
+            Form7.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+        '清空窗体中已有的数据
+        Form7.ksnf1.Clear()
+        Form7.ksnf2.Clear()
+        Form7.ksnf3.Clear()
+        Form7.jsnf1.Clear()
+        Form7.jsnf2.Clear()
+        Form7.jsnf3.Clear()
+        Form7.CheckBox1.Checked = False
+        Form7.CheckBox2.Checked = False
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+
+    Sub 逐年衰减系数输入()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要修改程序内置的默认光伏发电逐年衰减效率或者蓄电池逐年衰减效率?", vbOKCancel)
+        Dim Form2 As New 逐年衰减系数设置
+        If XZ = vbOK Then
+            '读取输入的衰减开始年份和衰减率（%）
+            Form2.ShowDialog() '窗口显示
+            Form2.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“逐年衰减系数设置.确定”
+        End If
+        '清空窗体中已有的数据
+        Form2.TextBox1.Clear()
+        Form2.TextBox2.Clear()
+        Form2.TextBox3.Clear()
+        Form2.TextBox4.Clear()
+        Form2.TextBox5.Clear()
+        Form2.TextBox6.Clear()
+        Form2.TextBox7.Clear()
+        Form2.TextBox8.Clear()
+        Form2.TextBox9.Clear()
+        Form2.TextBox10.Clear()
+        Form2.RichTextBox1.Rtf = Nothing
+        Form2.RichTextBox1.Clear()
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+
+    Sub 修理费率逐年变化设置()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要设置逐年动态变化的修理费率?", vbOKCancel)
+        Dim Form4 As New 修理费率逐年变化设置
+        If XZ = vbOK Then
+            '读取输入的修理费率变化率（%）
+            Form4.ShowDialog() '窗口显示
+            Form4.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“修理费率逐年变化设置.确定”
+        End If
+        '清空窗体中已有的数据
+        Form4.ksnf1.Clear()
+        Form4.ksnf2.Clear()
+        Form4.ksnf3.Clear()
+        Form4.ksnf4.Clear()
+        Form4.ksnf5.Clear()
+        Form4.jsnf1.Clear()
+        Form4.jsnf2.Clear()
+        Form4.jsnf3.Clear()
+        Form4.jsnf4.Clear()
+        Form4.jsnf5.Clear()
+        Form4.ksfl1.Clear()
+        Form4.ksfl2.Clear()
+        Form4.ksfl3.Clear()
+        Form4.ksfl4.Clear()
+        Form4.ksfl5.Clear()
+        Form4.jsfl1.Clear()
+        Form4.jsfl2.Clear()
+        Form4.jsfl3.Clear()
+        Form4.jsfl4.Clear()
+        Form4.RichTextBox1.Rtf = Nothing
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
+
+    Sub 建设期资金运用方式设置()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要设置建设期资金运用方式?包括每次投资的资本金比例系数取值方式和建设期贷款利率。", vbOKCancel)
+        Dim Form5 As New 建设期资金运用方式设置
+        If XZ = vbOK Then
+            Form5.ShowDialog() '窗口显示
+            Form5.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“建设期资金运用方式设置.确定”
+        End If
+        '清空已有内容
+        Form5.zbjbl_a.Clear()
+        Form5.dkll_a.Clear()
+        Form5.zbjbl1.Clear()
+        Form5.zbjbl2.Clear()
+        Form5.zbjbl3.Clear()
+        Form5.zbjbl4.Clear()
+        Form5.zbjbl5.Clear()
+        Form5.zbjbl6.Clear()
+        Form5.zbjbl7.Clear()
+        Form5.zbjbl8.Clear()
+        Form5.zbjbl9.Clear()
+        Form5.zbjbl10.Clear()
+        Form5.dkll1.Clear()
+        Form5.dkll2.Clear()
+        Form5.dkll3.Clear()
+        Form5.dkll4.Clear()
+        Form5.dkll5.Clear()
+        Form5.dkll6.Clear()
+        Form5.dkll7.Clear()
+        Form5.dkll8.Clear()
+        Form5.dkll9.Clear()
+        Form5.dkll10.Clear()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+
+    Sub 建设期逐次设置折旧摊销计算方式()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要每次投资设置不同的固定资产折旧和无形资产摊销计算方式？", vbOKCancel)
+        Dim Form8 As New 每次投资设置不同的折旧摊销计算方式
+        If XZ = vbOK Then
+            Form8.ShowDialog() '窗口显示
+            Form8.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“每次投资设置不同的折旧摊销计算方式.确定”
+        End If
+        '清空已有的全部数据
+        '固定资产折旧年限
+        Form8.gdzczjnx1.Clear()
+        Form8.gdzczjnx2.Clear()
+        Form8.gdzczjnx3.Clear()
+        Form8.gdzczjnx4.Clear()
+        Form8.gdzczjnx5.Clear()
+        Form8.gdzczjnx6.Clear()
+        Form8.gdzczjnx7.Clear()
+        Form8.gdzczjnx8.Clear()
+        Form8.gdzczjnx9.Clear()
+        Form8.gdzczjnx10.Clear()
+        '固定资产残值率
+        Form8.gdzcczl1.Clear()
+        Form8.gdzcczl2.Clear()
+        Form8.gdzcczl3.Clear()
+        Form8.gdzcczl4.Clear()
+        Form8.gdzcczl5.Clear()
+        Form8.gdzcczl6.Clear()
+        Form8.gdzcczl7.Clear()
+        Form8.gdzcczl8.Clear()
+        Form8.gdzcczl9.Clear()
+        Form8.gdzcczl10.Clear()
+        '无形资产摊销年限
+        Form8.wxzctxnx1.Clear()
+        Form8.wxzctxnx2.Clear()
+        Form8.wxzctxnx3.Clear()
+        Form8.wxzctxnx4.Clear()
+        Form8.wxzctxnx5.Clear()
+        Form8.wxzctxnx6.Clear()
+        Form8.wxzctxnx7.Clear()
+        Form8.wxzctxnx8.Clear()
+        Form8.wxzctxnx9.Clear()
+        Form8.wxzctxnx10.Clear()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+
+    Sub 逐次设置长期贷款还款和宽限年限()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要每次投资设置不同的长期贷款还款年限和宽限年限？", vbOKCancel)
+        Dim Form9 As New 每次投资设置不同的长期贷款还款和宽限年限
+        If XZ = vbOK Then
+            Form9.ShowDialog() '窗口显示
+            Form9.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“每次投资设置不同的长期贷款还款年限和宽限年限.确定”
+        End If
+        '长期贷款还款年限
+        Form9.cqdkhknx1.Clear()
+        Form9.cqdkhknx2.Clear()
+        Form9.cqdkhknx3.Clear()
+        Form9.cqdkhknx4.Clear()
+        Form9.cqdkhknx5.Clear()
+        Form9.cqdkhknx6.Clear()
+        Form9.cqdkhknx7.Clear()
+        Form9.cqdkhknx8.Clear()
+        Form9.cqdkhknx9.Clear()
+        Form9.cqdkhknx10.Clear()
+        '长期贷款宽限年限
+        Form9.kxnx1.Clear()
+        Form9.kxnx2.Clear()
+        Form9.kxnx3.Clear()
+        Form9.kxnx4.Clear()
+        Form9.kxnx5.Clear()
+        Form9.kxnx6.Clear()
+        Form9.kxnx7.Clear()
+        Form9.kxnx8.Clear()
+        Form9.kxnx9.Clear()
+        Form9.kxnx10.Clear()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+
+    Sub 分别设置投资各方收益计算参数()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽事件
+        ExcelApp.Application.EnableEvents = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        Dim XZ = MsgBox("是否需要分别设置投资各方收益计算参数？", vbOKCancel)
+        Dim Form14 As New 投资各方设置不同的出资比例资产处置比例和利润分配比例
+        If XZ = vbOK Then
+            Form14.ShowDialog() '窗口显示
+            Form14.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+        End If
+        '清空窗体内的数据
+        '出资比例
+        Form14.czbl1.Clear()
+        Form14.czbl2.Clear()
+        Form14.czbl3.Clear()
+        Form14.czbl4.Clear()
+        Form14.czbl5.Clear()
+        '资产处置比例
+        Form14.zcczbl1.Clear()
+        Form14.zcczbl2.Clear()
+        Form14.zcczbl3.Clear()
+        Form14.zcczbl4.Clear()
+        Form14.zcczbl5.Clear()
+        '利润分配比例
+        Form14.lrfpbl1.Clear()
+        Form14.lrfpbl2.Clear()
+        Form14.lrfpbl3.Clear()
+        Form14.lrfpbl4.Clear()
+        Form14.lrfpbl5.Clear()
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '打开事件
+        ExcelApp.Application.EnableEvents = True
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+    Sub 进入维护模式()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '屏蔽ctrl+break
+        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '读取计数
+        Dim Form3 As New 进入维护模式
+        If (ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value < 3 And ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value >= 0) Then '最多只可以连续错3次。单元格Z2
+            Form3.ShowDialog() '窗口显示
+            Form3.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            Form3.TextBox1.Text = Nothing '清空已有的内容
+        Else
+            MsgBox("已超过最大尝试次数，不可以再尝试输入密码！")
+            '锁定表格
+            Call 锁定表格(ExcelApp)
+        End If
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+
     Sub 打开表格自动运行()
         On Error Resume Next
         '定义Excel对象
@@ -1263,9 +1975,245 @@ Public Class Com技术经济分析计算程序
             Exit Sub
         End If
         '投资各方收益
-        Call 投资各方收益率表格操作(ExcelApp)
+        Call 投资各方收益率表格操作()
         '锁定表格
         Call 锁定表格(ExcelApp)
+    End Sub
+
+    Sub 投资各方收益率表格操作()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '读取输入的投资各方出资比例
+        Dim TZGFCZBL(10) As Double '数组，储存投资各方出资比例
+        Dim TZFJS As Integer = 0 '投资各方出资比例大于0的数量计数
+        For i = 0 To 4
+            TZGFCZBL(i) = ExcelApp.Worksheets("建设期时间计划表").Cells(163 + i, 2).Value
+            If TZGFCZBL(i) > 0 Then
+                TZFJS = TZFJS + 1
+            End If
+        Next
+        '针对读取的投资各方出资比例添加报错功能
+        '不能隔行输入
+        If TZGFCZBL(0) = 0 And (TZGFCZBL(1) > 0 Or TZGFCZBL(2) > 0 Or TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
+            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例重置回默认值
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+        If TZGFCZBL(1) = 0 And (TZGFCZBL(2) > 0 Or TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
+            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例重置回默认值
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+        If TZGFCZBL(2) = 0 And (TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
+            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例重置回默认值
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+        If TZGFCZBL(3) = 0 And TZGFCZBL(4) > 0 Then
+            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例重置回默认值
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+        '根据输入的情况，自动补全后面一个出资比例，保证总出资比例为100%
+        If ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value <= 100 Then '如果总和小于等于100
+            If TZFJS = 1 Then
+                '屏蔽事件
+                ExcelApp.Application.EnableEvents = False
+                ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 100 - TZGFCZBL(0)
+                '开启事件触发
+                ExcelApp.Application.EnableEvents = True
+            End If
+            If TZFJS = 2 Then
+                '屏蔽事件
+                ExcelApp.Application.EnableEvents = False
+                ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 100 - TZGFCZBL(1) - TZGFCZBL(0)
+                '开启事件触发
+                ExcelApp.Application.EnableEvents = True
+            End If
+            If TZFJS = 3 Then
+                '屏蔽事件
+                ExcelApp.Application.EnableEvents = False
+                ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 100 - TZGFCZBL(2) - TZGFCZBL(1) - TZGFCZBL(0)
+                '开启事件触发
+                ExcelApp.Application.EnableEvents = True
+            End If
+            If TZFJS = 4 Then
+                '屏蔽事件
+                ExcelApp.Application.EnableEvents = False
+                ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 100 - TZGFCZBL(3) - TZGFCZBL(2) - TZGFCZBL(1) - TZGFCZBL(0)
+                '开启事件触发
+                ExcelApp.Application.EnableEvents = True
+            End If
+        End If
+        '总和不能大于100
+        If ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value > 100 Then
+            'MsgBox("投资各方出资比例总和不可以大于100%，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例设置为：第一的不变，第二的变成100减去第一年，第三到第五为0            
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
+            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 100 - ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+        '如果输入到了投资方5输入比例，但是总和小于100
+        If TZGFCZBL(4) > 0 And ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value < 100 Then
+            'MsgBox("投资各方出资比例总和不可以小于100%，程序将自动重置回默认值！")
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '投资各方出资比例设置为：第一到第四不变，第五等于100减去前四个之和
+            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 100 - ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value
+            '开启事件触发
+            ExcelApp.Application.EnableEvents = True
+            GoTo aaaaa
+        End If
+aaaaa：
+        '再重新读取一次各方投资比例
+        For i = 0 To 4
+            TZGFCZBL(i) = ExcelApp.Worksheets("建设期时间计划表").Cells(163 + i, 2).Value
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '将输入的投资各方比例写入表格
+        '解锁表格
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Unprotect(Password:="wscjc")
+        '投资方1
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
+        '投资方2
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
+        '投资方3
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
+        '投资方4
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
+        '投资方5
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '根据输入的投资各方出资比例，自动显示或者隐藏相关工作表
+        If TZGFCZBL(0) > 0 Then
+            '显示工作表
+            ExcelApp.Worksheets("投资方1现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
+        Else
+            '彻底隐藏工作表
+            ExcelApp.Worksheets("投资方1现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
+        End If
+        If TZGFCZBL(1) > 0 Then
+            '显示工作表
+            ExcelApp.Worksheets("投资方2现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
+        Else
+            '彻底隐藏工作表
+            ExcelApp.Worksheets("投资方2现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
+        End If
+        If TZGFCZBL(2) > 0 Then
+            '显示工作表
+            ExcelApp.Worksheets("投资方3现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
+        Else
+            '彻底隐藏工作表
+            ExcelApp.Worksheets("投资方3现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
+        End If
+        If TZGFCZBL(3) > 0 Then
+            '显示工作表
+            ExcelApp.Worksheets("投资方4现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
+        Else
+            '彻底隐藏工作表
+            ExcelApp.Worksheets("投资方4现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
+        End If
+        If TZGFCZBL(4) > 0 Then
+            '显示工作表
+            ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
+        Else
+            '彻底隐藏工作表
+            ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '写入计算模式
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "相同"
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '锁定表格
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '计算回收期
+        Call 投资回收期计算(ExcelApp)
+        '开启屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
     End Sub
 
     Sub 投资回收期和流动资金计算()
@@ -1288,6 +2236,29 @@ Public Class Com技术经济分析计算程序
         '锁定表格
         Call 锁定表格(ExcelApp)
     End Sub
+
+    Sub 隐藏收入表和成本表中为0的行()
+        On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Call 隐藏收入税收表中收入为0的行(ExcelApp)
+        Call 隐藏总成本表中成本为0的行(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+    End Sub
+
     Sub 逐年负荷率输入()
         On Error Resume Next
         '在Excel中被直接调用，所以需要单独实例化ExcelApp
@@ -1312,6 +2283,222 @@ Public Class Com技术经济分析计算程序
         '锁定表格
         Call 锁定表格(ExcelApp)
     End Sub
+
+    Sub 隐藏收入税收表中收入为0的行(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '定义局部变量
+        Dim js As Integer
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        '解锁收入税收表
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Unprotect(Password:="wscjc")
+        '第1年到第15年
+        For i = 1 To 13
+            For j = 1 To 10
+                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则不隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        For i = 1 To 13
+            For j = 1 To 13
+                '隐藏销项增值税为0的
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + j).EntireRow.Hidden = True
+                End If
+                '增值税大于0，不隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格
+        If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, 34).Value = 0 Then
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(16).EntireRow.Hidden = True
+        Else
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(16).EntireRow.Hidden = False
+        End If
+        '隐藏补贴收入分项中为0的行，前15年表格
+        For i = 1 To 13
+            For j = 1 To 3
+                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则不隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '自动给收入税收表的条目编序号，前15年表格
+        js = 0 '计数
+        For i = 1 To 11
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + i, 1).Value = 1 + js / 10
+            End If
+        Next
+        '自动给销项增值税表编号，前15年表格
+        js = 0 '计数
+        For i = 1 To 13
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + i, 1).Value = js
+            End If
+        Next
+        '自动给补贴收入分项计算表编号，前15年表格
+        js = 0 '计数
+        For i = 1 To 3
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + i, 1).Value = js
+            End If
+        Next
+        '第16年到第30年
+        For i = 1 To 13
+            For j = 1 To 10
+                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        For i = 1 To 13
+            For j = 1 To 13
+                '隐藏销项增值税为0的
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + j).EntireRow.Hidden = True
+                End If
+                '增值税大于0，不隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '如果增值税退税比例为0，则隐藏增值税退税收入，后15年表格
+        If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, 34).Value = 0 Then
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(39).EntireRow.Hidden = True
+        Else
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(39).EntireRow.Hidden = False
+        End If
+        '隐藏补贴收入分项中为0的行，后15年表格
+        For i = 1 To 13
+            For j = 1 To 3
+                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '自动给收入税收表的条目编序号，后15年表格
+        js = 0 '计数
+        For i = 1 To 11
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + i, 1).Value = 1 + js / 10
+            End If
+        Next
+        '自动给销项增值税表编号，后15年表格
+        js = 0 '计数
+        For i = 1 To 13
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + i, 1).Value = js
+            End If
+        Next
+        '自动给补贴收入分项计算表编号，后15年表格
+        js = 0 '计数
+        For i = 1 To 3
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + i, 1).Value = js
+            End If
+        Next
+        '锁定收入税收表
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+    Sub 隐藏总成本表中成本为0的行(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '定义局部变量
+        Dim js As Integer
+        '屏蔽屏幕更新，防止屏闪
+        ExcelApp.Application.ScreenUpdating = False
+        '手动计算，关闭excel的自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
+        '解锁总成本表
+        ExcelApp.ThisWorkbook.Worksheets("总成本表").Unprotect(Password:="wscjc")
+        '第1年到第15年
+        For i = 1 To 15
+            For j = 1 To 15
+                '如果某一项成本为0，并且成本类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项成本大于0，并且成本类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '自动给总成本表的条目编序号
+        js = 0 '计数
+        For i = 1 To 19
+            If ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + i, 1).Value = js
+            End If
+        Next
+        '第16年到第30年
+        For i = 1 To 15
+            For j = 1 To 15
+                '如果某一项成本为0，并且成本类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + j).EntireRow.Hidden = True
+                End If
+                '如果某一项成本大于0，并且成本类型与输入的类型匹配，则隐藏
+                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + j, 2).Value Then
+                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + j).EntireRow.Hidden = False
+                End If
+            Next
+        Next
+        '自动给总成本表的条目编序号
+        js = 0 '计数
+        For i = 1 To 19
+            If ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + i).Height > 0 Then
+                js = js + 1
+                ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + i, 1).Value = js
+            End If
+        Next
+        '锁定总成本表
+        ExcelApp.ThisWorkbook.Worksheets("总成本表").Protect(Password:="wscjc")
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+
     Sub 直接输入综合负荷率(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -3527,581 +4714,7 @@ Public Class Com技术经济分析计算程序
         Next
     End Sub
 
-    Sub 设置所得税减免和增值税退税包含内容()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        Dim XZ = MsgBox("是否需要设置所得税减免和增值税退税包含内容?", vbOKCancel)
-        Dim Form6 As New 设置所得税减免和增值税退税包含内容
-        If XZ = vbOK Then
-            Form6.ShowDialog() '窗口显示
-            Form6.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-        End If
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
 
-    Sub 设置部分销售收入和经营成本计算年限()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要设置部分销售收入和经营成本计算年限?", vbOKCancel)
-        Dim Form13 As New 设置部分销售收入和经营成本计算年限
-        If XZ = vbOK Then
-            Form13.ShowDialog() '窗口显示
-            Form13.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-        End If
-        '清空窗体中已有的数据
-        Form13.ksnf1.Clear()
-        Form13.ksnf2.Clear()
-        Form13.ksnf3.Clear()
-        Form13.jsnf1.Clear()
-        Form13.jsnf2.Clear()
-        Form13.jsnf3.Clear()
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
-    Sub 设置接入费收入计算方式()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要设置接入费收入计算方式?", vbOKCancel)
-        Dim Form12 As New 设置接入费计算方式
-        If XZ = vbOK Then
-            Form12.ShowDialog() '窗口显示
-            Form12.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-        End If
-        '清空窗体中已有的数据
-        Form12.ksnf1.Clear()
-        Form12.ksnf2.Clear()
-        Form12.ksnf3.Clear()
-        Form12.jsnf1.Clear()
-        Form12.jsnf2.Clear()
-        Form12.jsnf3.Clear()
-        Form12.CheckBox1.Checked = False
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
-
-    Sub 设置补贴收入计算年限()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要设置补贴收入的计算年限?", vbOKCancel)
-        Dim Form7 As New 设置补贴收入计算年限
-        If XZ = vbOK Then
-            Form7.ShowDialog() '窗口显示
-            Form7.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-        End If
-        '清空窗体中已有的数据
-        Form7.ksnf1.Clear()
-        Form7.ksnf2.Clear()
-        Form7.ksnf3.Clear()
-        Form7.jsnf1.Clear()
-        Form7.jsnf2.Clear()
-        Form7.jsnf3.Clear()
-        Form7.CheckBox1.Checked = False
-        Form7.CheckBox2.Checked = False
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
-
-    Sub 逐年衰减系数输入()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要修改程序内置的默认光伏发电逐年衰减效率或者蓄电池逐年衰减效率?", vbOKCancel)
-        Dim Form2 As New 逐年衰减系数设置
-        If XZ = vbOK Then
-            '读取输入的衰减开始年份和衰减率（%）
-            Form2.ShowDialog() '窗口显示
-            Form2.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            '计算过程在“逐年衰减系数设置.确定”
-        End If
-        '清空窗体中已有的数据
-        Form2.TextBox1.Clear()
-        Form2.TextBox2.Clear()
-        Form2.TextBox3.Clear()
-        Form2.TextBox4.Clear()
-        Form2.TextBox5.Clear()
-        Form2.TextBox6.Clear()
-        Form2.TextBox7.Clear()
-        Form2.TextBox8.Clear()
-        Form2.TextBox9.Clear()
-        Form2.TextBox10.Clear()
-        Form2.RichTextBox1.Rtf = Nothing
-        Form2.RichTextBox1.Clear()
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
-
-    Sub 修理费率逐年变化设置()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要设置逐年动态变化的修理费率?", vbOKCancel)
-        Dim Form4 As New 修理费率逐年变化设置
-        If XZ = vbOK Then
-            '读取输入的修理费率变化率（%）
-            Form4.ShowDialog() '窗口显示
-            Form4.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            '计算过程在“修理费率逐年变化设置.确定”
-        End If
-        '清空窗体中已有的数据
-        Form4.ksnf1.Clear()
-        Form4.ksnf2.Clear()
-        Form4.ksnf3.Clear()
-        Form4.ksnf4.Clear()
-        Form4.ksnf5.Clear()
-        Form4.jsnf1.Clear()
-        Form4.jsnf2.Clear()
-        Form4.jsnf3.Clear()
-        Form4.jsnf4.Clear()
-        Form4.jsnf5.Clear()
-        Form4.ksfl1.Clear()
-        Form4.ksfl2.Clear()
-        Form4.ksfl3.Clear()
-        Form4.ksfl4.Clear()
-        Form4.ksfl5.Clear()
-        Form4.jsfl1.Clear()
-        Form4.jsfl2.Clear()
-        Form4.jsfl3.Clear()
-        Form4.jsfl4.Clear()
-        Form4.RichTextBox1.Rtf = Nothing
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
-    End Sub
-
-    Sub 建设期资金运用方式设置()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要设置建设期资金运用方式?包括每次投资的资本金比例系数取值方式和建设期贷款利率。", vbOKCancel)
-        Dim Form5 As New 建设期资金运用方式设置
-        If XZ = vbOK Then
-            Form5.ShowDialog() '窗口显示
-            Form5.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            '计算过程在“建设期资金运用方式设置.确定”
-        End If
-        '清空已有内容
-        Form5.zbjbl_a.Clear()
-        Form5.dkll_a.Clear()
-        Form5.zbjbl1.Clear()
-        Form5.zbjbl2.Clear()
-        Form5.zbjbl3.Clear()
-        Form5.zbjbl4.Clear()
-        Form5.zbjbl5.Clear()
-        Form5.zbjbl6.Clear()
-        Form5.zbjbl7.Clear()
-        Form5.zbjbl8.Clear()
-        Form5.zbjbl9.Clear()
-        Form5.zbjbl10.Clear()
-        Form5.dkll1.Clear()
-        Form5.dkll2.Clear()
-        Form5.dkll3.Clear()
-        Form5.dkll4.Clear()
-        Form5.dkll5.Clear()
-        Form5.dkll6.Clear()
-        Form5.dkll7.Clear()
-        Form5.dkll8.Clear()
-        Form5.dkll9.Clear()
-        Form5.dkll10.Clear()
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '激活表格
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-
-    Sub 建设期逐次设置折旧摊销计算方式()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要每次投资设置不同的固定资产折旧和无形资产摊销计算方式？", vbOKCancel)
-        Dim Form8 As New 每次投资设置不同的折旧摊销计算方式
-        If XZ = vbOK Then
-            Form8.ShowDialog() '窗口显示
-            Form8.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            '计算过程在“每次投资设置不同的折旧摊销计算方式.确定”
-        End If
-        '清空已有的全部数据
-        '固定资产折旧年限
-        Form8.gdzczjnx1.Clear()
-        Form8.gdzczjnx2.Clear()
-        Form8.gdzczjnx3.Clear()
-        Form8.gdzczjnx4.Clear()
-        Form8.gdzczjnx5.Clear()
-        Form8.gdzczjnx6.Clear()
-        Form8.gdzczjnx7.Clear()
-        Form8.gdzczjnx8.Clear()
-        Form8.gdzczjnx9.Clear()
-        Form8.gdzczjnx10.Clear()
-        '固定资产残值率
-        Form8.gdzcczl1.Clear()
-        Form8.gdzcczl2.Clear()
-        Form8.gdzcczl3.Clear()
-        Form8.gdzcczl4.Clear()
-        Form8.gdzcczl5.Clear()
-        Form8.gdzcczl6.Clear()
-        Form8.gdzcczl7.Clear()
-        Form8.gdzcczl8.Clear()
-        Form8.gdzcczl9.Clear()
-        Form8.gdzcczl10.Clear()
-        '无形资产摊销年限
-        Form8.wxzctxnx1.Clear()
-        Form8.wxzctxnx2.Clear()
-        Form8.wxzctxnx3.Clear()
-        Form8.wxzctxnx4.Clear()
-        Form8.wxzctxnx5.Clear()
-        Form8.wxzctxnx6.Clear()
-        Form8.wxzctxnx7.Clear()
-        Form8.wxzctxnx8.Clear()
-        Form8.wxzctxnx9.Clear()
-        Form8.wxzctxnx10.Clear()
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '激活表格
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-
-    Sub 逐次设置长期贷款还款和宽限年限()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要每次投资设置不同的长期贷款还款年限和宽限年限？", vbOKCancel)
-        Dim Form9 As New 每次投资设置不同的长期贷款还款和宽限年限
-        If XZ = vbOK Then
-            Form9.ShowDialog() '窗口显示
-            Form9.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            '计算过程在“每次投资设置不同的长期贷款还款年限和宽限年限.确定”
-        End If
-        '长期贷款还款年限
-        Form9.cqdkhknx1.Clear()
-        Form9.cqdkhknx2.Clear()
-        Form9.cqdkhknx3.Clear()
-        Form9.cqdkhknx4.Clear()
-        Form9.cqdkhknx5.Clear()
-        Form9.cqdkhknx6.Clear()
-        Form9.cqdkhknx7.Clear()
-        Form9.cqdkhknx8.Clear()
-        Form9.cqdkhknx9.Clear()
-        Form9.cqdkhknx10.Clear()
-        '长期贷款宽限年限
-        Form9.kxnx1.Clear()
-        Form9.kxnx2.Clear()
-        Form9.kxnx3.Clear()
-        Form9.kxnx4.Clear()
-        Form9.kxnx5.Clear()
-        Form9.kxnx6.Clear()
-        Form9.kxnx7.Clear()
-        Form9.kxnx8.Clear()
-        Form9.kxnx9.Clear()
-        Form9.kxnx10.Clear()
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '激活表格
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-
-    Sub 分别设置投资各方收益计算参数()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '定义局部变量
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        Dim XZ = MsgBox("是否需要分别设置投资各方收益计算参数？", vbOKCancel)
-        Dim Form14 As New 投资各方设置不同的出资比例资产处置比例和利润分配比例
-        If XZ = vbOK Then
-            Form14.ShowDialog() '窗口显示
-            Form14.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-        End If
-        '清空窗体内的数据
-        '出资比例
-        Form14.czbl1.Clear()
-        Form14.czbl2.Clear()
-        Form14.czbl3.Clear()
-        Form14.czbl4.Clear()
-        Form14.czbl5.Clear()
-        '资产处置比例
-        Form14.zcczbl1.Clear()
-        Form14.zcczbl2.Clear()
-        Form14.zcczbl3.Clear()
-        Form14.zcczbl4.Clear()
-        Form14.zcczbl5.Clear()
-        '利润分配比例
-        Form14.lrfpbl1.Clear()
-        Form14.lrfpbl2.Clear()
-        Form14.lrfpbl3.Clear()
-        Form14.lrfpbl4.Clear()
-        Form14.lrfpbl5.Clear()
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '激活表格
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '打开事件
-        ExcelApp.Application.EnableEvents = True
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
     Sub 项目计算年限变化后改变相关系数(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -5444,343 +6057,6 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = 1
         End If
     End Sub
-    Sub 隐藏收入表和成本表中为0的行()
-        On Error Resume Next
-        '在Excel中被直接调用，所以需要单独实例化ExcelApp
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Call 隐藏收入税收表中收入为0的行(ExcelApp)
-        Call 隐藏总成本表中成本为0的行(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-    End Sub
-    Sub 隐藏收入税收表中收入为0的行(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '定义局部变量
-        Dim js As Integer
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        '解锁收入税收表
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Unprotect(Password:="wscjc")
-        '第1年到第15年
-        For i = 1 To 13
-            For j = 1 To 10
-                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则不隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        For i = 1 To 13
-            For j = 1 To 13
-                '隐藏销项增值税为0的
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + j).EntireRow.Hidden = True
-                End If
-                '增值税大于0，不隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格
-        If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, 34).Value = 0 Then
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(16).EntireRow.Hidden = True
-        Else
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(16).EntireRow.Hidden = False
-        End If
-        '隐藏补贴收入分项中为0的行，前15年表格
-        For i = 1 To 13
-            For j = 1 To 3
-                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则不隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '自动给收入税收表的条目编序号，前15年表格
-        js = 0 '计数
-        For i = 1 To 11
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(5 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5 + i, 1).Value = 1 + js / 10
-            End If
-        Next
-        '自动给销项增值税表编号，前15年表格
-        js = 0 '计数
-        For i = 1 To 13
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(64 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(64 + i, 1).Value = js
-            End If
-        Next
-        '自动给补贴收入分项计算表编号，前15年表格
-        js = 0 '计数
-        For i = 1 To 3
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(52 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(52 + i, 1).Value = js
-            End If
-        Next
-        '第16年到第30年
-        For i = 1 To 13
-            For j = 1 To 10
-                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        For i = 1 To 13
-            For j = 1 To 13
-                '隐藏销项增值税为0的
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + j).EntireRow.Hidden = True
-                End If
-                '增值税大于0，不隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '如果增值税退税比例为0，则隐藏增值税退税收入，后15年表格
-        If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, 34).Value = 0 Then
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(39).EntireRow.Hidden = True
-        Else
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(39).EntireRow.Hidden = False
-        End If
-        '隐藏补贴收入分项中为0的行，后15年表格
-        For i = 1 To 13
-            For j = 1 To 3
-                '如果某一项收入为0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项收入大于0，并且收入类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 7).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 2).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '自动给收入税收表的条目编序号，后15年表格
-        js = 0 '计数
-        For i = 1 To 11
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(28 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(28 + i, 1).Value = 1 + js / 10
-            End If
-        Next
-        '自动给销项增值税表编号，后15年表格
-        js = 0 '计数
-        For i = 1 To 13
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(79 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(79 + i, 1).Value = js
-            End If
-        Next
-        '自动给补贴收入分项计算表编号，后15年表格
-        js = 0 '计数
-        For i = 1 To 3
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(58 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(58 + i, 1).Value = js
-            End If
-        Next
-        '锁定收入税收表
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-    Sub 隐藏总成本表中成本为0的行(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '定义局部变量
-        Dim js As Integer
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '手动计算，关闭excel的自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-        '解锁总成本表
-        ExcelApp.ThisWorkbook.Worksheets("总成本表").Unprotect(Password:="wscjc")
-        '第1年到第15年
-        For i = 1 To 15
-            For j = 1 To 15
-                '如果某一项成本为0，并且成本类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项成本大于0，并且成本类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '自动给总成本表的条目编序号
-        js = 0 '计数
-        For i = 1 To 19
-            If ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(4 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(4 + i, 1).Value = js
-            End If
-        Next
-        '第16年到第30年
-        For i = 1 To 15
-            For j = 1 To 15
-                '如果某一项成本为0，并且成本类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + j).EntireRow.Hidden = True
-                End If
-                '如果某一项成本大于0，并且成本类型与输入的类型匹配，则隐藏
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 14).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12 + i, 9).Value = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + j, 2).Value Then
-                    ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + j).EntireRow.Hidden = False
-                End If
-            Next
-        Next
-        '自动给总成本表的条目编序号
-        js = 0 '计数
-        For i = 1 To 19
-            If ExcelApp.ThisWorkbook.Worksheets("总成本表").Rows(36 + i).Height > 0 Then
-                js = js + 1
-                ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(36 + i, 1).Value = js
-            End If
-        Next
-        '锁定总成本表
-        ExcelApp.ThisWorkbook.Worksheets("总成本表").Protect(Password:="wscjc")
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-    Sub 逐年判断是否有收入以及所得税减免计算系数()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim DYGSRNF As Integer = 0 '第一个有收入的年份
-        Dim SDSMC As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value '所得税免除年分数
-        Dim SDSJZ As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value '所得税减征年分数
-        Dim XMJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        If SDSMC + SDSJZ >= 0 Then
-            '屏蔽屏幕更新，防止屏闪
-            ExcelApp.Application.ScreenUpdating = False
-            '手动计算，关闭excel的自动计算
-            ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            ExcelApp.Calculate() '计算一次
-            '输入的所得税免除和减征年数必需为整数，大于等于0且相加小于等于项目计算年数
-            If SDSMC >= 0 And SDSJZ >= 0 And Int(SDSMC) = SDSMC And Int(SDSJZ) = SDSJZ And SDSMC + SDSJZ <= XMJSNX Then
-                '逐年判断该年是否有收入
-                For i = 5 To 35
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i).Value > 0 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i - 2).Value = 1
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i - 2).Value = 0
-                    End If
-                Next
-                '查找第一个有收入的年份序号
-                For i = 5 To 35
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, i - 1).Value = 0 Then
-                        DYGSRNF = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(4, i).Value
-                        Exit For
-                    End If
-                Next
-                '所得税免除
-                For i = 4 To 34
-                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value >= DYGSRNF And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value <= DYGSRNF + SDSMC - 1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 1
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 0
-                    End If
-                Next
-                '所得税减征
-                For i = 4 To 34
-                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value >= DYGSRNF + SDSMC And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value <= DYGSRNF + SDSMC + SDSJZ - 1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 1
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 0
-                    End If
-                Next
-                '写入所得税征收比例
-                For i = 4 To 34
-                    '所得税免除
-                    If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 0 Then
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 0
-                        '所得税减征收
-                    ElseIf ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(51, i).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(52, i).Value = 1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1 - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value = 1
-                    End If
-                Next
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "常规设置"
-            ElseIf SDSMC < 0 Then
-                MsgBox("输入的所得税免除年限不可以小于0，程序将自动修改年限为0！")
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
-            ElseIf SDSJZ < 0 Then
-                MsgBox("输入的所得税减征年限不可以小于0，程序将自动修改年限为0！")
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
-            ElseIf Int(SDSMC) <> SDSMC Then
-                MsgBox("输入的所得税免除年限必须为整数，程序将自动修改年限为0！")
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
-            ElseIf Int(SDSJZ) <> SDSJZ Then
-                MsgBox("输入的所得税减征年限必须为整数，程序将自动修改年限为0！")
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
-            ElseIf SDSMC + SDSJZ > XMJSNX Then
-                MsgBox("输入的所得税免除年限和所得税减征年限之和必须为小于等于项目计算总年限，程序将自动修改年限！")
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
-            End If
-            '锁定收入税收表
-            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-            '重新打开excel自动计算
-            ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-            '重新打开屏幕更新
-            ExcelApp.Application.ScreenUpdating = True
-        End If
-    End Sub
 
     Sub 投资回收期计算(ExcelApp As Object)
         On Error Resume Next
@@ -6247,39 +6523,7 @@ Public Class Com技术经济分析计算程序
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
     End Sub
-    Sub 进入维护模式()
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '读取计数
-        Dim Form3 As New 进入维护模式
-        If (ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value < 3 And ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value >= 0) Then '最多只可以连续错3次。单元格Z2
-            Form3.ShowDialog() '窗口显示
-            Form3.TopMost = True
-            System.Windows.Forms.Application.DoEvents()
-            Form3.TextBox1.Text = Nothing '清空已有的内容
-        Else
-            MsgBox("已超过最大尝试次数，不可以再尝试输入密码！")
-            '锁定表格
-            Call 锁定表格(ExcelApp)
-        End If
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
+
     Sub 计算前基本处理(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -6292,229 +6536,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Unprotect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Unprotect(Password:="wscjc")
-    End Sub
-    Sub 投资各方收益率表格操作(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '屏蔽屏幕更新，防止屏闪
-        ExcelApp.Application.ScreenUpdating = False
-        '读取输入的投资各方出资比例
-        Dim TZGFCZBL(10) As Double '数组，储存投资各方出资比例
-        Dim TZFJS As Integer = 0 '投资各方出资比例大于0的数量计数
-        For i = 0 To 4
-            TZGFCZBL(i) = ExcelApp.Worksheets("建设期时间计划表").Cells(163 + i, 2).Value
-            If TZGFCZBL(i) > 0 Then
-                TZFJS = TZFJS + 1
-            End If
-        Next
-        '针对读取的投资各方出资比例添加报错功能
-        '不能隔行输入
-        If TZGFCZBL(0) = 0 And (TZGFCZBL(1) > 0 Or TZGFCZBL(2) > 0 Or TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
-            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例重置回默认值
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-        If TZGFCZBL(1) = 0 And (TZGFCZBL(2) > 0 Or TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
-            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例重置回默认值
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-        If TZGFCZBL(2) = 0 And (TZGFCZBL(3) > 0 Or TZGFCZBL(4) > 0) Then
-            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例重置回默认值
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-        If TZGFCZBL(3) = 0 And TZGFCZBL(4) > 0 Then
-            MsgBox("投资各方出资比例不可以隔行输入，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例重置回默认值
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value = 100
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-        '根据输入的情况，自动补全后面一个出资比例，保证总出资比例为100%
-        If ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value <= 100 Then '如果总和小于等于100
-            If TZFJS = 1 Then
-                '屏蔽事件
-                ExcelApp.Application.EnableEvents = False
-                ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 100 - TZGFCZBL(0)
-                '开启事件触发
-                ExcelApp.Application.EnableEvents = True
-            End If
-            If TZFJS = 2 Then
-                '屏蔽事件
-                ExcelApp.Application.EnableEvents = False
-                ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 100 - TZGFCZBL(1) - TZGFCZBL(0)
-                '开启事件触发
-                ExcelApp.Application.EnableEvents = True
-            End If
-            If TZFJS = 3 Then
-                '屏蔽事件
-                ExcelApp.Application.EnableEvents = False
-                ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 100 - TZGFCZBL(2) - TZGFCZBL(1) - TZGFCZBL(0)
-                '开启事件触发
-                ExcelApp.Application.EnableEvents = True
-            End If
-            If TZFJS = 4 Then
-                '屏蔽事件
-                ExcelApp.Application.EnableEvents = False
-                ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 100 - TZGFCZBL(3) - TZGFCZBL(2) - TZGFCZBL(1) - TZGFCZBL(0)
-                '开启事件触发
-                ExcelApp.Application.EnableEvents = True
-            End If
-        End If
-        '总和不能大于100
-        If ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value > 100 Then
-            'MsgBox("投资各方出资比例总和不可以大于100%，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例设置为：第一的不变，第二的变成100减去第一年，第三到第五为0            
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 0
-            ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value = 100 - ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-        '如果输入到了投资方5输入比例，但是总和小于100
-        If TZGFCZBL(4) > 0 And ExcelApp.Worksheets("建设期时间计划表").Cells(168, 2).Value < 100 Then
-            'MsgBox("投资各方出资比例总和不可以小于100%，程序将自动重置回默认值！")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '投资各方出资比例设置为：第一到第四不变，第五等于100减去前四个之和
-            ExcelApp.Worksheets("建设期时间计划表").Cells(167, 2).Value = 100 - ExcelApp.Worksheets("建设期时间计划表").Cells(163, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(164, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(165, 2).Value - ExcelApp.Worksheets("建设期时间计划表").Cells(166, 2).Value
-            '开启事件触发
-            ExcelApp.Application.EnableEvents = True
-            GoTo aaaaa
-        End If
-aaaaa：
-        '再重新读取一次各方投资比例
-        For i = 0 To 4
-            TZGFCZBL(i) = ExcelApp.Worksheets("建设期时间计划表").Cells(163 + i, 2).Value
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '将输入的投资各方比例写入表格
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Unprotect(Password:="wscjc")
-        '投资方1
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
-        '投资方2
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 2).Value / 100
-        '投资方3
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 2).Value / 100
-        '投资方4
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 2).Value / 100
-        '投资方5
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(6, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value / 100
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '根据输入的投资各方出资比例，自动显示或者隐藏相关工作表
-        If TZGFCZBL(0) > 0 Then
-            '显示工作表
-            ExcelApp.Worksheets("投资方1现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
-        Else
-            '彻底隐藏工作表
-            ExcelApp.Worksheets("投资方1现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
-        End If
-        If TZGFCZBL(1) > 0 Then
-            '显示工作表
-            ExcelApp.Worksheets("投资方2现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
-        Else
-            '彻底隐藏工作表
-            ExcelApp.Worksheets("投资方2现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
-        End If
-        If TZGFCZBL(2) > 0 Then
-            '显示工作表
-            ExcelApp.Worksheets("投资方3现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
-        Else
-            '彻底隐藏工作表
-            ExcelApp.Worksheets("投资方3现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
-        End If
-        If TZGFCZBL(3) > 0 Then
-            '显示工作表
-            ExcelApp.Worksheets("投资方4现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
-        Else
-            '彻底隐藏工作表
-            ExcelApp.Worksheets("投资方4现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
-        End If
-        If TZGFCZBL(4) > 0 Then
-            '显示工作表
-            ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
-        Else
-            '彻底隐藏工作表
-            ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVeryHidden
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '写入计算模式
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "相同"
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '锁定表格
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Protect(Password:="wscjc")
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '计算回收期
-        Call 投资回收期计算(ExcelApp)
-        '开启屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
     End Sub
 
     Sub 解锁表格(ExcelApp As Object)
