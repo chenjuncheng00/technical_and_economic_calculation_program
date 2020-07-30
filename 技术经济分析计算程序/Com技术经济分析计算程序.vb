@@ -1,7 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Microsoft.Office.Core
-Imports Microsoft.Office.Interop
-Imports Microsoft.Office.Interop.Excel
+﻿Imports Microsoft.Office.Interop
 Imports System.IO
 <ComClass(Com技术经济分析计算程序.ClassId, Com技术经济分析计算程序.InterfaceId, Com技术经济分析计算程序.EventsId)>
 Public Class Com技术经济分析计算程序
@@ -94,337 +91,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = True
     End Sub
 
-    Sub 直接输入综合负荷率()
-        On Error Resume Next
-        '在Excel中被直接调用，所以需要单独实例化ExcelApp
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
-        '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-        Call 计算前基本处理(ExcelApp)
-        '重新打开excel自动计算，仅部分区域
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("C3:R9").Calculate
-        For i = 3 To 17
-            '综合负荷率，前15年
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0
-            End If
-        Next
-        For i = 2 To 17
-            '综合负荷率，后16年        
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(8, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0
-            End If
-        Next
-        '检测建设期，将没有投产月份数量的年份负荷率设置为0
-        For i = 3 To 17 '投资计划与资金筹措表列号
-            '前15年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
-            End If
-        Next
-        For i = 2 To 17 '投资计划与资金筹措表列号           
-            '后16年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————————————
-        '如果此时接入费是按照逐年达产率增加值计算的，则重新计算此时的接入费逐年系数
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
-            '接入费计算模式（第2年到计算期最后一年，根据逐年达产率增加值计算）
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-            '第1年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = 0
-            '第1-15年
-            For i = 3 To 17
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '第16年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 2).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-            '第17-31年
-            For i = 19 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '将小于0的结果设置为0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-    Sub 分投资逐次输入负荷率()
-        On Error Resume Next
-        '在Excel中被直接调用，所以需要单独实例化ExcelApp
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
-        '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
-        Call 计算前基本处理(ExcelApp)
-        '计算年限改变后，改变相应的逐年达产系数（前15年）
-        For i = 3 To 17
-            '第1次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(507, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(447, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(507, i).Value = 0
-            End If
-            '第2次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(512, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(452, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(512, i).Value = 0
-            End If
-            '第3次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(517, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(457, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(517, i).Value = 0
-            End If
-            '第4次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(522, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(462, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(522, i).Value = 0
-            End If
-            '第5次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(527, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(467, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(527, i).Value = 0
-            End If
-            '第6次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(532, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(472, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(532, i).Value = 0
-            End If
-            '第7次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(537, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(477, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(537, i).Value = 0
-            End If
-            '第8次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(542, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(482, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(542, i).Value = 0
-            End If
-            '第9次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(547, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(487, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(547, i).Value = 0
-            End If
-            '第10次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(552, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(492, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(552, i).Value = 0
-            End If
-        Next
-        '计算年限改变后，改变相应的逐年达产系数（后16年）
-        For i = 2 To 17
-            '第1次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(509, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(449, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(509, i).Value = 0
-            End If
-            '第2次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(514, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(454, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(514, i).Value = 0
-            End If
-            '第3次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(519, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(459, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(519, i).Value = 0
-            End If
-            '第4次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(524, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(464, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(524, i).Value = 0
-            End If
-            '第5次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(529, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(469, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(529, i).Value = 0
-            End If
-            '第6次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(534, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(474, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(534, i).Value = 0
-            End If
-            '第7次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(539, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(479, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(539, i).Value = 0
-            End If
-            '第8次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(544, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(484, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(544, i).Value = 0
-            End If
-            '第9次投资负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(549, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(489, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(549, i).Value = 0
-            End If
-            '第10次投资负荷率          
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(554, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(494, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(554, i).Value = 0
-            End If
-        Next
-        '重新打开excel自动计算，仅部分区域
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("A90:S650").Calculate
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("C3:R9").Calculate
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '前15年
-        For i = 3 To 17
-            '综合负荷率
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0
-            End If
-        Next
-        '后16年
-        For i = 2 To 17
-            '综合负荷率          
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(8, i).Value
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0
-            End If
-        Next
-        '检测建设期，将没有投产月份数量的年份负荷率设置为0
-        For i = 3 To 17 '投资计划与资金筹措表列号
-            '前15年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
-            End If
-        Next
-        For i = 2 To 17 '投资计划与资金筹措表列号          
-            '后16年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————————————
-        '如果此时接入费是按照逐年达产率增加值计算的，则重新计算此时的接入费逐年系数
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
-            '接入费计算模式（第2年到计算期最后一年，根据逐年达产率增加值计算）
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-            '第1年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = 0
-            '第1-15年
-            For i = 3 To 17
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '第16年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 2).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-            '第17-31年
-            For i = 19 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '将小于0的结果设置为0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算流动资金
-        Call 流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call 投资回收期计算(ExcelApp)
-        '锁定表格
-        Call 锁定表格(ExcelApp)
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
-    End Sub
-
     Sub 清空输入的收入和成本数据()
         On Error Resume Next
         '定义Excel对象
@@ -497,11 +163,14 @@ Public Class Com技术经济分析计算程序
         '计算一次
         ExcelApp.Calculate()
         '负荷率
-        Call 直接输入综合负荷率()
-        Call 分投资逐次输入负荷率()
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
+            Call 直接输入综合负荷率(ExcelApp)
+        Else
+            Call 分投资逐次输入负荷率(ExcelApp)
+        End If
         '隐藏收入和成本表格
-        Call 隐藏总成本表中成本为0的行()
-        Call 隐藏收入税收表中收入为0的行()
+        Call 隐藏总成本表中成本为0的行(ExcelApp)
+        Call 隐藏收入税收表中收入为0的行(ExcelApp)
         '计算一次流动资金
         Call 流动资金相关计算(ExcelApp)
         '计算一次回收期
@@ -947,8 +616,11 @@ Public Class Com技术经济分析计算程序
         Call 建设期增值税抵扣系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
-        Call 直接输入综合负荷率()
-        Call 分投资逐次输入负荷率()
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
+            Call 直接输入综合负荷率(ExcelApp)
+        Else
+            Call 分投资逐次输入负荷率(ExcelApp)
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         Call 将部分设置重置回默认状态(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -1533,8 +1205,11 @@ Public Class Com技术经济分析计算程序
         Call 建设期增值税抵扣系数(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
-        Call 直接输入综合负荷率()
-        Call 分投资逐次输入负荷率()
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
+            Call 直接输入综合负荷率(ExcelApp)
+        Else
+            Call 分投资逐次输入负荷率(ExcelApp)
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '将部分设置重置回默认状态
@@ -1612,6 +1287,334 @@ Public Class Com技术经济分析计算程序
         Call 流动资金相关计算(ExcelApp)
         '锁定表格
         Call 锁定表格(ExcelApp)
+    End Sub
+    Sub 逐年负荷率输入()
+        On Error Resume Next
+        '在Excel中被直接调用，所以需要单独实例化ExcelApp
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
+            Call 直接输入综合负荷率(ExcelApp)
+        Else
+            Call 分投资逐次输入负荷率(ExcelApp)
+        End If
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+    End Sub
+    Sub 直接输入综合负荷率(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '屏蔽ctrl+break
+        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
+        '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
+        Call 计算前基本处理(ExcelApp)
+        '重新打开excel自动计算，仅部分区域
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("C3:R9").Calculate
+        For i = 3 To 17
+            '综合负荷率，前15年
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0
+            End If
+        Next
+        For i = 2 To 17
+            '综合负荷率，后16年        
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(8, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0
+            End If
+        Next
+        '检测建设期，将没有投产月份数量的年份负荷率设置为0
+        For i = 3 To 17 '投资计划与资金筹措表列号
+            '前15年
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
+            End If
+        Next
+        For i = 2 To 17 '投资计划与资金筹措表列号           
+            '后16年
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '如果此时接入费是按照逐年达产率增加值计算的，则重新计算此时的接入费逐年系数
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
+            '接入费计算模式（第2年到计算期最后一年，根据逐年达产率增加值计算）
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+            '第1年
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = 0
+            '第1-15年
+            For i = 3 To 17
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+            '第16年
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 2).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
+            '第17-31年
+            For i = 19 To 33
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+            '将小于0的结果设置为0
+            For i = 3 To 33
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
+    End Sub
+    Sub 分投资逐次输入负荷率(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '屏蔽ctrl+break
+        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
+        '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
+        Call 计算前基本处理(ExcelApp)
+        '计算年限改变后，改变相应的逐年达产系数（前15年）
+        For i = 3 To 17
+            '第1次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(507, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(447, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(507, i).Value = 0
+            End If
+            '第2次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(512, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(452, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(512, i).Value = 0
+            End If
+            '第3次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(517, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(457, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(517, i).Value = 0
+            End If
+            '第4次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(522, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(462, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(522, i).Value = 0
+            End If
+            '第5次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(527, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(467, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(527, i).Value = 0
+            End If
+            '第6次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(532, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(472, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(532, i).Value = 0
+            End If
+            '第7次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(537, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(477, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(537, i).Value = 0
+            End If
+            '第8次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(542, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(482, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(542, i).Value = 0
+            End If
+            '第9次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(547, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(487, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(547, i).Value = 0
+            End If
+            '第10次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(552, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(492, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(552, i).Value = 0
+            End If
+        Next
+        '计算年限改变后，改变相应的逐年达产系数（后16年）
+        For i = 2 To 17
+            '第1次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(509, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(449, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(509, i).Value = 0
+            End If
+            '第2次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(514, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(454, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(514, i).Value = 0
+            End If
+            '第3次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(519, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(459, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(519, i).Value = 0
+            End If
+            '第4次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(524, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(464, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(524, i).Value = 0
+            End If
+            '第5次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(529, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(469, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(529, i).Value = 0
+            End If
+            '第6次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(534, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(474, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(534, i).Value = 0
+            End If
+            '第7次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(539, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(479, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(539, i).Value = 0
+            End If
+            '第8次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(544, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(484, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(544, i).Value = 0
+            End If
+            '第9次投资负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(549, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(489, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(549, i).Value = 0
+            End If
+            '第10次投资负荷率          
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(554, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(494, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(554, i).Value = 0
+            End If
+        Next
+        '重新打开excel自动计算，仅部分区域
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("A90:S650").Calculate
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("C3:R9").Calculate
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '前15年
+        For i = 3 To 17
+            '综合负荷率
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(102, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0
+            End If
+        Next
+        '后16年
+        For i = 2 To 17
+            '综合负荷率          
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(105, i).Value <= ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(8, i).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0
+            End If
+        Next
+        '检测建设期，将没有投产月份数量的年份负荷率设置为0
+        For i = 3 To 17 '投资计划与资金筹措表列号
+            '前15年
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
+            End If
+        Next
+        For i = 2 To 17 '投资计划与资金筹措表列号          
+            '后16年
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '如果此时接入费是按照逐年达产率增加值计算的，则重新计算此时的接入费逐年系数
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
+            '接入费计算模式（第2年到计算期最后一年，根据逐年达产率增加值计算）
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+            '第1年
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = 0
+            '第1-15年
+            For i = 3 To 17
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+            '第16年
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 2).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
+            '第17-31年
+            For i = 19 To 33
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+            '将小于0的结果设置为0
+            For i = 3 To 33
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
+                End If
+            Next
+            '锁定表格
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算流动资金
+        Call 流动资金相关计算(ExcelApp)
+        '重新计算投资回收期
+        Call 投资回收期计算(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+        '重新打开excel自动计算
+        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
+        '重新打开屏幕更新
+        ExcelApp.Application.ScreenUpdating = True
     End Sub
     Sub 将部分设置重置回默认状态(ExcelApp As Object)
         On Error Resume Next
@@ -3163,208 +3166,205 @@ Public Class Com技术经济分析计算程序
     Sub 绘制单因素敏感性分析图(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
-        Dim Form10 As New 选择单因素敏感性分析内容
-        If Form10.hzzxt.Checked = True Then
-            '绘制单因素敏感性分析图
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes.AddChart.Name = "单因素敏感性分析图" '创建图表并重命名
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes("单因素敏感性分析图").Select
-            ExcelApp.ActiveChart.ChartType = Excel.XlChartType.xlLineMarkers '选择图表类型
-            ExcelApp.ActiveSheet.Shapes("单因素敏感性分析图").IncrementLeft(-415)
-            ExcelApp.ActiveSheet.Shapes("单因素敏感性分析图").IncrementTop(340)
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
-            ExcelApp.ActiveChart.ChartTitle.Text = "单因素敏感性分析图表"
-            '————————————————————————————————————————————————————————————————————————————————————————
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            Dim js As Integer = 0
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(7, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$7"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$7:$K$11"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(12, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$12"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$12:$K$16"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(17, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$17"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$17:$K$21"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(22, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$22"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$22:$K$26"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(27, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$27"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$27:$K$31"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(32, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$32"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$32:$K$36"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(37, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$37"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$37:$K$41"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(42, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$42"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$42:$K$46"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(47, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$47"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$47:$K$51"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(52, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$52"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$52:$K$56"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(57, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$57"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$57:$K$61"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(62, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$62"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$62:$K$66"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(67, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$67"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$67:$K$71"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(72, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$72"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$72:$K$76"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(77, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$77"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$77:$K$81"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(82, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$82"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$82:$K$86"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(87, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$87"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$87:$K$91"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(92, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$92"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$92:$K$96"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(97, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$97"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$97:$K$101"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(102, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$102"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$102:$K$106"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(107, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$107"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$107:$K$111"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(112, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$112"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$112:$K$116"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(117, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$117"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$117:$K$121"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(122, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$122"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$122:$K$126"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(127, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$127"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$127:$K$131"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(132, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$132"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$132:$K$136"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
-            If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(137, 8).Value > 0 Then
-                js = js + 1
-                ExcelApp.ActiveChart.SeriesCollection.NewSeries
-                ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$137"
-                ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$137:$K$141"
-                ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
-            End If
+        '绘制单因素敏感性分析图
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes.AddChart.Name = "单因素敏感性分析图" '创建图表并重命名
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes("单因素敏感性分析图").Select
+        ExcelApp.ActiveChart.ChartType = Excel.XlChartType.xlLineMarkers '选择图表类型
+        ExcelApp.ActiveSheet.Shapes("单因素敏感性分析图").IncrementLeft(-415)
+        ExcelApp.ActiveSheet.Shapes("单因素敏感性分析图").IncrementTop(340)
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+        ExcelApp.ActiveChart.ChartTitle.Text = "单因素敏感性分析图表"
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim js As Integer = 0
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(7, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$7"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$7:$K$11"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(12, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$12"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$12:$K$16"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(17, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$17"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$17:$K$21"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(22, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$22"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$22:$K$26"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(27, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$27"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$27:$K$31"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(32, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$32"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$32:$K$36"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(37, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$37"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$37:$K$41"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(42, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$42"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$42:$K$46"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(47, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$47"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$47:$K$51"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(52, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$52"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$52:$K$56"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(57, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$57"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$57:$K$61"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(62, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$62"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$62:$K$66"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(67, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$67"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$67:$K$71"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(72, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$72"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$72:$K$76"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(77, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$77"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$77:$K$81"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(82, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$82"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$82:$K$86"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(87, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$87"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$87:$K$91"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(92, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$92"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$92:$K$96"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(97, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$97"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$97:$K$101"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(102, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$102"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$102:$K$106"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(107, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$107"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$107:$K$111"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(112, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$112"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$112:$K$116"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(117, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$117"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$117:$K$121"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(122, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$122"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$122:$K$126"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(127, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$127"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$127:$K$131"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(132, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$132"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$132:$K$136"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").cells(137, 8).Value > 0 Then
+            js = js + 1
+            ExcelApp.ActiveChart.SeriesCollection.NewSeries
+            ExcelApp.ActiveChart.SeriesCollection(js).Name = "=指标数据!$R$137"
+            ExcelApp.ActiveChart.SeriesCollection(js).Values = "=指标数据!$K$137:$K$141"
+            ExcelApp.ActiveChart.SeriesCollection(js).XValues = "=指标数据!$I$7:$I$11"
         End If
     End Sub
     Sub 设置敏感性分析图格式(ExcelApp As Object)
@@ -4106,10 +4106,19 @@ Public Class Com技术经济分析计算程序
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        Dim tznfzdz, zjdknx '投资年份最大值、折旧贷款年限中较大的值
-        '折旧贷款年限中的最大值
-        zjdknx = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Range("G6:G8").Value)
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '投资年份最大值
+        Dim tznfzdz As Integer
+        '固定资产折旧年限
+        Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+        '无形资产摊销年限
+        Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+        '长期贷款还款年限
+        Dim cqdkhknx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+        '折旧贷款年限中较大的值        
+        Dim zjdknx_1 As Integer = Math.Max(gdzczjnx, wxzctxnx)
+        Dim zjdknx As Integer = Math.Max(zjdknx_1, cqdkhknx)
         '项目计算年数改变后改变的计算用系数
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一或者方法二，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
@@ -4135,7 +4144,6 @@ Public Class Com技术经济分析计算程序
         Else
             tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
         End If
-
         '输入的数字必需为从2到31的整数，同时要大于等于项目投资年份最大值与折旧和贷款年限的较大值的和
         If jsnx >= 2 And jsnx <= 31 And jsnx >= tznfzdz + zjdknx And Int(jsnx) = jsnx Then
             '屏蔽屏幕更新，防止屏闪；手动计算，关闭excel的自动计算；解锁表格
@@ -4224,7 +4232,7 @@ Public Class Com技术经济分析计算程序
         Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value '固定资产折旧年限
         Dim tznfzdz As Integer
         '读取输入的项目计算年限
-        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一或者方法二，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
@@ -4430,10 +4438,10 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————        
         'cqdkhknx 长期贷款还款年限
         '定义局部变量
-        Dim tznfzdz
+        Dim tznfzdz As Integer
         '读取输入的项目计算年限
-        Dim cqdkhknx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value '长期贷款年限
-        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim cqdkhknx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value '长期贷款年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
@@ -4667,10 +4675,10 @@ Public Class Com技术经济分析计算程序
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim tznfzdz
+        Dim tznfzdz As Integer
         Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value '无形资产摊销年限
         '读取输入的项目计算年限
-        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '读取输入的10次投资发生年份的最大值
         '如果贷款计算方法是方法一，同时折旧和摊销的计算方法为方法一或者方法二，定义投资年份最大值等于1
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
@@ -4855,12 +4863,19 @@ Public Class Com技术经济分析计算程序
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim jsnx, zjdknx, tzzdnf '项目计算年限、折旧贷款年限中的较大值
-        Dim tznf2, tznf3, tznf4, tznf5, tznf6, tznf7, tznf8, tznf9, tznf10 '投资年份2-10
+        Dim jsnx, zjdknx, tzzdnf As Integer '项目计算年限、折旧贷款年限中的较大值
+        Dim tznf2, tznf3, tznf4, tznf5, tznf6, tznf7, tznf8, tznf9, tznf10 As Integer '投资年份2-10
         '读取本项目计算年限、以及折旧年限和贷款年限中的较大值
         jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
-        '折旧贷款年限最大值
-        zjdknx = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Range("G6:G8").Value)
+        '固定资产折旧年限
+        Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+        '无形资产摊销年限
+        Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+        '长期贷款还款年限
+        Dim cqdkhknx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+        '折旧贷款年限中较大的值        
+        Dim zjdknx_1 As Integer = Math.Max(gdzczjnx, wxzctxnx)
+        zjdknx = Math.Max(zjdknx_1, cqdkhknx)
         '允许输入的最大年份数
         tzzdnf = jsnx - zjdknx '投资最大年份
         '项目第二次投资年份发生变化时
@@ -5026,12 +5041,19 @@ Public Class Com技术经济分析计算程序
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim jsnx, zjdknx, tzzdnf '项目计算年限、折旧贷款年限中的较大值
-        Dim tznf2, tznf3, tznf4, tznf5, tznf6, tznf7, tznf8, tznf9, tznf10 '投资年份2-10
+        Dim jsnx, zjdknx, tzzdnf As Integer '项目计算年限、折旧贷款年限中的较大值
+        Dim tznf2, tznf3, tznf4, tznf5, tznf6, tznf7, tznf8, tznf9, tznf10 As Integer '投资年份2-10
         '读取本项目计算年限、以及折旧年限和贷款年限中的较大值
         jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
-        '折旧贷款年限最大值
-        zjdknx = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Range("G6:G8").Value)
+        '固定资产折旧年限
+        Dim gdzczjnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+        '无形资产摊销年限
+        Dim wxzctxnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+        '长期贷款还款年限
+        Dim cqdkhknx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+        '折旧贷款年限中较大的值        
+        Dim zjdknx_1 As Integer = Math.Max(gdzczjnx, wxzctxnx)
+        zjdknx = Math.Max(zjdknx_1, cqdkhknx)
         '允许输入的最大年份数
         tzzdnf = jsnx - zjdknx '投资最大年份
         '项目第六次投资年份发生变化时
@@ -5422,7 +5444,7 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value = 1
         End If
     End Sub
-    Sub 隐藏收入税收表中收入为0的行()
+    Sub 隐藏收入表和成本表中为0的行()
         On Error Resume Next
         '在Excel中被直接调用，所以需要单独实例化ExcelApp
         '定义Excel对象
@@ -5438,8 +5460,16 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
+        Call 隐藏收入税收表中收入为0的行(ExcelApp)
+        Call 隐藏总成本表中成本为0的行(ExcelApp)
+        '锁定表格
+        Call 锁定表格(ExcelApp)
+    End Sub
+    Sub 隐藏收入税收表中收入为0的行(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim js
+        Dim js As Integer
         '屏蔽屏幕更新，防止屏闪
         ExcelApp.Application.ScreenUpdating = False
         '手动计算，关闭excel的自动计算
@@ -5589,24 +5619,11 @@ Public Class Com技术经济分析计算程序
         '重新打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
     End Sub
-    Sub 隐藏总成本表中成本为0的行()
+    Sub 隐藏总成本表中成本为0的行(ExcelApp As Object)
         On Error Resume Next
-        '在Excel中被直接调用，所以需要单独实例化ExcelApp
-        '定义Excel对象
-        Dim ExcelApp As Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
-        If ZTJC = 1 Then
-            Call 锁定表格(ExcelApp)
-            ZTJC = 0
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim js
+        Dim js As Integer
         '屏蔽屏幕更新，防止屏闪
         ExcelApp.Application.ScreenUpdating = False
         '手动计算，关闭excel的自动计算
@@ -5994,7 +6011,7 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("资产负债表").unProtect(Password:="wscjc")
         '————————————————————————————————————————————————————————————————————————————————————————
         '第一年的应收账款、原材料、燃料和动力、现金的和
-        Dim DYN = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(49, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(50, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(51, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(52, 3).Value
+        Dim DYN As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(49, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(50, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(51, 3).Value + ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(52, 3).Value
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual

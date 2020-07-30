@@ -551,8 +551,10 @@ Public Class 选择单因素敏感性分析内容
             Call mainprogram.成本敏感性分析计算(ExcelApp, MGXFXBHL)
             Call mainprogram.年运行小时数敏感性分析(ExcelApp, MGXFXBHL)
             '绘制敏感性分析图并设置格式
-            Call mainprogram.绘制单因素敏感性分析图(ExcelApp)
-            Call mainprogram.设置敏感性分析图格式(ExcelApp)
+            If Me.hzzxt.Checked = True Then
+                Call mainprogram.绘制单因素敏感性分析图(ExcelApp)
+                Call mainprogram.设置敏感性分析图格式(ExcelApp)
+            End If
             '锁定表格
             ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
