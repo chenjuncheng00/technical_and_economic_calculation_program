@@ -202,7 +202,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽事件
-        ExcelApp.Application.EnableEvents = False
+        'ExcelApp.Application.EnableEvents = False
         '屏蔽屏幕更新
         ExcelApp.Application.ScreenUpdating = False
         Dim FSLJDJSCSMax As Integer = InputBox("请输入反算临界点功能的最大计算次数，输入的数字越大，计算次数越多，计算速度越慢，计算精度越高。", "输入反算临界点最大计算次数", 200)
@@ -3141,7 +3141,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value * (1 + 1 / JSCSMax), 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value * (1 + 1 / JSCSMax), 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3174,7 +3174,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
                         '如果此时的内部收益率小于设定的临界点内部收益率，则将目前的单价往上加
                         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
@@ -3191,7 +3191,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3227,7 +3227,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
                     End If
                 Next
@@ -3284,7 +3284,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3320,7 +3320,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
                         '如果此时的内部收益率大于设定的临界点内部收益率，则将目前的单价往上加
                         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
@@ -3337,7 +3337,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value * (1 - 1 / JSCSMax), 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value * (1 - 1 / JSCSMax), 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3370,7 +3370,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
                     End If
                 Next
@@ -3410,7 +3410,7 @@ aaaaa：
                 TZmin = TZJECC(i）
             End If
         Next
-        WTJSBC = ExcelApp.WorksheetFunction.RoundUp(TZmin / (JSCSMax * 10), 0)
+        WTJSBC = Math.Round(TZmin / (JSCSMax * 10), 0)
         Dim JS As Integer = 0
         '判断此时的内部收益率和设定的临界点内部收益率的大小关系
         '如果此时的内部收益率小于设定的临界点内部收益率，则将目前的单价往下减
@@ -3443,8 +3443,8 @@ aaaaa：
                             JTTZWT(TZJESLJS) = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(k), l).Value, 2)
                         Next
                     Next
-                    JTTZZEWT = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
-                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    JTTZZEWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
                     Exit For
                 End If
             Next
@@ -3527,8 +3527,8 @@ aaaaa：
                             JTTZWT(TZJESLJS) = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(k), l).Value, 2)
                         Next
                     Next
-                    JTTZZEWT = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
-                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value * (1 - 1 / 2000), 2) '将反算出来的总投资记在表格中
+                    JTTZZEWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value * (1 - 1 / 2000), 2) '将反算出来的总投资记在表格中
                     Exit For
                 End If
             Next
@@ -3632,7 +3632,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value * (1 + 1 / JSCSMax), 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value * (1 + 1 / JSCSMax), 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3665,7 +3665,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
                         '如果此时的内部收益率小于设定的临界点内部收益率，则将目前的单价往上加
                         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
@@ -3682,7 +3682,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3718,7 +3718,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
                     End If
                 Next
@@ -3775,7 +3775,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3811,7 +3811,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
                         '如果此时的内部收益率大于设定的临界点内部收益率，则将目前的单价往上加
                         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
@@ -3828,7 +3828,7 @@ aaaaa：
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
-                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value * (1 - 1 / JSCSMax), 3) '将反算出来的单价记在表格中
+                                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value * (1 - 1 / JSCSMax), 3) '将反算出来的单价记在表格中
                                     Exit For
                                 End If
                             Next
@@ -3861,7 +3861,7 @@ aaaaa：
                             '计算流动资金
                             Call 流动资金相关计算(ExcelApp)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = ExcelApp.WorksheetFunction.RoundUp((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
+                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
                     End If
                 Next
@@ -3901,7 +3901,7 @@ aaaaa：
                 TZmin = TZJECC(i）
             End If
         Next
-        WTJSBC = ExcelApp.WorksheetFunction.RoundUp(TZmin / (JSCSMax * 10), 0)
+        WTJSBC = Math.Round(TZmin / (JSCSMax * 10), 0)
         Dim JS As Integer = 0
         '判断此时的内部收益率和设定的临界点内部收益率的大小关系
         '如果此时的内部收益率小于设定的临界点内部收益率，则将目前的单价往下减
@@ -3934,8 +3934,8 @@ aaaaa：
                             JTTZWT(TZJESLJS) = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(k), l).Value, 2)
                         Next
                     Next
-                    JTTZZEWT = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
-                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    JTTZZEWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
                     Exit For
                 End If
             Next
@@ -4018,8 +4018,8 @@ aaaaa：
                             JTTZWT(TZJESLJS) = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(TZHH(k), l).Value, 2)
                         Next
                     Next
-                    JTTZZEWT = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
-                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.WorksheetFunction.RoundUp(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value * (1 - 1 / 2000), 2) '将反算出来的总投资记在表格中
+                    JTTZZEWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value, 2) '将反算出来的总投资记在表格中
+                    'ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value * (1 - 1 / 2000), 2) '将反算出来的总投资记在表格中
                     Exit For
                 End If
             Next
@@ -4575,8 +4575,8 @@ aaaaa：
         ExcelApp.ActiveChart.HasAxis(Excel.XlAxisType.xlValue) = True
         ExcelApp.ActiveChart.Axes(Excel.XlAxisType.xlValue).Select
         ExcelApp.Selection.TickLabels.NumberFormatLocal = "0%"
-        ExcelApp.ActiveChart.Axes(Excel.XlAxisType.xlValue).MinimumScale = ExcelApp.WorksheetFunction.RoundDown(NBSYLmin - 0.005, 2) '设置折线图坐标下限
-        ExcelApp.ActiveChart.Axes(Excel.XlAxisType.xlValue).MaximumScale = ExcelApp.WorksheetFunction.RoundUp(NBSYLmax + 0.005, 2) '设置折线图坐标上限
+        ExcelApp.ActiveChart.Axes(Excel.XlAxisType.xlValue).MinimumScale = Math.Round(NBSYLmin - 0.005, 2) '设置折线图坐标下限
+        ExcelApp.ActiveChart.Axes(Excel.XlAxisType.xlValue).MaximumScale = Math.Round(NBSYLmax + 0.005, 2) '设置折线图坐标上限
         '设置横坐标标题、纵坐标标题、图表总标题
         ExcelApp.ActiveSheet.ChartObjects("单因素敏感性分析图").Activate
         'ExcelApp.ActiveChart.Legend.Position = Excel.XlLegendPosition.xlLegendPositionBottom '设置图例出现在底部

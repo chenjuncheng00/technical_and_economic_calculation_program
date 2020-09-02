@@ -903,52 +903,52 @@
             '第1次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value > 0 Then
                 Me.zbjbl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 3).Value * 100, String)
-                Me.dkll1.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 3).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll1.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 3).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第2次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value > 0 Then
                 Me.zbjbl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 5).Value * 100, String)
-                Me.dkll2.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 5).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll2.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 5).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第3次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value > 0 Then
                 Me.zbjbl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 7).Value * 100, String)
-                Me.dkll3.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 7).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll3.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 7).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第4次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value > 0 Then
                 Me.zbjbl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 9).Value * 100, String)
-                Me.dkll4.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 9).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll4.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 9).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第5次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value > 0 Then
                 Me.zbjbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 11).Value * 100, String)
-                Me.dkll5.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 11).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll5.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 11).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第6次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value > 0 Then
                 Me.zbjbl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 13).Value * 100, String)
-                Me.dkll6.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 13).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll6.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 13).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第7次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value > 0 Then
                 Me.zbjbl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 15).Value * 100, String)
-                Me.dkll7.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 15).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll7.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 15).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第8次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value > 0 Then
                 Me.zbjbl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 17).Value * 100, String)
-                Me.dkll8.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 17).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll8.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 17).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第9次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value > 0 Then
                 Me.zbjbl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 19).Value * 100, String)
-                Me.dkll9.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 19).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll9.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 19).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
             '第10次投资
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value > 0 Then
                 Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(173, 21).Value * 100, String)
-                Me.dkll10.Text = CType(ExcelApp.WorksheetFunction.RoundUp(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 21).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
+                Me.dkll10.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(174, 21).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
             End If
         Else
             '载入默认值
