@@ -202,7 +202,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽事件
-        'ExcelApp.Application.EnableEvents = False
+        ExcelApp.Application.EnableEvents = False
         '屏蔽屏幕更新
         ExcelApp.Application.ScreenUpdating = False
         Dim FSLJDJSCSMax As Integer = InputBox("请输入反算临界点功能的最大计算次数，输入的数字越大，计算次数越多，计算速度越慢，计算精度越高。", "输入反算临界点最大计算次数", 200)
@@ -4755,7 +4755,14 @@ aaaaa：
                 End If
             End If
         Else
-            tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
+            Dim TZNF_LIST As New List(Of Integer)
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, i).Value)
+            Next
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, i).Value)
+            Next
+            tznfzdz = TZNF_LIST.Max '投资年份最大值
         End If
         '输入的数字必需为从2到31的整数，同时要大于等于项目投资年份最大值与折旧和贷款年限的较大值的和
         If jsnx >= 2 And jsnx <= 31 And jsnx >= tznfzdz + zjdknx And Int(jsnx) = jsnx Then
@@ -4851,7 +4858,14 @@ aaaaa：
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
-            tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
+            Dim TZNF_LIST As New List(Of Integer)
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, i).Value)
+            Next
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, i).Value)
+            Next
+            tznfzdz = TZNF_LIST.Max '投资年份最大值
         End If
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If gdzczjnx >= 1 And gdzczjnx <= 30 And gdzczjnx <= jsnx - tznfzdz And Int(gdzczjnx) = gdzczjnx Then
@@ -5060,7 +5074,14 @@ aaaaa：
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
-            tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
+            Dim TZNF_LIST As New List(Of Integer)
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, i).Value)
+            Next
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, i).Value)
+            Next
+            tznfzdz = TZNF_LIST.Max '投资年份最大值
         End If
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If cqdkhknx >= 1 And cqdkhknx <= 30 And cqdkhknx <= jsnx - tznfzdz And Int(cqdkhknx) = cqdkhknx Then
@@ -5297,7 +5318,14 @@ aaaaa：
         If (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二") And (ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二") Then
             tznfzdz = 1
         Else
-            tznfzdz = ExcelApp.WorksheetFunction.Max(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, 11).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 3).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 5).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 7).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 9).Value, ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, 11).Value) '投资年份最大值
+            Dim TZNF_LIST As New List(Of Integer)
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(28, i).Value)
+            Next
+            For i = 3 To 11 Step 2
+                TZNF_LIST.Add(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(71, i).Value)
+            Next
+            tznfzdz = TZNF_LIST.Max '投资年份最大值
         End If
         '输入的数字必需为从1到30的整数，并且小于项目计算年限
         If wxzctxnx >= 1 And wxzctxnx <= 30 And wxzctxnx <= jsnx - tznfzdz And Int(wxzctxnx) = wxzctxnx Then
