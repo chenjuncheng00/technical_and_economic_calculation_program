@@ -138,15 +138,35 @@ Public Class 修理费率逐年变化设置
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
             Next
             Dim ZNBHL1 As Double '输入的第1条修理费的逐年变化率
-            ZNBHL1 = (JSNFFL1 - KSNFFL1) / (JSNF1 - KSNF1)
+            If JSNF1 - KSNF1 = 0 Then
+                ZNBHL1 = 0
+            Else
+                ZNBHL1 = (JSNFFL1 - KSNFFL1) / (JSNF1 - KSNF1)
+            End If
             Dim ZNBHL2 As Double '输入的第2条修理费的逐年变化率
-            ZNBHL2 = (JSNFFL2 - KSNFFL2) / (JSNF2 - KSNF2)
+            If JSNF2 - KSNF2 = 0 Then
+                ZNBHL2 = 0
+            Else
+                ZNBHL2 = (JSNFFL2 - KSNFFL2) / (JSNF2 - KSNF2)
+            End If
             Dim ZNBHL3 As Double '输入的第3条修理费的逐年变化率
-            ZNBHL3 = (JSNFFL3 - KSNFFL3) / (JSNF3 - KSNF3)
+            If JSNF3 - KSNF3 = 0 Then
+                ZNBHL3 = 0
+            Else
+                ZNBHL3 = (JSNFFL3 - KSNFFL3) / (JSNF3 - KSNF3)
+            End If
             Dim ZNBHL4 As Double '输入的第4条修理费的逐年变化率
-            ZNBHL4 = (JSNFFL4 - KSNFFL4) / (JSNF4 - KSNF4)
+            If JSNF4 - KSNF4 = 0 Then
+                ZNBHL4 = 0
+            Else
+                ZNBHL4 = (JSNFFL4 - KSNFFL4) / (JSNF4 - KSNF4)
+            End If
             Dim ZNBHL5 As Double '输入的第5条修理费的逐年变化率
-            ZNBHL5 = (JSNFFL5 - KSNFFL5) / (JSNF5 - KSNF5)
+            If JSNF5 - KSNF5 = 0 Then
+                ZNBHL5 = 0
+            Else
+                ZNBHL5 = (JSNFFL5 - KSNFFL5) / (JSNF5 - KSNF5)
+            End If
             '计算期第一年到到KSNF1之间的年份，修理费率设置为0
             Dim js0 As Integer = 0
             For i = 3 To 33
