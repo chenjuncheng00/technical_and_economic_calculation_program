@@ -322,10 +322,10 @@ Public Class 每次投资设置不同的折旧摊销计算方式
             '手动计算，关闭excel的自动计算
             ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
             '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
             '———————————————————————————————————————————————————————————————————————————————————
             '———————————————————————————————————————————————————————————————————————————————————

@@ -82,11 +82,11 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
                 Exit Sub
             End If
             '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
             '将输入写入Excel
             '投资方1
             ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = czbl1 / 100
@@ -190,11 +190,11 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         If XZ = vbOK Then
             '根据在<建设期时间计划表>中输入的投资各方出资比例，将投资各方的出资比例、利润分配比例、资产处置比例设置为一样的值           
             '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
             '将输入写入Excel
             '投资方1
             ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
