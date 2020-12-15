@@ -207,8 +207,8 @@ Public Class Com技术经济分析计算程序
         ExcelApp.Application.ScreenUpdating = False
         Dim FSLJDJSCSMax As Integer = InputBox("请输入反算临界点功能的最大计算次数，输入的数字越大，计算次数越多，计算速度越慢，计算精度越高。", "输入反算临界点最大计算次数", 200)
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
         '确定选择的需要反算的内部收益率类型
@@ -256,8 +256,8 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '清空数据
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("D43:D67").ClearContents
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("G42:G67").ClearContents
@@ -308,7 +308,7 @@ Public Class Com技术经济分析计算程序
         '定义局部变量
         Dim nfxh As Integer = 0
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
         '寻找总成本费用最大值的年份序号，并记录下年固定成本和可变成本
         For i = 5 To 19 '前15年
             If ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(24, i).Value = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(1, 4).Value Then
@@ -371,7 +371,7 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
         '复制
@@ -395,7 +395,7 @@ Public Class Com技术经济分析计算程序
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("盈亏平衡分析图").Activate
         '复制
@@ -420,7 +420,8 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————  
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '敏感性分析计算结果
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("K7:L141").ClearContents
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("H7:H141").ClearContents
@@ -438,13 +439,27 @@ Public Class Com技术经济分析计算程序
         Next
         '清空Excel内已有的输入
         For i = 7 To 137 Step 5
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = Nothing
         Next
+        '清空Excel内已有的输入(年运行小时数敏感性分析内容)
+        '收入
+        For i = 13 To 25
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 30).Value = Nothing
+        Next
+        '成本
+        For i = 14 To 19
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 31).Value = Nothing
+        Next
+        For i = 21 To 25
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 31).Value = Nothing
+        Next
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 31).Value = Nothing
         '清空盈亏平衡分析计算数据
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("E55:E59").ClearContents
         '——————————————————————————————————————————————————————————————————————————————————————
         '锁定表格
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
         '重新打开excel自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
     End Sub
@@ -2133,11 +2148,11 @@ aaaaa：
         '————————————————————————————————————————————————————————————————————————————————————————
         '将输入的投资各方比例写入表格
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
         '投资方1
         ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
         ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(5, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
@@ -2294,7 +2309,7 @@ aaaaa：
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         '解锁收入税收表
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
         '第1年到第15年
         For i = 1 To 13
             For j = 1 To 10
@@ -2448,7 +2463,7 @@ aaaaa：
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         '解锁总成本表
-        ExcelApp.ThisWorkbook.Worksheets("总成本表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("总成本表").unProtect(Password:="wscjc")
         '第1年到第15年
         For i = 1 To 15
             For j = 1 To 15
@@ -4277,7 +4292,7 @@ aaaaa：
                 For i = 13 To 25
                     SRNL(i - 12) = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 6).Value
                 Next
-                For i = 14 To 24
+                For i = 14 To 27
                     CBNL(i - 12) = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 13).Value
                 Next
                 Dim JS As Integer = 0
@@ -4298,13 +4313,15 @@ aaaaa：
                         Next
                     Next
                     '遍历各种收入和成本的全年输入，每个值都变化
+                    '收入
                     For j = 13 To 25 '行号
-                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 6).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 6).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 30).Value = 1 Then
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 6).Value = SRNL(j - 12) * (（1 - 2 * MGXFXBHL） + (i - 1) * MGXFXBHL)
                         End If
                     Next
-                    For j = 14 To 24 '行号
-                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 13).Value > 0 Then
+                    '成本
+                    For j = 14 To 27 '行号
+                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 13).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 31).Value = 1 Then
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 13).Value = CBNL(j - 12) * (（1 - 2 * MGXFXBHL） + (i - 1) * MGXFXBHL)
                         End If
                     Next
@@ -4337,7 +4354,7 @@ aaaaa：
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 6).Value = SRNL(j - 12)
                     End If
                 Next
-                For j = 14 To 24 '行号
+                For j = 14 To 27 '行号
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 13).Value > 0 Then
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 13).Value = CBNL(j - 12)
                     End If
@@ -4558,8 +4575,8 @@ aaaaa：
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '求取计算出的内部收益率中的最小值和最大值
-        Dim NBSYLmin = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 11).Value '内部收益率最小值
-        Dim NBSYLmax = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 11).Value '内部收益率最大值
+        Dim NBSYLmin As Double = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 11).Value '内部收益率最小值
+        Dim NBSYLmax As Double = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 11).Value '内部收益率最大值
         For i = 8 To 141 '求最小值
             If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 11).Value < NBSYLmin And ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 11).Value <> Nothing Then
                 NBSYLmin = ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 11).Value
@@ -6320,9 +6337,9 @@ aaaaa：
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         '————————————————————————————————————————————————————————————————————————————————————————
-        '如果计算期第一年应收账款、原材料、燃料和动力、现金的和大于0，但是计算期第一年的负荷率等于0，则报错
-        If DYN > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, 3).Value = 0 Then
-            MsgBox("计算期第一年设置的负荷率等于0，但是计算期第一年存在流动资金计算，请检查。")
+        '如果计算期第一年应收账款、原材料、燃料和动力、现金的和大于0，同时计算期第一年的负荷率等于0，同时计算期第一年收入为0，则报错
+        If DYN > 0 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(5, 3).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 5).Value = 0 Then
+            MsgBox("计算期第一年设置的负荷率等于0，计算期第一年收入等于0，但是计算期第一年存在流动资金计算，请检查。")
         End If
         '计算一次Excel
         ExcelApp.Calculate()
@@ -6560,10 +6577,10 @@ aaaaa：
         '手动计算，关闭excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Unprotect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Unprotect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").unProtect(Password:="wscjc")
+        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").unProtect(Password:="wscjc")
     End Sub
 
     Sub 解锁表格(ExcelApp As Object)

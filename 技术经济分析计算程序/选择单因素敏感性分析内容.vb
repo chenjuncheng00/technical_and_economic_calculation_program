@@ -46,67 +46,67 @@ Public Class 选择单因素敏感性分析内容
             Me.jttz.Enabled = False
         End If
         '收入
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 7).Value > 0 Then
             Me.sr1.Enabled = True
         Else
             Me.sr1.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 7).Value > 0 Then
             Me.sr2.Enabled = True
         Else
             Me.sr2.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 7).Value > 0 Then
             Me.sr3.Enabled = True
         Else
             Me.sr3.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 7).Value > 0 Then
             Me.sr4.Enabled = True
         Else
             Me.sr4.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 7).Value > 0 Then
             Me.sr5.Enabled = True
         Else
             Me.sr5.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 7).Value > 0 Then
             Me.sr6.Enabled = True
         Else
             Me.sr6.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 7).Value > 0 Then
             Me.sr7.Enabled = True
         Else
             Me.sr7.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 7).Value > 0 Then
             Me.sr8.Enabled = True
         Else
             Me.sr8.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 7).Value > 0 Then
             Me.sr9.Enabled = True
         Else
             Me.sr9.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 7).Value > 0 Then
             Me.sr10.Enabled = True
         Else
             Me.sr10.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 7).Value > 0 Then
             Me.sr11.Enabled = True
         Else
             Me.sr11.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 7).Value > 0 Then
             Me.sr12.Enabled = True
         Else
             Me.sr12.Enabled = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 7).Value > 0 Then
             Me.sr13.Enabled = True
         Else
             Me.sr13.Enabled = False
@@ -192,67 +192,67 @@ Public Class 选择单因素敏感性分析内容
             Me.nyxxss_text.Text = Nothing
         End If
         '收入
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(12, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 7).Value > 0 Then
             Me.sr1.Checked = True
         Else
             Me.sr1.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(17, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 7).Value > 0 Then
             Me.sr2.Checked = True
         Else
             Me.sr2.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(22, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 7).Value > 0 Then
             Me.sr3.Checked = True
         Else
             Me.sr3.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(27, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 7).Value > 0 Then
             Me.sr4.Checked = True
         Else
             Me.sr4.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(32, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 7).Value > 0 Then
             Me.sr5.Checked = True
         Else
             Me.sr5.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(37, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 7).Value > 0 Then
             Me.sr6.Checked = True
         Else
             Me.sr6.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(42, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 7).Value > 0 Then
             Me.sr7.Checked = True
         Else
             Me.sr7.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 7).Value > 0 Then
             Me.sr8.Checked = True
         Else
             Me.sr8.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(52, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 7).Value > 0 Then
             Me.sr9.Checked = True
         Else
             Me.sr9.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(57, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 7).Value > 0 Then
             Me.sr10.Checked = True
         Else
             Me.sr10.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 7).Value > 0 Then
             Me.sr11.Checked = True
         Else
             Me.sr11.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(67, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 7).Value > 0 Then
             Me.sr12.Checked = True
         Else
             Me.sr12.Checked = False
         End If
-        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 6).Value > 0 Then
+        If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(72, 29).Value = 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 7).Value > 0 Then
             Me.sr13.Checked = True
         Else
             Me.sr13.Checked = False
@@ -335,16 +335,22 @@ Public Class 选择单因素敏感性分析内容
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
+            '屏蔽事件
+            ExcelApp.Application.EnableEvents = False
+            '屏蔽屏幕更新
+            ExcelApp.Application.ScreenUpdating = False
             '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Unprotect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Unprotect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
             '————————————————————————————————————————————————————————————————————
-            Me.Hide() '隐藏窗体
+            '隐藏窗体
+            Me.Hide()
             '清空Excel内已有的输入
             For i = 7 To 137 Step 5
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = Nothing
             Next
+            '————————————————————————————————————————————————————————————————————           
             '根据复选框的内容，将系数写入Excel，1代表计算，0代表不计算
             '静态投资
             If Me.jttz.Checked = True Then
@@ -353,14 +359,11 @@ Public Class 选择单因素敏感性分析内容
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 29).Value = 0
             End If
             '年利用小时数
-            If CType(Me.nyxxss_text.Text, Double) > 0 Then '写入年利用小时数
+            If Me.nyxxss_text.Text <> Nothing And Me.nyxxss_check.Checked = True Then '写入年利用小时数
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value = CType(Me.nyxxss_text.Text, Double)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value = Nothing
-            End If
-            If Me.nyxxss_check.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 1
             Else
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value = Nothing
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 0
             End If
             '收入
@@ -492,8 +495,7 @@ Public Class 选择单因素敏感性分析内容
             End If
             '关闭窗体
             Me.Close()
-            '————————————————————————————————————————————————————————————————————
-            '————————————————————————————————————————————————————————————————————
+            '————————————————————————————————————————————————————————————————————————————————————————————————
             Dim mainprogram As New Com技术经济分析计算程序
             '实例化计算进度显示窗体
             Dim Form1 As New 计算进度显示
@@ -504,10 +506,6 @@ Public Class 选择单因素敏感性分析内容
             '删除敏感性分析图表
             ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
             ExcelApp.ActiveChart.Parent.Delete
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '屏蔽屏幕更新
-            ExcelApp.Application.ScreenUpdating = False
             '输入敏感性分析每次的计算步长
             'Dim BHL = InputBox("请输入在进行敏感性分析计算时，每次计算的变化率百分比（%）", "请输入敏感性分析计算变化率（单位为%）", 5)
             Dim BHL = CType(Me.mgxfxbhl.Text, Double)
@@ -565,8 +563,11 @@ Public Class 选择单因素敏感性分析内容
             Call mainprogram.流动资金相关计算(ExcelApp)
             '计算回收期
             Call mainprogram.投资回收期计算(ExcelApp)
-            '重新打开屏幕更新
+            '打开事件
+            ExcelApp.Application.EnableEvents = True
+            '打开屏幕更新
             ExcelApp.Application.ScreenUpdating = True
+            '选中工作表
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate()
             '提醒计算完成
             Form1.Show()
@@ -584,10 +585,26 @@ Public Class 选择单因素敏感性分析内容
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否清空已选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
+            '解锁表格
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
             '清空Excel内已有的输入
             For i = 7 To 137 Step 5
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = Nothing
             Next
+            '清空Excel内已有的输入(年运行小时数敏感性分析内容)
+            '收入
+            For i = 13 To 25
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 30).Value = Nothing
+            Next
+            '成本
+            For i = 14 To 19
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 31).Value = Nothing
+            Next
+            For i = 21 To 25
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 31).Value = Nothing
+            Next
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 31).Value = Nothing
             '静态投资
             Me.jttz.Checked = False
             '收入
@@ -623,6 +640,20 @@ Public Class 选择单因素敏感性分析内容
             Me.mgxfxbhl.Text = Nothing
             '年利用小时数
             Me.nyxxss_text.Text = Nothing
+            '锁定表格
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
+        End If
+    End Sub
+
+    Private Sub 运行小时数敏感性分析设置_Click(sender As Object, e As EventArgs) Handles 运行小时数敏感性分析设置.Click
+        On Error Resume Next
+        If Me.nyxxss_text.Text <> Nothing And Me.nyxxss_check.Checked = True Then
+            Dim nyxxss_set As New 年运行小时数敏感性分析设置
+            nyxxss_set.Show()
+            nyxxss_set.TopMost = True
+        Else
+            MsgBox("没有勾选<项目年运行小时数敏感性分析计算>同时输入<项目年运行小时数(h/a)>，请重新设置！")
         End If
     End Sub
 End Class
