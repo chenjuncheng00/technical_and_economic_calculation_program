@@ -10,7 +10,7 @@ Public Class 进入维护模式
         Dim 技术经济分析计算程序 As New Com技术经济分析计算程序
         Dim mima As String '输入的密码
         mima = CType(Me.TextBox1.Text, String)
-        If mima = "cjc19920105" Then
+        If mima = "ZHny@1115" Then
             '解锁工作表
             Call 技术经济分析计算程序.解锁表格(ExcelApp)
             '显示工作表
