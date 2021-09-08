@@ -552,27 +552,45 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
         End If
         '————————————————————————————————————————————————————————————————————————————————————————————
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+            zbj_model = 0
+        Else
+            zbj_model = 1
+        End If
+        'hscy：计算期末，是否回收资产残值
+        Dim hscz As Boolean
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
+            hscz = False
+        Else
+            hscz = True
+        End If
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim clfl_qtfl_model As Integer = 1
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否确定设置的各个参数？", vbOKCancel)
         If XZ = vbOK Then
-            '实例化一个主计算程序
-            Dim mainprogram As New Com技术经济分析计算程序
-            '记录所得税免征年限和减少年限
-            Dim SDSMZNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value
-            Dim SDSJSNX As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value
-            '如果没有所得税减征和免除年限都是0，报错
-            If SDSMZNX > 0 Or SDSJSNX > 0 Then
-                MsgBox("所得税免征年限和所得税减少年限必须都是0，请重新输入！")
-                Exit Sub
-            End If
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            '将所得税征收比例重置回100%
-            For i = 1 To 31
-                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = 1
+            '所得税免征年限和减少年限设置为0
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 7).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 7).Value = 0
+            '将所得税征收比例设置重置回0
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 7).Value = 0
+            '逐年所得税率重置回默认值
+            For i = 3 To 33
+                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value
             Next
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '在已经设置好的项目方案中，根据选择的收入内容，记录下不进行任何所得税减免时，实际的逐年所得税，然后计算将需要计算的部分的投资和收入都去掉后，剩下的所得税，差值就是需要计算的部分的所得税，然后将这部分按比例减免           
             '记录此时的逐年所得税值（原始值）
             Dim ZNSDS_YSZ(50) As Double
@@ -691,8 +709,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                         End If
                     Next
                 Next
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年所得税金额
                 Dim ZNSDS_gf(50) As Double
@@ -734,8 +755,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第二步，仅减去风电的部分        
@@ -780,8 +804,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                         End If
                     Next
                 Next
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年所得税金额
                 Dim ZNSDS_fd(50) As Double
@@ -820,8 +847,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
@@ -1021,8 +1051,10 @@ Public Class 设置所得税减免和增值税退税包含内容
                 Next
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '记录此时的逐年所得税金额
             Dim ZNSDS_qt(50) As Double
             '前15年（1-15）
@@ -1124,11 +1156,14 @@ Public Class 设置所得税减免和增值税退税包含内容
             If Me.成本11.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————————
-            '计算此时实际的所得税征收比例
+            '计算此时实际的所得税征收金额
             Dim SDS_JS(50) As Double
             For i = 0 To 49
                 SDS_JS(i) = 0 '初始化数组，都是0
@@ -1203,8 +1238,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                 If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = 0
                 End If
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '寻找有其它收入的第一年的年份序号
                 Dim QTSRNF_No1 As Integer = 0
                 '前15年（1-15）
@@ -1232,8 +1270,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                 If Me.收入7.Checked = True Then
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value = srdj7
                 End If
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '计算逐年其它所得税减少金额
                 For i = 1 To 31
                     If i >= QTSRNF_No1 And i <= QTSRNF_No1 + qtsdsmznx - 1 Then
@@ -1245,25 +1286,43 @@ Public Class 设置所得税减免和增值税退税包含内容
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————————
-            '计算所得税逐年计算比例
+            '计算所得税逐年征收比例
+            Dim SDYZN_BL(31) As Double
             Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
             For i = 1 To 31
                 If i <= jsnx And ZNSDS_YSZ(i) > 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = (ZNSDS_YSZ(i) - SDS_JS(i)) / ZNSDS_YSZ(i)
+                    SDYZN_BL(i) = (ZNSDS_YSZ(i) - SDS_JS(i)) / ZNSDS_YSZ(i)
                 Else
-                    ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = 0
+                    SDYZN_BL(i) = 0
                 End If
             Next
             '将小于0的情况设置为0，大于1的情况下设置为1
             For i = 1 To 31
-                If ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value < 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = 0
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value > 1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = 1
+                If SDYZN_BL(i) < 0 Then
+                    SDYZN_BL(i) = 0
+                ElseIf SDYZN_BL(i) > 1 Then
+                    SDYZN_BL(i) = 1
                 End If
             Next
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '写入实际的逐年所得税金额
+            '前15年
+            For i = 1 To 15
+                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(12, i + 4).Value = ZNSDS_YSZ(i) * SDYZN_BL(i)
+            Next
+            '16-31年
+            For i = 16 To 31
+                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(32, i - 12).Value = ZNSDS_YSZ(i) * SDYZN_BL(i)
+            Next
+            '写入实际的逐年所得税率
+            For i = 3 To 33
+                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(13, 7).Value * SDYZN_BL(i - 2)
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+            '写入计算模式
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "特殊设置"
             '——————————————————————————————————————————————————————————————————————————————
             '计算一次Excel
@@ -1275,18 +1334,18 @@ Public Class 设置所得税减免和增值税退税包含内容
             Dim sdszsbl As Double '所得税征收比例
             Dim sdsl As Double '实际所得税率
             Dim nf As Integer
-            For i = 4 To 34  '根据数组中的元素数量循环
-                If i - 3 <= jsnx Then
-                    nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
-                    sdszsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value) * 100, 2) '读取所得税征收比例
+            For i = 1 To 31  '根据数组中的元素数量循环
+                If i <= jsnx Then
+                    nf = i '年份序号
+                    sdszsbl = Math.Round(SDYZN_BL(i) * 100, 2) '读取所得税征收比例
                     Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
                 End If
             Next
             Me.RichTextBox1.Text = "逐年所得税实际征收比例：" & Me.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
-            For i = 4 To 34  '根据数组中的元素数量循环
-                If i - 3 <= jsnx Then
-                    nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
-                    sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(50, i).Value) * 100, 2) '读取所得税率
+            For i = 1 To 31  '根据数组中的元素数量循环
+                If i <= jsnx Then
+                    nf = i '年份序号
+                    sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value) * 100, 2) '读取所得税率
                     Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdsl & "%(" & nf & ") " '输出到RichTextBox1
                 End If
             Next
@@ -1524,11 +1583,29 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确定设置的各个参数？", vbOKCancel)
         If XZ = vbOK Then
-            '实例化一个主计算程序
-            Dim mainprogram As New Com技术经济分析计算程序
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            'hscy：计算期末，是否回收资产残值
+            Dim hscz As Boolean
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
+                hscz = False
+            Else
+                hscz = True
+            End If
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————————
             '记录此时的逐年增值税税值（原始值）
             Dim ZZS_YSZ(50) As Double
             '前15年（1-15）
@@ -1646,8 +1723,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                         End If
                     Next
                 Next
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年增值税金额
                 Dim ZZS_gf(50) As Double
@@ -1689,8 +1769,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第二步，仅减去风电的部分        
@@ -1735,8 +1818,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                         End If
                     Next
                 Next
-                '计算一次流动资金
-                mainprogram.流动资金相关计算(ExcelApp)
+                '————————————————————————————————————————————————————————————————————————————————————————
+                '计算一次工作簿
+                ExcelApp.Calculate()
+                '计算税收相关计算
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年增值税金额
                 Dim ZZS_fd(50) As Double
@@ -1775,8 +1861,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
                 End If
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
@@ -1975,8 +2064,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     Next
                 Next
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '记录此时的逐年增值税金额
             Dim ZZS_qt(50) As Double
@@ -2079,8 +2171,11 @@ Public Class 设置所得税减免和增值税退税包含内容
             If Me.成本11.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '计算此时实际的增值税退税比例
@@ -2136,8 +2231,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                     ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(172, i + 2).Value = 1
                 End If
             Next
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '设置表格中的收入行隐藏或者显示
             '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格
@@ -2182,23 +2280,34 @@ Public Class 设置所得税减免和增值税退税包含内容
         '————————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否将所得税减免和增值税退税计算模式均重置回默认方式？", vbOKCancel)
         If XZ = vbOK Then
-            '实例化一个主计算程序
-            Dim mainprogram As New Com技术经济分析计算程序
-            '所得税减免
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
+            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            'hscy：计算期末，是否回收资产残值
+            Dim hscz As Boolean
+            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
+                hscz = False
+            Else
+                hscz = True
+            End If
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             '————————————————————————————————————————————————————————————
-            '将所得税征收比例重置回100%
-            For i = 1 To 31
-                ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i + 3).Value = 1
-            Next
+            '所得税减免
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "常规设置"
             '————————————————————————————————————————————————————————————
             '将增值税退税计算重置回默认
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
             For i = 3 To 33
                 If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(171, i).Value <= jsnx Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value
@@ -2207,9 +2316,11 @@ Public Class 设置所得税减免和增值税退税包含内容
                 End If
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(45, 18).Value = "常规设置"
-            '————————————————————————————————————————————————————————————
-            '计算一次流动资金
-            mainprogram.流动资金相关计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '计算税收相关计算
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
             '—————————————————————————————————————————————————————————————
             '设置表格中的收入行隐藏或者显示
             '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格
@@ -2225,36 +2336,22 @@ Public Class 设置所得税减免和增值税退税包含内容
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Rows(39).EntireRow.Hidden = False
             End If
             '————————————————————————————————————————————————————————————
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Protect(Password:="wscjc")
-            '————————————————————————————————————————————————————————————
             '计算一次Excel
             ExcelApp.Calculate()
             '清空已有内容
             Me.RichTextBox1.Rtf = Nothing
             Me.RichTextBox1.Clear()
             '显示所得税减免计算结果
-            Dim sdszsbl As Double '所得税征收比例
             Dim sdsl As Double '实际所得税率
             Dim nf As Integer
-            For i = 4 To 34  '根据数组中的元素数量循环
-                If i - 3 <= jsnx Then
-                    nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
-                    sdszsbl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(53, i).Value) * 100, 2) '读取所得税征收比例
-                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdszsbl & "%(" & nf & ") "  '输出到RichTextBox1
-                End If
-            Next
-            Me.RichTextBox1.Text = "逐年所得税实际征收比例：" & Me.RichTextBox1.Text & vbCrLf & "逐年实际所得税率："
-            For i = 4 To 34  '根据数组中的元素数量循环
-                If i - 3 <= jsnx Then
-                    nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value '年份序号
-                    sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(50, i).Value) * 100, 2) '读取所得税率
+            For i = 3 To 33  '根据数组中的元素数量循环
+                If i - 2 <= jsnx Then
+                    nf = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(48, i).Value '年份序号
+                    sdsl = Math.Round((ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(49, i).Value) * 100, 2) '读取所得税率
                     Me.RichTextBox1.Text = Me.RichTextBox1.Text & sdsl & "%(" & nf & ") "  '输出到RichTextBox1
                 End If
             Next
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & vbCrLf & "逐年增值税退税比例："
+            Me.RichTextBox1.Text = "逐年实际所得税率：" & Me.RichTextBox1.Text & vbCrLf & "逐年增值税退税比例："
             '显示增值税退税计算结果
             Dim zzstsbl As Double '增值税退税比例
             For i = 3 To 33  '根据数组中的元素数量循环

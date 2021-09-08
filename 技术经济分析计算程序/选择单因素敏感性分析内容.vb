@@ -335,15 +335,6 @@ Public Class 选择单因素敏感性分析内容
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '屏蔽屏幕更新
-            ExcelApp.Application.ScreenUpdating = False
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
-            '————————————————————————————————————————————————————————————————————
             '隐藏窗体
             Me.Hide()
             '清空Excel内已有的输入
@@ -496,7 +487,6 @@ Public Class 选择单因素敏感性分析内容
             '关闭窗体
             Me.Close()
             '————————————————————————————————————————————————————————————————————————————————————————————————
-            Dim mainprogram As New Com技术经济分析计算程序
             '实例化计算进度显示窗体
             Dim Form1 As New 计算进度显示
             '清空已有的敏感性分析计算数据
@@ -507,7 +497,6 @@ Public Class 选择单因素敏感性分析内容
             ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
             ExcelApp.ActiveChart.Parent.Delete
             '输入敏感性分析每次的计算步长
-            'Dim BHL = InputBox("请输入在进行敏感性分析计算时，每次计算的变化率百分比（%）", "请输入敏感性分析计算变化率（单位为%）", 5)
             Dim BHL = CType(Me.mgxfxbhl.Text, Double)
             Dim MGXFXBHL As Double = BHL / 100 '敏感性分析变化率
             '判断输入的变化率是否为整数
@@ -519,14 +508,12 @@ Public Class 选择单因素敏感性分析内容
             If BHL * 2 = Int(BHL * 2) Then
                 ZSJC2 = 1
             End If
-            '手动计算，关闭excel的自动计算,提高计算速度
-            ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
             '将敏感性分析变化率写入表格中
             For i = 7 To 137 Step 5
                 For j = 1 To 5
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).Value = MGXFXBHL * j - 3 * MGXFXBHL '从小往大排列
                     If j = 2 Or j = 4 Then '变化率的1倍
-                        If ZSJC1 = 1 Then '一倍是整数
+                        If ZSJC1 = 1 Then '1倍是整数
                             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0%"
                         Else
                             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0.0%"
@@ -541,32 +528,16 @@ Public Class 选择单因素敏感性分析内容
                     End If
                 Next
             Next
-            '重新打开excel自动计算
-            ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
             '敏感性计算
-            Call mainprogram.静态投资敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call mainprogram.收入敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call mainprogram.成本敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call mainprogram.年运行小时数敏感性分析(ExcelApp, MGXFXBHL)
+            Call 静态投资敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call 收入敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call 成本敏感性分析计算(ExcelApp, MGXFXBHL)
+            Call 年运行小时数敏感性分析(ExcelApp, MGXFXBHL)
             '绘制敏感性分析图并设置格式
             If Me.hzzxt.Checked = True Then
-                Call mainprogram.绘制单因素敏感性分析图(ExcelApp)
-                Call mainprogram.设置敏感性分析图格式(ExcelApp)
+                Call 绘制单因素敏感性分析图(ExcelApp)
+                Call 设置敏感性分析图格式(ExcelApp)
             End If
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
-            '打开事件
-            ExcelApp.Application.EnableEvents = True
-            '计算流动资金
-            Call mainprogram.流动资金相关计算(ExcelApp)
-            '计算回收期
-            Call mainprogram.投资回收期计算(ExcelApp)
-            '打开事件
-            ExcelApp.Application.EnableEvents = True
-            '打开屏幕更新
-            ExcelApp.Application.ScreenUpdating = True
             '选中工作表
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate()
             '提醒计算完成
@@ -585,9 +556,6 @@ Public Class 选择单因素敏感性分析内容
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否清空已选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
             '清空Excel内已有的输入
             For i = 7 To 137 Step 5
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = Nothing
@@ -640,9 +608,6 @@ Public Class 选择单因素敏感性分析内容
             Me.mgxfxbhl.Text = Nothing
             '年利用小时数
             Me.nyxxss_text.Text = Nothing
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
         End If
     End Sub
 

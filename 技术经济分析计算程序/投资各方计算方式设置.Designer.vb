@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 投资各方设置不同的出资比例资产处置比例和利润分配比例
+Partial Class 投资各方计算方式设置
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。

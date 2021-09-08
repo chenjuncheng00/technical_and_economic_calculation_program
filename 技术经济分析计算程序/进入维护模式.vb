@@ -12,7 +12,7 @@ Public Class 进入维护模式
         mima = CType(Me.TextBox1.Text, String)
         If mima = "ZHny@1115" Then
             '解锁工作表
-            Call 技术经济分析计算程序.解锁表格(ExcelApp)
+            Call 解锁表格(ExcelApp)
             '显示工作表
             ExcelApp.Worksheets("投资方1现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
             ExcelApp.Worksheets("投资方2现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
@@ -33,7 +33,7 @@ Public Class 进入维护模式
             MsgBox("密码错误，请重新输入！")
             Me.Close()
             '锁定表格
-            Call 技术经济分析计算程序.锁定表格(ExcelApp)
+            Call 锁定表格(ExcelApp)
             '保存表格的改动
             ExcelApp.Application.DisplayAlerts = False
             ExcelApp.ThisWorkbook.Save()

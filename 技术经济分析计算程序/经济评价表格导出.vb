@@ -21,7 +21,7 @@ Public Class 经济评价表格导出
         If Wordname = Nothing Then
             '清除全部表格的批注
             If Me.Checkbox1.Checked = True Then
-                Call mainprogram.解锁表格(ExcelApp)
+                Call 解锁表格(ExcelApp)
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells.Select
                 ExcelApp.Selection.ClearComments
@@ -76,7 +76,7 @@ Public Class 经济评价表格导出
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells.Select
                 ExcelApp.Selection.ClearComments
-                Call mainprogram.锁定表格(ExcelApp)
+                Call 锁定表格(ExcelApp)
                 '激活表格
                 ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate
             End If
@@ -591,7 +591,6 @@ Public Class 经济评价表格导出
                 '————————————————————————————————————————————————————————————————————————————————————————
                 '导出财务分析指标数据一览表
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc") '解锁表格
                 '财务评价指标一览表
                 '根据投资方数量复制不同的范围
                 If TZFJS = 1 Then
@@ -646,7 +645,6 @@ Public Class 经济评价表格导出
             If Me.CheckBox3.Checked = True Then
                 '指标数据表
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc") '解锁表格
                 '敏感性分析表格
                 '年运行小时数黄底色去除
                 If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8) > 0 Then
@@ -690,7 +688,6 @@ Public Class 经济评价表格导出
             If Me.CheckBox4.Checked = True Then
                 '指标数据表
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Activate '表格激活
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").unProtect(Password:="wscjc") '解锁表格
                 '复制盈亏平衡分析表（根据选择的模式自动选择）
                 If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(62, 4).Value = "总成本最大年份" Then
                     '从Excel中复制
@@ -719,7 +716,6 @@ Public Class 经济评价表格导出
                 '激活表格
                 ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate
             End If
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").Protect(Password:="wscjc") '锁定表格
             '————————————————————————————————————————————————————————————————————————————————————————
             '将导出的表格居中
             WordDoc.Selection.WholeStory '全选

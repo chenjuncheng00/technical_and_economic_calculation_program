@@ -7,10 +7,10 @@ Imports System.Runtime.InteropServices
 '查看程序集特性的值
 <Assembly: AssemblyTitle("技术经济分析计算程序")>
 <Assembly: AssemblyDescription("技术经济分析计算程序")>
-<Assembly: AssemblyCompany("上海发电设备成套设计研究院")>
+<Assembly: AssemblyCompany("ChenJuncheng")>
 <Assembly: AssemblyProduct("技术经济分析计算程序")>
 <Assembly: AssemblyCopyright("Copyright © 陈俊丞 SINCE 2016")>
-<Assembly: AssemblyTrademark("SPERI")>
+<Assembly: AssemblyTrademark("ChenJuncheng")>
 <Assembly: ComVisible(True)>
 '如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 <Assembly: Guid("cd5ec300-13cd-4199-8b3f-8d78a7ffd686")>
@@ -24,5 +24,5 @@ Imports System.Runtime.InteropServices
 '可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 ' 方法是按如下所示使用“*”: :
 ' <Assembly: AssemblyVersion("1.0.*")> 
-<Assembly: AssemblyVersion("5.8.8.0")>
-<Assembly: AssemblyFileVersion("5.8.8.0")>
+<Assembly: AssemblyVersion("5.9.0.0")>
+<Assembly: AssemblyFileVersion("5.9.0.0")>

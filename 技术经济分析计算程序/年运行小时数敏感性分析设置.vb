@@ -175,13 +175,6 @@ Public Class 年运行小时数敏感性分析设置
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否清空已选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '屏蔽屏幕更新
-            ExcelApp.Application.ScreenUpdating = False
-            '————————————————————————————————————————————————————————————————————
             '清空Excel内已有的输入
             '收入
             For i = 13 To 25
@@ -223,12 +216,6 @@ Public Class 年运行小时数敏感性分析设置
             Me.cb10.Checked = False
             Me.cb11.Checked = False
             Me.cb12.Checked = False
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-            '打开事件
-            ExcelApp.Application.EnableEvents = True
-            '打开屏幕更新
-            ExcelApp.Application.ScreenUpdating = True
         End If
     End Sub
 
@@ -240,13 +227,6 @@ Public Class 年运行小时数敏感性分析设置
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            '屏蔽事件
-            ExcelApp.Application.EnableEvents = False
-            '屏蔽屏幕更新
-            ExcelApp.Application.ScreenUpdating = False
-            '————————————————————————————————————————————————————————————————————
             '清空Excel内已有的输入
             '收入
             For i = 13 To 25
@@ -394,13 +374,6 @@ Public Class 年运行小时数敏感性分析设置
             '————————————————————————————————————————————————————————————————————
             '关闭窗体
             Me.Close()
-            '————————————————————————————————————————————————————————————————————
-            '锁定表格
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
-            '打开事件
-            ExcelApp.Application.EnableEvents = True
-            '打开屏幕更新
-            ExcelApp.Application.ScreenUpdating = True
         End If
     End Sub
 End Class

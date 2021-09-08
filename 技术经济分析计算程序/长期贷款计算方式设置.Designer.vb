@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 每次投资设置不同的长期贷款还款和宽限年限
+Partial Class 长期贷款计算方式设置
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。

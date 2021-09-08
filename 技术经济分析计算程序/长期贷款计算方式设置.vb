@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 
-Public Class 每次投资设置不同的长期贷款还款和宽限年限
+Public Class 长期贷款计算方式设置
     Private Sub 每次投资设置不同的长期贷款还款和宽限年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
@@ -223,6 +223,12 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
+        '长期贷款计算方法需要采用方法三或者方法四
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
+            MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
+            Exit Sub
+        End If
+        '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '长期贷款还款年限
         Dim cqdkhknx1 = CType(Me.cqdkhknx1.Text, Integer)
@@ -251,9 +257,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         If XZ = vbOK Then
             '读取项目总的计算年限
             Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
             '将已有的数据清零
             For i = 23 To 32
                 '长期贷款还款年限
@@ -280,21 +283,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(23, 39).Value = cqdkhknx1
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(34, 39).Value = kxnx1
-                    '第1次投资发生后，长期贷款计算系数，默认第一次投资发生在第一年且不可以修改
-                    For i = 3 To 17
-                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(127, i).Value <= cqdkhknx1 + 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(127, i).Value > 1 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(128, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(128, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(130, i).Value <= cqdkhknx1 + 1 And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(130, i).Value > 1 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(131, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(131, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第2次投资
@@ -313,21 +301,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(24, 39).Value = cqdkhknx2
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(35, 39).Value = kxnx2
-                    '第2次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(207, i).Value <= (cqdkhknx2 + tznf2)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(207, i).Value > tznf2 And tznf2 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(208, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(208, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(210, i).Value <= (cqdkhknx2 + tznf2)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(210, i).Value > tznf2 And tznf2 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(211, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(211, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第3次投资
@@ -346,21 +319,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 39).Value = cqdkhknx3
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 39).Value = kxnx3
-                    '第3次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(215, i).Value <= (cqdkhknx3 + tznf3)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(215, i).Value > tznf3 And tznf3 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(216, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(216, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(218, i).Value <= (cqdkhknx3 + tznf3)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(218, i).Value > tznf3 And tznf3 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(219, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(219, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第4次投资
@@ -379,21 +337,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(26, 39).Value = cqdkhknx4
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, 39).Value = kxnx4
-                    '第4次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(223, i).Value <= (cqdkhknx4 + tznf4)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(223, i).Value > tznf4 And tznf4 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(224, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(224, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(226, i).Value <= (cqdkhknx4 + tznf4)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(226, i).Value > tznf4 And tznf4 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(227, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(227, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第5次投资
@@ -412,21 +355,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(27, 39).Value = cqdkhknx5
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, 39).Value = kxnx5
-                    '第5次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(231, i).Value <= (cqdkhknx5 + tznf5)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(231, i).Value > tznf5 And tznf5 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(232, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(232, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(234, i).Value <= (cqdkhknx5 + tznf5)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(234, i).Value > tznf5 And tznf5 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(235, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(235, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第6次投资
@@ -445,21 +373,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(28, 39).Value = cqdkhknx6
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, 39).Value = kxnx6
-                    '第6次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(319, i).Value <= (cqdkhknx6 + tznf6)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(319, i).Value > tznf6 And tznf6 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(320, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(320, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(322, i).Value <= (cqdkhknx6 + tznf6)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(322, i).Value > tznf6 And tznf6 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(323, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(323, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第7次投资
@@ -478,21 +391,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(29, 39).Value = cqdkhknx7
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, 39).Value = kxnx7
-                    '第7次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(327, i).Value <= (cqdkhknx7 + tznf7)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(327, i).Value > tznf7 And tznf7 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(328, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(328, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(330, i).Value <= (cqdkhknx7 + tznf7)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(330, i).Value > tznf7 And tznf7 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(331, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(331, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第8次投资
@@ -511,21 +409,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(30, 39).Value = cqdkhknx8
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, 39).Value = kxnx8
-                    '第8次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(335, i).Value <= (cqdkhknx8 + tznf8)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(335, i).Value > tznf8 And tznf8 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(336, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(336, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(338, i).Value <= (cqdkhknx8 + tznf8)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(338, i).Value > tznf8 And tznf8 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(339, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(339, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第9次投资
@@ -544,21 +427,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(31, 39).Value = cqdkhknx9
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(42, 39).Value = kxnx9
-                    '第9次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(343, i).Value <= (cqdkhknx9 + tznf9)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(343, i).Value > tznf9 And tznf9 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(344, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(344, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(346, i).Value <= (cqdkhknx9 + tznf9)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(346, i).Value > tznf9 And tznf9 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(347, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(347, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
             '第10次投资
@@ -577,102 +445,20 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                     '写入数据
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(32, 39).Value = cqdkhknx10
                     ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(43, 39).Value = kxnx10
-                    '第10次投资发生后，长期贷款计算系数
-                    For i = 3 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(351, i).Value <= (cqdkhknx10 + tznf10)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(351, i).Value > tznf10 And tznf10 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(352, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(352, i).Value = 0
-                        End If
-                    Next
-                    For i = 2 To 17
-                        If (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(354, i).Value <= (cqdkhknx10 + tznf10)) And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(354, i).Value > tznf10 And tznf10 <> 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(355, i).Value = 1
-                        Else
-                            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(355, i).Value = 0
-                        End If
-                    Next
                 End If
             End If
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            '计算长期贷款
+            Call 长期贷款相关计算(ExcelApp, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            '每次贷款已经发生的年份数，和剩余的贷款年份数计算
-            Dim JS1 As Integer = 0
-            For i = 100 To 600 '遍历借款还本付息计划表的行号
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 52).Value = 8888 Then '贷款已经发生的年份数，标签是8888
-                    For j = 28 To 71 Step 43 '估算表行号
-                        For k = 3 To 11 Step 2 '估算表列号
-                            JS1 = JS1 + 1
-                            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value > 0 Then
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    If (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) >= ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS1, 39).Value And (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) <= （ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(22 + JS1, 39).Value + ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS1, 39).Value - 1） Then
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS1, l).Value = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value - （ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS1, 39).Value - 1）
-                                    Else
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS1, l).Value = 0
-                                    End If
-                                Next
-                            Else
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS1, l).Value = 0
-                                Next
-                            End If
-                        Next
-                    Next
-                End If
-            Next
-            Dim JS2 As Integer = 0
-            For i = 100 To 600 '遍历借款还本付息计划表的行号
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 53).Value = 9999 Then '贷款剩余的年份数，标签是9999
-                    For j = 28 To 71 Step 43 '估算表行号
-                        For k = 3 To 11 Step 2 '估算表列号
-                            JS2 = JS2 + 1
-                            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value > 0 Then
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    If (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) >= ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS2, 39).Value And (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) <= （ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(22 + JS2, 39).Value + ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS2, 39).Value - 1） Then
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS2, l).Value = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(22 + JS2, 39).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value - ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value + ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS2, 39).Value
-                                    Else
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS2, l).Value = 0
-                                    End If
-                                Next
-                            Else
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS2, l).Value = 0
-                                Next
-                            End If
-                        Next
-                    Next
-                End If
-            Next
-            '判断是否处于贷款宽限期
-            Dim JS3 As Integer = 0
-            For i = 100 To 600 '遍历借款还本付息计划表的行号
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 7777 Then '标签是7777
-                    For j = 28 To 71 Step 43 '估算表行号
-                        For k = 3 To 11 Step 2 '估算表列号
-                            JS3 = JS3 + 1
-                            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value > 0 Then
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    If (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) >= 0 And (ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, l).Value - ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, k).Value) <= （ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(33 + JS3, 39).Value - 1） Then
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS3, l).Value = 1 '处于宽限期就赋值为1
-                                    Else
-                                        ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS3, l).Value = 0
-                                    End If
-                                Next
-                            Else
-                                For l = 3 To 33 '借款还本付息计划表列号
-                                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + JS3, l).Value = 0
-                                Next
-                            End If
-                        Next
-                    Next
-                End If
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 7).Value = "不相同"
-            MsgBox("每次投资设置不同的长期贷款还款和宽限年限完成，请选择计算方法三或者方法四！")
-            Me.Close()
         End If
+        Me.Close()
     End Sub
 
     Private Sub 重置回默认方式_Click(sender As Object, e As EventArgs) Handles 重置回默认方式.Click
@@ -684,9 +470,6 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否将逐次投资的长期贷款还款年限和宽限年限重置回默认值？？", vbOKCancel)
         If XZ = vbOK Then
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").unProtect(Password:="wscjc")
             '写入各种系数默认值
             For i = 23 To 32
                 '长期贷款还款年限
@@ -697,24 +480,17 @@ Public Class 每次投资设置不同的长期贷款还款和宽限年限
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
             Next
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 7).Value = "相同"
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            '计算长期贷款
+            Call 长期贷款相关计算(ExcelApp, sdsl_model)
+            '————————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("设置完成，每次投资的固定资产折旧和无形资产摊销计算系数就均相同！")
         End If
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
-        Dim mainprogram As New Com技术经济分析计算程序
-        '长期贷款还款年数改变后改变的计算用系数
-        Call mainprogram.长期贷款计算年限变化后改变相关系数(ExcelApp)
-        '————————————————————————————————————————————————————————————————————————————————————————————
-        '计算一次Excel
-        ExcelApp.Calculate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '计算流动资金
-        Call mainprogram.流动资金相关计算(ExcelApp)
-        '重新计算投资回收期
-        Call mainprogram.投资回收期计算(ExcelApp)
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
         Me.Close()
     End Sub
 End Class

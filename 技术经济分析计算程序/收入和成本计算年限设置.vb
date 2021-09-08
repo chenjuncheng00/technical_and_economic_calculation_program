@@ -1,4 +1,4 @@
-﻿Public Class 设置部分销售收入和经营成本计算年限
+﻿Public Class 收入和成本计算年限设置
     Private Sub 设置部分销售收入和经营成本计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
@@ -95,9 +95,6 @@
             MsgBox("充电桩收入计算设置，不可以同时勾选两种计算模式，请重新选择！")
             Exit Sub
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值    
@@ -159,6 +156,12 @@
         End If
         '计算一次Excel
         ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
@@ -221,9 +224,6 @@
         If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
@@ -258,6 +258,12 @@
         End If
         '计算一次Excel
         ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
@@ -320,9 +326,6 @@
         If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
@@ -357,6 +360,12 @@
         End If
         '计算一次Excel
         ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
@@ -419,9 +428,6 @@
         If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
@@ -457,6 +463,12 @@
         End If
         '计算一次Excel
         ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
@@ -474,7 +486,7 @@
         Me.RichTextBox1.Text = cbbq2 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
 
-    Private Sub 常规设备修理费_Click(sender As Object, e As EventArgs) Handles 常规设备修理费.Click
+    Private Sub 设备修理费_Click(sender As Object, e As EventArgs) Handles 设备修理费.Click
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
@@ -519,9 +531,6 @@
         If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
             MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
@@ -539,6 +548,24 @@
         Next
         '计算一次Excel
         ExcelApp.Calculate()
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '修改逐年设备修理费
+        '前15年
+        For i = 1 To 15
+            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value * ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(148, i + 2).Value
+        Next
+        '16—31年
+        For i = 16 To 31
+            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value * ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(148, i + 2).Value
+        Next
+        '计算一次Excel
+        ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
@@ -552,7 +579,7 @@
                 Me.RichTextBox1.Text = Me.RichTextBox1.Text & cbbl3 & "%(" & nf & ") " '输出到RichTextBox1
             End If
         Next
-        Me.RichTextBox1.Text = "常规设备修理费计算年份(显示100%的年份表示有常规设备修理费，显示0%的表示没有常规设备修理费)：" & Me.RichTextBox1.Text
+        Me.RichTextBox1.Text = "设备修理费计算年份(显示100%的年份表示有设备修理费，显示0%的表示没有设备修理费)：" & Me.RichTextBox1.Text
     End Sub
 
     Private Sub 人员工资_Click(sender As Object, e As EventArgs) Handles 人员工资.Click
@@ -605,9 +632,6 @@
             MsgBox("人员工资计算设置，不可以同时勾选两种计算模式，请重新选择！")
             Exit Sub
         End If
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
@@ -653,6 +677,12 @@
         End If
         '计算一次Excel
         ExcelApp.Calculate()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()

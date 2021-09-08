@@ -118,64 +118,62 @@
                 Exit Sub
             End If
             '————————————————————————————————————————————————————————————————————————————————————————        
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-            '————————————————————————————————————————————————————————————————————————————————————————        
             Me.RichTextBox1.Clear()
             For i = 3 To 33 '清空已有的负荷率，防止出错
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value = 0
             Next
+            '光伏发电的基础负荷率
+            Dim fhl_base_gf(31) As Double
             '输入了5种不同的衰减系数
             If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
                 Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
                 Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 1
+                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                    If i >= ksnf And i < SJKSNF1 Then
+                        fhl_base_gf(i) = 1
                     End If
                 Next
-                For i = 3 To 33 '收入税收表的列，第1种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF2 Then
+                For i = 1 To 31 '收入税收表的列，第1种衰减率
+                    If i >= SJKSNF1 And i < SJKSNF2 Then
                         JS1 = JS1 + 1
                         YJSJ1 = SJL1 * JS1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1) / 100
                     End If
                 Next
                 Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
                 Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第2种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF3 Then
+                For i = 1 To 31 '收入税收表的列，第2种衰减率
+                    If i >= SJKSNF2 And i < SJKSNF3 Then
                         JS2 = JS2 + 1
                         YJSJ2 = SJL2 * JS2
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
                     End If
                 Next
                 Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
                 Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第3种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF4 Then
+                For i = 1 To 31 '收入税收表的列，第3种衰减率
+                    If i >= SJKSNF3 And i < SJKSNF4 Then
                         JS3 = JS3 + 1
                         YJSJ3 = SJL3 * JS3
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                     End If
                 Next
                 Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
                 Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第4种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF5 Then
+                For i = 1 To 31 '收入税收表的列，第4种衰减率
+                    If i >= SJKSNF4 And i < SJKSNF5 Then
                         JS4 = JS4 + 1
                         YJSJ4 = SJL4 * JS4
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                     End If
                 Next
                 Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
                 Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第4种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF5 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value <= jsnx Then
+                For i = 1 To 31 '收入税收表的列，第4种衰减率
+                    If i >= SJKSNF5 And i <= jsnx Then
                         JS5 = JS5 + 1
                         YJSJ5 = SJL5 * JS5
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
                     End If
                 Next
             End If
@@ -183,43 +181,43 @@
             If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
                 Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
                 Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 1
+                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                    If i >= ksnf And i < SJKSNF1 Then
+                        fhl_base_gf(i) = 1
                     End If
                 Next
-                For i = 3 To 33 '收入税收表的列，第1种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF2 Then
+                For i = 1 To 31 '收入税收表的列，第1种衰减率
+                    If i >= SJKSNF1 And i < SJKSNF2 Then
                         JS1 = JS1 + 1
                         YJSJ1 = SJL1 * JS1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1) / 100
                     End If
                 Next
                 Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
                 Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第2种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF3 Then
+                For i = 1 To 31 '收入税收表的列，第2种衰减率
+                    If i >= SJKSNF2 And i < SJKSNF3 Then
                         JS2 = JS2 + 1
                         YJSJ2 = SJL2 * JS2
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
                     End If
                 Next
                 Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
                 Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第3种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF4 Then
+                For i = 1 To 31 '收入税收表的列，第3种衰减率
+                    If i >= SJKSNF3 And i < SJKSNF4 Then
                         JS3 = JS3 + 1
                         YJSJ3 = SJL3 * JS3
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                     End If
                 Next
                 Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
                 Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第4种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value <= jsnx Then
+                For i = 1 To 31 '收入税收表的列，第4种衰减率
+                    If i >= SJKSNF4 And i <= jsnx Then
                         JS4 = JS4 + 1
                         YJSJ4 = SJL4 * JS4
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                     End If
                 Next
             End If
@@ -227,34 +225,34 @@
             If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
                 Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
                 Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 1
+                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                    If i >= ksnf And i < SJKSNF1 Then
+                        fhl_base_gf(i) = 1
                     End If
                 Next
-                For i = 3 To 33 '收入税收表的列，第1种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF2 Then
+                For i = 1 To 31 '收入税收表的列，第1种衰减率
+                    If i >= SJKSNF1 And i < SJKSNF2 Then
                         JS1 = JS1 + 1
                         YJSJ1 = SJL1 * JS1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1) / 100
                     End If
                 Next
                 Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
                 Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第2种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF3 Then
+                For i = 1 To 31 '收入税收表的列，第2种衰减率
+                    If i >= SJKSNF2 And i < SJKSNF3 Then
                         JS2 = JS2 + 1
                         YJSJ2 = SJL2 * JS2
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
                     End If
                 Next
                 Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
                 Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第2种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value <= jsnx Then
+                For i = 1 To 31 '收入税收表的列，第2种衰减率
+                    If i >= SJKSNF3 And i <= jsnx Then
                         JS3 = JS3 + 1
                         YJSJ3 = SJL3 * JS3
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                     End If
                 Next
             End If
@@ -262,25 +260,25 @@
             If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
                 Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
                 Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 1
+                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                    If i >= ksnf And i < SJKSNF1 Then
+                        fhl_base_gf(i) = 1
                     End If
                 Next
-                For i = 3 To 33 '收入税收表的列，第1种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF2 Then
+                For i = 1 To 31 '收入税收表的列，第1种衰减率
+                    If i >= SJKSNF1 And i < SJKSNF2 Then
                         JS1 = JS1 + 1
                         YJSJ1 = SJL1 * JS1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1) / 100
                     End If
                 Next
                 Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
                 Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '收入税收表的列，第2种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value <= jsnx Then
+                For i = 1 To 31 '收入税收表的列，第2种衰减率
+                    If i >= SJKSNF2 And i <= jsnx Then
                         JS2 = JS2 + 1
                         YJSJ2 = SJL2 * JS2
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
                     End If
                 Next
             End If
@@ -288,77 +286,54 @@
             If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
                 Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
                 Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value < SJKSNF1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 1
+                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                    If i >= ksnf And i < SJKSNF1 Then
+                        fhl_base_gf(i) = 1
                     End If
                 Next
-                For i = 3 To 33 '收入税收表的列，第1种衰减率
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value <= jsnx Then
+                For i = 1 To 31 '收入税收表的列，第1种衰减率
+                    If i >= SJKSNF1 And i <= jsnx Then
                         JS1 = JS1 + 1
                         YJSJ1 = SJL1 * JS1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = (100 - YJSJ1) / 100
+                        fhl_base_gf(i) = (100 - YJSJ1) / 100
                     End If
                 Next
             End If
             '将大于计算年限的负荷率设置为0
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value > jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, i).Value = 0
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i > jsnx Then
+                    fhl_base_gf(i) = 0
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.Calculate()
-            '计算光伏逐年装机量累加值
-            Dim js As Integer = 0
-            '按照逐年投产月份数量比例计算
+            '光伏逐年衰减系数计算方式
+            Dim tcyfzs As Boolean
             If Me.CheckBox1.Checked = True Then
-                For i = 109 To 139 '行号
-                    js = js + 1
-                    For j = 3 + js - 1 To 33 '列号
-                        If j <= 33 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(i, j).Value = (ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, j).Value / 12) * ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, js + 2).Value * ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, j - js + 1).Value
-                        End If
-                    Next
-                Next
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(46, 18).Value = "逐年投产月份比例"
+                tcyfzs = True
             Else
-                For i = 109 To 139 '行号
-                    js = js + 1
-                    For j = 3 + js - 1 To 33 '列号
-                        If j <= 33 Then
-                            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(i, j).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, js + 2).Value * ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, j - js + 1).Value
-                        End If
-                    Next
-                Next
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(46, 18).Value = "常规设置"
+                tcyfzs = False
             End If
             '————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.Calculate()
-            '计算光伏发电逐年负荷系数，将超过计算年限的计算结果归零
-            Dim gfzjzl = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 34).Value '读取光伏装机总量
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(99, i).Value <= jsnx Then '年份小于等于总的计算年限
-                    If gfzjzl > 0 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(140, i).Value / gfzjzl
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value = 0
-                    End If
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value = 0 '超过计算年限的系数归零
-                End If
-            Next
+            '计算光伏发电逐年综合系数
+            Call 光伏逐年综合达产率计算(ExcelApp, fhl_base_gf, tcyfzs)
             '————————————————————————————————————————————————————————————————————————————————————————
-            '计算一次Excle
-            ExcelApp.Calculate()
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            '收入和成本变化后相关计算
+            Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+            '———————————————————————————————————————————————————————————————————————————————————————— 
             '清空已有内容
             Me.RichTextBox1.Rtf = Nothing
             Me.RichTextBox1.Clear()
             '显示此时的光伏逐年负荷率
             Dim SJ As Double
             Dim nf
-            For i = 3 To 33  '根据数组中的元素数量循环
-                nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(105, i).Value '年份序号
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
                 SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value) * 100, 2) '读取综合负荷率
                 Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
             Next
@@ -526,64 +501,62 @@
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————               
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-        '————————————————————————————————————————————————————————————————————————————————————————      
         Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 0
         Next
+        '蓄电池供电的基础负荷率
+        Dim fhl_base_xdc(31) As Double
         '输入了5种不同的衰减系数
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第3种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF4 Then
+            For i = 1 To 31 '收入税收表的列，第3种衰减率
+                If i >= SJKSNF3 And i < SJKSNF4 Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
             Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
             Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF5 Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF4 And i < SJKSNF5 Then
                     JS4 = JS4 + 1
                     YJSJ4 = SJL4 * JS4
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                 End If
             Next
             Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
             Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF5 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF5 And i <= jsnx Then
                     JS5 = JS5 + 1
                     YJSJ5 = SJL5 * JS5
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
                 End If
             Next
         End If
@@ -591,43 +564,43 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第3种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF4 Then
+            For i = 1 To 31 '收入税收表的列，第3种衰减率
+                If i >= SJKSNF3 And i < SJKSNF4 Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
             Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
             Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF4 And i <= jsnx Then
                     JS4 = JS4 + 1
                     YJSJ4 = SJL4 * JS4
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                 End If
             Next
         End If
@@ -635,34 +608,34 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF3 And i <= jsnx Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
         End If
@@ -670,25 +643,25 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i <= jsnx Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
         End If
@@ -696,46 +669,57 @@
         If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i <= jsnx Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
         End If
         '将大于计算年限的负荷率设置为0
-        For i = 3 To 33 '收入税收表的列，第1种衰减率
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value > jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 0
+        For i = 1 To 31 '收入税收表的列，第1种衰减率
+            If i > jsnx Then
+                fhl_base_xdc(i) = 0
             End If
         Next
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算模式
+        Dim jsms As String = "供电"
         '是否需要根据逐年投产月份数量折算
+        Dim tcyfzs As Boolean
         If Me.CheckBox1.Checked = True Then
-            For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-            Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "逐年投产月份比例"
+            tcyfzs = True
         Else
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "常规设置"
+            tcyfzs = False
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算一次Excle
         ExcelApp.Calculate()
+        '计算逐年负荷率
+        Call 蓄电池逐年综合达产率计算(ExcelApp, fhl_base_xdc, jsms, tcyfzs)
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
         '显示此时的蓄电池逐年负荷率
         Dim SJ As Double
         Dim nf
-        For i = 3 To 33  '根据数组中的元素数量循环
-            SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value) * 100, 2)
-            nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value
+        For i = 1 To 31  '根据数组中的元素数量循环
+            SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
+            nf = i
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "蓄电池供电逐年负荷率：" & Me.RichTextBox1.Text
@@ -958,64 +942,62 @@
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————               
-        '解锁表格
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
-        '————————————————————————————————————————————————————————————————————————————————————————      
         Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 0
         Next
+        '蓄电池购电基础负荷率
+        Dim fhl_base_xdc(31) As Double
         '输入了5种不同的衰减系数
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第3种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF4 Then
+            For i = 1 To 31 '收入税收表的列，第3种衰减率
+                If i >= SJKSNF3 And i < SJKSNF4 Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
             Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
             Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF5 Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF4 And i < SJKSNF5 Then
                     JS4 = JS4 + 1
                     YJSJ4 = SJL4 * JS4
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                 End If
             Next
             Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
             Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF5 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF5 And i <= jsnx Then
                     JS5 = JS5 + 1
                     YJSJ5 = SJL5 * JS5
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
                 End If
             Next
         End If
@@ -1023,43 +1005,43 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第3种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF4 Then
+            For i = 1 To 31 '收入税收表的列，第3种衰减率
+                If i >= SJKSNF3 And i < SJKSNF4 Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
             Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
             Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第4种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第4种衰减率
+                If i >= SJKSNF4 And i <= jsnx Then
                     JS4 = JS4 + 1
                     YJSJ4 = SJL4 * JS4
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
                 End If
             Next
         End If
@@ -1067,34 +1049,34 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF3 Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i < SJKSNF3 Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
             Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
             Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF3 And i <= jsnx Then
                     JS3 = JS3 + 1
                     YJSJ3 = SJL3 * JS3
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
                 End If
             Next
         End If
@@ -1102,25 +1084,25 @@
         If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF2 Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i < SJKSNF2 Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
             Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
             Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '收入税收表的列，第2种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第2种衰减率
+                If i >= SJKSNF2 And i <= jsnx Then
                     JS2 = JS2 + 1
                     YJSJ2 = SJL2 * JS2
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1 - YJSJ2) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
                 End If
             Next
         End If
@@ -1128,46 +1110,57 @@
         If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
             Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
             Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 3 To 33 '小于第一个衰减开始年份的负荷率设置为1
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= ksnf And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value < SJKSNF1 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 1
+            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
+                If i >= ksnf And i < SJKSNF1 Then
+                    fhl_base_xdc(i) = 1
                 End If
             Next
-            For i = 3 To 33 '收入税收表的列，第1种衰减率
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value >= SJKSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value <= jsnx Then
+            For i = 1 To 31 '收入税收表的列，第1种衰减率
+                If i >= SJKSNF1 And i <= jsnx Then
                     JS1 = JS1 + 1
                     YJSJ1 = SJL1 * JS1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = (100 - YJSJ1) / 100
+                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
                 End If
             Next
         End If
         '将大于计算年限的负荷率设置为0
-        For i = 3 To 33 '收入税收表的列，第1种衰减率
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value > jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 0
+        For i = 1 To 31 '收入税收表的列，第1种衰减率
+            If i > jsnx Then
+                fhl_base_xdc(i) = 0
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '计算模式
+        Dim jsms As String = "购电"
         '是否需要根据逐年投产月份数量折算
+        Dim tcyfzs As Boolean
         If Me.CheckBox1.Checked = True Then
-            For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-            Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "逐年投产月份比例"
+            tcyfzs = True
         Else
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "常规设置"
+            tcyfzs = False
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算一次Excle
         ExcelApp.Calculate()
+        '计算逐年负荷率
+        Call 蓄电池逐年综合达产率计算(ExcelApp, fhl_base_xdc, jsms, tcyfzs)
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 1
+        '收入和成本变化后相关计算
+        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
         '显示此时的蓄电池逐年负荷率
         Dim SJ As Double
         Dim nf
-        For i = 3 To 33  '根据数组中的元素数量循环
-            SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value) * 100, 2)
-            nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(95, i).Value
+        For i = 1 To 31  '根据数组中的元素数量循环
+            SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
+            nf = i
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "蓄电池购电逐年负荷率：" & Me.RichTextBox1.Text

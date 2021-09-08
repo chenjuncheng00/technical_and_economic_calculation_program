@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
-Public Class 投资各方设置不同的出资比例资产处置比例和利润分配比例
+Public Class 投资各方计算方式设置
     Private Sub 确定参数_Click(sender As Object, e As EventArgs) Handles 确定参数.Click
         On Error Resume Next
         '定义Excel对象
@@ -81,12 +81,6 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
                 MsgBox("不能隔行收入，请检查！")
                 Exit Sub
             End If
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
             '将输入写入Excel
             '投资方1
             ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = czbl1 / 100
@@ -133,24 +127,12 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
                 ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
             End If
             '写入计算模式
-            ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "不相同"
             MsgBox("设置完成！")
         End If
         '计算一次Excel
         ExcelApp.Calculate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新计算投资回收期
-        Dim mainprogram As New Com技术经济分析计算程序
-        '计算流动资金
-        Call mainprogram.流动资金相关计算(ExcelApp)
-        '计算回收期
-        Call mainprogram.投资回收期计算(ExcelApp)
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
         Me.Close()
-
     End Sub
 
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
@@ -189,12 +171,6 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
         Dim XZ = MsgBox("是否将投资各方收益计算参数重置回默认状态？", vbOKCancel)
         If XZ = vbOK Then
             '根据在<建设期时间计划表>中输入的投资各方出资比例，将投资各方的出资比例、利润分配比例、资产处置比例设置为一样的值           
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").unProtect(Password:="wscjc")
-            ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
             '将输入写入Excel
             '投资方1
             ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(4, 38).Value = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(163, 2).Value / 100
@@ -240,22 +216,11 @@ Public Class 投资各方设置不同的出资比例资产处置比例和利润�
                 ExcelApp.Worksheets("投资方5现金流量表").Visible = Excel.XlSheetVisibility.xlSheetVisible
             End If
             '写入计算模式
-            ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").unProtect(Password:="wscjc")
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "相同"
             MsgBox("计算模式重置回默认状态设置完成！")
         End If
         '计算一次Excel
         ExcelApp.Calculate()
-        '重新打开excel自动计算
-        ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '重新计算投资回收期
-        Dim mainprogram As New Com技术经济分析计算程序
-        '计算流动资金
-        Call mainprogram.流动资金相关计算(ExcelApp)
-        '计算回收期
-        Call mainprogram.投资回收期计算(ExcelApp)
-        '重新打开屏幕更新
-        ExcelApp.Application.ScreenUpdating = True
         Me.Close()
     End Sub
 

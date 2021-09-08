@@ -130,13 +130,13 @@ Public Class 修理费率逐年变化设置
                 Exit Sub
             End If
             '————————————————————————————————————————————————————————————————————————————————————————  
-            '解锁表格
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").unProtect(Password:="wscjc")
             '清空窗体
             Me.RichTextBox1.Clear()
-            For i = 3 To 33 '清空已有的修理费率，防止出错
+            '清空已有的数据，防止出错
+            For i = 3 To 33
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
             Next
+            '————————————————————————————————————————————————————————————————————————————————————————  
             Dim ZNBHL1 As Double '输入的第1条修理费的逐年变化率
             If JSNF1 - KSNF1 = 0 Then
                 ZNBHL1 = 0
@@ -167,68 +167,70 @@ Public Class 修理费率逐年变化设置
             Else
                 ZNBHL5 = (JSNFFL5 - KSNFFL5) / (JSNF5 - KSNF5)
             End If
+            '常规设备修理费率列表
+            Dim xlfl_cg_list(31) As Double
             '计算期第一年到到KSNF1之间的年份，修理费率设置为0
             Dim js0 As Integer = 0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= 1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value < KSNF1 Then
+            For i = 1 To 31
+                If i >= 1 And i < KSNF1 Then
                     js0 = js0 + 1
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
+                    xlfl_cg_list(i) = 0
                 End If
             Next
             '计算输入的第1条逐年修理费变化率
             If KSNF1 > 0 And JSNF1 > 0 Then
                 Dim js1 As Integer = 0
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= KSNF1 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= JSNF1 Then
+                For i = 1 To 31
+                    If i >= KSNF1 And i <= JSNF1 Then
                         js1 = js1 + 1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = (KSNFFL1 + (js1 - 1) * ZNBHL1) / 100
+                        xlfl_cg_list(i) = (KSNFFL1 + (js1 - 1) * ZNBHL1) / 100
                     End If
                 Next
             End If
             '计算第2条逐年修理费变化率
             If KSNF2 > 0 And JSNF2 > 0 Then
                 Dim js2 As Integer = 0
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= KSNF2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= JSNF2 Then
+                For i = 1 To 31
+                    If i >= KSNF2 And i <= JSNF2 Then
                         js2 = js2 + 1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = (KSNFFL2 + (js2 - 1) * ZNBHL2) / 100
+                        xlfl_cg_list(i) = (KSNFFL2 + (js2 - 1) * ZNBHL2) / 100
                     End If
                 Next
             End If
             '计算第3条逐年修理费变化率
             If KSNF3 > 0 And JSNF3 > 0 Then
                 Dim js3 As Integer = 0
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= KSNF3 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= JSNF3 Then
+                For i = 1 To 31
+                    If i >= KSNF3 And i <= JSNF3 Then
                         js3 = js3 + 1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = (KSNFFL3 + (js3 - 1) * ZNBHL3) / 100
+                        xlfl_cg_list(i) = (KSNFFL3 + (js3 - 1) * ZNBHL3) / 100
                     End If
                 Next
             End If
             '计算第4条逐年修理费变化率
             If KSNF4 > 0 And JSNF4 > 0 Then
                 Dim js4 As Integer = 0
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= KSNF4 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= JSNF4 Then
+                For i = 1 To 31
+                    If i >= KSNF4 And i <= JSNF4 Then
                         js4 = js4 + 1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = (KSNFFL4 + (js4 - 1) * ZNBHL4) / 100
+                        xlfl_cg_list(i) = (KSNFFL4 + (js4 - 1) * ZNBHL4) / 100
                     End If
                 Next
             End If
             '计算第5条逐年修理费变化率
             If KSNF5 > 0 And JSNF5 > 0 Then
                 Dim js5 As Integer = 0
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value >= KSNF5 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value <= JSNF5 Then
+                For i = 1 To 31
+                    If i >= KSNF5 And i <= JSNF5 Then
                         js5 = js5 + 1
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = (KSNFFL5 + (js5 - 1) * ZNBHL5) / 100
+                        xlfl_cg_list(i) = (KSNFFL5 + (js5 - 1) * ZNBHL5) / 100
                     End If
                 Next
             End If
             '超过最大结束年份的修理费设置为0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > ZDJSNF Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
+            For i = 1 To 31
+                If i > ZDJSNF Then
+                    xlfl_cg_list(i) = 0
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
@@ -313,120 +315,134 @@ Public Class 修理费率逐年变化设置
             Dim TZLJJE_10 As Double = TZJE_1 * tzbl_1 + TZJE_2 * tzbl_2 + TZJE_3 * tzbl_3 + TZJE_4 * tzbl_4 + TZJE_5 * tzbl_5 + TZJE_6 * tzbl_6 + TZJE_7 * tzbl_7 + TZJE_8 * tzbl_8 + TZJE_9 * tzbl_9 + TZJE_10 * tzbl_10
             '将已经写入Excel的逐年修理费率读取到数组内
             Dim ZNXLFL_a(50) As Double
-            For i = 3 To 33
-                ZNXLFL_a(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value
+            For i = 1 To 31
+                ZNXLFL_a(i) = xlfl_cg_list(i)
             Next
             '根据每次投资的累计比例，将逐年修理费率进行整体折算
             '计算到的年份序号计数
             Dim NFXH As Integer = 1
             '第一次投资
             If TZNF_1 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_1 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_1 / TZJE_1
+                    If i > TZNF_1 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_1 / TZJE_1
                     End If
                 Next
             End If
             '第二次投资
             If TZNF_2 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_2 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_2 / (TZJE_1 + TZJE_2)
+                    If i > TZNF_2 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_2 / (TZJE_1 + TZJE_2)
                     End If
                 Next
             End If
             '第三次投资
             If TZNF_3 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_3 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_3 / (TZJE_1 + TZJE_2 + TZJE_3)
+                    If i > TZNF_3 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_3 / (TZJE_1 + TZJE_2 + TZJE_3)
                     End If
                 Next
             End If
             '第四次投资
             If TZNF_4 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_4 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_4 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4)
+                    If i > TZNF_4 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_4 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4)
                     End If
                 Next
             End If
             '第五次投资
             If TZNF_5 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_5 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_5 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5)
+                    If i > TZNF_5 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_5 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5)
                     End If
                 Next
             End If
             '第六次投资
             If TZNF_6 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_6 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_6 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6)
+                    If i > TZNF_6 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_6 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6)
                     End If
                 Next
             End If
             '第七次投资
             If TZNF_7 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_7 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_7 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7)
+                    If i > TZNF_7 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_7 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7)
                     End If
                 Next
             End If
             '第八次投资
             If TZNF_8 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_8 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_8 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8)
+                    If i > TZNF_8 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_8 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8)
                     End If
                 Next
             End If
             '第九次投资
             If TZNF_9 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_9 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_9 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8 + TZJE_9)
+                    If i > TZNF_9 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_9 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8 + TZJE_9)
                     End If
                 Next
             End If
             '第十次投资
             If TZNF_10 > 0 Then
-                For i = 3 To 33
+                For i = 1 To 31
                     '直接算到最后一年
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > TZNF_10 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = ZNXLFL_a(i - 2) * TZLJJE_10 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8 + TZJE_9 + TZJE_10)
+                    If i > TZNF_10 Then
+                        xlfl_cg_list(i) = ZNXLFL_a(i) * TZLJJE_10 / (TZJE_1 + TZJE_2 + TZJE_3 + TZJE_4 + TZJE_5 + TZJE_6 + TZJE_7 + TZJE_8 + TZJE_9 + TZJE_10)
                     End If
                 Next
             End If
             '超过计算年限的年份设置为0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value > jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
+            For i = 1 To 31
+                If i > jsnx Then
+                    xlfl_cg_list(i) = 0
                 End If
             Next
+            '逐年常规修理费写入Excel
+            For i = 3 To 33
+                '常规设备修理费率（%）
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = xlfl_cg_list(i - 2)
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————     
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            '修理费计算
+            Call 修理费相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————        
             '读取并显示计算出的逐年修理费率
             Dim SJ As Double
-                Dim nf
-                For i = 3 To 33  '根据数组中的元素数量循环
-                    nf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value '年份序号
-                    SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value) * 100, 2)
-                    Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-                Next
-                Me.RichTextBox1.Text = "逐年设备修理费率：" & Me.RichTextBox1.Text
-                MsgBox("修理费系数设置完成！")
-            End If
+            Dim nf
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
+                SJ = Math.Round((xlfl_cg_list(i)) * 100, 2)
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+            Next
+            Me.RichTextBox1.Text = "逐年设备修理费率：" & Me.RichTextBox1.Text
+            MsgBox("修理费系数设置完成！")
+        End If
     End Sub
 
     Private Sub 修理费率逐年变化设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -461,7 +477,7 @@ Public Class 修理费率逐年变化设置
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
-        For i = 3 To 33
+        For i = 1 To 31
             If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value > 0 Then
                 JSKSNF = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i).Value
                 Exit For

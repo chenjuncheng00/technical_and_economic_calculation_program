@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 设置部分销售收入和经营成本计算年限
+Partial Class 收入和成本计算年限设置
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -39,7 +39,7 @@ Partial Class 设置部分销售收入和经营成本计算年限
         Me.城市管廊成本 = New System.Windows.Forms.Button()
         Me.风力发电收入 = New System.Windows.Forms.Button()
         Me.充电桩收入 = New System.Windows.Forms.Button()
-        Me.常规设备修理费 = New System.Windows.Forms.Button()
+        Me.设备修理费 = New System.Windows.Forms.Button()
         Me.人员工资 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -229,17 +229,17 @@ Partial Class 设置部分销售收入和经营成本计算年限
         Me.充电桩收入.Text = "充电桩收入"
         Me.充电桩收入.UseVisualStyleBackColor = False
         '
-        '常规设备修理费
+        '设备修理费
         '
-        Me.常规设备修理费.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.常规设备修理费.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.常规设备修理费.Location = New System.Drawing.Point(57, 975)
-        Me.常规设备修理费.Margin = New System.Windows.Forms.Padding(6)
-        Me.常规设备修理费.Name = "常规设备修理费"
-        Me.常规设备修理费.Size = New System.Drawing.Size(341, 82)
-        Me.常规设备修理费.TabIndex = 93
-        Me.常规设备修理费.Text = "常规设备修理费"
-        Me.常规设备修理费.UseVisualStyleBackColor = False
+        Me.设备修理费.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.设备修理费.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.设备修理费.Location = New System.Drawing.Point(57, 975)
+        Me.设备修理费.Margin = New System.Windows.Forms.Padding(6)
+        Me.设备修理费.Name = "设备修理费"
+        Me.设备修理费.Size = New System.Drawing.Size(341, 82)
+        Me.设备修理费.TabIndex = 93
+        Me.设备修理费.Text = "设备修理费"
+        Me.设备修理费.UseVisualStyleBackColor = False
         '
         '人员工资
         '
@@ -343,7 +343,7 @@ Partial Class 设置部分销售收入和经营成本计算年限
         Me.Controls.Add(Me.人员工资递增比例)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.人员工资)
-        Me.Controls.Add(Me.常规设备修理费)
+        Me.Controls.Add(Me.设备修理费)
         Me.Controls.Add(Me.购电容量费成本)
         Me.Controls.Add(Me.城市管廊成本)
         Me.Controls.Add(Me.风力发电收入)
@@ -385,7 +385,7 @@ Partial Class 设置部分销售收入和经营成本计算年限
     Friend WithEvents 城市管廊成本 As System.Windows.Forms.Button
     Friend WithEvents 风力发电收入 As System.Windows.Forms.Button
     Friend WithEvents 充电桩收入 As System.Windows.Forms.Button
-    Friend WithEvents 常规设备修理费 As System.Windows.Forms.Button
+    Friend WithEvents 设备修理费 As System.Windows.Forms.Button
     Friend WithEvents 人员工资 As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
