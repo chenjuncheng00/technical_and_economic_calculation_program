@@ -146,7 +146,7 @@
     End Sub
     Sub 光伏逐年综合达产率计算(ExcelApp As Object, fhl_base As Array, tcyfzs As Boolean)
         On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
+        '————————————————————————————————————————————————————————————————————————————————————————       
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         'tcyfzs：逐年负荷率是否按照逐年投产月份数折算
@@ -250,11 +250,19 @@
                     If jsms = "购电" Then
                         ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, 2 + i).Value = fhl_zh_xdc(i) * tcyfs_list(i) / 12
                     End If
+                    If jsms = "供电和购电" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, 2 + i).Value = fhl_zh_xdc(i) * tcyfs_list(i) / 12
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, 2 + i).Value = fhl_zh_xdc(i) * tcyfs_list(i) / 12
+                    End If
                 Else
                     If jsms = "供电" Then
                         ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, 2 + i).Value = fhl_zh_xdc(i)
                     End If
                     If jsms = "购电" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, 2 + i).Value = fhl_zh_xdc(i)
+                    End If
+                    If jsms = "供电和购电" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, 2 + i).Value = fhl_zh_xdc(i)
                         ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, 2 + i).Value = fhl_zh_xdc(i)
                     End If
                 End If
@@ -325,15 +333,46 @@
             'i：value_list
             For j = 2 To 32 - i
                 'j：fhl_base
-                '从i+j-1年开始
+                '从i+j-2年开始
                 fhl_value_list(i + j - 2) = fhl_base(j) * value_list(i - 1)
             Next
             '累加
             For k = 1 To 31
-                ans_fhl(k) += fhl_value_list(k) / value_sum
+                If value_sum > 0 Then
+                    ans_fhl(k) += fhl_value_list(k) / value_sum
+                Else
+                    ans_fhl(k) = 0
+                End If
             Next
         Next
         '返回结果
         Return ans_fhl
+    End Function
+
+    Function 默认逐年达产率()
+        '风电逐年达产率
+        Dim fhl_fd(31) As Double
+        '光伏逐年达产率
+        Dim fhl_gf(31) As Double
+        '蓄电池逐年衰减率
+        Dim fhl_xdc(31) As Double
+        '风电
+        For i = 2 To 21 '从第二年开始
+            fhl_fd(i) = 1
+        Next
+        '光伏
+        For i = 2 To 26 '从第二年开始
+            fhl_gf(i) = 0.989 - 0.007 * i
+        Next
+        '蓄电池
+        For i = 2 To 11 '从第二年开始
+            fhl_xdc(i) = 1.02 - 0.01 * i
+        Next
+        '返回结果
+        Dim ans(2)
+        ans(0) = fhl_fd
+        ans(1) = fhl_gf
+        ans(2) = fhl_xdc
+        Return ans
     End Function
 End Module

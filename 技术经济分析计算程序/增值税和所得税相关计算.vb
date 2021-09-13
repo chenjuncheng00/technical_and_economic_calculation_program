@@ -232,7 +232,7 @@
         Return ans
     End Function
     Function 所得税减免计算_main(znsr_list As Array, ynsdse_list As Array, sdsmc_nfs As Integer,
-                               sdsjz_nfs As Integer, sdsjz_bl As Double, sdsl As Double)
+                                 sdsjz_nfs As Integer, sdsjz_bl As Double, sdsl As Double)
         'znsr_list：逐年收入金额，列表，长度31
         'ynsdse_list：逐年应纳所得税额，列表，长度31
         'sdsmc_nfs：所得税免除的年份数量

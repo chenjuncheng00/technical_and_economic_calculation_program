@@ -37,9 +37,7 @@ Partial Class 收入和成本计算年限设置
         Me.ksnf1 = New System.Windows.Forms.TextBox()
         Me.购电容量费成本 = New System.Windows.Forms.Button()
         Me.城市管廊成本 = New System.Windows.Forms.Button()
-        Me.风力发电收入 = New System.Windows.Forms.Button()
         Me.充电桩收入 = New System.Windows.Forms.Button()
-        Me.设备修理费 = New System.Windows.Forms.Button()
         Me.人员工资 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -197,25 +195,13 @@ Partial Class 收入和成本计算年限设置
         '
         Me.城市管廊成本.BackColor = System.Drawing.SystemColors.ControlLight
         Me.城市管廊成本.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.城市管廊成本.Location = New System.Drawing.Point(429, 878)
+        Me.城市管廊成本.Location = New System.Drawing.Point(430, 780)
         Me.城市管廊成本.Margin = New System.Windows.Forms.Padding(6)
         Me.城市管廊成本.Name = "城市管廊成本"
         Me.城市管廊成本.Size = New System.Drawing.Size(341, 82)
         Me.城市管廊成本.TabIndex = 91
         Me.城市管廊成本.Text = "城市管廊成本"
         Me.城市管廊成本.UseVisualStyleBackColor = False
-        '
-        '风力发电收入
-        '
-        Me.风力发电收入.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.风力发电收入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.风力发电收入.Location = New System.Drawing.Point(429, 780)
-        Me.风力发电收入.Margin = New System.Windows.Forms.Padding(6)
-        Me.风力发电收入.Name = "风力发电收入"
-        Me.风力发电收入.Size = New System.Drawing.Size(341, 82)
-        Me.风力发电收入.TabIndex = 90
-        Me.风力发电收入.Text = "风力发电收入"
-        Me.风力发电收入.UseVisualStyleBackColor = False
         '
         '充电桩收入
         '
@@ -229,23 +215,11 @@ Partial Class 收入和成本计算年限设置
         Me.充电桩收入.Text = "充电桩收入"
         Me.充电桩收入.UseVisualStyleBackColor = False
         '
-        '设备修理费
-        '
-        Me.设备修理费.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.设备修理费.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.设备修理费.Location = New System.Drawing.Point(57, 975)
-        Me.设备修理费.Margin = New System.Windows.Forms.Padding(6)
-        Me.设备修理费.Name = "设备修理费"
-        Me.设备修理费.Size = New System.Drawing.Size(341, 82)
-        Me.设备修理费.TabIndex = 93
-        Me.设备修理费.Text = "设备修理费"
-        Me.设备修理费.UseVisualStyleBackColor = False
-        '
         '人员工资
         '
         Me.人员工资.BackColor = System.Drawing.SystemColors.ControlLight
         Me.人员工资.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.人员工资.Location = New System.Drawing.Point(429, 975)
+        Me.人员工资.Location = New System.Drawing.Point(430, 878)
         Me.人员工资.Margin = New System.Windows.Forms.Padding(6)
         Me.人员工资.Name = "人员工资"
         Me.人员工资.Size = New System.Drawing.Size(341, 82)
@@ -330,11 +304,11 @@ Partial Class 收入和成本计算年限设置
         Me.CheckBox3.Text = "充电桩收入逐年计算系数是否乘以逐年负荷达产率？"
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
-        '设置部分销售收入和经营成本计算年限
+        '收入和成本计算年限设置
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(834, 1079)
+        Me.ClientSize = New System.Drawing.Size(834, 983)
         Me.Controls.Add(Me.CheckBox3)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.RichTextBox1)
@@ -343,10 +317,8 @@ Partial Class 收入和成本计算年限设置
         Me.Controls.Add(Me.人员工资递增比例)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.人员工资)
-        Me.Controls.Add(Me.设备修理费)
         Me.Controls.Add(Me.购电容量费成本)
         Me.Controls.Add(Me.城市管廊成本)
-        Me.Controls.Add(Me.风力发电收入)
         Me.Controls.Add(Me.充电桩收入)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label5)
@@ -361,7 +333,7 @@ Partial Class 收入和成本计算年限设置
         Me.Controls.Add(Me.ksnf3)
         Me.Controls.Add(Me.ksnf2)
         Me.Controls.Add(Me.ksnf1)
-        Me.Name = "设置部分销售收入和经营成本计算年限"
+        Me.Name = "收入和成本计算年限设置"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "设置部分销售收入和经营成本计算年限"
         Me.ResumeLayout(False)
@@ -383,9 +355,7 @@ Partial Class 收入和成本计算年限设置
     Friend WithEvents ksnf1 As System.Windows.Forms.TextBox
     Friend WithEvents 购电容量费成本 As System.Windows.Forms.Button
     Friend WithEvents 城市管廊成本 As System.Windows.Forms.Button
-    Friend WithEvents 风力发电收入 As System.Windows.Forms.Button
     Friend WithEvents 充电桩收入 As System.Windows.Forms.Button
-    Friend WithEvents 设备修理费 As System.Windows.Forms.Button
     Friend WithEvents 人员工资 As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label7 As System.Windows.Forms.Label

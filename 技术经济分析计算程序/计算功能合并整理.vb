@@ -26,6 +26,9 @@
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
 
+        '综合达产率计算
+
+        '————————————————————————————————————————————————————————————————————————————————————————
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
         '长期贷款计算
@@ -37,6 +40,41 @@
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model)
         '————————————————————————————————————————————————————————————————————————————————————————
+        Dim ans_fhl_base = 默认逐年达产率()
+        '风电默认逐年负荷率
+        Dim fhl_fd = ans_fhl_base(0)
+        '光伏默认逐年负荷率
+        Dim fhl_gf = ans_fhl_base(1)
+        '蓄电池默认逐年负荷率
+        Dim fhl_xdc = ans_fhl_base(2)
+        '————————————————————————————————————————————————————————————————————————————————————————       
+        '光伏逐年衰减系数
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(46, 18).Value = "逐年投产月份比例" Then
+            Dim tcyfzs_gf As Boolean = True
+            Call 光伏逐年综合达产率计算(ExcelApp, fhl_gf, tcyfzs_gf)
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(46, 18).Value = "常规设置" Then
+            Dim tcyfzs_gf As Boolean = False
+            Call 光伏逐年综合达产率计算(ExcelApp, fhl_gf, tcyfzs_gf)
+        End If
+        '—————————————————————————————————————————————————————————————————
+        '蓄电池逐年衰减系数
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "逐年投产月份比例" Then
+            Dim tcyfzs_xdc As Boolean = True
+            Call 蓄电池逐年综合达产率计算(ExcelApp, fhl_xdc, "供电和购电", tcyfzs_xdc)
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(47, 18).Value = "常规设置" Then
+            Dim tcyfzs_xdc As Boolean = False
+            Call 蓄电池逐年综合达产率计算(ExcelApp, fhl_xdc, "供电和购电", tcyfzs_xdc)
+        End If
+        '—————————————————————————————————————————————————————————————————
+        '风力发电逐年系数	
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(48, 18).Value = "逐年投产月份比例" Then
+            Dim tcyfzs_fd As Boolean = True
+            Call 风电逐年综合达产率计算(ExcelApp, fhl_fd, tcyfzs_fd)
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(48, 18).Value = "常规设置" Then
+            Dim tcyfzs_fd As Boolean = False
+            Call 风电逐年综合达产率计算(ExcelApp, fhl_fd, tcyfzs_fd)
+        End If
+        '—————————————————————————————————————————————————————————————————
         '计算材料费和其它费
         Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
