@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class 选择单因素敏感性分析内容
+Partial Class 设置单因素敏感性计算内容
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -70,7 +70,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.开始计算.BackColor = System.Drawing.SystemColors.ControlLight
         Me.开始计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.开始计算.Location = New System.Drawing.Point(73, 1080)
-        Me.开始计算.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.开始计算.Margin = New System.Windows.Forms.Padding(6)
         Me.开始计算.Name = "开始计算"
         Me.开始计算.Size = New System.Drawing.Size(246, 108)
         Me.开始计算.TabIndex = 133
@@ -82,7 +82,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.jttz.AutoSize = True
         Me.jttz.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.jttz.Location = New System.Drawing.Point(74, 858)
-        Me.jttz.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.jttz.Margin = New System.Windows.Forms.Padding(6)
         Me.jttz.Name = "jttz"
         Me.jttz.Size = New System.Drawing.Size(408, 32)
         Me.jttz.TabIndex = 134
@@ -94,7 +94,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr1.AutoSize = True
         Me.sr1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr1.Location = New System.Drawing.Point(74, 124)
-        Me.sr1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr1.Margin = New System.Windows.Forms.Padding(6)
         Me.sr1.Name = "sr1"
         Me.sr1.Size = New System.Drawing.Size(170, 32)
         Me.sr1.TabIndex = 135
@@ -106,7 +106,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr2.AutoSize = True
         Me.sr2.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr2.Location = New System.Drawing.Point(74, 172)
-        Me.sr2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr2.Margin = New System.Windows.Forms.Padding(6)
         Me.sr2.Name = "sr2"
         Me.sr2.Size = New System.Drawing.Size(170, 32)
         Me.sr2.TabIndex = 136
@@ -118,7 +118,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr3.AutoSize = True
         Me.sr3.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr3.Location = New System.Drawing.Point(74, 220)
-        Me.sr3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr3.Margin = New System.Windows.Forms.Padding(6)
         Me.sr3.Name = "sr3"
         Me.sr3.Size = New System.Drawing.Size(170, 32)
         Me.sr3.TabIndex = 137
@@ -130,7 +130,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr4.AutoSize = True
         Me.sr4.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr4.Location = New System.Drawing.Point(74, 268)
-        Me.sr4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr4.Margin = New System.Windows.Forms.Padding(6)
         Me.sr4.Name = "sr4"
         Me.sr4.Size = New System.Drawing.Size(170, 32)
         Me.sr4.TabIndex = 138
@@ -142,7 +142,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr5.AutoSize = True
         Me.sr5.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr5.Location = New System.Drawing.Point(74, 316)
-        Me.sr5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr5.Margin = New System.Windows.Forms.Padding(6)
         Me.sr5.Name = "sr5"
         Me.sr5.Size = New System.Drawing.Size(170, 32)
         Me.sr5.TabIndex = 143
@@ -154,7 +154,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr6.AutoSize = True
         Me.sr6.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr6.Location = New System.Drawing.Point(74, 364)
-        Me.sr6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr6.Margin = New System.Windows.Forms.Padding(6)
         Me.sr6.Name = "sr6"
         Me.sr6.Size = New System.Drawing.Size(170, 32)
         Me.sr6.TabIndex = 142
@@ -166,7 +166,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr7.AutoSize = True
         Me.sr7.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr7.Location = New System.Drawing.Point(74, 412)
-        Me.sr7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr7.Margin = New System.Windows.Forms.Padding(6)
         Me.sr7.Name = "sr7"
         Me.sr7.Size = New System.Drawing.Size(170, 32)
         Me.sr7.TabIndex = 141
@@ -178,7 +178,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr8.AutoSize = True
         Me.sr8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr8.Location = New System.Drawing.Point(74, 460)
-        Me.sr8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr8.Margin = New System.Windows.Forms.Padding(6)
         Me.sr8.Name = "sr8"
         Me.sr8.Size = New System.Drawing.Size(170, 32)
         Me.sr8.TabIndex = 140
@@ -190,7 +190,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr9.AutoSize = True
         Me.sr9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr9.Location = New System.Drawing.Point(74, 508)
-        Me.sr9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr9.Margin = New System.Windows.Forms.Padding(6)
         Me.sr9.Name = "sr9"
         Me.sr9.Size = New System.Drawing.Size(184, 32)
         Me.sr9.TabIndex = 139
@@ -202,7 +202,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr10.AutoSize = True
         Me.sr10.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr10.Location = New System.Drawing.Point(74, 556)
-        Me.sr10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr10.Margin = New System.Windows.Forms.Padding(6)
         Me.sr10.Name = "sr10"
         Me.sr10.Size = New System.Drawing.Size(184, 32)
         Me.sr10.TabIndex = 153
@@ -214,7 +214,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr11.AutoSize = True
         Me.sr11.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr11.Location = New System.Drawing.Point(74, 604)
-        Me.sr11.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr11.Margin = New System.Windows.Forms.Padding(6)
         Me.sr11.Name = "sr11"
         Me.sr11.Size = New System.Drawing.Size(184, 32)
         Me.sr11.TabIndex = 152
@@ -226,7 +226,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr12.AutoSize = True
         Me.sr12.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr12.Location = New System.Drawing.Point(74, 652)
-        Me.sr12.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr12.Margin = New System.Windows.Forms.Padding(6)
         Me.sr12.Name = "sr12"
         Me.sr12.Size = New System.Drawing.Size(184, 32)
         Me.sr12.TabIndex = 151
@@ -238,7 +238,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.sr13.AutoSize = True
         Me.sr13.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.sr13.Location = New System.Drawing.Point(74, 700)
-        Me.sr13.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.sr13.Margin = New System.Windows.Forms.Padding(6)
         Me.sr13.Name = "sr13"
         Me.sr13.Size = New System.Drawing.Size(184, 32)
         Me.sr13.TabIndex = 150
@@ -250,7 +250,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb1.AutoSize = True
         Me.cb1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb1.Location = New System.Drawing.Point(616, 124)
-        Me.cb1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb1.Margin = New System.Windows.Forms.Padding(6)
         Me.cb1.Name = "cb1"
         Me.cb1.Size = New System.Drawing.Size(184, 32)
         Me.cb1.TabIndex = 149
@@ -262,7 +262,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb2.AutoSize = True
         Me.cb2.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb2.Location = New System.Drawing.Point(616, 172)
-        Me.cb2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb2.Margin = New System.Windows.Forms.Padding(6)
         Me.cb2.Name = "cb2"
         Me.cb2.Size = New System.Drawing.Size(184, 32)
         Me.cb2.TabIndex = 148
@@ -274,7 +274,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb3.AutoSize = True
         Me.cb3.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb3.Location = New System.Drawing.Point(616, 220)
-        Me.cb3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb3.Margin = New System.Windows.Forms.Padding(6)
         Me.cb3.Name = "cb3"
         Me.cb3.Size = New System.Drawing.Size(184, 32)
         Me.cb3.TabIndex = 147
@@ -286,7 +286,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb4.AutoSize = True
         Me.cb4.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb4.Location = New System.Drawing.Point(616, 268)
-        Me.cb4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb4.Margin = New System.Windows.Forms.Padding(6)
         Me.cb4.Name = "cb4"
         Me.cb4.Size = New System.Drawing.Size(184, 32)
         Me.cb4.TabIndex = 146
@@ -298,7 +298,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb5.AutoSize = True
         Me.cb5.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb5.Location = New System.Drawing.Point(616, 316)
-        Me.cb5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb5.Margin = New System.Windows.Forms.Padding(6)
         Me.cb5.Name = "cb5"
         Me.cb5.Size = New System.Drawing.Size(184, 32)
         Me.cb5.TabIndex = 145
@@ -310,7 +310,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb6.AutoSize = True
         Me.cb6.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb6.Location = New System.Drawing.Point(616, 364)
-        Me.cb6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb6.Margin = New System.Windows.Forms.Padding(6)
         Me.cb6.Name = "cb6"
         Me.cb6.Size = New System.Drawing.Size(184, 32)
         Me.cb6.TabIndex = 144
@@ -355,7 +355,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb7.AutoSize = True
         Me.cb7.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb7.Location = New System.Drawing.Point(614, 412)
-        Me.cb7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb7.Margin = New System.Windows.Forms.Padding(6)
         Me.cb7.Name = "cb7"
         Me.cb7.Size = New System.Drawing.Size(184, 32)
         Me.cb7.TabIndex = 162
@@ -367,7 +367,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb8.AutoSize = True
         Me.cb8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb8.Location = New System.Drawing.Point(614, 460)
-        Me.cb8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb8.Margin = New System.Windows.Forms.Padding(6)
         Me.cb8.Name = "cb8"
         Me.cb8.Size = New System.Drawing.Size(184, 32)
         Me.cb8.TabIndex = 161
@@ -379,7 +379,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb9.AutoSize = True
         Me.cb9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb9.Location = New System.Drawing.Point(614, 508)
-        Me.cb9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb9.Margin = New System.Windows.Forms.Padding(6)
         Me.cb9.Name = "cb9"
         Me.cb9.Size = New System.Drawing.Size(184, 32)
         Me.cb9.TabIndex = 160
@@ -391,7 +391,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb10.AutoSize = True
         Me.cb10.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb10.Location = New System.Drawing.Point(614, 556)
-        Me.cb10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb10.Margin = New System.Windows.Forms.Padding(6)
         Me.cb10.Name = "cb10"
         Me.cb10.Size = New System.Drawing.Size(184, 32)
         Me.cb10.TabIndex = 159
@@ -403,7 +403,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb11.AutoSize = True
         Me.cb11.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb11.Location = New System.Drawing.Point(614, 604)
-        Me.cb11.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb11.Margin = New System.Windows.Forms.Padding(6)
         Me.cb11.Name = "cb11"
         Me.cb11.Size = New System.Drawing.Size(184, 32)
         Me.cb11.TabIndex = 158
@@ -415,7 +415,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.cb12.AutoSize = True
         Me.cb12.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.cb12.Location = New System.Drawing.Point(614, 652)
-        Me.cb12.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cb12.Margin = New System.Windows.Forms.Padding(6)
         Me.cb12.Name = "cb12"
         Me.cb12.Size = New System.Drawing.Size(184, 32)
         Me.cb12.TabIndex = 163
@@ -438,7 +438,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.hzzxt.AutoSize = True
         Me.hzzxt.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.hzzxt.Location = New System.Drawing.Point(74, 1000)
-        Me.hzzxt.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.hzzxt.Margin = New System.Windows.Forms.Padding(6)
         Me.hzzxt.Name = "hzzxt"
         Me.hzzxt.Size = New System.Drawing.Size(408, 32)
         Me.hzzxt.TabIndex = 165
@@ -461,7 +461,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.nyxxss_check.AutoSize = True
         Me.nyxxss_check.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.nyxxss_check.Location = New System.Drawing.Point(616, 796)
-        Me.nyxxss_check.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.nyxxss_check.Margin = New System.Windows.Forms.Padding(6)
         Me.nyxxss_check.Name = "nyxxss_check"
         Me.nyxxss_check.Size = New System.Drawing.Size(464, 32)
         Me.nyxxss_check.TabIndex = 167
@@ -482,7 +482,7 @@ Partial Class 选择单因素敏感性分析内容
         'nyxxss_text
         '
         Me.nyxxss_text.Location = New System.Drawing.Point(948, 858)
-        Me.nyxxss_text.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.nyxxss_text.Margin = New System.Windows.Forms.Padding(6)
         Me.nyxxss_text.Name = "nyxxss_text"
         Me.nyxxss_text.Size = New System.Drawing.Size(142, 35)
         Me.nyxxss_text.TabIndex = 169
@@ -502,7 +502,7 @@ Partial Class 选择单因素敏感性分析内容
         'mgxfxbhl
         '
         Me.mgxfxbhl.Location = New System.Drawing.Point(948, 1000)
-        Me.mgxfxbhl.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.mgxfxbhl.Margin = New System.Windows.Forms.Padding(6)
         Me.mgxfxbhl.Name = "mgxfxbhl"
         Me.mgxfxbhl.Size = New System.Drawing.Size(142, 35)
         Me.mgxfxbhl.TabIndex = 172
@@ -524,7 +524,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.清空输入.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空输入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.清空输入.Location = New System.Drawing.Point(488, 1080)
-        Me.清空输入.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.清空输入.Margin = New System.Windows.Forms.Padding(6)
         Me.清空输入.Name = "清空输入"
         Me.清空输入.Size = New System.Drawing.Size(246, 108)
         Me.清空输入.TabIndex = 173
@@ -543,7 +543,7 @@ Partial Class 选择单因素敏感性分析内容
         Me.运行小时数敏感性分析设置.Text = "运行小时数敏感性分析设置"
         Me.运行小时数敏感性分析设置.UseVisualStyleBackColor = False
         '
-        '选择单因素敏感性分析内容
+        '设置单因素敏感性计算内容
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -589,10 +589,10 @@ Partial Class 选择单因素敏感性分析内容
         Me.Controls.Add(Me.sr1)
         Me.Controls.Add(Me.jttz)
         Me.Controls.Add(Me.开始计算)
-        Me.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
-        Me.Name = "选择单因素敏感性分析内容"
+        Me.Margin = New System.Windows.Forms.Padding(6)
+        Me.Name = "设置单因素敏感性计算内容"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "选择单因素敏感性分析内容"
+        Me.Text = "设置单因素敏感性计算内容"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

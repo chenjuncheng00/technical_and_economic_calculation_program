@@ -27,8 +27,8 @@
         Dim rjfdl_list(10) As Double
         '蓄电池总投资(万元)
         Dim xdctz_list(10) As Double
-        '蓄电池总装机功率(kW)
-        Dim xdczjgl_list(10) As Double
+        '蓄电池总发电量(万kWh)
+        Dim xdcfdl_list(10) As Double
         '暖通总投资(万元)
         Dim nttz_list(10) As Double
         '供冷供热总量(万kWh)
@@ -62,7 +62,7 @@
             rjtz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 2 * i + 1).Value
             rjfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(45, 2 * i + 1).Value
             xdctz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 2 * i + 1).Value
-            xdczjgl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 2 * i + 1).Value
+            xdcfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 2 * i + 1).Value
             nttz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 2 * i + 1).Value
             glgrl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(49, 2 * i + 1).Value
             gftz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 2 * i + 1).Value
@@ -87,7 +87,7 @@
             rjtz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(91, 2 * i - 9).Value
             rjfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(92, 2 * i - 9).Value
             xdctz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(93, 2 * i - 9).Value
-            xdczjgl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(94, 2 * i - 9).Value
+            xdcfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(94, 2 * i - 9).Value
             nttz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(95, 2 * i - 9).Value
             glgrl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(96, 2 * i - 9).Value
             gftz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(97, 2 * i - 9).Value
@@ -113,7 +113,7 @@
         ans(10) = rjtz_list
         ans(11) = rjfdl_list
         ans(12) = xdctz_list
-        ans(13) = xdczjgl_list
+        ans(13) = xdcfdl_list
         ans(14) = nttz_list
         ans(15) = glgrl_list
         ans(16) = gftz_list
@@ -129,7 +129,7 @@
         '资本金基准收益率(%)
         '全投资基准收益率(%)
         '投资方基准收益率(%)
-        Dim ans_C(3)
+        Dim ans_C(3) As Double
         For i = 1 To 3
             ans_C(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 3).Value
         Next
@@ -144,7 +144,7 @@
         '提取盈余公积(%)
         '城市维护建设税率(%)
         '教育附加税率(%)
-        Dim ans_E(10)
+        Dim ans_E(10) As Double
         For i = 1 To 10
             ans_E(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 5).Value
         Next
@@ -157,16 +157,26 @@
         '长期贷款还款宽限年限(年)
         '所得税免除年份数(年)
         '所得税减征年份数(年)
+        Dim ans_G_1(10) As Integer
+        For i = 1 To 10
+            ans_G_1(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 7).Value
+        Next
+        '读取第7列(G列)，内容分别是
         '所得税率(%)
         '所得税减少征收比例(%)
-        Dim ans_G(10)
-        For i = 1 To 10
-            ans_G(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 7).Value
+        Dim ans_G_2(10) As Double
+        For i = 9 To 10
+            ans_G_2(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 7).Value
         Next
         '读取第9列(I列)，内容分别是
         '长期贷款年计息次数
         '流动资金贷款年计息次数
         '短期贷款年计息次数
+        Dim ans_I_1(10) As Integer
+        For i = 1 To 3
+            ans_I_1(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 9).Value
+        Next
+        '读取第9列(I列)，内容分别是
         '长期贷款利率(%)
         '流动资金贷款利率(%)
         '短期贷款利率(%)
@@ -174,15 +184,17 @@
         '经济增加值折现率(%)
         '其他制造费率(%)
         '其他管理费率(%)
-        Dim ans_I(10)
-        For i = 1 To 10
-            ans_I(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 9).Value
+        Dim ans_I_2(10) As Double
+        For i = 4 To 10
+            ans_I_2(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 4, 9).Value
         Next
-        Dim ans(3)
+        Dim ans(5)
         ans(0) = ans_C
         ans(1) = ans_E
-        ans(2) = ans_G
-        ans(3) = ans_I
+        ans(2) = ans_G_1
+        ans(3) = ans_G_2
+        ans(4) = ans_I_1
+        ans(5) = ans_I_2
         Return ans
     End Function
     Function 读取计算方法设置(ExcelApp As Object)

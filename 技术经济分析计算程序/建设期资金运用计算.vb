@@ -28,7 +28,13 @@
         '将资本金比例转换成31年的列表
         Dim zbjbl_list = 基础计算功能_10_to_31(tznf_list, zbjbl)
         '读取手动输入的建设期贷款利息金额，列表，长度10
-        Dim dklx_shuru = 读取建设期时间计划数据(6)
+        Dim dklx_shuru(10) As Double
+        For i = 1 To 5
+            dklx_shuru(i) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(162 + i, 12).Value
+        Next
+        For i = 6 To 10
+            dklx_shuru(i) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(157 + i, 16).Value
+        Next
         '转为长度31的列表
         Dim dklx_shuru_list = 基础计算功能_10_to_31(tznf_list, dklx_shuru)
         '读取资本金计算模式、建设期贷款利息计算模式

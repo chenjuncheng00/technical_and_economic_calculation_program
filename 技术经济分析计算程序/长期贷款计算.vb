@@ -98,7 +98,7 @@
         ExcelApp.Calculate()
     End Sub
     Function 长期贷款计算_等额本息_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                              dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
         'dnkx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
@@ -113,52 +113,102 @@
         '第1次投资
         Dim bj_0_1 As Double = bj_0_list(1)
         Dim ksnf_1 As Integer = ksnf_list(1)
-        Dim dknx_0_1 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_1)
+        Dim dknx_0_1 As Integer
+        If dknx_0 + 1 - ksnf_1 > 0 Then
+            dknx_0_1 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_1)
+        Else
+            dknx_0_1 = Math.Min(dknx_0, jsnx - ksnf_1)
+        End If
         Dim kxnx_1 As Integer = kxnx
         '第2次投资
         Dim bj_0_2 As Double = bj_0_list(2)
         Dim ksnf_2 As Integer = ksnf_list(2)
-        Dim dknx_0_2 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_2)
+        Dim dknx_0_2 As Integer
+        If dknx_0 + 1 - ksnf_2 > 0 Then
+            dknx_0_2 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_2)
+        Else
+            dknx_0_2 = Math.Min(dknx_0, jsnx - ksnf_2)
+        End If
         Dim kxnx_2 As Integer = Math.Min(Math.Max(kxnx - (ksnf_2 - ksnf_1), 0), kxnx)
         '第3次投资
         Dim bj_0_3 As Double = bj_0_list(3)
         Dim ksnf_3 As Integer = ksnf_list(3)
-        Dim dknx_0_3 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_3)
+        Dim dknx_0_3 As Integer
+        If dknx_0 + 1 - ksnf_3 > 0 Then
+            dknx_0_3 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_3)
+        Else
+            dknx_0_3 = Math.Min(dknx_0, jsnx - ksnf_3)
+        End If
         Dim kxnx_3 As Integer = Math.Min(Math.Max(kxnx - (ksnf_3 - ksnf_1), 0), kxnx)
         '第4次投资
         Dim bj_0_4 As Double = bj_0_list(4)
         Dim ksnf_4 As Integer = ksnf_list(4)
-        Dim dknx_0_4 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_4)
+        Dim dknx_0_4 As Integer
+        If dknx_0 + 1 - ksnf_4 > 0 Then
+            dknx_0_4 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_4)
+        Else
+            dknx_0_4 = Math.Min(dknx_0, jsnx - ksnf_4)
+        End If
         Dim kxnx_4 As Integer = Math.Min(Math.Max(kxnx - (ksnf_4 - ksnf_1), 0), kxnx)
         '第5次投资
         Dim bj_0_5 As Double = bj_0_list(5)
         Dim ksnf_5 As Integer = ksnf_list(5)
-        Dim dknx_0_5 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_5)
+        Dim dknx_0_5 As Integer
+        If dknx_0 + 1 - ksnf_5 > 0 Then
+            dknx_0_5 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_5)
+        Else
+            dknx_0_5 = Math.Min(dknx_0, jsnx - ksnf_5)
+        End If
         Dim kxnx_5 As Integer = Math.Min(Math.Max(kxnx - (ksnf_5 - ksnf_1), 0), kxnx)
         '第6次投资
         Dim bj_0_6 As Double = bj_0_list(6)
         Dim ksnf_6 As Integer = ksnf_list(6)
-        Dim dknx_0_6 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_6)
+        Dim dknx_0_6 As Integer
+        If dknx_0 + 1 - ksnf_6 > 0 Then
+            dknx_0_6 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_6)
+        Else
+            dknx_0_6 = Math.Min(dknx_0, jsnx - ksnf_6)
+        End If
         Dim kxnx_6 As Integer = Math.Min(Math.Max(kxnx - (ksnf_6 - ksnf_1), 0), kxnx)
         '第7次投资
         Dim bj_0_7 As Double = bj_0_list(7)
         Dim ksnf_7 As Integer = ksnf_list(7)
-        Dim dknx_0_7 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_7)
+        Dim dknx_0_7 As Integer
+        If dknx_0 + 1 - ksnf_7 > 0 Then
+            dknx_0_7 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_7)
+        Else
+            dknx_0_7 = Math.Min(dknx_0, jsnx - ksnf_7)
+        End If
         Dim kxnx_7 As Integer = Math.Min(Math.Max(kxnx - (ksnf_7 - ksnf_1), 0), kxnx)
         '第8次投资
         Dim bj_0_8 As Double = bj_0_list(8)
         Dim ksnf_8 As Integer = ksnf_list(8)
-        Dim dknx_0_8 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_8)
+        Dim dknx_0_8 As Integer
+        If dknx_0 + 1 - ksnf_8 > 0 Then
+            dknx_0_8 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_8)
+        Else
+            dknx_0_8 = Math.Min(dknx_0, jsnx - ksnf_8)
+        End If
         Dim kxnx_8 As Integer = Math.Min(Math.Max(kxnx - (ksnf_8 - ksnf_1), 0), kxnx)
         '第9次投资
         Dim bj_0_9 As Double = bj_0_list(9)
         Dim ksnf_9 As Integer = ksnf_list(9)
-        Dim dknx_0_9 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_9)
+        Dim dknx_0_9 As Integer
+        If dknx_0 + 1 - ksnf_9 > 0 Then
+            dknx_0_9 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_9)
+        Else
+            dknx_0_9 = Math.Min(dknx_0, jsnx - ksnf_9)
+        End If
         Dim kxnx_9 As Integer = Math.Min(Math.Max(kxnx - (ksnf_9 - ksnf_1), 0), kxnx)
         '第10次投资
         Dim bj_0_10 As Double = bj_0_list(10)
         Dim ksnf_10 As Integer = ksnf_list(10)
-        Dim dknx_0_10 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_10)
+        Dim dknx_0_10 As Integer
+        If dknx_0 + 1 - ksnf_10 > 0 Then
+            dknx_0_10 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_10)
+        Else
+            dknx_0_10 = Math.Min(dknx_0, jsnx - ksnf_10)
+        End If
         Dim kxnx_10 As Integer = Math.Min(Math.Max(kxnx - (ksnf_10 - ksnf_1), 0), kxnx)
 
         '列表，储存计算结果
@@ -203,7 +253,7 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本金_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                              dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
         'dnkx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
@@ -218,52 +268,102 @@
         '第1次投资
         Dim bj_0_1 As Double = bj_0_list(1)
         Dim ksnf_1 As Integer = ksnf_list(1)
-        Dim dknx_0_1 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_1)
+        Dim dknx_0_1 As Integer
+        If dknx_0 + 1 - ksnf_1 > 0 Then
+            dknx_0_1 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_1)
+        Else
+            dknx_0_1 = Math.Min(dknx_0, jsnx - ksnf_1)
+        End If
         Dim kxnx_1 As Integer = kxnx
         '第2次投资
         Dim bj_0_2 As Double = bj_0_list(2)
         Dim ksnf_2 As Integer = ksnf_list(2)
-        Dim dknx_0_2 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_2)
+        Dim dknx_0_2 As Integer
+        If dknx_0 + 1 - ksnf_2 > 0 Then
+            dknx_0_2 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_2)
+        Else
+            dknx_0_2 = Math.Min(dknx_0, jsnx - ksnf_2)
+        End If
         Dim kxnx_2 As Integer = Math.Min(Math.Max(kxnx - (ksnf_2 - ksnf_1), 0), kxnx)
         '第3次投资
         Dim bj_0_3 As Double = bj_0_list(3)
         Dim ksnf_3 As Integer = ksnf_list(3)
-        Dim dknx_0_3 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_3)
+        Dim dknx_0_3 As Integer
+        If dknx_0 + 1 - ksnf_3 > 0 Then
+            dknx_0_3 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_3)
+        Else
+            dknx_0_3 = Math.Min(dknx_0, jsnx - ksnf_3)
+        End If
         Dim kxnx_3 As Integer = Math.Min(Math.Max(kxnx - (ksnf_3 - ksnf_1), 0), kxnx)
         '第4次投资
         Dim bj_0_4 As Double = bj_0_list(4)
         Dim ksnf_4 As Integer = ksnf_list(4)
-        Dim dknx_0_4 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_4)
+        Dim dknx_0_4 As Integer
+        If dknx_0 + 1 - ksnf_4 > 0 Then
+            dknx_0_4 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_4)
+        Else
+            dknx_0_4 = Math.Min(dknx_0, jsnx - ksnf_4)
+        End If
         Dim kxnx_4 As Integer = Math.Min(Math.Max(kxnx - (ksnf_4 - ksnf_1), 0), kxnx)
         '第5次投资
         Dim bj_0_5 As Double = bj_0_list(5)
         Dim ksnf_5 As Integer = ksnf_list(5)
-        Dim dknx_0_5 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_5)
+        Dim dknx_0_5 As Integer
+        If dknx_0 + 1 - ksnf_5 > 0 Then
+            dknx_0_5 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_5)
+        Else
+            dknx_0_5 = Math.Min(dknx_0, jsnx - ksnf_5)
+        End If
         Dim kxnx_5 As Integer = Math.Min(Math.Max(kxnx - (ksnf_5 - ksnf_1), 0), kxnx)
         '第6次投资
         Dim bj_0_6 As Double = bj_0_list(6)
         Dim ksnf_6 As Integer = ksnf_list(6)
-        Dim dknx_0_6 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_6)
+        Dim dknx_0_6 As Integer
+        If dknx_0 + 1 - ksnf_6 > 0 Then
+            dknx_0_6 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_6)
+        Else
+            dknx_0_6 = Math.Min(dknx_0, jsnx - ksnf_6)
+        End If
         Dim kxnx_6 As Integer = Math.Min(Math.Max(kxnx - (ksnf_6 - ksnf_1), 0), kxnx)
         '第7次投资
         Dim bj_0_7 As Double = bj_0_list(7)
         Dim ksnf_7 As Integer = ksnf_list(7)
-        Dim dknx_0_7 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_7)
+        Dim dknx_0_7 As Integer
+        If dknx_0 + 1 - ksnf_7 > 0 Then
+            dknx_0_7 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_7)
+        Else
+            dknx_0_7 = Math.Min(dknx_0, jsnx - ksnf_7)
+        End If
         Dim kxnx_7 As Integer = Math.Min(Math.Max(kxnx - (ksnf_7 - ksnf_1), 0), kxnx)
         '第8次投资
         Dim bj_0_8 As Double = bj_0_list(8)
         Dim ksnf_8 As Integer = ksnf_list(8)
-        Dim dknx_0_8 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_8)
+        Dim dknx_0_8 As Integer
+        If dknx_0 + 1 - ksnf_8 > 0 Then
+            dknx_0_8 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_8)
+        Else
+            dknx_0_8 = Math.Min(dknx_0, jsnx - ksnf_8)
+        End If
         Dim kxnx_8 As Integer = Math.Min(Math.Max(kxnx - (ksnf_8 - ksnf_1), 0), kxnx)
         '第9次投资
         Dim bj_0_9 As Double = bj_0_list(9)
         Dim ksnf_9 As Integer = ksnf_list(9)
-        Dim dknx_0_9 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_9)
+        Dim dknx_0_9 As Integer
+        If dknx_0 + 1 - ksnf_9 > 0 Then
+            dknx_0_9 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_9)
+        Else
+            dknx_0_9 = Math.Min(dknx_0, jsnx - ksnf_9)
+        End If
         Dim kxnx_9 As Integer = Math.Min(Math.Max(kxnx - (ksnf_9 - ksnf_1), 0), kxnx)
         '第10次投资
         Dim bj_0_10 As Double = bj_0_list(10)
         Dim ksnf_10 As Integer = ksnf_list(10)
-        Dim dknx_0_10 As Integer = Math.Min(dknx_0, dknx_0 + 1 - ksnf_10)
+        Dim dknx_0_10 As Integer
+        If dknx_0 + 1 - ksnf_10 > 0 Then
+            dknx_0_10 = Math.Min(dknx_0, dknx_0 + 1 - ksnf_10)
+        Else
+            dknx_0_10 = Math.Min(dknx_0, jsnx - ksnf_10)
+        End If
         Dim kxnx_10 As Integer = Math.Min(Math.Max(kxnx - (ksnf_10 - ksnf_1), 0), kxnx)
 
         '列表，储存计算结果

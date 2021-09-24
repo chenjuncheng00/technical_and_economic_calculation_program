@@ -20,9 +20,9 @@
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
-        For i = 3 To 33
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value > 0 Then
-                JSKSNF = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i).Value
+        For i = 1 To 15
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
+                JSKSNF = i
                 Exit For
             End If
         Next

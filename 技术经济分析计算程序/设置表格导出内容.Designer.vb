@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 经济评价表格导出
+Partial Class 设置表格导出内容
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -112,7 +112,7 @@ Partial Class 经济评价表格导出
         Me.CheckBox5.Text = "导出财务评价指标一览表"
         Me.CheckBox5.UseVisualStyleBackColor = True
         '
-        '经济评价表格导出
+        '设置表格导出内容
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -123,9 +123,9 @@ Partial Class 经济评价表格导出
         Me.Controls.Add(Me.CheckBox3)
         Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.Checkbox1)
-        Me.Name = "经济评价表格导出"
+        Me.Name = "设置表格导出内容"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "经济评价表格导出"
+        Me.Text = "设置表格导出内容"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

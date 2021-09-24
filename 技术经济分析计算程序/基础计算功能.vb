@@ -32,7 +32,57 @@
         '返回结果
         Return ans
     End Function
+    Function 计算费率修正计算基础功能(tznf_list As Array, je_10_list As Array, je_31_list As Array, fl_list As Array, yynx As Integer, kcbl As Double)
+        '本方法用户修理费、材料费其它费的特殊计算功能
+        'tznf_list：10次投资的年份序号，列表，长度10
+        'je_10_list：10次投资的各种金额数值(静态投资，建设期利息，可抵扣增值税，资本金，建设期贷款)，列表，长度10
+        'je_31_list：31年各种金额数值(静态投资，建设期利息，可抵扣增值税，资本金，建设期贷款)，列表，长度31
+        'fl_list：逐年计算费率初始值，列表，长度31
+        'yynx：运营年限
+        'kcbl：超过运营年限后的扣除比例
 
+        '31长度的列表累加值
+        Dim je_lj_list(31) As Double
+        For i = 1 To 31
+            '当年的新增投资内容，从后一年开始加入累计
+            For j = 0 To i - 1
+                je_lj_list(i) += je_31_list(j)
+            Next
+        Next
+        '根据十次投资的时间、运营年限和扣除比例，计算逐年扣除的金额
+        Dim kcje_list(31) As Double '逐年扣除的金额
+        For i = 1 To 10 '10次投资
+            If tznf_list(i) > 0 Then
+                For j = 1 To 31 '31年
+                    If j > tznf_list(i) + yynx Then
+                        kcje_list(j) += je_10_list(i) * kcbl
+                    Else
+                        kcje_list(j) += 0
+                    End If
+                Next
+            End If
+        Next
+        '扣除后剩余的金额
+        Dim je_lj_sy_list(31) As Double
+        For i = 1 To 31
+            je_lj_sy_list(i) = je_lj_list(i) - kcje_list(i)
+        Next
+        '折算逐年费率
+        Dim ans_fl_list(31) As Double
+        For i = 1 To 31
+            If je_lj_list(i) > 0 Then
+                ans_fl_list(i) = fl_list(i) * (je_lj_sy_list(i) / je_lj_list(i))
+            Else
+                ans_fl_list(i) = 0
+            End If
+        Next
+        '返回结果
+        Dim ans(2)
+        ans(0) = ans_fl_list
+        ans(1) = kcje_list
+        ans(2) = je_lj_list
+        Return ans
+    End Function
     Sub 投资回收期计算(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————

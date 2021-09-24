@@ -33,6 +33,8 @@ Module 敏感性分析计算
             Dim xlfl_qt_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '将总静态投资写入敏感性分析表格中
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 8).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value
@@ -72,7 +74,7 @@ Module 敏感性分析计算
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
                 '读取计算的结果，内部收益率和回收年限
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
@@ -93,7 +95,7 @@ Module 敏感性分析计算
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
         End If
         Form1.Close()
     End Sub

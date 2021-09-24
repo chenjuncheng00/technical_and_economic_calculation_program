@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 
-Public Class 折旧摊销计算方式设置
-    Private Sub 每次投资设置不同的折旧摊销计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+Public Class 设置折旧摊销计算方式
+    Private Sub 设置折旧摊销计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象

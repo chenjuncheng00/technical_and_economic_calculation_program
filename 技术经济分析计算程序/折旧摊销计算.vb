@@ -197,7 +197,7 @@
         ExcelApp.Calculate()
     End Sub
     Function 折旧摊销计算_直线法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
-                                                  jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+                                            jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
@@ -211,43 +211,93 @@
         '第1次投资
         Dim zcyz_1 As Double = zcyz_list(1)
         Dim ksnf_1 As Integer = ksnf_list(1)
-        Dim zjtxnx_0_1 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_1)
+        Dim zjtxnx_0_1 As Integer
+        If zjtxnx_0 + 1 - ksnf_1 > 0 Then
+            zjtxnx_0_1 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_1)
+        Else
+            zjtxnx_0_1 = Math.Min(zjtxnx_0, jsnx - ksnf_1)
+        End If
         '第2次投资
         Dim zcyz_2 As Double = zcyz_list(2)
         Dim ksnf_2 As Integer = ksnf_list(2)
-        Dim zjtxnx_0_2 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_2)
+        Dim zjtxnx_0_2 As Integer
+        If zjtxnx_0 + 1 - ksnf_2 > 0 Then
+            zjtxnx_0_2 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_2)
+        Else
+            zjtxnx_0_2 = Math.Min(zjtxnx_0, jsnx - ksnf_2)
+        End If
         '第3次投资
         Dim zcyz_3 As Double = zcyz_list(3)
         Dim ksnf_3 As Integer = ksnf_list(3)
-        Dim zjtxnx_0_3 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_3)
+        Dim zjtxnx_0_3 As Integer
+        If zjtxnx_0 + 1 - ksnf_3 > 0 Then
+            zjtxnx_0_3 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_3)
+        Else
+            zjtxnx_0_3 = Math.Min(zjtxnx_0, jsnx - ksnf_3)
+        End If
         '第4次投资
         Dim zcyz_4 As Double = zcyz_list(4)
         Dim ksnf_4 As Integer = ksnf_list(4)
-        Dim zjtxnx_0_4 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_4)
+        Dim zjtxnx_0_4 As Integer
+        If zjtxnx_0 + 1 - ksnf_4 > 0 Then
+            zjtxnx_0_4 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_4)
+        Else
+            zjtxnx_0_4 = Math.Min(zjtxnx_0, jsnx - ksnf_4)
+        End If
         '第5次投资
         Dim zcyz_5 As Double = zcyz_list(5)
         Dim ksnf_5 As Integer = ksnf_list(5)
-        Dim zjtxnx_0_5 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_5)
+        Dim zjtxnx_0_5 As Integer
+        If zjtxnx_0 + 1 - ksnf_5 > 0 Then
+            zjtxnx_0_5 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_5)
+        Else
+            zjtxnx_0_5 = Math.Min(zjtxnx_0, jsnx - ksnf_5)
+        End If
         '第6次投资
         Dim zcyz_6 As Double = zcyz_list(6)
         Dim ksnf_6 As Integer = ksnf_list(6)
-        Dim zjtxnx_0_6 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_6)
+        Dim zjtxnx_0_6 As Integer
+        If zjtxnx_0 + 1 - ksnf_6 > 0 Then
+            zjtxnx_0_6 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_6)
+        Else
+            zjtxnx_0_6 = Math.Min(zjtxnx_0, jsnx - ksnf_6)
+        End If
         '第7次投资
         Dim zcyz_7 As Double = zcyz_list(7)
         Dim ksnf_7 As Integer = ksnf_list(7)
-        Dim zjtxnx_0_7 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_7)
+        Dim zjtxnx_0_7 As Integer
+        If zjtxnx_0 + 1 - ksnf_7 > 0 Then
+            zjtxnx_0_7 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_7)
+        Else
+            zjtxnx_0_7 = Math.Min(zjtxnx_0, jsnx - ksnf_7)
+        End If
         '第8次投资
         Dim zcyz_8 As Double = zcyz_list(8)
         Dim ksnf_8 As Integer = ksnf_list(8)
-        Dim zjtxnx_0_8 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_8)
+        Dim zjtxnx_0_8 As Integer
+        If zjtxnx_0 + 1 - ksnf_8 > 0 Then
+            zjtxnx_0_8 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_8)
+        Else
+            zjtxnx_0_8 = Math.Min(zjtxnx_0, jsnx - ksnf_8)
+        End If
         '第9次投资
         Dim zcyz_9 As Double = zcyz_list(9)
         Dim ksnf_9 As Integer = ksnf_list(9)
-        Dim zjtxnx_0_9 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_9)
+        Dim zjtxnx_0_9 As Integer
+        If zjtxnx_0 + 1 - ksnf_9 > 0 Then
+            zjtxnx_0_9 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_9)
+        Else
+            zjtxnx_0_9 = Math.Min(zjtxnx_0, jsnx - ksnf_9)
+        End If
         '第10次投资
         Dim zcyz_10 As Double = zcyz_list(10)
         Dim ksnf_10 As Integer = ksnf_list(10)
-        Dim zjtxnx_0_10 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_10)
+        Dim zjtxnx_0_10 As Integer
+        If zjtxnx_0 + 1 - ksnf_10 > 0 Then
+            zjtxnx_0_10 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_10)
+        Else
+            zjtxnx_0_10 = Math.Min(zjtxnx_0, jsnx - ksnf_10)
+        End If
 
         '列表，储存计算结果
         Dim ZJTXF(31) As Double '逐年折旧摊销费金额
@@ -295,14 +345,12 @@
         ans(2) = SYJZ
         Return ans
     End Function
-
-
-    Function 折旧摊销计算_年数总和法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_0_list As Array,
-                                                      jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+    Function 折旧摊销计算_年数总和法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
+                                                jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
 
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
-        'ksnf_0_list：折旧摊销计算的开始年份初始值，列表，长度10
+        'ksnf_list：折旧摊销计算的开始年份初始值，列表，长度10
         'jsnx：项目总的计算年限
         'czl：残值率
         'tcyfs_list：逐年投产的月份数，列表，长度31
@@ -312,44 +360,95 @@
 
         '第1次投资
         Dim zcyz_1 As Double = zcyz_list(1)
-        Dim ksnf_0_1 As Integer = ksnf_0_list(1)
-        Dim zjtxnx_0_1 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_1)
+        Dim ksnf_1 As Integer = ksnf_list(1)
+        Dim zjtxnx_0_1 As Integer
+        If zjtxnx_0 + 1 - ksnf_1 > 0 Then
+            zjtxnx_0_1 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_1)
+        Else
+            zjtxnx_0_1 = Math.Min(zjtxnx_0, jsnx - ksnf_1)
+        End If
         '第2次投资
         Dim zcyz_2 As Double = zcyz_list(2)
-        Dim ksnf_0_2 As Integer = ksnf_0_list(2)
-        Dim zjtxnx_0_2 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_2)
+        Dim ksnf_2 As Integer = ksnf_list(2)
+        Dim zjtxnx_0_2 As Integer
+        If zjtxnx_0 + 1 - ksnf_2 > 0 Then
+            zjtxnx_0_2 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_2)
+        Else
+            zjtxnx_0_2 = Math.Min(zjtxnx_0, jsnx - ksnf_2)
+        End If
         '第3次投资
         Dim zcyz_3 As Double = zcyz_list(3)
-        Dim ksnf_0_3 As Integer = ksnf_0_list(3)
-        Dim zjtxnx_0_3 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_3)
+        Dim ksnf_3 As Integer = ksnf_list(3)
+        Dim zjtxnx_0_3 As Integer
+        If zjtxnx_0 + 1 - ksnf_3 > 0 Then
+            zjtxnx_0_3 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_3)
+        Else
+            zjtxnx_0_3 = Math.Min(zjtxnx_0, jsnx - ksnf_3)
+        End If
         '第4次投资
         Dim zcyz_4 As Double = zcyz_list(4)
-        Dim ksnf_0_4 As Integer = ksnf_0_list(4)
-        Dim zjtxnx_0_4 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_4)
+        Dim ksnf_4 As Integer = ksnf_list(4)
+        Dim zjtxnx_0_4 As Integer
+        If zjtxnx_0 + 1 - ksnf_4 > 0 Then
+            zjtxnx_0_4 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_4)
+        Else
+            zjtxnx_0_4 = Math.Min(zjtxnx_0, jsnx - ksnf_4)
+        End If
         '第5次投资
         Dim zcyz_5 As Double = zcyz_list(5)
-        Dim ksnf_0_5 As Integer = ksnf_0_list(5)
-        Dim zjtxnx_0_5 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_5)
+        Dim ksnf_5 As Integer = ksnf_list(5)
+        Dim zjtxnx_0_5 As Integer
+        If zjtxnx_0 + 1 - ksnf_5 > 0 Then
+            zjtxnx_0_5 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_5)
+        Else
+            zjtxnx_0_5 = Math.Min(zjtxnx_0, jsnx - ksnf_5)
+        End If
         '第6次投资
         Dim zcyz_6 As Double = zcyz_list(6)
-        Dim ksnf_0_6 As Integer = ksnf_0_list(6)
-        Dim zjtxnx_0_6 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_6)
+        Dim ksnf_6 As Integer = ksnf_list(6)
+        Dim zjtxnx_0_6 As Integer
+        If zjtxnx_0 + 1 - ksnf_6 > 0 Then
+            zjtxnx_0_6 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_6)
+        Else
+            zjtxnx_0_6 = Math.Min(zjtxnx_0, jsnx - ksnf_6)
+        End If
         '第7次投资
         Dim zcyz_7 As Double = zcyz_list(7)
-        Dim ksnf_0_7 As Integer = ksnf_0_list(7)
-        Dim zjtxnx_0_7 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_7)
+        Dim ksnf_7 As Integer = ksnf_list(7)
+        Dim zjtxnx_0_7 As Integer
+        If zjtxnx_0 + 1 - ksnf_7 > 0 Then
+            zjtxnx_0_7 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_7)
+        Else
+            zjtxnx_0_7 = Math.Min(zjtxnx_0, jsnx - ksnf_7)
+        End If
         '第8次投资
         Dim zcyz_8 As Double = zcyz_list(8)
-        Dim ksnf_0_8 As Integer = ksnf_0_list(8)
-        Dim zjtxnx_0_8 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_8)
+        Dim ksnf_8 As Integer = ksnf_list(8)
+        Dim zjtxnx_0_8 As Integer
+        If zjtxnx_0 + 1 - ksnf_8 > 0 Then
+            zjtxnx_0_8 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_8)
+        Else
+            zjtxnx_0_8 = Math.Min(zjtxnx_0, jsnx - ksnf_8)
+        End If
         '第9次投资
         Dim zcyz_9 As Double = zcyz_list(9)
-        Dim ksnf_0_9 As Integer = ksnf_0_list(9)
-        Dim zjtxnx_0_9 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_9)
+        Dim ksnf_9 As Integer = ksnf_list(9)
+        Dim zjtxnx_0_9 As Integer
+        If zjtxnx_0 + 1 - ksnf_9 > 0 Then
+            zjtxnx_0_9 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_9)
+        Else
+            zjtxnx_0_9 = Math.Min(zjtxnx_0, jsnx - ksnf_9)
+        End If
         '第10次投资
         Dim zcyz_10 As Double = zcyz_list(10)
-        Dim ksnf_0_10 As Integer = ksnf_0_list(10)
-        Dim zjtxnx_0_10 As Integer = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_0_10)
+        Dim ksnf_10 As Integer = ksnf_list(10)
+        Dim zjtxnx_0_10 As Integer
+        If zjtxnx_0 + 1 - ksnf_10 > 0 Then
+            zjtxnx_0_10 = Math.Min(zjtxnx_0, zjtxnx_0 + 1 - ksnf_10)
+        Else
+            zjtxnx_0_10 = Math.Min(zjtxnx_0, jsnx - ksnf_10)
+        End If
+
         '列表，储存计算过程量
         Dim ZJTXF(31) As Double '逐年折旧摊销费金额
         Dim ZJTXFLJ(31) As Double '逐年折旧摊销费金额累计
@@ -357,16 +456,16 @@
         Dim ZJL(31) As Double '逐年折旧率
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_0_1, jsnx, czl, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_0_2, jsnx, czl, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_0_3, jsnx, czl, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_0_4, jsnx, czl, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_0_5, jsnx, czl, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_0_6, jsnx, czl, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_0_7, jsnx, czl, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_0_8, jsnx, czl, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_0_9, jsnx, czl, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_0_10, jsnx, czl, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl, tcyfs_list)
+        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl, tcyfs_list)
+        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl, tcyfs_list)
+        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl, tcyfs_list)
+        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl, tcyfs_list)
+        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl, tcyfs_list)
+        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl, tcyfs_list)
+        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl, tcyfs_list)
+        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl, tcyfs_list)
+        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl, tcyfs_list)
 
         '累加
         For i = 1 To 31 '第1年到第31年
@@ -404,9 +503,8 @@
         ans(3) = ZJL
         Return ans
     End Function
-
     Function 折旧摊销计算_直线法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
-                                                  jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+                                            jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
@@ -514,12 +612,11 @@
         ans(2) = SYJZ
         Return ans
     End Function
-
-    Function 折旧摊销计算_年数总和法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_0_list As Array,
-                                                      jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+    Function 折旧摊销计算_年数总和法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
+                                                jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
-        'ksnf_0_list：折旧摊销计算的开始年份初始值，列表，长度10
+        'ksnf_list：折旧摊销计算的开始年份初始值，列表，长度10
         'jsnx：项目总的计算年限
         'czl_list：残值率，列表，长度10
         'tcyfs_list：逐年投产的月份数，列表，长度31
@@ -530,52 +627,52 @@
         '第1次投资
         Dim zcyz_1 As Double = zcyz_list(1)
         Dim zjtxnx_0_1 As Integer = zjtxnx_0_list(1)
-        Dim ksnf_0_1 As Integer = ksnf_0_list(1)
+        Dim ksnf_1 As Integer = ksnf_list(1)
         Dim czl_1 As Double = czl_list(1)
         '第2次投资
         Dim zcyz_2 As Double = zcyz_list(2)
         Dim zjtxnx_0_2 As Integer = zjtxnx_0_list(2)
-        Dim ksnf_0_2 As Integer = ksnf_0_list(2)
+        Dim ksnf_2 As Integer = ksnf_list(2)
         Dim czl_2 As Double = czl_list(2)
         '第3次投资
         Dim zcyz_3 As Double = zcyz_list(3)
         Dim zjtxnx_0_3 As Integer = zjtxnx_0_list(3)
-        Dim ksnf_0_3 As Integer = ksnf_0_list(3)
+        Dim ksnf_3 As Integer = ksnf_list(3)
         Dim czl_3 As Double = czl_list(3)
         '第4次投资
         Dim zcyz_4 As Double = zcyz_list(4)
         Dim zjtxnx_0_4 As Integer = zjtxnx_0_list(4)
-        Dim ksnf_0_4 As Integer = ksnf_0_list(4)
+        Dim ksnf_4 As Integer = ksnf_list(4)
         Dim czl_4 As Double = czl_list(4)
         '第5次投资
         Dim zcyz_5 As Double = zcyz_list(5)
         Dim zjtxnx_0_5 As Integer = zjtxnx_0_list(5)
-        Dim ksnf_0_5 As Integer = ksnf_0_list(5)
+        Dim ksnf_5 As Integer = ksnf_list(5)
         Dim czl_5 As Double = czl_list(5)
         '第6次投资
         Dim zcyz_6 As Double = zcyz_list(6)
         Dim zjtxnx_0_6 As Integer = zjtxnx_0_list(6)
-        Dim ksnf_0_6 As Integer = ksnf_0_list(6)
+        Dim ksnf_6 As Integer = ksnf_list(6)
         Dim czl_6 As Double = czl_list(6)
         '第7次投资
         Dim zcyz_7 As Double = zcyz_list(7)
         Dim zjtxnx_0_7 As Integer = zjtxnx_0_list(7)
-        Dim ksnf_0_7 As Integer = ksnf_0_list(7)
+        Dim ksnf_7 As Integer = ksnf_list(7)
         Dim czl_7 As Double = czl_list(7)
         '第8次投资
         Dim zcyz_8 As Double = zcyz_list(8)
         Dim zjtxnx_0_8 As Integer = zjtxnx_0_list(8)
-        Dim ksnf_0_8 As Integer = ksnf_0_list(8)
+        Dim ksnf_8 As Integer = ksnf_list(8)
         Dim czl_8 As Double = czl_list(8)
         '第9次投资
         Dim zcyz_9 As Double = zcyz_list(9)
         Dim zjtxnx_0_9 As Integer = zjtxnx_0_list(9)
-        Dim ksnf_0_9 As Integer = ksnf_0_list(9)
+        Dim ksnf_9 As Integer = ksnf_list(9)
         Dim czl_9 As Double = czl_list(9)
         '第10次投资
         Dim zcyz_10 As Double = zcyz_list(10)
         Dim zjtxnx_0_10 As Integer = zjtxnx_0_list(10)
-        Dim ksnf_0_10 As Integer = ksnf_0_list(10)
+        Dim ksnf_10 As Integer = ksnf_list(10)
         Dim czl_10 As Double = czl_list(10)
 
         '列表，储存计算过程量
@@ -585,16 +682,16 @@
         Dim ZJL(31) As Double '逐年折旧率
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_0_1, jsnx, czl_1, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_0_2, jsnx, czl_2, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_0_3, jsnx, czl_3, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_0_4, jsnx, czl_4, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_0_5, jsnx, czl_5, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_0_6, jsnx, czl_6, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_0_7, jsnx, czl_7, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_0_8, jsnx, czl_8, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_0_9, jsnx, czl_9, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_0_10, jsnx, czl_10, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl_1, tcyfs_list)
+        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl_2, tcyfs_list)
+        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl_3, tcyfs_list)
+        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl_4, tcyfs_list)
+        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl_5, tcyfs_list)
+        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl_6, tcyfs_list)
+        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl_7, tcyfs_list)
+        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl_8, tcyfs_list)
+        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl_9, tcyfs_list)
+        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl_10, tcyfs_list)
 
         '累加
         For i = 1 To 31 '第1年到第31年
@@ -690,7 +787,6 @@
         ans(2) = SYJZ
         Return ans
     End Function
-
     Function 折旧摊销计算_年数总和法(zcyz As Double, zjtxnx_0 As Integer, ksnf_0 As Integer, jsnx As Integer,
                                      czl As Double, tcyfs_list As Array)
         'zcyz：资产原值
@@ -734,8 +830,8 @@
                     '还剩余的可以折旧摊销的资产
                     Dim SYKZJTX As Double = zcyz * (1 - czl) - YJZJTX
                     '计算逐年折旧率
-                    ZJL(i) = (zjtxnx - (i - ksnf + 1) + 2) * (1 - czl) / NFH
-                    '当年折旧摊销费金额，每年是定值
+                    ZJL(i) = Math.Max((zjtxnx - (i - ksnf + 1) + 2) * (1 - czl) / NFH, 0)
+                    '当年折旧摊销费金额
                     ZJTXF(i) = Math.Min(zcyz * ZJL(i), SYKZJTX)
                     '已经折旧摊销的资产累计
                     YJZJTX += ZJTXF(i)

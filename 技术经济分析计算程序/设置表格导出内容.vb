@@ -4,7 +4,7 @@ Imports Microsoft.Office.Interop.Excel
 Imports System.IO
 Imports System.Windows.Forms
 
-Public Class 经济评价表格导出
+Public Class 设置表格导出内容
     Private Sub 确定_Click(sender As Object, e As EventArgs) Handles 确定.Click
         On Error Resume Next
         '定义Excel对象
@@ -730,7 +730,7 @@ Public Class 经济评价表格导出
         Me.Close()
     End Sub
 
-    Private Sub 经济评价表格导出_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub 设置表格导出内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Checkbox1.Checked = True
         Me.CheckBox2.Checked = True
         Me.CheckBox3.Checked = True

@@ -1,4 +1,4 @@
-﻿Public Class 建设期资金运用方式设置
+﻿Public Class 设置建设期资金运用方式
     Sub 建设期默认资金运用模式(ZBJBL As Double, DKLL As Double)
         '每次投资的资本金比例和建设期贷款利率均相同，资本金比例为占动态投资比例
         On Error Resume Next
@@ -42,9 +42,13 @@
         Dim clfl_qtfl_model As Integer = 1
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim sdsl_model As Integer = 1
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
         '————————————————————————————————————————————————————————————————————————————————————————
         '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
         '——————————————————————————————————————————————————————————————————————————————————————
         '在表格中写入当前采用的资金运用模式
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
@@ -143,9 +147,13 @@
             Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
@@ -305,9 +313,13 @@
             Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
@@ -497,9 +509,13 @@
             Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
@@ -554,7 +570,7 @@
         End If
     End Sub
 
-    Private Sub 每次投资设置不同的资本金比例和建设期贷款利率_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub 设置建设期资金运用方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象

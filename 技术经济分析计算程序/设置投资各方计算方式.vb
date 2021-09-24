@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
-Public Class 投资各方计算方式设置
+Public Class 设置投资各方计算方式
     Private Sub 确定参数_Click(sender As Object, e As EventArgs) Handles 确定参数.Click
         On Error Resume Next
         '定义Excel对象
@@ -224,7 +224,7 @@ Public Class 投资各方计算方式设置
         Me.Close()
     End Sub
 
-    Private Sub 投资各方设置不同的出资比例资产处置比例和利润分配比例_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub 设置投资各方计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象

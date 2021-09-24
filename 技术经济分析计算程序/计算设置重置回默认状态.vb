@@ -55,6 +55,10 @@ Module 计算设置重置回默认状态
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(54, 18).Value = "常规设置"
         '材料费其它费
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(55, 18).Value = "常规设置"
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '光伏、风电修理费计算基数设置
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)"
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)"
     End Sub
     Sub 计算设置重置回默认状态_part2(ExcelApp As Object)
         On Error Resume Next
@@ -379,11 +383,15 @@ Module 计算设置重置回默认状态
                     '蓄电池修理费率（%）
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_mr_list(i - 2)
                     '光伏设备修理费率（%）
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_mr_list(i - 2)
+                    If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_mr_list(i - 2)
+                    End If
                     '暖通设备修理费率（%）
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(157, i).Value = xlfl_nt_mr_list(i - 2)
                     '风电设备修理费率（%）
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = xlfl_fd_mr_list(i - 2)
+                    If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = xlfl_fd_mr_list(i - 2)
+                    End If
                 Else
                     '常规设备修理费率（%）
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
@@ -399,6 +407,21 @@ Module 计算设置重置回默认状态
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = 0
                 End If
             Next
+            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            '其它设备计算基数扣除默认设置
+            Dim kcje_mr = 设备修理费计算基数扣除默认设置(ExcelApp)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = kcje_mr(0)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = kcje_mr(1)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = kcje_mr(2)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 6).Value = kcje_mr(3)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 7).Value = kcje_mr(4)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 8).Value = kcje_mr(5)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = kcje_mr(6)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = kcje_mr(7)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = kcje_mr(8)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = kcje_mr(9)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = kcje_mr(10)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = kcje_mr(11)
         End If
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '材料费率、其它费率重置回默认值
@@ -449,6 +472,23 @@ Module 计算设置重置回默认状态
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = 0
                 End If
             Next
+            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            Dim kcje_mr = 材料费其它费计算基数扣除默认设置(ExcelApp)
+            '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = kcje_mr(0)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = kcje_mr(1)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value = kcje_mr(2)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value = kcje_mr(3)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value = kcje_mr(4)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value = kcje_mr(5)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value = kcje_mr(6)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value = kcje_mr(7)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = kcje_mr(8)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value = kcje_mr(9)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value = kcje_mr(10)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value = kcje_mr(11)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value = kcje_mr(12)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value = kcje_mr(13)
         End If
         '————————————————————————————————————————————————————————————————————————————————————————      
         '计算一次工作簿

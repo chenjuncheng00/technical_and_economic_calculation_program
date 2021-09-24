@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 折旧摊销计算方式设置
+Partial Class 设置折旧摊销计算方式
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -785,7 +785,7 @@ Partial Class 折旧摊销计算方式设置
         Me.回收固定资产残值.Text = "回收固定资产残值"
         Me.回收固定资产残值.UseVisualStyleBackColor = False
         '
-        '每次投资设置不同的折旧摊销计算方式
+        '设置折旧摊销计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -859,9 +859,9 @@ Partial Class 折旧摊销计算方式设置
         Me.Controls.Add(Me.gdzczjnx1)
         Me.Controls.Add(Me.Label22)
         Me.Margin = New System.Windows.Forms.Padding(6)
-        Me.Name = "每次投资设置不同的折旧摊销计算方式"
+        Me.Name = "设置折旧摊销计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "每次投资设置不同的折旧摊销计算方式"
+        Me.Text = "设置折旧摊销计算方式"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

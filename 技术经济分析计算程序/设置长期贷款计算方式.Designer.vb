@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 长期贷款计算方式设置
+Partial Class 设置长期贷款计算方式
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -73,189 +73,210 @@ Partial Class 长期贷款计算方式设置
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label22.Location = New System.Drawing.Point(137, 23)
+        Me.Label22.Location = New System.Drawing.Point(274, 46)
+        Me.Label22.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(297, 16)
+        Me.Label22.Size = New System.Drawing.Size(576, 33)
         Me.Label22.TabIndex = 70
         Me.Label22.Text = "每次投资设置不同的长期贷款还款年限"
         '
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(17, 52)
+        Me.Label3.Location = New System.Drawing.Point(34, 104)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(184, 28)
+        Me.Label3.Size = New System.Drawing.Size(368, 56)
         Me.Label3.TabIndex = 73
         Me.Label3.Text = "第1次投资长期贷款还款年限(年)"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx1
         '
-        Me.cqdkhknx1.Location = New System.Drawing.Point(206, 57)
+        Me.cqdkhknx1.Location = New System.Drawing.Point(412, 114)
+        Me.cqdkhknx1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx1.Name = "cqdkhknx1"
-        Me.cqdkhknx1.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx1.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx1.TabIndex = 72
         Me.cqdkhknx1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(285, 52)
+        Me.Label1.Location = New System.Drawing.Point(570, 104)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(185, 28)
+        Me.Label1.Size = New System.Drawing.Size(370, 56)
         Me.Label1.TabIndex = 75
         Me.Label1.Text = "第2次投资长期贷款还款年限(年)"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx2
         '
-        Me.cqdkhknx2.Location = New System.Drawing.Point(476, 57)
+        Me.cqdkhknx2.Location = New System.Drawing.Point(952, 114)
+        Me.cqdkhknx2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx2.Name = "cqdkhknx2"
-        Me.cqdkhknx2.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx2.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx2.TabIndex = 74
         Me.cqdkhknx2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(17, 80)
+        Me.Label2.Location = New System.Drawing.Point(34, 160)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(184, 28)
+        Me.Label2.Size = New System.Drawing.Size(368, 56)
         Me.Label2.TabIndex = 77
         Me.Label2.Text = "第3次投资长期贷款还款年限(年)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx3
         '
-        Me.cqdkhknx3.Location = New System.Drawing.Point(206, 85)
+        Me.cqdkhknx3.Location = New System.Drawing.Point(412, 170)
+        Me.cqdkhknx3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx3.Name = "cqdkhknx3"
-        Me.cqdkhknx3.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx3.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx3.TabIndex = 76
         Me.cqdkhknx3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label4.Location = New System.Drawing.Point(285, 80)
+        Me.Label4.Location = New System.Drawing.Point(570, 160)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(185, 28)
+        Me.Label4.Size = New System.Drawing.Size(370, 56)
         Me.Label4.TabIndex = 79
         Me.Label4.Text = "第4次投资长期贷款还款年限(年)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx4
         '
-        Me.cqdkhknx4.Location = New System.Drawing.Point(476, 85)
+        Me.cqdkhknx4.Location = New System.Drawing.Point(952, 170)
+        Me.cqdkhknx4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx4.Name = "cqdkhknx4"
-        Me.cqdkhknx4.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx4.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx4.TabIndex = 78
         Me.cqdkhknx4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(17, 109)
+        Me.Label5.Location = New System.Drawing.Point(34, 218)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(184, 28)
+        Me.Label5.Size = New System.Drawing.Size(368, 56)
         Me.Label5.TabIndex = 81
         Me.Label5.Text = "第5次投资长期贷款还款年限(年)"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx5
         '
-        Me.cqdkhknx5.Location = New System.Drawing.Point(206, 114)
+        Me.cqdkhknx5.Location = New System.Drawing.Point(412, 228)
+        Me.cqdkhknx5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx5.Name = "cqdkhknx5"
-        Me.cqdkhknx5.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx5.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx5.TabIndex = 80
         Me.cqdkhknx5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(285, 109)
+        Me.Label6.Location = New System.Drawing.Point(570, 218)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(185, 28)
+        Me.Label6.Size = New System.Drawing.Size(370, 56)
         Me.Label6.TabIndex = 83
         Me.Label6.Text = "第6次投资长期贷款还款年限(年)"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx6
         '
-        Me.cqdkhknx6.Location = New System.Drawing.Point(476, 114)
+        Me.cqdkhknx6.Location = New System.Drawing.Point(952, 228)
+        Me.cqdkhknx6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx6.Name = "cqdkhknx6"
-        Me.cqdkhknx6.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx6.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx6.TabIndex = 82
         Me.cqdkhknx6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label7.Location = New System.Drawing.Point(17, 138)
+        Me.Label7.Location = New System.Drawing.Point(34, 276)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(184, 28)
+        Me.Label7.Size = New System.Drawing.Size(368, 56)
         Me.Label7.TabIndex = 85
         Me.Label7.Text = "第7次投资长期贷款还款年限(年)"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx7
         '
-        Me.cqdkhknx7.Location = New System.Drawing.Point(206, 143)
+        Me.cqdkhknx7.Location = New System.Drawing.Point(412, 286)
+        Me.cqdkhknx7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx7.Name = "cqdkhknx7"
-        Me.cqdkhknx7.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx7.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx7.TabIndex = 84
         Me.cqdkhknx7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label8.Location = New System.Drawing.Point(285, 138)
+        Me.Label8.Location = New System.Drawing.Point(570, 276)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(185, 28)
+        Me.Label8.Size = New System.Drawing.Size(370, 56)
         Me.Label8.TabIndex = 87
         Me.Label8.Text = "第8次投资长期贷款还款年限(年)"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx8
         '
-        Me.cqdkhknx8.Location = New System.Drawing.Point(476, 143)
+        Me.cqdkhknx8.Location = New System.Drawing.Point(952, 286)
+        Me.cqdkhknx8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx8.Name = "cqdkhknx8"
-        Me.cqdkhknx8.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx8.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx8.TabIndex = 86
         Me.cqdkhknx8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label9.Location = New System.Drawing.Point(17, 166)
+        Me.Label9.Location = New System.Drawing.Point(34, 332)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(184, 28)
+        Me.Label9.Size = New System.Drawing.Size(368, 56)
         Me.Label9.TabIndex = 89
         Me.Label9.Text = "第9次投资长期贷款还款年限(年)"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx9
         '
-        Me.cqdkhknx9.Location = New System.Drawing.Point(206, 171)
+        Me.cqdkhknx9.Location = New System.Drawing.Point(412, 342)
+        Me.cqdkhknx9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx9.Name = "cqdkhknx9"
-        Me.cqdkhknx9.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx9.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx9.TabIndex = 88
         Me.cqdkhknx9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label10.Location = New System.Drawing.Point(285, 166)
+        Me.Label10.Location = New System.Drawing.Point(570, 332)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(192, 28)
+        Me.Label10.Size = New System.Drawing.Size(384, 56)
         Me.Label10.TabIndex = 91
         Me.Label10.Text = "第10次投资长期贷款还款年限(年)"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cqdkhknx10
         '
-        Me.cqdkhknx10.Location = New System.Drawing.Point(476, 171)
+        Me.cqdkhknx10.Location = New System.Drawing.Point(952, 342)
+        Me.cqdkhknx10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.cqdkhknx10.Name = "cqdkhknx10"
-        Me.cqdkhknx10.Size = New System.Drawing.Size(73, 21)
+        Me.cqdkhknx10.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx10.TabIndex = 90
         Me.cqdkhknx10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -263,9 +284,10 @@ Partial Class 长期贷款计算方式设置
         '
         Me.确定计算方式.BackColor = System.Drawing.SystemColors.ControlLight
         Me.确定计算方式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.确定计算方式.Location = New System.Drawing.Point(29, 402)
+        Me.确定计算方式.Location = New System.Drawing.Point(58, 804)
+        Me.确定计算方式.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.确定计算方式.Name = "确定计算方式"
-        Me.确定计算方式.Size = New System.Drawing.Size(152, 54)
+        Me.确定计算方式.Size = New System.Drawing.Size(304, 108)
         Me.确定计算方式.TabIndex = 132
         Me.确定计算方式.Text = "确定计算方式"
         Me.确定计算方式.UseVisualStyleBackColor = False
@@ -274,9 +296,10 @@ Partial Class 长期贷款计算方式设置
         '
         Me.清空窗体数据.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空窗体数据.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空窗体数据.Location = New System.Drawing.Point(381, 402)
+        Me.清空窗体数据.Location = New System.Drawing.Point(762, 804)
+        Me.清空窗体数据.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.清空窗体数据.Name = "清空窗体数据"
-        Me.清空窗体数据.Size = New System.Drawing.Size(152, 54)
+        Me.清空窗体数据.Size = New System.Drawing.Size(304, 108)
         Me.清空窗体数据.TabIndex = 135
         Me.清空窗体数据.Text = "清空窗体数据"
         Me.清空窗体数据.UseVisualStyleBackColor = False
@@ -285,9 +308,10 @@ Partial Class 长期贷款计算方式设置
         '
         Me.重置回默认方式.BackColor = System.Drawing.SystemColors.ControlLight
         Me.重置回默认方式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.重置回默认方式.Location = New System.Drawing.Point(206, 402)
+        Me.重置回默认方式.Location = New System.Drawing.Point(412, 804)
+        Me.重置回默认方式.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.重置回默认方式.Name = "重置回默认方式"
-        Me.重置回默认方式.Size = New System.Drawing.Size(152, 54)
+        Me.重置回默认方式.Size = New System.Drawing.Size(304, 108)
         Me.重置回默认方式.TabIndex = 134
         Me.重置回默认方式.Text = "重置回默认方式"
         Me.重置回默认方式.UseVisualStyleBackColor = False
@@ -295,9 +319,10 @@ Partial Class 长期贷款计算方式设置
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label11.Location = New System.Drawing.Point(17, 240)
+        Me.Label11.Location = New System.Drawing.Point(34, 480)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(184, 28)
+        Me.Label11.Size = New System.Drawing.Size(368, 56)
         Me.Label11.TabIndex = 136
         Me.Label11.Text = "第1次投资长期贷款宽限年限(年)"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -305,9 +330,10 @@ Partial Class 长期贷款计算方式设置
         'Label12
         '
         Me.Label12.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label12.Location = New System.Drawing.Point(285, 240)
+        Me.Label12.Location = New System.Drawing.Point(570, 480)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(184, 28)
+        Me.Label12.Size = New System.Drawing.Size(368, 56)
         Me.Label12.TabIndex = 137
         Me.Label12.Text = "第2次投资长期贷款宽限年限(年)"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -315,9 +341,10 @@ Partial Class 长期贷款计算方式设置
         'Label13
         '
         Me.Label13.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label13.Location = New System.Drawing.Point(17, 271)
+        Me.Label13.Location = New System.Drawing.Point(34, 542)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(184, 28)
+        Me.Label13.Size = New System.Drawing.Size(368, 56)
         Me.Label13.TabIndex = 138
         Me.Label13.Text = "第3次投资长期贷款宽限年限(年)"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -325,83 +352,93 @@ Partial Class 长期贷款计算方式设置
         'Label14
         '
         Me.Label14.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label14.Location = New System.Drawing.Point(285, 271)
+        Me.Label14.Location = New System.Drawing.Point(570, 542)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(184, 28)
+        Me.Label14.Size = New System.Drawing.Size(368, 56)
         Me.Label14.TabIndex = 139
         Me.Label14.Text = "第4次投资长期贷款宽限年限(年)"
         Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'kxnx1
         '
-        Me.kxnx1.Location = New System.Drawing.Point(206, 245)
+        Me.kxnx1.Location = New System.Drawing.Point(412, 490)
+        Me.kxnx1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx1.Name = "kxnx1"
-        Me.kxnx1.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx1.Size = New System.Drawing.Size(142, 35)
         Me.kxnx1.TabIndex = 140
         Me.kxnx1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx2
         '
-        Me.kxnx2.Location = New System.Drawing.Point(476, 245)
+        Me.kxnx2.Location = New System.Drawing.Point(952, 490)
+        Me.kxnx2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx2.Name = "kxnx2"
-        Me.kxnx2.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx2.Size = New System.Drawing.Size(142, 35)
         Me.kxnx2.TabIndex = 141
         Me.kxnx2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx3
         '
-        Me.kxnx3.Location = New System.Drawing.Point(206, 276)
+        Me.kxnx3.Location = New System.Drawing.Point(412, 552)
+        Me.kxnx3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx3.Name = "kxnx3"
-        Me.kxnx3.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx3.Size = New System.Drawing.Size(142, 35)
         Me.kxnx3.TabIndex = 142
         Me.kxnx3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx4
         '
-        Me.kxnx4.Location = New System.Drawing.Point(476, 276)
+        Me.kxnx4.Location = New System.Drawing.Point(952, 552)
+        Me.kxnx4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx4.Name = "kxnx4"
-        Me.kxnx4.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx4.Size = New System.Drawing.Size(142, 35)
         Me.kxnx4.TabIndex = 143
         Me.kxnx4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx8
         '
-        Me.kxnx8.Location = New System.Drawing.Point(476, 337)
+        Me.kxnx8.Location = New System.Drawing.Point(952, 674)
+        Me.kxnx8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx8.Name = "kxnx8"
-        Me.kxnx8.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx8.Size = New System.Drawing.Size(142, 35)
         Me.kxnx8.TabIndex = 151
         Me.kxnx8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx7
         '
-        Me.kxnx7.Location = New System.Drawing.Point(206, 337)
+        Me.kxnx7.Location = New System.Drawing.Point(412, 674)
+        Me.kxnx7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx7.Name = "kxnx7"
-        Me.kxnx7.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx7.Size = New System.Drawing.Size(142, 35)
         Me.kxnx7.TabIndex = 150
         Me.kxnx7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx6
         '
-        Me.kxnx6.Location = New System.Drawing.Point(476, 306)
+        Me.kxnx6.Location = New System.Drawing.Point(952, 612)
+        Me.kxnx6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx6.Name = "kxnx6"
-        Me.kxnx6.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx6.Size = New System.Drawing.Size(142, 35)
         Me.kxnx6.TabIndex = 149
         Me.kxnx6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx5
         '
-        Me.kxnx5.Location = New System.Drawing.Point(206, 306)
+        Me.kxnx5.Location = New System.Drawing.Point(412, 612)
+        Me.kxnx5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx5.Name = "kxnx5"
-        Me.kxnx5.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx5.Size = New System.Drawing.Size(142, 35)
         Me.kxnx5.TabIndex = 148
         Me.kxnx5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label15
         '
         Me.Label15.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label15.Location = New System.Drawing.Point(285, 332)
+        Me.Label15.Location = New System.Drawing.Point(570, 664)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(184, 28)
+        Me.Label15.Size = New System.Drawing.Size(368, 56)
         Me.Label15.TabIndex = 147
         Me.Label15.Text = "第8次投资长期贷款宽限年限(年)"
         Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -409,9 +446,10 @@ Partial Class 长期贷款计算方式设置
         'Label16
         '
         Me.Label16.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label16.Location = New System.Drawing.Point(17, 332)
+        Me.Label16.Location = New System.Drawing.Point(34, 664)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(184, 28)
+        Me.Label16.Size = New System.Drawing.Size(368, 56)
         Me.Label16.TabIndex = 146
         Me.Label16.Text = "第7次投资长期贷款宽限年限(年)"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -419,9 +457,10 @@ Partial Class 长期贷款计算方式设置
         'Label17
         '
         Me.Label17.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label17.Location = New System.Drawing.Point(285, 301)
+        Me.Label17.Location = New System.Drawing.Point(570, 602)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(184, 28)
+        Me.Label17.Size = New System.Drawing.Size(368, 56)
         Me.Label17.TabIndex = 145
         Me.Label17.Text = "第6次投资长期贷款宽限年限(年)"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -429,9 +468,10 @@ Partial Class 长期贷款计算方式设置
         'Label18
         '
         Me.Label18.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label18.Location = New System.Drawing.Point(17, 301)
+        Me.Label18.Location = New System.Drawing.Point(34, 602)
+        Me.Label18.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(184, 28)
+        Me.Label18.Size = New System.Drawing.Size(368, 56)
         Me.Label18.TabIndex = 144
         Me.Label18.Text = "第5次投资长期贷款宽限年限(年)"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -440,34 +480,38 @@ Partial Class 长期贷款计算方式设置
         '
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(137, 210)
+        Me.Label19.Location = New System.Drawing.Point(274, 420)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(297, 16)
+        Me.Label19.Size = New System.Drawing.Size(576, 33)
         Me.Label19.TabIndex = 152
         Me.Label19.Text = "每次投资设置不同的长期贷款宽限年限"
         '
         'kxnx10
         '
-        Me.kxnx10.Location = New System.Drawing.Point(476, 365)
+        Me.kxnx10.Location = New System.Drawing.Point(952, 730)
+        Me.kxnx10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx10.Name = "kxnx10"
-        Me.kxnx10.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx10.Size = New System.Drawing.Size(142, 35)
         Me.kxnx10.TabIndex = 156
         Me.kxnx10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'kxnx9
         '
-        Me.kxnx9.Location = New System.Drawing.Point(206, 365)
+        Me.kxnx9.Location = New System.Drawing.Point(412, 730)
+        Me.kxnx9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
         Me.kxnx9.Name = "kxnx9"
-        Me.kxnx9.Size = New System.Drawing.Size(73, 21)
+        Me.kxnx9.Size = New System.Drawing.Size(142, 35)
         Me.kxnx9.TabIndex = 155
         Me.kxnx9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label20
         '
         Me.Label20.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label20.Location = New System.Drawing.Point(283, 360)
+        Me.Label20.Location = New System.Drawing.Point(566, 720)
+        Me.Label20.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(194, 28)
+        Me.Label20.Size = New System.Drawing.Size(388, 56)
         Me.Label20.TabIndex = 154
         Me.Label20.Text = "第10次投资长期贷款宽限年限(年)"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -475,18 +519,19 @@ Partial Class 长期贷款计算方式设置
         'Label21
         '
         Me.Label21.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label21.Location = New System.Drawing.Point(17, 360)
+        Me.Label21.Location = New System.Drawing.Point(34, 720)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(184, 28)
+        Me.Label21.Size = New System.Drawing.Size(368, 56)
         Me.Label21.TabIndex = 153
         Me.Label21.Text = "第9次投资长期贷款宽限年限(年)"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        '每次投资设置不同的长期贷款还款和宽限年限
+        '设置长期贷款计算方式
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(564, 471)
+        Me.ClientSize = New System.Drawing.Size(1128, 942)
         Me.Controls.Add(Me.kxnx10)
         Me.Controls.Add(Me.kxnx9)
         Me.Controls.Add(Me.Label20)
@@ -532,9 +577,10 @@ Partial Class 长期贷款计算方式设置
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cqdkhknx1)
         Me.Controls.Add(Me.Label22)
-        Me.Name = "每次投资设置不同的长期贷款还款和宽限年限"
+        Me.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Name = "设置长期贷款计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "每次投资设置不同的长期贷款还款和宽限年限"
+        Me.Text = "设置长期贷款计算方式"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

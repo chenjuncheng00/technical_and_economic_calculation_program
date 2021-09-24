@@ -1,5 +1,5 @@
-﻿Public Class 收入和成本计算年限设置
-    Private Sub 设置部分销售收入和经营成本计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+﻿Public Class 设置收入和成本计算年限
+    Private Sub 设置收入和成本计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
@@ -33,9 +33,9 @@
         '载入默认值
         '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
         Dim JSKSNF As Integer = 0
-        For i = 3 To 33
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value > 0 Then
-                JSKSNF = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i).Value
+        For i = 1 To 15
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
+                JSKSNF = i
                 Exit For
             End If
         Next

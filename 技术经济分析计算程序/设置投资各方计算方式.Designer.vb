@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 投资各方计算方式设置
+Partial Class 设置投资各方计算方式
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -309,7 +309,7 @@ Partial Class 投资各方计算方式设置
         Me.确定参数.Text = "确定参数"
         Me.确定参数.UseVisualStyleBackColor = False
         '
-        '投资各方设置不同的出资比例资产处置比例和利润分配比例
+        '设置投资各方计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -340,9 +340,9 @@ Partial Class 投资各方计算方式设置
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.czbl1)
-        Me.Name = "投资各方设置不同的出资比例资产处置比例和利润分配比例"
+        Me.Name = "设置投资各方计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "投资各方设置不同的出资比例资产处置比例和利润分配比例"
+        Me.Text = "设置投资各方计算方式"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

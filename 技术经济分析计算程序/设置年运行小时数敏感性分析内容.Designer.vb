@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 年运行小时数敏感性分析设置
+Partial Class 设置年运行小时数敏感性分析内容
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -399,7 +399,7 @@ Partial Class 年运行小时数敏感性分析设置
         Me.确定参数.Text = "确定参数"
         Me.确定参数.UseVisualStyleBackColor = False
         '
-        '年运行小时数敏感性分析设置
+        '设置年运行小时数敏感性分析内容
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -433,9 +433,9 @@ Partial Class 年运行小时数敏感性分析设置
         Me.Controls.Add(Me.sr2)
         Me.Controls.Add(Me.sr1)
         Me.Controls.Add(Me.确定参数)
-        Me.Name = "年运行小时数敏感性分析设置"
+        Me.Name = "设置年运行小时数敏感性分析内容"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "年运行小时数敏感性分析设置"
+        Me.Text = "设置年运行小时数敏感性分析内容"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

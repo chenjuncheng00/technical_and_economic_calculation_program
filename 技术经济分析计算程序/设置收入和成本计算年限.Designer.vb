@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 收入和成本计算年限设置
+Partial Class 设置收入和成本计算年限
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -304,7 +304,7 @@ Partial Class 收入和成本计算年限设置
         Me.CheckBox3.Text = "充电桩收入逐年计算系数是否乘以逐年负荷达产率？"
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
-        '收入和成本计算年限设置
+        '设置收入和成本计算年限
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -333,9 +333,9 @@ Partial Class 收入和成本计算年限设置
         Me.Controls.Add(Me.ksnf3)
         Me.Controls.Add(Me.ksnf2)
         Me.Controls.Add(Me.ksnf1)
-        Me.Name = "收入和成本计算年限设置"
+        Me.Name = "设置收入和成本计算年限"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "设置部分销售收入和经营成本计算年限"
+        Me.Text = "设置收入和成本计算年限"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

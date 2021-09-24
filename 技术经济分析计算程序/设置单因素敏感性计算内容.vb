@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 
-Public Class 选择单因素敏感性分析内容
-    Private Sub 选择单因素敏感性分析内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+Public Class 设置单因素敏感性计算内容
+    Private Sub 设置单因素敏感性计算内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
@@ -614,7 +614,7 @@ Public Class 选择单因素敏感性分析内容
     Private Sub 运行小时数敏感性分析设置_Click(sender As Object, e As EventArgs) Handles 运行小时数敏感性分析设置.Click
         On Error Resume Next
         If Me.nyxxss_text.Text <> Nothing And Me.nyxxss_check.Checked = True Then
-            Dim nyxxss_set As New 年运行小时数敏感性分析设置
+            Dim nyxxss_set As New 设置年运行小时数敏感性分析内容
             nyxxss_set.Show()
             nyxxss_set.TopMost = True
         Else

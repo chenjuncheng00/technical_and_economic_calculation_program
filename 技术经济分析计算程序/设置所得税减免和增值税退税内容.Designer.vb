@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class 设置所得税减免和增值税退税包含内容
+Partial Class 设置所得税减免和增值税退税内容
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -1735,7 +1735,7 @@ Partial Class 设置所得税减免和增值税退税包含内容
         Me.Label62.Text = "设置风力发电所得税减免和增值税退税参数"
         Me.Label62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        '设置所得税减免和增值税退税包含内容
+        '设置所得税减免和增值税退税内容
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1889,9 +1889,9 @@ Partial Class 设置所得税减免和增值税退税包含内容
         Me.Controls.Add(Me.收入3)
         Me.Controls.Add(Me.收入2)
         Me.Controls.Add(Me.收入1)
-        Me.Name = "设置所得税减免和增值税退税包含内容"
+        Me.Name = "设置所得税减免和增值税退税内容"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "设置所得税减免和增值税退税包含内容"
+        Me.Text = "设置所得税减免和增值税退税内容"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Office.Interop.Excel
-Public Class 年运行小时数敏感性分析设置
-    Private Sub 年运行小时数敏感性分析设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+Public Class 设置年运行小时数敏感性分析内容
+    Private Sub 设置年运行小时数敏感性分析内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象

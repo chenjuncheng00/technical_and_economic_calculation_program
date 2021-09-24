@@ -1,7 +1,8 @@
 ﻿Module 材料费其它费计算
-    Sub 材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer)
+    Sub 材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer)
         On Error Resume Next
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '读取材料费其它费计算默认值
         Dim clqtfl = 默认逐年材料费率其它费率(ExcelApp)
@@ -63,6 +64,56 @@
             Next
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
+        '设备材料费其它费计算基数扣除计算模式
+        Dim yynx_rj As Integer
+        Dim yynx_xdc As Integer
+        Dim yynx_nt As Integer
+        Dim yynx_gf As Integer
+        Dim yynx_rm As Integer
+        Dim yynx_fd As Integer
+        Dim yynx_ljfd As Integer
+        Dim kcbl_rj As Double
+        Dim kcbl_xdc As Double
+        Dim kcbl_nt As Double
+        Dim kcbl_gf As Double
+        Dim kcbl_rm As Double
+        Dim kcbl_fd As Double
+        Dim kcbl_ljfd As Double
+        Dim kcje_mr = 材料费其它费计算基数扣除默认设置(ExcelApp)
+        If kcje_clf_qtf_model = 0 Then
+            yynx_rj = kcje_mr(0)
+            yynx_xdc = kcje_mr(1)
+            yynx_nt = kcje_mr(2)
+            yynx_gf = kcje_mr(3)
+            yynx_rm = kcje_mr(4)
+            yynx_fd = kcje_mr(5)
+            yynx_ljfd = kcje_mr(6)
+            kcbl_rj = kcje_mr(7)
+            kcbl_xdc = kcje_mr(8)
+            kcbl_nt = kcje_mr(9)
+            kcbl_gf = kcje_mr(10)
+            kcbl_rm = kcje_mr(11)
+            kcbl_fd = kcje_mr(12)
+            kcbl_ljfd = kcje_mr(13)
+        Else
+            yynx_rj = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value
+            yynx_xdc = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value
+            yynx_nt = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value
+            yynx_gf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value
+            yynx_rm = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value
+            yynx_fd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value
+            yynx_ljfd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value
+            kcbl_rj = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value
+            kcbl_xdc = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value
+            kcbl_nt = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value
+            kcbl_gf = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value
+            kcbl_rm = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value
+            kcbl_fd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value
+            kcbl_ljfd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '材料费其它费计算模式
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
@@ -70,6 +121,9 @@
         '燃机总发电量(万kWh)，10次投资的情况
         Dim rjfdl = GSBSJ(11)
         Dim rjfdl_list = 基础计算功能_10_to_31(tznf_list, rjfdl)
+        '蓄电池总发电量(万kWh)，10次投资的情况
+        Dim xdcfdl = GSBSJ(13)
+        Dim xdcfdl_list = 基础计算功能_10_to_31(tznf_list, xdcfdl)
         '供冷供热总量(万kWh)，10次投资的情况
         Dim glgrl = GSBSJ(15)
         Dim glgrl_list = 基础计算功能_10_to_31(tznf_list, glgrl)
@@ -87,8 +141,38 @@
         Dim ljfdl_list = 基础计算功能_10_to_31(tznf_list, ljfdl)
         '读取逐年负荷率
         Dim fhl_list = 读取逐年负荷率(ExcelApp)
-        '项目计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '根据扣除设置，修改逐年计算基数
+        '燃机
+        Dim ans_clfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, clfl_rj_list, yynx_rj, kcbl_rj)
+        Dim ans_qtfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, qtfl_rj_list, yynx_rj, kcbl_rj)
+        clfl_rj_list = ans_clfl_rj(0)
+        qtfl_rj_list = ans_qtfl_rj(0)
+        '暖通
+        Dim ans_clfl_nt = 计算费率修正计算基础功能(tznf_list, glgrl, glgrl_list, clfl_glgr_list, yynx_nt, kcbl_nt)
+        Dim ans_qtfl_nt = 计算费率修正计算基础功能(tznf_list, glgrl, glgrl_list, qtfl_glgr_list, yynx_nt, kcbl_nt)
+        clfl_glgr_list = ans_clfl_nt(0)
+        qtfl_glgr_list = ans_qtfl_nt(0)
+        '光伏
+        Dim ans_clfl_gf = 计算费率修正计算基础功能(tznf_list, gfzjgl, gfzjgl_list, clfl_gf_list, yynx_gf, kcbl_gf)
+        Dim ans_qtfl_gf = 计算费率修正计算基础功能(tznf_list, gfzjgl, gfzjgl_list, qtfl_gf_list, yynx_gf, kcbl_gf)
+        clfl_gf_list = ans_clfl_gf(0)
+        qtfl_gf_list = ans_qtfl_gf(0)
+        '燃煤
+        Dim ans_clfl_rm = 计算费率修正计算基础功能(tznf_list, rmfdl, rmfdl_list, clfl_rm_list, yynx_rm, kcbl_rm)
+        Dim ans_qtfl_rm = 计算费率修正计算基础功能(tznf_list, rmfdl, rmfdl_list, qtfl_rm_list, yynx_rm, kcbl_rm)
+        clfl_rm_list = ans_clfl_rm(0)
+        qtfl_rm_list = ans_qtfl_rm(0)
+        '风电
+        Dim ans_clfl_fd = 计算费率修正计算基础功能(tznf_list, fdzjgl, fdzjgl_list, clfl_fd_list, yynx_fd, kcbl_fd)
+        Dim ans_qtfl_fd = 计算费率修正计算基础功能(tznf_list, fdzjgl, fdzjgl_list, qtfl_fd_list, yynx_fd, kcbl_fd)
+        clfl_fd_list = ans_clfl_fd(0)
+        qtfl_fd_list = ans_qtfl_fd(0)
+        '垃圾发电
+        Dim ans_clfl_ljfd = 计算费率修正计算基础功能(tznf_list, ljfdl, ljfdl_list, clfl_ljfd_list, yynx_ljfd, kcbl_ljfd)
+        Dim ans_qtfl_ljfd = 计算费率修正计算基础功能(tznf_list, ljfdl, ljfdl_list, qtfl_ljfd_list, yynx_ljfd, kcbl_ljfd)
+        clfl_ljfd_list = ans_clfl_ljfd(0)
+        qtfl_ljfd_list = ans_qtfl_ljfd(0)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算
         Dim ans_clfqtf
@@ -159,6 +243,22 @@
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = 0
             End If
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = yynx_rj
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = yynx_xdc
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value = yynx_nt
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value = yynx_gf
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value = yynx_rm
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value = yynx_fd
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value = yynx_ljfd
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value = kcbl_rj
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = kcbl_xdc
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value = kcbl_nt
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value = kcbl_gf
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value = kcbl_rm
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value = kcbl_fd
+        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value = kcbl_ljfd
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次Excel
         ExcelApp.Calculate()
@@ -361,6 +461,57 @@
         ans(9) = qtfl_glgr_list
         ans(10) = qtfl_gf_list
         ans(11) = qtfl_fd_list
+        Return ans
+    End Function
+    Function 材料费其它费计算基数扣除默认设置(ExcelApp As Object)
+        'yynx_rj：燃机每次投资运营年限数量（年）
+        'yynx_xdc：蓄电池每次投资运营年限数量（年）
+        'yynx_nt：暖通每次投资运营年限数量（年）
+        'yynx_gf：光伏每次投资运营年限数量（年）
+        'yynx_rm：燃煤每次投资运营年限数量（年）
+        'yynx_fd：风电每次投资运营年限数量（年）
+        'yynx_ljfd：垃圾发电每次投资运营年限数量（年）
+        'kcbl_rj：燃机每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_xdc：蓄电池每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_nt：暖通每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_gf：光伏每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_rm：燃煤每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_fd：风电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+        'kcbl_ljfd：垃圾发电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
+
+        '读取计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        Dim yynx_rj As Integer = jsnx - 1
+        Dim yynx_xdc As Integer = 10
+        Dim yynx_nt As Integer = jsnx - 1
+        Dim yynx_gf As Integer = jsnx - 1
+        Dim yynx_rm As Integer = jsnx - 1
+        Dim yynx_fd As Integer = jsnx - 1
+        Dim yynx_ljfd As Integer = jsnx - 1
+        Dim kcbl_rj As Double = 0
+        Dim kcbl_xdc As Double = 1
+        Dim kcbl_nt As Double = 0
+        Dim kcbl_gf As Double = 0
+        Dim kcbl_rm As Double = 0
+        Dim kcbl_fd As Double = 0
+        Dim kcbl_ljfd As Double = 0
+
+        '返回结果
+        Dim ans(13)
+        ans(0) = yynx_rj
+        ans(1) = yynx_xdc
+        ans(2) = yynx_nt
+        ans(3) = yynx_gf
+        ans(4) = yynx_rm
+        ans(5) = yynx_fd
+        ans(6) = yynx_ljfd
+        ans(7) = kcbl_rj
+        ans(8) = kcbl_xdc
+        ans(9) = kcbl_nt
+        ans(10) = kcbl_gf
+        ans(11) = kcbl_rm
+        ans(12) = kcbl_fd
+        ans(13) = kcbl_ljfd
         Return ans
     End Function
 End Module

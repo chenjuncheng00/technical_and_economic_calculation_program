@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 逐年衰减系数设置
+Partial Class 设置逐年衰减计算方式
     Inherits System.Windows.Forms.Form
     'Form 重写 Dispose，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -479,7 +479,7 @@ Partial Class 逐年衰减系数设置
         Me.蓄电池购电.Text = "蓄电池购电"
         Me.蓄电池购电.UseVisualStyleBackColor = False
         '
-        '逐年衰减系数设置
+        '设置逐年衰减计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -526,9 +526,9 @@ Partial Class 逐年衰减系数设置
         Me.Controls.Add(Me.TextBox1)
         Me.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Margin = New System.Windows.Forms.Padding(6)
-        Me.Name = "逐年衰减系数设置"
+        Me.Name = "设置逐年衰减计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "逐年衰减系数设置"
+        Me.Text = "设置逐年衰减计算方式"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

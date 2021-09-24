@@ -1,5 +1,6 @@
 ﻿Module 计算功能合并整理
-    Sub 确定估算表参数设置(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer, sdsl_model As Integer)
+    Sub 确定估算表参数设置(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
+                           sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '<估算表>中：项目计算年限、长期贷款相关年限、折旧摊销相关年限、可抵扣增值税年限变化后相关计算
@@ -9,13 +10,17 @@
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+
         '————————————————————————————————————————————————————————————————————————————————————————
         Call 年限系数相关计算.年限系数相关计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
-        Call 确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model)
+        Call 确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
         Call 收入成本相关计算(ExcelApp, clfl_qtfl_model)
     End Sub
-    Sub 确定投资数据输入(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer, sdsl_model As Integer)
+    Sub 确定投资数据输入(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
+                         sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer)
         On Error Resume Next
         '包括：改变建设期投资金额数值后相关计算+材料费其它费计算
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -24,9 +29,8 @@
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-
-        '综合达产率计算
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
 
         '————————————————————————————————————————————————————————————————————————————————————————
         '建设期资金运用计算
@@ -38,7 +42,7 @@
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
-        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model)
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim ans_fhl_base = 默认逐年达产率()
         '风电默认逐年负荷率
@@ -76,7 +80,7 @@
         End If
         '—————————————————————————————————————————————————————————————————
         '计算材料费和其它费
-        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model)
+        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '资金筹措表计算
         Call 投资计划与资金筹措表计算(ExcelApp)
@@ -94,7 +98,7 @@
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
-    Sub 建设投资相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer)
+    Sub 建设投资相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer)
         On Error Resume Next
         '仅改变建设期投资金额数值后相关计算
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -103,6 +107,7 @@
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
 
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
@@ -113,7 +118,7 @@
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
-        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model)
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '资金筹措表计算
         Call 投资计划与资金筹措表计算(ExcelApp)
@@ -178,15 +183,16 @@
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
-    Sub 修理费相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer)
+    Sub 修理费相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
 
         '修理费计算
-        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model)
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '增值税相关计算
         Call 增值税相关计算(ExcelApp)
@@ -230,7 +236,8 @@
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
-    Sub 税收相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer, sdsl_model As Integer)
+    Sub 税收相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
+                     sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer)
         On Error Resume Next
         '影响增值税或者所得税的相关内容计算，包括投资相关、收入成本相关的全部内容
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -240,6 +247,8 @@
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
 
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
@@ -250,10 +259,10 @@
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
-        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model)
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算材料费和其它费
-        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model)
+        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '资金筹措表计算
         Call 投资计划与资金筹措表计算(ExcelApp)

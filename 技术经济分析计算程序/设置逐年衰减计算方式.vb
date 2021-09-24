@@ -1,4 +1,4 @@
-﻿Public Class 逐年衰减系数设置
+﻿Public Class 设置逐年衰减计算方式
     Private Sub 光伏发电_Click(sender As Object, e As EventArgs) Handles 光伏发电.Click
         On Error Resume Next
         '定义Excel对象
@@ -351,7 +351,7 @@
             光伏发电.PerformClick()
         End If
     End Sub
-    Private Sub 逐年衰减系数设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub 设置逐年衰减计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
@@ -777,9 +777,9 @@
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
             Dim JSKSNF As Integer = 0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value > 0 Then
-                    JSKSNF = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i).Value
+            For i = 1 To 15
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
+                    JSKSNF = i
                     Exit For
                 End If
             Next
@@ -814,9 +814,9 @@
             Me.gfjsnf.Clear()
             '——————————————————————————————————————————————————————————————————————————————————————————————
             Dim JSKSNF As Integer = 0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value > 0 Then
-                    JSKSNF = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i).Value
+            For i = 1 To 15
+                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
+                    JSKSNF = i
                     Exit For
                 End If
             Next
