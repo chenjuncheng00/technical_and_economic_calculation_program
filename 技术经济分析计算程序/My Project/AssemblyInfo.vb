@@ -7,10 +7,10 @@ Imports System.Runtime.InteropServices
 '查看程序集特性的值
 <Assembly: AssemblyTitle("技术经济分析计算程序")>
 <Assembly: AssemblyDescription("技术经济分析计算程序")>
-<Assembly: AssemblyCompany("ChenJuncheng")>
+<Assembly: AssemblyCompany("陈俊丞")>
 <Assembly: AssemblyProduct("技术经济分析计算程序")>
 <Assembly: AssemblyCopyright("Copyright © 陈俊丞 SINCE 2016")>
-<Assembly: AssemblyTrademark("ChenJuncheng")>
+<Assembly: AssemblyTrademark("陈俊丞")>
 <Assembly: ComVisible(True)>
 '如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 <Assembly: Guid("cd5ec300-13cd-4199-8b3f-8d78a7ffd686")>

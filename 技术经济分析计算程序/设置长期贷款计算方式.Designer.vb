@@ -43,9 +43,9 @@ Partial Class 设置长期贷款计算方式
         Me.cqdkhknx9 = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.cqdkhknx10 = New System.Windows.Forms.TextBox()
-        Me.确定计算方式 = New System.Windows.Forms.Button()
-        Me.清空窗体数据 = New System.Windows.Forms.Button()
-        Me.重置回默认方式 = New System.Windows.Forms.Button()
+        Me.开始计算 = New System.Windows.Forms.Button()
+        Me.清空窗体 = New System.Windows.Forms.Button()
+        Me.重置默认 = New System.Windows.Forms.Button()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -67,6 +67,16 @@ Partial Class 设置长期贷款计算方式
         Me.kxnx9 = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.changgui = New System.Windows.Forms.CheckBox()
+        Me.fengdian = New System.Windows.Forms.CheckBox()
+        Me.guangfu = New System.Windows.Forms.CheckBox()
+        Me.nuantong = New System.Windows.Forms.CheckBox()
+        Me.xudianchi = New System.Windows.Forms.CheckBox()
+        Me.ranji = New System.Windows.Forms.CheckBox()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.写入参数 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label22
@@ -94,7 +104,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx1
         '
         Me.cqdkhknx1.Location = New System.Drawing.Point(412, 114)
-        Me.cqdkhknx1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx1.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx1.Name = "cqdkhknx1"
         Me.cqdkhknx1.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx1.TabIndex = 72
@@ -114,7 +124,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx2
         '
         Me.cqdkhknx2.Location = New System.Drawing.Point(952, 114)
-        Me.cqdkhknx2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx2.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx2.Name = "cqdkhknx2"
         Me.cqdkhknx2.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx2.TabIndex = 74
@@ -134,7 +144,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx3
         '
         Me.cqdkhknx3.Location = New System.Drawing.Point(412, 170)
-        Me.cqdkhknx3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx3.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx3.Name = "cqdkhknx3"
         Me.cqdkhknx3.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx3.TabIndex = 76
@@ -154,7 +164,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx4
         '
         Me.cqdkhknx4.Location = New System.Drawing.Point(952, 170)
-        Me.cqdkhknx4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx4.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx4.Name = "cqdkhknx4"
         Me.cqdkhknx4.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx4.TabIndex = 78
@@ -174,7 +184,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx5
         '
         Me.cqdkhknx5.Location = New System.Drawing.Point(412, 228)
-        Me.cqdkhknx5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx5.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx5.Name = "cqdkhknx5"
         Me.cqdkhknx5.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx5.TabIndex = 80
@@ -194,7 +204,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx6
         '
         Me.cqdkhknx6.Location = New System.Drawing.Point(952, 228)
-        Me.cqdkhknx6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx6.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx6.Name = "cqdkhknx6"
         Me.cqdkhknx6.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx6.TabIndex = 82
@@ -214,7 +224,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx7
         '
         Me.cqdkhknx7.Location = New System.Drawing.Point(412, 286)
-        Me.cqdkhknx7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx7.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx7.Name = "cqdkhknx7"
         Me.cqdkhknx7.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx7.TabIndex = 84
@@ -234,7 +244,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx8
         '
         Me.cqdkhknx8.Location = New System.Drawing.Point(952, 286)
-        Me.cqdkhknx8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx8.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx8.Name = "cqdkhknx8"
         Me.cqdkhknx8.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx8.TabIndex = 86
@@ -254,7 +264,7 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx9
         '
         Me.cqdkhknx9.Location = New System.Drawing.Point(412, 342)
-        Me.cqdkhknx9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx9.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx9.Name = "cqdkhknx9"
         Me.cqdkhknx9.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx9.TabIndex = 88
@@ -274,47 +284,47 @@ Partial Class 设置长期贷款计算方式
         'cqdkhknx10
         '
         Me.cqdkhknx10.Location = New System.Drawing.Point(952, 342)
-        Me.cqdkhknx10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.cqdkhknx10.Margin = New System.Windows.Forms.Padding(6)
         Me.cqdkhknx10.Name = "cqdkhknx10"
         Me.cqdkhknx10.Size = New System.Drawing.Size(142, 35)
         Me.cqdkhknx10.TabIndex = 90
         Me.cqdkhknx10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        '确定计算方式
+        '开始计算
         '
-        Me.确定计算方式.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.确定计算方式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.确定计算方式.Location = New System.Drawing.Point(58, 804)
-        Me.确定计算方式.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
-        Me.确定计算方式.Name = "确定计算方式"
-        Me.确定计算方式.Size = New System.Drawing.Size(304, 108)
-        Me.确定计算方式.TabIndex = 132
-        Me.确定计算方式.Text = "确定计算方式"
-        Me.确定计算方式.UseVisualStyleBackColor = False
+        Me.开始计算.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.开始计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.开始计算.Location = New System.Drawing.Point(1380, 314)
+        Me.开始计算.Margin = New System.Windows.Forms.Padding(6)
+        Me.开始计算.Name = "开始计算"
+        Me.开始计算.Size = New System.Drawing.Size(224, 102)
+        Me.开始计算.TabIndex = 132
+        Me.开始计算.Text = "开始计算"
+        Me.开始计算.UseVisualStyleBackColor = False
         '
-        '清空窗体数据
+        '清空窗体
         '
-        Me.清空窗体数据.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.清空窗体数据.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空窗体数据.Location = New System.Drawing.Point(762, 804)
-        Me.清空窗体数据.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
-        Me.清空窗体数据.Name = "清空窗体数据"
-        Me.清空窗体数据.Size = New System.Drawing.Size(304, 108)
-        Me.清空窗体数据.TabIndex = 135
-        Me.清空窗体数据.Text = "清空窗体数据"
-        Me.清空窗体数据.UseVisualStyleBackColor = False
+        Me.清空窗体.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.清空窗体.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.清空窗体.Location = New System.Drawing.Point(1852, 314)
+        Me.清空窗体.Margin = New System.Windows.Forms.Padding(6)
+        Me.清空窗体.Name = "清空窗体"
+        Me.清空窗体.Size = New System.Drawing.Size(224, 102)
+        Me.清空窗体.TabIndex = 135
+        Me.清空窗体.Text = "清空窗体"
+        Me.清空窗体.UseVisualStyleBackColor = False
         '
-        '重置回默认方式
+        '重置默认
         '
-        Me.重置回默认方式.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.重置回默认方式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.重置回默认方式.Location = New System.Drawing.Point(412, 804)
-        Me.重置回默认方式.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
-        Me.重置回默认方式.Name = "重置回默认方式"
-        Me.重置回默认方式.Size = New System.Drawing.Size(304, 108)
-        Me.重置回默认方式.TabIndex = 134
-        Me.重置回默认方式.Text = "重置回默认方式"
-        Me.重置回默认方式.UseVisualStyleBackColor = False
+        Me.重置默认.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.重置默认.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.重置默认.Location = New System.Drawing.Point(1616, 314)
+        Me.重置默认.Margin = New System.Windows.Forms.Padding(6)
+        Me.重置默认.Name = "重置默认"
+        Me.重置默认.Size = New System.Drawing.Size(224, 102)
+        Me.重置默认.TabIndex = 134
+        Me.重置默认.Text = "重置默认"
+        Me.重置默认.UseVisualStyleBackColor = False
         '
         'Label11
         '
@@ -363,7 +373,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx1
         '
         Me.kxnx1.Location = New System.Drawing.Point(412, 490)
-        Me.kxnx1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx1.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx1.Name = "kxnx1"
         Me.kxnx1.Size = New System.Drawing.Size(142, 35)
         Me.kxnx1.TabIndex = 140
@@ -372,7 +382,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx2
         '
         Me.kxnx2.Location = New System.Drawing.Point(952, 490)
-        Me.kxnx2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx2.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx2.Name = "kxnx2"
         Me.kxnx2.Size = New System.Drawing.Size(142, 35)
         Me.kxnx2.TabIndex = 141
@@ -381,7 +391,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx3
         '
         Me.kxnx3.Location = New System.Drawing.Point(412, 552)
-        Me.kxnx3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx3.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx3.Name = "kxnx3"
         Me.kxnx3.Size = New System.Drawing.Size(142, 35)
         Me.kxnx3.TabIndex = 142
@@ -390,7 +400,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx4
         '
         Me.kxnx4.Location = New System.Drawing.Point(952, 552)
-        Me.kxnx4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx4.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx4.Name = "kxnx4"
         Me.kxnx4.Size = New System.Drawing.Size(142, 35)
         Me.kxnx4.TabIndex = 143
@@ -399,7 +409,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx8
         '
         Me.kxnx8.Location = New System.Drawing.Point(952, 674)
-        Me.kxnx8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx8.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx8.Name = "kxnx8"
         Me.kxnx8.Size = New System.Drawing.Size(142, 35)
         Me.kxnx8.TabIndex = 151
@@ -408,7 +418,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx7
         '
         Me.kxnx7.Location = New System.Drawing.Point(412, 674)
-        Me.kxnx7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx7.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx7.Name = "kxnx7"
         Me.kxnx7.Size = New System.Drawing.Size(142, 35)
         Me.kxnx7.TabIndex = 150
@@ -417,7 +427,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx6
         '
         Me.kxnx6.Location = New System.Drawing.Point(952, 612)
-        Me.kxnx6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx6.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx6.Name = "kxnx6"
         Me.kxnx6.Size = New System.Drawing.Size(142, 35)
         Me.kxnx6.TabIndex = 149
@@ -426,7 +436,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx5
         '
         Me.kxnx5.Location = New System.Drawing.Point(412, 612)
-        Me.kxnx5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx5.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx5.Name = "kxnx5"
         Me.kxnx5.Size = New System.Drawing.Size(142, 35)
         Me.kxnx5.TabIndex = 148
@@ -490,7 +500,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx10
         '
         Me.kxnx10.Location = New System.Drawing.Point(952, 730)
-        Me.kxnx10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx10.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx10.Name = "kxnx10"
         Me.kxnx10.Size = New System.Drawing.Size(142, 35)
         Me.kxnx10.TabIndex = 156
@@ -499,7 +509,7 @@ Partial Class 设置长期贷款计算方式
         'kxnx9
         '
         Me.kxnx9.Location = New System.Drawing.Point(412, 730)
-        Me.kxnx9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.kxnx9.Margin = New System.Windows.Forms.Padding(6)
         Me.kxnx9.Name = "kxnx9"
         Me.kxnx9.Size = New System.Drawing.Size(142, 35)
         Me.kxnx9.TabIndex = 155
@@ -527,11 +537,126 @@ Partial Class 设置长期贷款计算方式
         Me.Label21.Text = "第9次投资长期贷款宽限年限(年)"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label36.Location = New System.Drawing.Point(1139, 244)
+        Me.Label36.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(754, 28)
+        Me.Label36.TabIndex = 165
+        Me.Label36.Text = "第2步：全部计算参数写入完成后，点击<开始计算>完成计算"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label35.Location = New System.Drawing.Point(1139, 185)
+        Me.Label35.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(922, 28)
+        Me.Label35.TabIndex = 164
+        Me.Label35.Text = "第1步：依次<勾选>并点击<写入参数>，写入不同投资内容对应的计算参数"
+        '
+        'changgui
+        '
+        Me.changgui.AutoSize = True
+        Me.changgui.Location = New System.Drawing.Point(1144, 122)
+        Me.changgui.Name = "changgui"
+        Me.changgui.Size = New System.Drawing.Size(186, 28)
+        Me.changgui.TabIndex = 163
+        Me.changgui.Text = "常规设备投资"
+        Me.changgui.UseVisualStyleBackColor = True
+        '
+        'fengdian
+        '
+        Me.fengdian.AutoSize = True
+        Me.fengdian.Location = New System.Drawing.Point(1936, 122)
+        Me.fengdian.Name = "fengdian"
+        Me.fengdian.Size = New System.Drawing.Size(138, 28)
+        Me.fengdian.TabIndex = 162
+        Me.fengdian.Text = "风电投资"
+        Me.fengdian.UseVisualStyleBackColor = True
+        '
+        'guangfu
+        '
+        Me.guangfu.AutoSize = True
+        Me.guangfu.Location = New System.Drawing.Point(1792, 122)
+        Me.guangfu.Name = "guangfu"
+        Me.guangfu.Size = New System.Drawing.Size(138, 28)
+        Me.guangfu.TabIndex = 161
+        Me.guangfu.Text = "光伏投资"
+        Me.guangfu.UseVisualStyleBackColor = True
+        '
+        'nuantong
+        '
+        Me.nuantong.AutoSize = True
+        Me.nuantong.Location = New System.Drawing.Point(1648, 122)
+        Me.nuantong.Name = "nuantong"
+        Me.nuantong.Size = New System.Drawing.Size(138, 28)
+        Me.nuantong.TabIndex = 160
+        Me.nuantong.Text = "暖通投资"
+        Me.nuantong.UseVisualStyleBackColor = True
+        '
+        'xudianchi
+        '
+        Me.xudianchi.AutoSize = True
+        Me.xudianchi.Location = New System.Drawing.Point(1480, 122)
+        Me.xudianchi.Name = "xudianchi"
+        Me.xudianchi.Size = New System.Drawing.Size(162, 28)
+        Me.xudianchi.TabIndex = 159
+        Me.xudianchi.Text = "蓄电池投资"
+        Me.xudianchi.UseVisualStyleBackColor = True
+        '
+        'ranji
+        '
+        Me.ranji.AutoSize = True
+        Me.ranji.Location = New System.Drawing.Point(1336, 122)
+        Me.ranji.Name = "ranji"
+        Me.ranji.Size = New System.Drawing.Size(138, 28)
+        Me.ranji.TabIndex = 158
+        Me.ranji.Text = "燃机投资"
+        Me.ranji.UseVisualStyleBackColor = True
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label34.Location = New System.Drawing.Point(1317, 46)
+        Me.Label34.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(576, 33)
+        Me.Label34.TabIndex = 157
+        Me.Label34.Text = "勾选需要特殊设置计算参数的投资内容"
+        '
+        '写入参数
+        '
+        Me.写入参数.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.写入参数.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.写入参数.Location = New System.Drawing.Point(1144, 314)
+        Me.写入参数.Margin = New System.Windows.Forms.Padding(6)
+        Me.写入参数.Name = "写入参数"
+        Me.写入参数.Size = New System.Drawing.Size(224, 102)
+        Me.写入参数.TabIndex = 166
+        Me.写入参数.Text = "写入参数"
+        Me.写入参数.UseVisualStyleBackColor = False
+        '
         '设置长期贷款计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1128, 942)
+        Me.ClientSize = New System.Drawing.Size(2108, 806)
+        Me.Controls.Add(Me.写入参数)
+        Me.Controls.Add(Me.Label36)
+        Me.Controls.Add(Me.Label35)
+        Me.Controls.Add(Me.changgui)
+        Me.Controls.Add(Me.fengdian)
+        Me.Controls.Add(Me.guangfu)
+        Me.Controls.Add(Me.nuantong)
+        Me.Controls.Add(Me.xudianchi)
+        Me.Controls.Add(Me.ranji)
+        Me.Controls.Add(Me.Label34)
         Me.Controls.Add(Me.kxnx10)
         Me.Controls.Add(Me.kxnx9)
         Me.Controls.Add(Me.Label20)
@@ -553,9 +678,9 @@ Partial Class 设置长期贷款计算方式
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.清空窗体数据)
-        Me.Controls.Add(Me.重置回默认方式)
-        Me.Controls.Add(Me.确定计算方式)
+        Me.Controls.Add(Me.清空窗体)
+        Me.Controls.Add(Me.重置默认)
+        Me.Controls.Add(Me.开始计算)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.cqdkhknx10)
         Me.Controls.Add(Me.Label9)
@@ -577,7 +702,7 @@ Partial Class 设置长期贷款计算方式
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cqdkhknx1)
         Me.Controls.Add(Me.Label22)
-        Me.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Margin = New System.Windows.Forms.Padding(6)
         Me.Name = "设置长期贷款计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "设置长期贷款计算方式"
@@ -607,9 +732,9 @@ Partial Class 设置长期贷款计算方式
     Friend WithEvents cqdkhknx9 As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents cqdkhknx10 As System.Windows.Forms.TextBox
-    Friend WithEvents 确定计算方式 As System.Windows.Forms.Button
-    Friend WithEvents 清空窗体数据 As System.Windows.Forms.Button
-    Friend WithEvents 重置回默认方式 As System.Windows.Forms.Button
+    Friend WithEvents 开始计算 As System.Windows.Forms.Button
+    Friend WithEvents 清空窗体 As System.Windows.Forms.Button
+    Friend WithEvents 重置默认 As System.Windows.Forms.Button
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents Label13 As System.Windows.Forms.Label
@@ -631,4 +756,14 @@ Partial Class 设置长期贷款计算方式
     Friend WithEvents kxnx9 As System.Windows.Forms.TextBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents Label36 As System.Windows.Forms.Label
+    Friend WithEvents Label35 As System.Windows.Forms.Label
+    Friend WithEvents changgui As System.Windows.Forms.CheckBox
+    Friend WithEvents fengdian As System.Windows.Forms.CheckBox
+    Friend WithEvents guangfu As System.Windows.Forms.CheckBox
+    Friend WithEvents nuantong As System.Windows.Forms.CheckBox
+    Friend WithEvents xudianchi As System.Windows.Forms.CheckBox
+    Friend WithEvents ranji As System.Windows.Forms.CheckBox
+    Friend WithEvents Label34 As System.Windows.Forms.Label
+    Friend WithEvents 写入参数 As System.Windows.Forms.Button
 End Class

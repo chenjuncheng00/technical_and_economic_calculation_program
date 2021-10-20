@@ -63,14 +63,14 @@ Module 辅助程序
         '程序开始
         Try '异常处理，防止无文件
             '验证本地C盘是否存在白名单文件，用来区分是不是自己的电脑，是否需要进行自保护程序验证
-            Dim fs As New FileStream("C:\Windows\WhiteList_CJC.txt", FileMode.Open)
+            Dim fs As New FileStream("C:\Windows\WhiteList_CJC_6669628.txt", FileMode.Open)
             Dim sr As New StreamReader(fs)
             Dim strTemp As String
             strTemp = sr.ReadLine
             Dim WhiteList_PC As String = strTemp '获取TXT文本内容
             sr.Close()
             fs.Close()
-            If WhiteList_PC <> "WhiteList_PC" Then '如果不是合格的白名单文件，验证失败，则进行自保护验证
+            If WhiteList_PC <> "WhiteList_PC_6669628" Then '如果不是合格的白名单文件，验证失败，则进行自保护验证
                 'Call 获取本地服务器版本信息并验证(ExcelApp)
                 Call 获取本机MAC地址并验证(ExcelApp)
                 Call 网络时间和本地时间交替验证(ExcelApp)
@@ -139,7 +139,7 @@ Module 辅助程序
         For Each obj In wmiObjSet
             MAC = obj.MACAddress
             'MAC地址白名单(随便写一个)
-            If MAC = "45:40:C1:8F:AD:4A" Then
+            If MAC = "00:1C:42:23:91:BA" Then
                 MACTEST = 1
                 Exit For
             Else
@@ -191,7 +191,7 @@ Module 辅助程序
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #01/01/2020# Then '月/日/年，验证网络时间
+                If GetDate >= #01/01/2022# Then '月/日/年，验证网络时间
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
@@ -209,7 +209,7 @@ Module 辅助程序
             '进程暂停一段时间（2000分钟）
             Threading.Thread.Sleep(120000000)
             Dim Local_Time = Date.Now '获取系统本地时间
-            Dim Dead_Time = Convert.ToDateTime("2020/01/01 01:00:00") '设定程序有效期截止时间
+            Dim Dead_Time = Convert.ToDateTime("2022/01/01 01:00:00") '设定程序有效期截止时间
             If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
                 '保存表格的改动
                 ExcelApp.Application.DisplayAlerts = False
@@ -231,7 +231,7 @@ Module 辅助程序
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim Local_Time = Date.Now '获取系统本地时间
-        Dim Dead_Time = Convert.ToDateTime("2020/01/01 01:00:00") '设定程序有效期截止时间
+        Dim Dead_Time = Convert.ToDateTime("2022/01/01 01:00:00") '设定程序有效期截止时间
         If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
             '保存表格的改动
             ExcelApp.Application.DisplayAlerts = False
@@ -266,7 +266,7 @@ Module 辅助程序
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #01/01/2020# Then '月/日/年
+                If GetDate >= #01/01/2022# Then '月/日/年
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()

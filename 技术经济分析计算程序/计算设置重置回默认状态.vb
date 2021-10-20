@@ -77,15 +77,25 @@ Module 计算设置重置回默认状态
             '计算复利贷款利率
             Dim dkll = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
             Dim dkll_fl As Double = (1 + dkll / jsqdkjxcs) ^ jsqdkjxcs - 1
-            '长期贷款年利率
+            '常规设备
             For i = 12 To 21
                 '长期贷款年利率
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = dkll_fl
+            Next
+            '其它设备
+            For i = 5 To 14
+                '长期贷款利率
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
             Next
         End If
         '——————————————————————————————————————————————————————————————————————————————————————————
         '折旧摊销计算方式
         If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 7).Value = "相同" Then
+            '常规设备写入各种系数默认值
             For i = 4 To 13
                 '固定资产折旧年限
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
@@ -94,10 +104,36 @@ Module 计算设置重置回默认状态
                 '无形资产摊销年限
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
             Next
+            '其它设备
+            For i = 4 To 13
+                '固定资产折旧年限
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            Next
+            For i = 15 To 24
+                '固定资产残值率
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            Next
+            For i = 26 To 35
+                '无形资产摊销年限
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            Next
         End If
         '————————————————————————————————————————————————————————————————————————————————————————       
         '长期贷款计算方式
         If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 7).Value = "相同" Then
+            '常规设备
             For i = 23 To 32
                 '长期贷款还款年限
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
@@ -105,6 +141,23 @@ Module 计算设置重置回默认状态
             For i = 34 To 43
                 '长期贷款宽限年限
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            Next
+            '其它设备
+            For i = 16 To 25
+                '长期贷款年限
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            Next
+            For i = 27 To 36
+                '宽限年限
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
             Next
         End If
         '———————————————————————————————————————————————————————————————————————————————————————————

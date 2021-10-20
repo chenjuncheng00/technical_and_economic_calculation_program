@@ -177,12 +177,24 @@
         Dim fdzj = GSBSJ(19)
         Dim fdzj_list = 基础计算功能_10_to_31(tznf_list, fdzj)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '计算常规设备的逐年修理费计算基数：相当于计算常规设备投资
-        Dim cgtz(10) As Double '10次投资
+        '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
+        Dim qttzbl(10) As Double
         For i = 1 To 10
-            cgtz(i) = (gdzcyz(i) - jsqdklx(i) * (1 - wxzcbl)) - (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i))
+            qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+        Next
+        '其它投资比例转为31年的列表
+        Dim qttzbl_list = 基础计算功能_10_to_31(tznf_list, qttzbl)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算常规设备的逐年修理费计算基数：相当于计算常规设备投资，按比例折算
+        Dim cgtz(10) As Double '10次投资
+        '计算常除了常规设备以外的其它设备的逐年投资额，按比例折算
+        Dim qttz(10) As Double
+        For i = 1 To 10
+            cgtz(i) = (gdzcyz(i) - jsqdklx(i) * (1 - wxzcbl)) * (1 - qttzbl(i))
+            qttz(i) = (gdzcyz(i) - jsqdklx(i) * (1 - wxzcbl)) * qttzbl(i)
         Next
         Dim cgtz_list = 基础计算功能_10_to_31(tznf_list, cgtz)
+        Dim qttz_list = 基础计算功能_10_to_31(tznf_list, qttz)
         '————————————————————————————————————————————————————————————————————————————————————————
         '根据输入的运营年限和扣除比例，计算实际的逐年修理费率、逐年投资额度
         '保持计算用的基数不变，但是折算逐年计算费率
@@ -228,12 +240,6 @@
         Dim ans_xlf_cg = 计算费率修正计算基础功能(tznf_list, cgtz, cgtz_list, xlfl_cg_list, yynx_cg, kcbl_cg)
         xlfl_cg_list = ans_xlf_cg(0)
         Dim cgtz_lj_list = ans_xlf_cg(2)
-        '————————————————————————————————————————————————————————————————————————————————————————
-        'qttz_list：除了常规设备以外的其它设备的逐年投资额，列表
-        Dim qttz_list(31) As Double
-        For i = 1 To 31
-            qttz_list(i) = rjtz_list(i) + xdctz_list(i) + nttz_list(i) + gftz_list(i) + fdtz_list(i)
-        Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算常规设备的逐年修理费率
         Dim ans_cgsb
