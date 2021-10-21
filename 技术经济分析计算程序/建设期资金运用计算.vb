@@ -7,26 +7,86 @@
 
         '从估算表读取计算所需数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
-        '10次的静态投资，列表，长度10
-        Dim jttz = GSBSJ(1)
         '10次投资年份序号列表，列表，长度10
         Dim tznf_list = GSBSJ(0)
+        '10次的静态投资，列表，长度10
+        Dim jttz = GSBSJ(1)
         '将静态投资转换成31年的列表
         Dim jttz_list = 基础计算功能_10_to_31(tznf_list, jttz)
-        '10次的贷款年利率，列表，长度10
-        Dim dkll(10) As Double
+        '燃机总投资(万元)
+        Dim rjtz = GSBSJ(10)
+        Dim rjtz_list = 基础计算功能_10_to_31(tznf_list, rjtz)
+        '蓄电池总投资(万元)
+        Dim xdctz = GSBSJ(12)
+        Dim xdctz_list = 基础计算功能_10_to_31(tznf_list, xdctz)
+        '暖通总投资(万元)
+        Dim nttz = GSBSJ(14)
+        Dim nttz_list = 基础计算功能_10_to_31(tznf_list, nttz)
+        '光伏总投资(万元)
+        Dim gftz = GSBSJ(16)
+        Dim gftz_list = 基础计算功能_10_to_31(tznf_list, gftz)
+        '风电总投资(万元)
+        Dim fdtz = GSBSJ(18)
+        Dim fdtz_list = 基础计算功能_10_to_31(tznf_list, fdtz)
+        '常规设备投资额
+        Dim cgtz(10) As Double
         For i = 1 To 10
-            dkll(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 11, 39).Value
+            cgtz(i) = jttz(i) - (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i))
+        Next
+        Dim cgtz_list = 基础计算功能_10_to_31(tznf_list, cgtz)
+        '分项投资之和不可以超过总投资
+        For i = 1 To 10
+            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
+                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，建设期资金运用计算终止！")
+                Exit Sub
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '10次的贷款年利率，列表，长度10
+        Dim dkll_cg(10) As Double
+        Dim dkll_rj(10) As Double
+        Dim dkll_xdc(10) As Double
+        Dim dkll_nt(10) As Double
+        Dim dkll_gf(10) As Double
+        Dim dkll_fd(10) As Double
+        For i = 1 To 10
+            dkll_cg(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 11, 39).Value
+            dkll_rj(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 4, 42).Value
+            dkll_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 4, 45).Value
+            dkll_nt(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 4, 48).Value
+            dkll_gf(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 4, 51).Value
+            dkll_fd(i) = ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 4, 54).Value
         Next
         '将贷款利率转换成31年的列表
-        Dim dkll_list = 基础计算功能_10_to_31(tznf_list, dkll)
+        Dim dkll_list_cg = 基础计算功能_10_to_31(tznf_list, dkll_cg)
+        Dim dkll_list_rj = 基础计算功能_10_to_31(tznf_list, dkll_rj)
+        Dim dkll_list_xdc = 基础计算功能_10_to_31(tznf_list, dkll_xdc)
+        Dim dkll_list_nt = 基础计算功能_10_to_31(tznf_list, dkll_nt)
+        Dim dkll_list_gf = 基础计算功能_10_to_31(tznf_list, dkll_gf)
+        Dim dkll_list_fd = 基础计算功能_10_to_31(tznf_list, dkll_fd)
         '10次投资的资本金比例，列表，长度10
-        Dim zbjbl(10) As Double
+        Dim zbjbl_cg(10) As Double
+        Dim zbjbl_rj(10) As Double
+        Dim zbjbl_xdc(10) As Double
+        Dim zbjbl_nt(10) As Double
+        Dim zbjbl_gf(10) As Double
+        Dim zbjbl_fd(10) As Double
         For i = 1 To 10
-            zbjbl(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value
+            zbjbl_cg(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value
+            zbjbl_rj(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value
+            zbjbl_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value
+            zbjbl_nt(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value
+            zbjbl_gf(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value
+            zbjbl_fd(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value
         Next
         '将资本金比例转换成31年的列表
-        Dim zbjbl_list = 基础计算功能_10_to_31(tznf_list, zbjbl)
+        Dim zbjbl_list_cg = 基础计算功能_10_to_31(tznf_list, zbjbl_cg)
+        Dim zbjbl_list_rj = 基础计算功能_10_to_31(tznf_list, zbjbl_rj)
+        Dim zbjbl_list_xdc = 基础计算功能_10_to_31(tznf_list, zbjbl_xdc)
+        Dim zbjbl_list_nt = 基础计算功能_10_to_31(tznf_list, zbjbl_nt)
+        Dim zbjbl_list_gf = 基础计算功能_10_to_31(tznf_list, zbjbl_gf)
+        Dim zbjbl_list_fd = 基础计算功能_10_to_31(tznf_list, zbjbl_fd)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '读取手动输入的建设期贷款利息金额，列表，长度10
         Dim dklx_shuru(10) As Double
         For i = 1 To 5
@@ -37,6 +97,7 @@
         Next
         '转为长度31的列表
         Dim dklx_shuru_list = 基础计算功能_10_to_31(tznf_list, dklx_shuru)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '读取资本金计算模式、建设期贷款利息计算模式
         Dim dklx_model As Integer
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 11).Value = "自动计算" Then
@@ -44,6 +105,7 @@
         Else
             dklx_model = 1
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————
         '从<建设期时间计划计算>的计算结果中读取数据
         'jsq_index_list：是否处于建设期标记，1：处于建设期，0：不处于建设期，列表，长度31
         Dim jsq_index_list(31) As Integer
@@ -68,18 +130,31 @@
         Dim year_list = 基础计算功能_10_to_31(tznf_list, year_jsq)
         Dim month_start_list = 基础计算功能_10_to_31(tznf_list, month_start_jsq)
         Dim month_end_list = 基础计算功能_10_to_31(tznf_list, month_end_jsq)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '进行建设期资金运用计算
-        Dim ans_jsqzjyy = 建设期资金运用计算_main(zbj_model, dklx_model, jttz_list, jsq_index_list, dkll_list, year_list,
-                                                  month_start_list, month_end_list, zbjbl_list, dklx_shuru_list)
-
-        '动态投资，列表，长度31
-        Dim ans_dttz_list = ans_jsqzjyy(0)
-        '资本金，列表，长度31
-        Dim ans_zbj_list = ans_jsqzjyy(1)
-        '建设期贷款金额，列表，长度31
-        Dim ans_dkje_list = ans_jsqzjyy(2)
-        '建设期贷款利息，列表，长度31
-        Dim ans_dklx_list = ans_jsqzjyy(3)
+        '常规设备
+        Dim ans_jsqzjyy_cg = 建设期资金运用计算_main(zbj_model, dklx_model, cgtz_list, jsq_index_list, dkll_list_cg, year_list, month_start_list, month_end_list, zbjbl_list_cg, dklx_shuru_list)
+        '燃机
+        Dim ans_jsqzjyy_rj = 建设期资金运用计算_main(zbj_model, dklx_model, rjtz_list, jsq_index_list, dkll_list_rj, year_list, month_start_list, month_end_list, zbjbl_list_rj, dklx_shuru_list)
+        '蓄电池
+        Dim ans_jsqzjyy_xdc = 建设期资金运用计算_main(zbj_model, dklx_model, xdctz_list, jsq_index_list, dkll_list_xdc, year_list, month_start_list, month_end_list, zbjbl_list_xdc, dklx_shuru_list)
+        '暖通
+        Dim ans_jsqzjyy_nt = 建设期资金运用计算_main(zbj_model, dklx_model, nttz_list, jsq_index_list, dkll_list_nt, year_list, month_start_list, month_end_list, zbjbl_list_nt, dklx_shuru_list)
+        '光伏
+        Dim ans_jsqzjyy_gf = 建设期资金运用计算_main(zbj_model, dklx_model, gftz_list, jsq_index_list, dkll_list_gf, year_list, month_start_list, month_end_list, zbjbl_list_gf, dklx_shuru_list)
+        '风电
+        Dim ans_jsqzjyy_fd = 建设期资金运用计算_main(zbj_model, dklx_model, fdtz_list, jsq_index_list, dkll_list_fd, year_list, month_start_list, month_end_list, zbjbl_list_fd, dklx_shuru_list)
+        '将分项结果累加
+        Dim ans_dttz_list(31) As Double '逐年动态投资金额
+        Dim ans_zbj_list(31) As Double '逐年资本金金额
+        Dim ans_dkje_list(31) As Double '逐年建设期贷款金额
+        Dim ans_dklx_list(31) As Double '逐年建设期贷款利息
+        For i = 1 To 31
+            ans_dttz_list(i) = ans_jsqzjyy_cg(0)(i) + ans_jsqzjyy_rj(0)(i) + ans_jsqzjyy_xdc(0)(i) + ans_jsqzjyy_nt(0)(i) + ans_jsqzjyy_gf(0)(i) + ans_jsqzjyy_fd(0)(i)
+            ans_zbj_list(i) = ans_jsqzjyy_cg(1)(i) + ans_jsqzjyy_rj(1)(i) + ans_jsqzjyy_xdc(1)(i) + ans_jsqzjyy_nt(1)(i) + ans_jsqzjyy_gf(1)(i) + ans_jsqzjyy_fd(1)(i)
+            ans_dkje_list(i) = ans_jsqzjyy_cg(2)(i) + ans_jsqzjyy_rj(2)(i) + ans_jsqzjyy_xdc(2)(i) + ans_jsqzjyy_nt(2)(i) + ans_jsqzjyy_gf(2)(i) + ans_jsqzjyy_fd(2)(i)
+            ans_dklx_list(i) = ans_jsqzjyy_cg(3)(i) + ans_jsqzjyy_rj(3)(i) + ans_jsqzjyy_xdc(3)(i) + ans_jsqzjyy_nt(3)(i) + ans_jsqzjyy_gf(3)(i) + ans_jsqzjyy_fd(3)(i)
+        Next
         '将列表转为长度10
         Dim dttz_list = 基础计算功能_31_to_10(tznf_list, ans_dttz_list)
         Dim zbj_list = 基础计算功能_31_to_10(tznf_list, ans_zbj_list)

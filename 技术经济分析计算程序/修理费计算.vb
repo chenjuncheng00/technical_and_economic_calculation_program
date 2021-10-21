@@ -176,6 +176,13 @@
         '风电装机功率(kW)
         Dim fdzj = GSBSJ(19)
         Dim fdzj_list = 基础计算功能_10_to_31(tznf_list, fdzj)
+        '分项投资之和不可以超过总投资
+        For i = 1 To 10
+            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
+                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，修理费计算终止！")
+                Exit Sub
+            End If
+        Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
         Dim qttzbl(10) As Double

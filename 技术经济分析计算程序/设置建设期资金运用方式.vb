@@ -11,7 +11,14 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '将资本金比例写入Excel
         For i = 1 To 10
+            '常规设备
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ZBJBL
+            '其它设备
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value = ZBJBL
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value = ZBJBL
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value = ZBJBL
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value = ZBJBL
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value = ZBJBL
         Next
         '计算复利贷款利率
         Dim dkll_fl As Double = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
@@ -92,47 +99,32 @@
         'Excel表格中的资本金比例均为占动态投资的比例，设置的如果是占静态投资比例，则实际上动态投资比例比设定的值要低，则往下减，直到满足要求
         Dim XZ = MsgBox("是否需要将资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同？", vbOKCancel)
         If XZ = vbOK Then
-            '如果没有任何一次投资计划年份或者投资金额，则不计算，防止死循环
-            Dim TZNF_zero As Integer = 0
-            Dim TZJE_zero As Integer = 0
-            For i = 3 To 11 Step 2
-                For j = 28 To 71 Step 43
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value = 0 Then
-                        TZNF_zero = TZNF_zero + 1
-                    End If
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value = 0 Then
-                        TZJE_zero = TZJE_zero + 1
-                    End If
-                Next
-            Next
-            If TZNF_zero = 10 Or TZJE_zero = 10 Then
-                MsgBox("没输入任何投资计划年份或者投资金额，请检查！")
-                Exit Sub
-            End If
-            '如果某一次投资没有输入静态投资金额或者投资计划年份，不允许计算，防止死循环
-            For i = 3 To 11 Step 2
-                For j = 28 To 71 Step 43
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value > 0 Then
-                        '不执行任何操作
-                    ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value = 0 Then
-                        '不执行任何操作
-                    Else
-                        MsgBox("有投资计划的年份没有投资金额，或者有投资金额的年份没有投资计划，请检查并重新输入！")
-                        Exit Sub
-                    End If
-
-                Next
-            Next
-            '———————————————————————————————————————————————————————————————————————————————————————— 
             '计算复利贷款利率
             Dim dkll_fl As Double = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
             '将实际的建设期贷款利率写入Excel
+            '常规设备
             For i = 1 To 10
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 11, 39).Value = dkll_fl
             Next
+            '其它设备
+            For i = 5 To 14
+                '长期贷款利率
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
+            Next
             '将资本金比例写入Excel
             For i = 1 To 10
+                '常规设备
                 ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ZBJBL
+                '其它设备
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value = ZBJBL
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value = ZBJBL
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value = ZBJBL
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value = ZBJBL
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value = ZBJBL
             Next
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿
@@ -180,163 +172,8 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————       
-        '定义局部变量
-        Dim zbjbl1, zbjbl2, zbjbl3, zbjbl4, zbjbl5, zbjbl6, zbjbl7, zbjbl8, zbjbl9, zbjbl10 As Double '资本金比例
-        Dim dkll1, dkll2, dkll3, dkll4, dkll5, dkll6, dkll7, dkll8, dkll9, dkll10 As Double '建设期贷款利率
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            MsgBox("长期贷款计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '读取输入的资本金(动态)比例
-        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
-        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
-        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
-        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
-        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
-        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
-        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
-        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
-        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
-        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
-        '读取输入的建设期贷款利率
-        dkll1 = CType(Me.dkll1.Text, Double) / 100
-        dkll2 = CType(Me.dkll2.Text, Double) / 100
-        dkll3 = CType(Me.dkll3.Text, Double) / 100
-        dkll4 = CType(Me.dkll4.Text, Double) / 100
-        dkll5 = CType(Me.dkll5.Text, Double) / 100
-        dkll6 = CType(Me.dkll6.Text, Double) / 100
-        dkll7 = CType(Me.dkll7.Text, Double) / 100
-        dkll8 = CType(Me.dkll8.Text, Double) / 100
-        dkll9 = CType(Me.dkll9.Text, Double) / 100
-        dkll10 = CType(Me.dkll10.Text, Double) / 100
-        '建设期贷款计息次数
-        Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
-        '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否需要将资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同？", vbOKCancel)
         If XZ = vbOK Then
-            '检测有投资的年份，是否都输入的资本金(动态)比例和建设期贷款利率，如果不正确报错，正确则写入数据（贷款利息全部采用复利计算）
-            '第1次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 3).Value > 0 And (zbjbl1 <= 0 Or dkll1 <= 0) Then
-                MsgBox("第1次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(5, 22).Value = zbjbl1
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 39).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第2次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 5).Value > 0 And (zbjbl2 <= 0 Or dkll2 <= 0) Then
-                MsgBox("第2次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(6, 22).Value = zbjbl2
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 39).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第3次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 7).Value > 0 And (zbjbl3 <= 0 Or dkll3 <= 0) Then
-                MsgBox("第3次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(7, 22).Value = zbjbl3
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 39).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第4次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 9).Value > 0 And (zbjbl4 <= 0 Or dkll4 <= 0) Then
-                MsgBox("第4次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(8, 22).Value = zbjbl4
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(15, 39).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第5次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 11).Value > 0 And (zbjbl5 <= 0 Or dkll5 <= 0) Then
-                MsgBox("第5次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(9, 22).Value = zbjbl5
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(16, 39).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第6次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 3).Value > 0 And (zbjbl6 <= 0 Or dkll6 <= 0) Then
-                MsgBox("第6次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(10, 22).Value = zbjbl6
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(17, 39).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第7次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 5).Value > 0 And (zbjbl7 <= 0 Or dkll7 <= 0) Then
-                MsgBox("第7次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(11, 22).Value = zbjbl7
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(18, 39).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第8次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 7).Value > 0 And (zbjbl8 <= 0 Or dkll8 <= 0) Then
-                MsgBox("第8次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(12, 22).Value = zbjbl8
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(19, 39).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第9次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 9).Value > 0 And (zbjbl9 <= 0 Or dkll9 <= 0) Then
-                MsgBox("第9次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(13, 22).Value = zbjbl9
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(20, 39).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第10次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 11).Value > 0 And (zbjbl10 <= 0 Or dkll10 <= 0) Then
-                MsgBox("第10次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value = zbjbl10
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '————————————————————————————————————————————————————————————————————————————————————————  
-            '等于0的参数改为默认值
-            '资本金比例
-            For i = 1 To 10
-                If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
-                End If
-            Next
-            '长期贷款年利率
-            '计算复利贷款利率
-            Dim dkll = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
-            Dim dkll_fl As Double = (1 + dkll / jsqdkjxcs) ^ jsqdkjxcs - 1
-            '常规设备
-            For i = 12 To 21
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = dkll_fl
-                End If
-            Next
-            '其它设备
-            For i = 5 To 14
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
-                End If
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
-                End If
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
-                End If
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
-                End If
-                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
-                End If
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————  
-            '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿
             ExcelApp.Calculate()
             '建设期时间计划计算
@@ -382,157 +219,8 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim zbjbl1, zbjbl2, zbjbl3, zbjbl4, zbjbl5, zbjbl6, zbjbl7, zbjbl8, zbjbl9, zbjbl10 As Double '资本金比例
-        Dim dkll1, dkll2, dkll3, dkll4, dkll5, dkll6, dkll7, dkll8, dkll9, dkll10 As Double '建设期贷款利率
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
-        '——————————————————————————————————————————————————————————————————————————————————————————————
-        '读取输入的资本金(动态)比例
-        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
-        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
-        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
-        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
-        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
-        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
-        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
-        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
-        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
-        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
-        '读取输入的建设期贷款利率
-        dkll1 = CType(Me.dkll1.Text, Double) / 100
-        dkll2 = CType(Me.dkll2.Text, Double) / 100
-        dkll3 = CType(Me.dkll3.Text, Double) / 100
-        dkll4 = CType(Me.dkll4.Text, Double) / 100
-        dkll5 = CType(Me.dkll5.Text, Double) / 100
-        dkll6 = CType(Me.dkll6.Text, Double) / 100
-        dkll7 = CType(Me.dkll7.Text, Double) / 100
-        dkll8 = CType(Me.dkll8.Text, Double) / 100
-        dkll9 = CType(Me.dkll9.Text, Double) / 100
-        dkll10 = CType(Me.dkll10.Text, Double) / 100
-        '建设期贷款计息次数
-        Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
-        '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否需要将资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同？", vbOKCancel)
         If XZ = vbOK Then
-            '如果没有任何一次投资计划年份或者投资金额，则不计算，防止死循环
-            Dim TZNF_zero As Integer = 0
-            Dim TZJE_zero As Integer = 0
-            For i = 3 To 11 Step 2
-                For j = 28 To 71 Step 43
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value = 0 Then
-                        TZNF_zero = TZNF_zero + 1
-                    End If
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value = 0 Then
-                        TZJE_zero = TZJE_zero + 1
-                    End If
-                Next
-            Next
-            If TZNF_zero = 10 Or TZJE_zero = 10 Then
-                MsgBox("没输入任何投资计划年份或者投资金额，请检查！")
-                Exit Sub
-            End If
-            '如果某一次投资没有输入静态投资金额或者投资计划年份，不允许计算，防止死循环
-            For i = 3 To 11 Step 2
-                For j = 28 To 71 Step 43
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value > 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value > 0 Then
-                        '不执行任何操作
-                    ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j, i).Value = 0 And ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(j + 2, i).Value = 0 Then
-                        '不执行任何操作
-                    Else
-                        MsgBox("有投资计划的年份没有投资金额，或者有投资金额的年份没有投资计划，请检查并重新输入！")
-                        Exit Sub
-                    End If
-
-                Next
-            Next
-            '———————————————————————————————————————————————————————————————————————————————————————— 
-            '第1次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 3).Value > 0 And (zbjbl1 <= 0 Or dkll1 <= 0) Then
-                MsgBox("第1次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(5, 22).Value = zbjbl1
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 39).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第2次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 5).Value > 0 And (zbjbl2 <= 0 Or dkll2 <= 0) Then
-                MsgBox("第2次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(6, 22).Value = zbjbl2
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 39).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第3次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 7).Value > 0 And (zbjbl3 <= 0 Or dkll3 <= 0) Then
-                MsgBox("第3次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(7, 22).Value = zbjbl3
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 39).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第4次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 9).Value > 0 And (zbjbl4 <= 0 Or dkll4 <= 0) Then
-                MsgBox("第4次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(8, 22).Value = zbjbl4
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(15, 39).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第5次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 11).Value > 0 And (zbjbl5 <= 0 Or dkll5 <= 0) Then
-                MsgBox("第5次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(9, 22).Value = zbjbl5
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(16, 39).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第6次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 3).Value > 0 And (zbjbl6 <= 0 Or dkll6 <= 0) Then
-                MsgBox("第6次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(10, 22).Value = zbjbl6
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(17, 39).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第7次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 5).Value > 0 And (zbjbl7 <= 0 Or dkll7 <= 0) Then
-                MsgBox("第7次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(11, 22).Value = zbjbl7
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(18, 39).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第8次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 7).Value > 0 And (zbjbl8 <= 0 Or dkll8 <= 0) Then
-                MsgBox("第8次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(12, 22).Value = zbjbl8
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(19, 39).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第9次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 9).Value > 0 And (zbjbl9 <= 0 Or dkll9 <= 0) Then
-                MsgBox("第9次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(13, 22).Value = zbjbl9
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(20, 39).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '第10次投资
-            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 11).Value > 0 And (zbjbl10 <= 0 Or dkll10 <= 0) Then
-                MsgBox("第10次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
-                Exit Sub
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value = zbjbl10
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
-            End If
-            '————————————————————————————————————————————————————————————————————————————————————————  
             '计算一次工作簿
             ExcelApp.Calculate()
             '建设期时间计划计算
@@ -612,6 +300,13 @@
             Me.dkll8.Clear()
             Me.dkll9.Clear()
             Me.dkll10.Clear()
+            '选择
+            Me.changgui.Checked = False
+            Me.ranji.Checked = False
+            Me.xudianchi.Checked = False
+            Me.nuantong.Checked = False
+            Me.guangfu.Checked = False
+            Me.fengdian.Checked = False
             MsgBox("清空窗体已完成！")
         End If
     End Sub
@@ -700,5 +395,400 @@
             Me.zbjbl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value * 100, String)
             Me.dkll10.Text = CType(Math.Round(((ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value + 1) ^ (1 / jsqdkjxcs) - 1) * jsqdkjxcs * 100, 2), String)
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '根据输入的投资情况，确定每个checkbox和投资比例输入是否可以选择和输入，并载入默认值
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 1).Value > 0 Then
+            Me.ranji.Enabled = True
+            Me.ranji.Checked = False
+        Else
+            Me.ranji.Enabled = False
+            Me.ranji.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value > 0 Then
+            Me.xudianchi.Enabled = True
+            Me.xudianchi.Checked = False
+        Else
+            Me.xudianchi.Enabled = False
+            Me.xudianchi.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 1).Value > 0 Then
+            Me.nuantong.Enabled = True
+            Me.nuantong.Checked = False
+        Else
+            Me.nuantong.Enabled = False
+            Me.nuantong.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value > 0 Then
+            Me.guangfu.Enabled = True
+            Me.guangfu.Checked = False
+        Else
+            Me.guangfu.Enabled = False
+            Me.guangfu.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value > 0 Then
+            Me.fengdian.Enabled = True
+            Me.fengdian.Checked = False
+        Else
+            Me.fengdian.Enabled = False
+            Me.fengdian.Checked = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+            Me.changgui.Enabled = True
+            Me.changgui.Checked = False
+        Else
+            Me.changgui.Enabled = False
+            Me.changgui.Checked = False
+        End If
+    End Sub
+
+    Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————       
+        '定义局部变量
+        Dim zbjbl1, zbjbl2, zbjbl3, zbjbl4, zbjbl5, zbjbl6, zbjbl7, zbjbl8, zbjbl9, zbjbl10 As Double '资本金比例
+        Dim dkll1, dkll2, dkll3, dkll4, dkll5, dkll6, dkll7, dkll8, dkll9, dkll10 As Double '建设期贷款利率
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        ''长期贷款计算方法需要采用方法三或者方法四
+        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
+        '    MsgBox("长期贷款计算方式，请选择计算方法三或者方法四，计算终止！")
+        '    Exit Sub
+        'End If
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '读取输入的资本金(动态)比例
+        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
+        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
+        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
+        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
+        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
+        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
+        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
+        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
+        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
+        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
+        '读取输入的建设期贷款利率
+        dkll1 = CType(Me.dkll1.Text, Double) / 100
+        dkll2 = CType(Me.dkll2.Text, Double) / 100
+        dkll3 = CType(Me.dkll3.Text, Double) / 100
+        dkll4 = CType(Me.dkll4.Text, Double) / 100
+        dkll5 = CType(Me.dkll5.Text, Double) / 100
+        dkll6 = CType(Me.dkll6.Text, Double) / 100
+        dkll7 = CType(Me.dkll7.Text, Double) / 100
+        dkll8 = CType(Me.dkll8.Text, Double) / 100
+        dkll9 = CType(Me.dkll9.Text, Double) / 100
+        dkll10 = CType(Me.dkll10.Text, Double) / 100
+        '建设期贷款计息次数
+        Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '检测有投资的年份，是否都输入的资本金(动态)比例和建设期贷款利率，如果不正确报错，正确则写入数据（贷款利息全部采用复利计算）
+        '第1次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 3).Value > 0 And (zbjbl1 <= 0 Or dkll1 <= 0) Then
+            MsgBox("第1次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第2次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 5).Value > 0 And (zbjbl2 <= 0 Or dkll2 <= 0) Then
+            MsgBox("第2次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第3次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 7).Value > 0 And (zbjbl3 <= 0 Or dkll3 <= 0) Then
+            MsgBox("第3次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第4次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 9).Value > 0 And (zbjbl4 <= 0 Or dkll4 <= 0) Then
+            MsgBox("第4次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第5次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 11).Value > 0 And (zbjbl5 <= 0 Or dkll5 <= 0) Then
+            MsgBox("第5次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第6次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 3).Value > 0 And (zbjbl6 <= 0 Or dkll6 <= 0) Then
+            MsgBox("第6次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第7次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 5).Value > 0 And (zbjbl7 <= 0 Or dkll7 <= 0) Then
+            MsgBox("第7次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第8次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 7).Value > 0 And (zbjbl8 <= 0 Or dkll8 <= 0) Then
+            MsgBox("第8次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第9次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 9).Value > 0 And (zbjbl9 <= 0 Or dkll9 <= 0) Then
+            MsgBox("第9次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '第10次投资
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(73, 11).Value > 0 And (zbjbl10 <= 0 Or dkll10 <= 0) Then
+            MsgBox("第10次投资的资本金比例或者建设期贷款利率不可以小于等于0，请重新输入！")
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '常规设备
+        If Me.changgui.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(5, 22).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 39).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(6, 22).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 39).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(7, 22).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 39).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(8, 22).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(15, 39).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(9, 22).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(16, 39).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(10, 22).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(17, 39).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(11, 22).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(18, 39).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(12, 22).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(19, 39).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(13, 22).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(20, 39).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+        End If
+        '燃机
+        If Me.ranji.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(16, 22).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(5, 42).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(17, 22).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(6, 42).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(18, 22).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 42).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(19, 22).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 42).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(20, 22).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 42).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(21, 22).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 42).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(22, 22).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 42).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(23, 22).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 42).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(24, 22).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 42).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(25, 22).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 42).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+        End If
+        '蓄电池
+        If Me.xudianchi.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(27, 22).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(5, 45).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(28, 22).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(6, 45).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(29, 22).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 45).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(30, 22).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 45).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(31, 22).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 45).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(32, 22).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 45).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(33, 22).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 45).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(34, 22).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 45).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(35, 22).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 45).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(36, 22).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 45).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+        End If
+        '暖通
+        If Me.nuantong.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(5, 25).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(5, 48).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(6, 25).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(6, 48).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(7, 25).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 48).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(8, 25).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 48).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(9, 25).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 48).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(10, 25).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 48).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(11, 25).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 48).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(12, 25).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 48).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(13, 25).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 48).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 25).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 48).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+        End If
+        '光伏
+        If Me.guangfu.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(16, 25).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(5, 51).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(17, 25).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(6, 51).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(18, 25).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 51).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(19, 25).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 51).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(20, 25).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 51).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(21, 25).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 51).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(22, 25).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 51).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(23, 25).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 51).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(24, 25).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 51).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(25, 25).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 51).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+        End If
+        '风电
+        If Me.fengdian.Checked = True Then
+            '第1次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(27, 25).Value = zbjbl1
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(5, 54).Value = (1 + dkll1 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第2次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(28, 25).Value = zbjbl2
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(6, 54).Value = (1 + dkll2 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第3次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(29, 25).Value = zbjbl3
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 54).Value = (1 + dkll3 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第4次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(30, 25).Value = zbjbl4
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 54).Value = (1 + dkll4 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第5次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(31, 25).Value = zbjbl5
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 54).Value = (1 + dkll5 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第6次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(32, 25).Value = zbjbl6
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 54).Value = (1 + dkll6 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第7次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(33, 25).Value = zbjbl7
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 54).Value = (1 + dkll7 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第8次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(34, 25).Value = zbjbl8
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(12, 54).Value = (1 + dkll8 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第9次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(35, 25).Value = zbjbl9
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(13, 54).Value = (1 + dkll9 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '第10次投资
+            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(36, 25).Value = zbjbl10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 54).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '等于0的参数改为默认值
+        '资本金比例
+        For i = 1 To 10
+            '常规设备
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+            '其它设备
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+            End If
+        Next
+        '长期贷款年利率
+        '计算复利贷款利率
+        Dim dkll = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
+        Dim dkll_fl As Double = (1 + dkll / jsqdkjxcs) ^ jsqdkjxcs - 1
+        '常规设备
+        For i = 12 To 21
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = dkll_fl
+            End If
+        Next
+        '其它设备
+        For i = 5 To 14
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
+            End If
+        Next
+        MsgBox("计算参数写入完成！")
     End Sub
 End Class

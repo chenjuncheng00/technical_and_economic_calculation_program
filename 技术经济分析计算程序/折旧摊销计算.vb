@@ -50,15 +50,16 @@
         '光伏总投资(万元)
         Dim gftz = GSBSJ(16)
         Dim gftz_list = 基础计算功能_10_to_31(tznf_list, gftz)
-        '光伏装机功率(kW)
-        Dim gfzj = GSBSJ(17)
-        Dim gfzj_list = 基础计算功能_10_to_31(tznf_list, gfzj)
         '风电总投资(万元)
         Dim fdtz = GSBSJ(18)
         Dim fdtz_list = 基础计算功能_10_to_31(tznf_list, fdtz)
-        '风电装机功率(kW)
-        Dim fdzj = GSBSJ(19)
-        Dim fdzj_list = 基础计算功能_10_to_31(tznf_list, fdzj)
+        '分项投资之和不可以超过总投资
+        For i = 1 To 10
+            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
+                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，折旧摊销计算终止！")
+                Exit Sub
+            End If
+        Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
         Dim rjtzbl(10) As Double

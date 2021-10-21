@@ -68,8 +68,16 @@ Module 计算设置重置回默认状态
         '建设期资金运用方式
         If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "相同" Then
             '资本金比例
+            '常规设备
             For i = 1 To 10
+                '常规设备
                 ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                '其它设备
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 15, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 26, 25).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
             Next
             '—————————————————————————————————————————————————————————————————————————————————————————
             '建设期贷款计息次数
