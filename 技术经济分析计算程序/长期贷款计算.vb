@@ -41,12 +41,21 @@
         Dim fdtzbl(10) As Double
         Dim qttzbl(10) As Double
         For i = 1 To 10
-            rjtzbl(i) = rjtz(i) / jttz(i)
-            xdctzbl(i) = xdctz(i) / jttz(i)
-            nttzbl(i) = nttz(i) / jttz(i)
-            gftzbl(i) = gftz(i) / jttz(i)
-            fdtzbl(i) = fdtz(i) / jttz(i)
-            qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            If jttz(i) > 0 Then
+                rjtzbl(i) = rjtz(i) / jttz(i)
+                xdctzbl(i) = xdctz(i) / jttz(i)
+                nttzbl(i) = nttz(i) / jttz(i)
+                gftzbl(i) = gftz(i) / jttz(i)
+                fdtzbl(i) = fdtz(i) / jttz(i)
+                qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            Else
+                rjtzbl(i) = 0
+                xdctzbl(i) = 0
+                nttzbl(i) = 0
+                gftzbl(i) = 0
+                fdtzbl(i) = 0
+                qttzbl(i) = 0
+            End If
         Next
         '10次投资不同内容的贷款本金金额，按比例分摊
         Dim dkje_cg(10) As Double
@@ -175,21 +184,25 @@
             ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
         End If
         '结果累加
-        Dim ans_DKJS
-        For j = 0 To 3
-            For i = 1 To 31
-                ans_DKJS(j)(i) = ans_DKJS_cg(j)(i) + ans_DKJS_rj(j)(i) + ans_DKJS_xdc(j)(i) + ans_DKJS_nt(j)(i) + ans_DKJS_gf(j)(i) + ans_DKJS_fd(j)(i)
-            Next
+        Dim ans_DKJS_dnbxze(31) As Double '当年还本付息总额
+        Dim ans_DKJS_dnfx(31) As Double '当年付息金额
+        Dim ans_DKJS_dnhb(31) As Double '当年还本金额
+        Dim ans_DKJS_bjye(31) As Double '当年本金剩余金额
+        For i = 1 To 31
+            ans_DKJS_dnbxze(i) = ans_DKJS_cg(0)(i) + ans_DKJS_rj(0)(i) + ans_DKJS_xdc(0)(i) + ans_DKJS_nt(0)(i) + ans_DKJS_gf(0)(i) + ans_DKJS_fd(0)(i)
+            ans_DKJS_dnfx(i) = ans_DKJS_cg(1)(i) + ans_DKJS_rj(1)(i) + ans_DKJS_xdc(1)(i) + ans_DKJS_nt(1)(i) + ans_DKJS_gf(1)(i) + ans_DKJS_fd(1)(i)
+            ans_DKJS_dnhb(i) = ans_DKJS_cg(2)(i) + ans_DKJS_rj(2)(i) + ans_DKJS_xdc(2)(i) + ans_DKJS_nt(2)(i) + ans_DKJS_gf(2)(i) + ans_DKJS_fd(2)(i)
+            ans_DKJS_bjye(i) = ans_DKJS_cg(3)(i) + ans_DKJS_rj(3)(i) + ans_DKJS_xdc(3)(i) + ans_DKJS_nt(3)(i) + ans_DKJS_gf(3)(i) + ans_DKJS_fd(3)(i)
         Next
         '结果写入Excel
         '前15年
         For i = 1 To 15
             If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = ans_DKJS(3)(i) + ans_DKJS(2)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = ans_DKJS(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = ans_DKJS(2)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = ans_DKJS(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = ans_DKJS(3)(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = ans_DKJS_dnbxze(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = ans_DKJS_dnfx(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = ans_DKJS_bjye(i)
             Else
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = 0
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = 0
@@ -201,11 +214,11 @@
         '16—31年
         For i = 16 To 31
             If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = ans_DKJS(3)(i) + ans_DKJS(2)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = ans_DKJS(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = ans_DKJS(2)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = ans_DKJS(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = ans_DKJS(3)(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = ans_DKJS_dnbxze(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = ans_DKJS_dnfx(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = ans_DKJS_bjye(i)
             Else
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = 0
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = 0

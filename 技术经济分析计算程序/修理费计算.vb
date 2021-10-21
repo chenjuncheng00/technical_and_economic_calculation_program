@@ -180,7 +180,11 @@
         '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
         Dim qttzbl(10) As Double
         For i = 1 To 10
-            qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            If jttz(i) > 0 Then
+                qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            Else
+                qttzbl(i) = 0
+            End If
         Next
         '其它投资比例转为31年的列表
         Dim qttzbl_list = 基础计算功能_10_to_31(tznf_list, qttzbl)

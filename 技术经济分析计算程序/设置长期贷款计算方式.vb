@@ -275,11 +275,11 @@ Public Class 设置长期贷款计算方式
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
+        ''长期贷款计算方法需要采用方法三或者方法四
+        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
+        '    MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
+        '    Exit Sub
+        'End If
         '——————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认输入的逐次投资的长期贷款还款和宽限年限？？", vbOKCancel)
         If XZ = vbOK Then
@@ -342,7 +342,7 @@ Public Class 设置长期贷款计算方式
             '计算长期贷款
             Call 长期贷款相关计算(ExcelApp, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————————
-            MsgBox("设置完成，每次投资的固定资产折旧和无形资产摊销计算系数就均相同！")
+            MsgBox("设置完成，每次投资的长期贷款还款年限和宽限年限均相同！")
         End If
         Me.Close()
     End Sub
@@ -354,11 +354,11 @@ Public Class 设置长期贷款计算方式
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
+        ''长期贷款计算方法需要采用方法三或者方法四
+        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
+        '    MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
+        '    Exit Sub
+        'End If
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '长期贷款还款年限
@@ -735,5 +735,56 @@ Public Class 设置长期贷款计算方式
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 54).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 54).Value = kxnx10
         End If
+        '常规设备
+        For i = 23 To 32
+            '长期贷款还款年限
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+        Next
+        For i = 34 To 43
+            '长期贷款宽限年限
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+        Next
+        '其它设备
+        For i = 16 To 25
+            '长期贷款年限
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 7).Value
+            End If
+        Next
+        For i = 27 To 36
+            '宽限年限
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
+            End If
+        Next
+        MsgBox("计算参数写入完成！")
     End Sub
 End Class

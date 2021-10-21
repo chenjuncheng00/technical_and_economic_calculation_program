@@ -328,11 +328,11 @@ Public Class 设置折旧摊销计算方式
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
-            MsgBox("折旧摊销计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
+        ''长期贷款计算方法需要采用方法三或者方法四
+        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
+        '    MsgBox("折旧摊销计算方式，请选择计算方法三或者方法四，计算终止！")
+        '    Exit Sub
+        'End If
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认输入的逐次投资的固定资产折旧和无形资产摊销计算系数？", vbOKCancel)
@@ -473,11 +473,11 @@ Public Class 设置折旧摊销计算方式
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        '长期贷款计算方法需要采用方法三或者方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
-            MsgBox("折旧摊销计算方式，请选择计算方法三或者方法四，计算终止！")
-            Exit Sub
-        End If
+        ''长期贷款计算方法需要采用方法三或者方法四
+        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
+        '    MsgBox("折旧摊销计算方式，请选择计算方法三或者方法四，计算终止！")
+        '    Exit Sub
+        'End If
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '固定资产折旧年限
@@ -935,5 +935,77 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 41).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 41).Value = wxzctxnx10
         End If
+        '如果数据是0，则改为默认值
+        '常规设备
+        For i = 4 To 13
+            '固定资产折旧年限
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+            '固定资产残值率
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+            '无形资产摊销年限
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+        Next
+        '其它设备
+        For i = 4 To 13
+            '固定资产折旧年限
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 7).Value
+            End If
+        Next
+        For i = 15 To 24
+            '固定资产残值率
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 5).Value
+            End If
+        Next
+        For i = 26 To 35
+            '无形资产摊销年限
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 29).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 32).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 35).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 38).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = 0 Then
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
+            End If
+        Next
+        MsgBox("计算参数写入完成！")
     End Sub
 End Class

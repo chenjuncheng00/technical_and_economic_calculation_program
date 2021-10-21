@@ -9,15 +9,25 @@
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '————————————————————————————————————————————————————————————————————————————————————————
-        '计算复利贷款利率
-        Dim dkll_fl As Double = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
-        '将实际的建设期贷款利率写入Excel
-        For i = 1 To 10
-            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 11, 39).Value = dkll_fl
-        Next
         '将资本金比例写入Excel
         For i = 1 To 10
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ZBJBL
+        Next
+        '计算复利贷款利率
+        Dim dkll_fl As Double = (1 + DKLL / jsqdkjxcs) ^ jsqdkjxcs - 1
+        '将实际的建设期贷款利率写入Excel
+        '常规设备
+        For i = 1 To 10
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i + 11, 39).Value = dkll_fl
+        Next
+        '其它设备
+        For i = 5 To 14
+            '长期贷款利率
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
+            ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次工作簿
@@ -289,6 +299,42 @@
                 ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value = zbjbl10
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
             End If
+            '————————————————————————————————————————————————————————————————————————————————————————  
+            '等于0的参数改为默认值
+            '资本金比例
+            For i = 1 To 10
+                If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(i + 4, 22).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 5).Value
+                End If
+            Next
+            '长期贷款年利率
+            '计算复利贷款利率
+            Dim dkll = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 9).Value
+            Dim dkll_fl As Double = (1 + dkll / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '常规设备
+            For i = 12 To 21
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 39).Value = dkll_fl
+                End If
+            Next
+            '其它设备
+            For i = 5 To 14
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 42).Value = dkll_fl
+                End If
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 45).Value = dkll_fl
+                End If
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 48).Value = dkll_fl
+                End If
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 51).Value = dkll_fl
+                End If
+                If ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = 0 Then
+                    ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
+                End If
+            Next
             '————————————————————————————————————————————————————————————————————————————————————————  
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿

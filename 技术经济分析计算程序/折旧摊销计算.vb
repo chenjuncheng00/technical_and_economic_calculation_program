@@ -68,12 +68,21 @@
         Dim fdtzbl(10) As Double
         Dim qttzbl(10) As Double
         For i = 1 To 10
-            rjtzbl(i) = rjtz(i) / jttz(i)
-            xdctzbl(i) = xdctz(i) / jttz(i)
-            nttzbl(i) = nttz(i) / jttz(i)
-            gftzbl(i) = gftz(i) / jttz(i)
-            fdtzbl(i) = fdtz(i) / jttz(i)
-            qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            If jttz(i) > 0 Then
+                rjtzbl(i) = rjtz(i) / jttz(i)
+                xdctzbl(i) = xdctz(i) / jttz(i)
+                nttzbl(i) = nttz(i) / jttz(i)
+                gftzbl(i) = gftz(i) / jttz(i)
+                fdtzbl(i) = fdtz(i) / jttz(i)
+                qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
+            Else
+                rjtzbl(i) = 0
+                xdctzbl(i) = 0
+                nttzbl(i) = 0
+                gftzbl(i) = 0
+                fdtzbl(i) = 0
+                qttzbl(i) = 0
+            End If
         Next
         '10次投资不同投资内容的资产原值，按照比例分摊
         Dim gdzcyz_cg(10) As Double
@@ -299,26 +308,33 @@
         ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 4).Value = gdzcyz_all
         ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 4).Value = wxzcyz_all
         '各种方法结果的累加
-        Dim ans_gdzczj
-        Dim ans_wxzctx
-        For j = 0 To 2
-            For i = 1 To 31
-                ans_gdzczj(j)(i) = ans_gdzczj_cg(j)(i) + ans_gdzczj_rj(j)(i) + ans_gdzczj_xdc(j)(i) + ans_gdzczj_nt(j)(i) + ans_gdzczj_gf(j)(i) + ans_gdzczj_fd(j)(i)
-                ans_wxzctx(j)(i) = ans_wxzctx_cg(j)(i) + ans_wxzctx_rj(j)(i) + ans_wxzctx_xdc(j)(i) + ans_wxzctx_nt(j)(i) + ans_wxzctx_gf(j)(i) + ans_wxzctx_fd(j)(i)
-            Next
+        '固定资产折旧
+        Dim ans_gdzczj_zjtxf(31) As Double '逐年折旧摊销费
+        Dim ans_gdzczj_zjtxflj(31) As Double '逐年折旧摊销费累计值
+        Dim ans_gdzczj_syjz(31) As Double '逐年剩余固定资产净值
+        '无形资产摊销
+        Dim ans_wxzctx_zjtxf(31) As Double '逐年折旧摊销费
+        Dim ans_wxzctx_zjtxflj(31) As Double '逐年折旧摊销费累计值
+        Dim ans_wxzctx_syjz(31) As Double '逐年剩余固定资产净值
+        For i = 1 To 31
+            ans_gdzczj_zjtxf(i) = ans_gdzczj_cg(0)(i) + ans_gdzczj_rj(0)(i) + ans_gdzczj_xdc(0)(i) + ans_gdzczj_nt(0)(i) + ans_gdzczj_gf(0)(i) + ans_gdzczj_fd(0)(i)
+            ans_gdzczj_zjtxflj(i) = ans_gdzczj_cg(1)(i) + ans_gdzczj_rj(1)(i) + ans_gdzczj_xdc(1)(i) + ans_gdzczj_nt(1)(i) + ans_gdzczj_gf(1)(i) + ans_gdzczj_fd(1)(i)
+            ans_gdzczj_syjz(i) = ans_gdzczj_cg(2)(i) + ans_gdzczj_rj(2)(i) + ans_gdzczj_xdc(2)(i) + ans_gdzczj_nt(2)(i) + ans_gdzczj_gf(2)(i) + ans_gdzczj_fd(2)(i)
+            ans_wxzctx_zjtxf(i) = ans_wxzctx_cg(0)(i) + ans_wxzctx_rj(0)(i) + ans_wxzctx_xdc(0)(i) + ans_wxzctx_nt(0)(i) + ans_wxzctx_gf(0)(i) + ans_wxzctx_fd(0)(i)
+            ans_wxzctx_zjtxflj(i) = ans_wxzctx_cg(1)(i) + ans_wxzctx_rj(1)(i) + ans_wxzctx_xdc(1)(i) + ans_wxzctx_nt(1)(i) + ans_wxzctx_gf(1)(i) + ans_wxzctx_fd(1)(i)
+            ans_wxzctx_syjz(i) = ans_wxzctx_cg(2)(i) + ans_wxzctx_rj(2)(i) + ans_wxzctx_xdc(2)(i) + ans_wxzctx_nt(2)(i) + ans_wxzctx_gf(2)(i) + ans_wxzctx_fd(2)(i)
         Next
-
         '前15年
         For i = 1 To 15
             If i <= jsnx Then
                 '固定资产折旧
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 4 + i).Value = ans_gdzczj(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 4 + i).Value = ans_gdzczj(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 4 + i).Value = ans_gdzczj(2)(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 4 + i).Value = ans_gdzczj_zjtxf(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 4 + i).Value = ans_gdzczj_zjtxflj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 4 + i).Value = ans_gdzczj_syjz(i)
                 '无形资产摊销
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(14, 4 + i).Value = ans_wxzctx(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(15, 4 + i).Value = ans_wxzctx(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(16, 4 + i).Value = ans_wxzctx(2)(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(14, 4 + i).Value = ans_wxzctx_zjtxf(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(15, 4 + i).Value = ans_wxzctx_zjtxflj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(16, 4 + i).Value = ans_wxzctx_syjz(i)
             Else
                 '固定资产折旧
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 4 + i).Value = 0
@@ -334,13 +350,13 @@
         For i = 16 To 31
             If i <= jsnx Then
                 '固定资产折旧
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(25, i - 12).Value = ans_gdzczj(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(26, i - 12).Value = ans_gdzczj(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(27, i - 12).Value = ans_gdzczj(2)(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(25, i - 12).Value = ans_gdzczj_zjtxf(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(26, i - 12).Value = ans_gdzczj_zjtxflj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(27, i - 12).Value = ans_gdzczj_syjz(i)
                 '无形资产摊销
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(31, i - 12).Value = ans_wxzctx(0)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(32, i - 12).Value = ans_wxzctx(1)(i)
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(33, i - 12).Value = ans_wxzctx(2)(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(31, i - 12).Value = ans_wxzctx_zjtxf(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(32, i - 12).Value = ans_wxzctx_zjtxflj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(33, i - 12).Value = ans_wxzctx_syjz(i)
             Else
                 '固定资产折旧
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(25, i - 12).Value = 0
