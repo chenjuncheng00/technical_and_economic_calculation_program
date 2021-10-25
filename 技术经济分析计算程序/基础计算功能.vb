@@ -33,7 +33,7 @@
         Return ans
     End Function
     Function 计算费率修正计算基础功能(tznf_list As Array, je_10_list As Array, je_31_list As Array, fl_list As Array, yynx As Integer, kcbl As Double)
-        '本方法用户修理费、材料费其它费的特殊计算功能
+        '本方法用于修理费、材料费其它费的特殊计算功能
         'tznf_list：10次投资的年份序号，列表，长度10
         'je_10_list：10次投资的各种金额数值(静态投资，建设期利息，可抵扣增值税，资本金，建设期贷款)，列表，长度10
         'je_31_list：31年各种金额数值(静态投资，建设期利息，可抵扣增值税，资本金，建设期贷款)，列表，长度31
@@ -83,7 +83,7 @@
         ans(2) = je_lj_list
         Return ans
     End Function
-    Sub 投资回收期计算(ExcelApp As Object)
+    Sub 投资收益率和投资回收期计算(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         ExcelApp.Calculate()
@@ -404,6 +404,157 @@
         Else
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(14, 3).Value = "正确"
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '内部收益率计算
+        '读取基本收益率
+        Dim guess_zbj As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 3).Value
+        Dim guess_qtz As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 3).Value
+        Dim guess_tzf As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 3).Value
+        '资本金所得税前
+        '读取逐年现金流
+        Dim xjl_zbjsdsq_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_zbjsdsq_list(i) = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(24, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_zbjsdsq_list(i) = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(50, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_zbjsdsq As Double = IRR(xjl_zbjsdsq_list, guess_zbj)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(52, 4).Value = syl_zbjsdsq
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '资本金所得税后
+        '读取逐年现金流
+        Dim xjl_zbjsdsh_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_zbjsdsh_list(i) = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(22, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_zbjsdsh_list(i) = ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(48, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_zbjsdsh As Double = IRR(xjl_zbjsdsh_list, guess_zbj)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("资本金现金流量表").Cells(53, 4).Value = syl_zbjsdsh
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '全投资所得税前
+        '读取逐年现金流
+        Dim xjl_qtzsdsq_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_qtzsdsq_list(i) = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(16, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_qtzsdsq_list(i) = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(37, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_qtzsdsq As Double = IRR(xjl_qtzsdsq_list, guess_qtz)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(42, 4).Value = syl_qtzsdsq
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '全投资所得税后
+        '读取逐年现金流
+        Dim xjl_qtzsdsh_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_qtzsdsh_list(i) = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(19, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_qtzsdsh_list(i) = ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(40, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_qtzsdsh As Double = IRR(xjl_qtzsdsh_list, guess_qtz)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("项目投资现金流量表").Cells(43, 4).Value = syl_qtzsdsh
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方1
+        '读取逐年现金流
+        Dim xjl_tzf1_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_tzf1_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(15, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_tzf1_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(32, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_tzf1 As Double = IRR(xjl_tzf1_list, guess_tzf)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("投资方1现金流量表").Cells(35, 4).Value = syl_tzf1
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方2
+        '读取逐年现金流
+        Dim xjl_tzf2_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_tzf2_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(15, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_tzf2_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(32, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_tzf2 As Double = IRR(xjl_tzf2_list, guess_tzf)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("投资方2现金流量表").Cells(35, 4).Value = syl_tzf2
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方3
+        '读取逐年现金流
+        Dim xjl_tzf3_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_tzf3_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(15, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_tzf3_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(32, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_tzf3 As Double = IRR(xjl_tzf3_list, guess_tzf)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("投资方3现金流量表").Cells(35, 4).Value = syl_tzf3
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方4
+        '读取逐年现金流
+        Dim xjl_tzf4_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_tzf4_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(15, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_tzf4_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(32, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_tzf4 As Double = IRR(xjl_tzf4_list, guess_tzf)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Cells(35, 4).Value = syl_tzf4
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '投资方5
+        '读取逐年现金流
+        Dim xjl_tzf5_list(31) As Double
+        '前15年
+        For i = 1 To 15
+            xjl_tzf5_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(15, i + 4).Value
+        Next
+        '16-31年
+        For i = 16 To 31
+            xjl_tzf5_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(32, i - 12).Value
+        Next
+        '计算收益率
+        Dim syl_tzf5 As Double = IRR(xjl_tzf5_list, guess_tzf)
+        '写入Excel
+        ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(35, 4).Value = syl_tzf5
     End Sub
     Sub 计算前基本处理(ExcelApp As Object, jbcl_model As Integer)
         On Error Resume Next
@@ -441,7 +592,7 @@
         '流动资金计算
         Call 流动资金相关计算(ExcelApp)
         '投资回收期计算
-        Call 投资回收期计算(ExcelApp)
+        Call 投资收益率和投资回收期计算(ExcelApp)
         '锁定表格
         Call 锁定表格(ExcelApp)
     End Sub

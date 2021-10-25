@@ -433,7 +433,7 @@
         ExcelApp.Calculate()
     End Sub
     Function 折旧摊销计算_直线法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
-                                            jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+                                                  jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
@@ -582,7 +582,7 @@
         Return ans
     End Function
     Function 折旧摊销计算_年数总和法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
-                                                jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+                                                      jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
 
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
@@ -740,7 +740,7 @@
         Return ans
     End Function
     Function 折旧摊销计算_直线法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
-                                            jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+                                                  jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
@@ -849,7 +849,7 @@
         Return ans
     End Function
     Function 折旧摊销计算_年数总和法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
-                                                jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+                                                      jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
         'ksnf_list：折旧摊销计算的开始年份初始值，列表，长度10

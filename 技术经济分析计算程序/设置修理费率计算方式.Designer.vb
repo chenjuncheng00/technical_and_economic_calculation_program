@@ -975,10 +975,10 @@ Partial Class 设置修理费率计算方式
         'Label38
         '
         Me.Label38.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label38.Location = New System.Drawing.Point(30, 634)
+        Me.Label38.Location = New System.Drawing.Point(6, 634)
         Me.Label38.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(474, 50)
+        Me.Label38.Size = New System.Drawing.Size(539, 50)
         Me.Label38.TabIndex = 109
         Me.Label38.Text = "修理费率计算单位选择(仅风电、光伏有效)"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -988,7 +988,7 @@ Partial Class 设置修理费率计算方式
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"投资额百分比(%)", "装机功率(元/kW)"})
-        Me.ComboBox1.Location = New System.Drawing.Point(535, 644)
+        Me.ComboBox1.Location = New System.Drawing.Point(554, 644)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(243, 32)
         Me.ComboBox1.TabIndex = 110

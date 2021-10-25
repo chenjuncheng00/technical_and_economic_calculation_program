@@ -143,6 +143,8 @@
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 资本金税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
@@ -291,6 +293,8 @@
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 资本金税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
@@ -520,6 +524,8 @@
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value, 2)
         End If
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 全投资税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
@@ -666,6 +672,8 @@
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 全投资税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
@@ -814,6 +822,8 @@
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 全投资税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
@@ -1043,6 +1053,8 @@
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value, 2)
         End If
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
 End Module

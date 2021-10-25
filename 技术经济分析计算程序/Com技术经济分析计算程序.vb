@@ -613,10 +613,10 @@ Public Class Com技术经济分析计算程序
             Dim xlfl_cg_model As Integer = 1
             'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
             Dim xlfl_qt_model As Integer = 1
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
             'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
             Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
             'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -1075,12 +1075,25 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
             ExcelApp.ActiveChart.Parent.Delete
             '————————————————————————————————————————————————————————————————————————————————————————
+            '清除敏感性分析数据
+            For i = 7 To 137 Step 5
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 8).Value = Nothing
+            Next
             '将敏感性分析变化率重置回5%，格式重置回0%
             For i = 7 To 137 Step 5
                 For j = 1 To 5
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).Value = 0.05 * j - 3 * 0.05
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0%"
                 Next
+            Next
+            For i = 7 To 137
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 10).Value = Nothing
+            Next
+            For i = 7 To 137
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 11).Value = Nothing
+            Next
+            For i = 7 To 137
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 12).Value = Nothing
             Next
             '清空Excel内已有的输入
             For i = 7 To 137 Step 5

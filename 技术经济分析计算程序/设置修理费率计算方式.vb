@@ -233,42 +233,42 @@ Public Class 设置修理费率计算方式
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = CInt(YYNX_RJ.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = CDbl(KCBL_RJ.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = CDbl(KCBL_RJ.Text) / 100
         End If
         '蓄电池
         If xudianchi.Checked = True Then
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = CInt(YYNX_XDC.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = CDbl(KCBL_XDC.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = CDbl(KCBL_XDC.Text) / 100
         End If
         '暖通
         If nuantong.Checked = True Then
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = CInt(YYNX_NT.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = CDbl(KCBL_NT.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = CDbl(KCBL_NT.Text) / 100
         End If
         '光伏
         If guangfu.Checked = True Then
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 6).Value = CInt(YYNX_GF.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = CDbl(KCBL_GF.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = CDbl(KCBL_GF.Text) / 100
         End If
         '风电
         If fengdian.Checked = True Then
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 7).Value = CInt(YYNX_FD.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = CDbl(KCBL_FD.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = CDbl(KCBL_FD.Text) / 100
         End If
         '常规设备
         If changgui.Checked = True Then
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 8).Value = CInt(YYNX_CG.Text)
             '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = CDbl(KCBL_CG.Text)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = CDbl(KCBL_CG.Text) / 100
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算一次工作簿

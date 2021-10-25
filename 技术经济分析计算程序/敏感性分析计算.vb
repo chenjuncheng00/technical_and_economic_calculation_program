@@ -97,6 +97,8 @@ Module 敏感性分析计算
             '投资金额变化后计算
             Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
         End If
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 收入敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double)
@@ -144,6 +146,8 @@ Module 敏感性分析计算
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 成本敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double)
@@ -191,6 +195,8 @@ Module 敏感性分析计算
                 Next
             End If
         Next
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 年运行小时数敏感性分析(ExcelApp As Object, MGXFXBHL As Double)
@@ -303,6 +309,8 @@ Module 敏感性分析计算
                 Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
             End If
         End If
+        '计算一次工作簿
+        ExcelApp.Calculate()
         Form1.Close()
     End Sub
     Sub 绘制单因素敏感性分析图(ExcelApp As Object)

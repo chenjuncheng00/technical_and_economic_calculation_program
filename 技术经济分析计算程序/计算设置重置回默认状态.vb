@@ -59,6 +59,9 @@ Module 计算设置重置回默认状态
         '光伏、风电修理费计算基数设置
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)"
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)"
+        '————————————————————————————————————————————————————————————————————————————————————————      
+        '计算一次工作簿
+        ExcelApp.Calculate()
     End Sub
     Sub 计算设置重置回默认状态_part2(ExcelApp As Object)
         On Error Resume Next
@@ -366,22 +369,38 @@ Module 计算设置重置回默认状态
         '购电容量费成本
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * tcyfs_list(i - 2) / 12
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * tcyfs_list(i - 2) / 12
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
+                End If
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "保持每年100%" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
+                End If
             Next
         End If
         '—————————————————————————————————————————————————————————————————
         '城市管廊成本
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * tcyfs_list(i - 2) / 12
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * tcyfs_list(i - 2) / 12
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
+                End If
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "保持每年100%" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
+                End If
             Next
         End If
         '—————————————————————————————————————————————————————————————————
@@ -389,31 +408,55 @@ Module 计算设置重置回默认状态
         '如果是逐年递增情况，不进行修改
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * tcyfs_list(i - 2) / 12
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * tcyfs_list(i - 2) / 12
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
+                End If
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "保持每年100%" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
+                End If
             Next
         End If
         '—————————————————————————————————————————————————————————————————
         '充电桩收入
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * tcyfs_list(i - 2) / 12
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * tcyfs_list(i - 2) / 12
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                End If
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "保持每年100%" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                End If
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年达产率" Then
             For i = 3 To 33
                 '前15年
                 If i - 2 <= 15 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
+                    If i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                    End If
                     '16-31年
                 ElseIf i - 2 >= 16 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
+                    If i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
+                    Else
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                    End If
                 End If
             Next
         End If

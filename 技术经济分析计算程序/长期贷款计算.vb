@@ -233,9 +233,9 @@
         ExcelApp.Calculate()
     End Sub
     Function 长期贷款计算_等额本息_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                              dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
-        'dnkx_0：长期贷款年限初始值
+        'dknx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
@@ -388,9 +388,9 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本金_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                              dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
-        'dnkx_0：长期贷款年限初始值
+        'dknx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
@@ -545,7 +545,7 @@
     Function 长期贷款计算_等额本息_10次投资分开计算(bj_0_list As Array, dknx_0_list As Array, ksnf_list As Array, jsnx As Integer,
                                                     dkll_list As Array, kxnx_list As Array, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 10次投资，贷款本金初始值，列表，长度10
-        'dnkx_0_list：10次投资，长期贷款年限初始值，列表，长度10
+        'dknx_0_list：10次投资，长期贷款年限初始值，列表，长度10
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll_list：10次投资，长期贷款年化利率(复利)，列表，长度10
@@ -659,7 +659,7 @@
     Function 长期贷款计算_等额本金_10次投资分开计算(bj_0_list As Array, dknx_0_list As Array, ksnf_list As Array, jsnx As Integer,
                                                     dkll_list As Array, kxnx_list As Array, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 贷款本金初始值，列表，长度10
-        'dnkx_0_list：长期贷款年限初始值，列表，长度10
+        'dknx_0_list：长期贷款年限初始值，列表，长度10
         'ksnf_list：贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll_list：长期贷款年化利率(复利)，列表，长度10
@@ -773,7 +773,7 @@
     Function 长期贷款计算_等额本息(bj_0 As Double, dknx_0 As Integer, ksnf As Integer, jsnx As Integer, dkll As Double,
                                    kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0: 贷款本金初始值
-        'dnkx_0：长期贷款年限初始值
+        'dknx_0：长期贷款年限初始值
         'ksnf：贷款计算的开始年份
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
@@ -862,7 +862,7 @@
     Function 长期贷款计算_等额本金(bj_0 As Double, dknx_0 As Integer, ksnf As Integer, jsnx As Integer, dkll As Double,
                                    kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0: 贷款本金初始值
-        'dnkx_0：长期贷款年限初始值
+        'dknx_0：长期贷款年限初始值
         'ksnf：贷款计算的开始年份
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
