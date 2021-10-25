@@ -371,50 +371,6 @@
             End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
-        '写入设备修理费系数，供其它程序调用
-        For i = 3 To 33
-            If i - 2 <= jsnx Then
-                '常规设备修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = xlfl_cg_list(i - 2)
-                '燃机修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i).Value = xlfl_rj_list(i - 2)
-                '蓄电池修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2)
-                '光伏设备修理费率（%）/(元/kW)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_list(i - 2)
-                '暖通设备修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(157, i).Value = xlfl_nt_list(i - 2)
-                '风电设备修理费率（%）/(元/kW)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = xlfl_fd_list(i - 2)
-            Else
-                '常规设备修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
-                '燃机修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i).Value = 0
-                '蓄电池修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = 0
-                '光伏设备修理费率（%）/(元/kW)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = 0
-                '暖通设备修理费率（%）
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(157, i).Value = 0
-                '风电设备修理费率（%）/(元/kW)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = 0
-            End If
-        Next
-        '写入其它投资计算基数特殊计算参数，供其它程序调用
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = yynx_rj
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = yynx_xdc
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = yynx_nt
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 6).Value = yynx_gf
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 7).Value = yynx_fd
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 8).Value = yynx_cg
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = kcbl_rj
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = kcbl_xdc
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = kcbl_nt
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = kcbl_gf
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = kcbl_fd
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = kcbl_cg
-        '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub

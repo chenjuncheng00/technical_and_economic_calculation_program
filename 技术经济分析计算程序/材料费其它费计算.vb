@@ -212,53 +212,6 @@
                 ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value = 0
             End If
         Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '将逐年材料费率、其它费率写入Excel，供其它程序调用
-        For i = 3 To 33 '列
-            If i - 2 <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value = clfl_rj_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(183, i).Value = clfl_rm_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(184, i).Value = clfl_ljfd_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(185, i).Value = clfl_glgr_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(186, i).Value = clfl_gf_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(187, i).Value = clfl_fd_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(188, i).Value = qtfl_rj_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(189, i).Value = qtfl_rm_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(190, i).Value = qtfl_ljfd_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(191, i).Value = qtfl_glgr_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(192, i).Value = qtfl_gf_list(i - 2)
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = qtfl_fd_list(i - 2)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(183, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(184, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(185, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(186, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(187, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(188, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(189, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(190, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(191, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(192, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = 0
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = yynx_rj
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = yynx_xdc
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value = yynx_nt
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value = yynx_gf
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value = yynx_rm
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value = yynx_fd
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value = yynx_ljfd
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value = kcbl_rj
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = kcbl_xdc
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value = kcbl_nt
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value = kcbl_gf
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value = kcbl_rm
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value = kcbl_fd
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value = kcbl_ljfd
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次Excel
         ExcelApp.Calculate()
