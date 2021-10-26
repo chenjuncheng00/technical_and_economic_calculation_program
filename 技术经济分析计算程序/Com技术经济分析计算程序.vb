@@ -43,7 +43,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
             '———————————————————————————————————————————————————————————————————————————————————————— 
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
         End If
     End Sub
     Sub 确定建设期时间计划()
@@ -364,7 +364,7 @@ Public Class Com技术经济分析计算程序
             MsgBox("计算年限内逐年投产的月份数量为：" & vbCrLf & XianShi_3)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("确定建设期时间计划完成！")
         End If
@@ -513,7 +513,7 @@ Public Class Com技术经济分析计算程序
             '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
             Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             MsgBox("清空建设期时间计划完成！")
         End If
     End Sub
@@ -571,7 +571,7 @@ Public Class Com技术经济分析计算程序
             '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
             Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             MsgBox("确定估算表参数设置完成！")
         End If
     End Sub
@@ -625,7 +625,7 @@ Public Class Com技术经济分析计算程序
             '确定投资数据输入
             Call 计算功能合并整理.确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             MsgBox("确定投资数据输入完成！")
         End If
     End Sub
@@ -712,7 +712,7 @@ Public Class Com技术经济分析计算程序
                 '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
                 Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
                 '————————————————————————————————————————————————————————————————————————————————————————
-                Call 计算后基本处理(ExcelApp)
+                Call 计算后基本处理(ExcelApp, 1)
                 MsgBox("清空输入的投资数据完成！")
             End If
         End If
@@ -743,7 +743,7 @@ Public Class Com技术经济分析计算程序
             '收入成本变化后计算
             Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             MsgBox("确定收入成本输入完成！")
         End If
     End Sub
@@ -794,7 +794,7 @@ Public Class Com技术经济分析计算程序
             '收入成本变化后的操作
             Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
             '———————————————————————————————————————————————————————————————————————————————————————— 
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             MsgBox("清空收入成本输入完成！")
         End If
     End Sub
@@ -836,7 +836,7 @@ Public Class Com技术经济分析计算程序
                 Call 全投资税后收益率反算成本单价(ExcelApp, FSLJDJSCSMax)
             End If
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
             '————————————————————————————————————————————————————————————————————————————————————————
             '提醒计算完成
             Form1.Show()
@@ -869,7 +869,7 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("D43:D67").ClearContents
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("G42:G67").ClearContents
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
             MsgBox("反算临界点数据已清空！")
         End If
     End Sub
@@ -898,7 +898,7 @@ Public Class Com技术经济分析计算程序
             Form10.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————       
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
     End Sub
     Sub 盈亏平衡点计算()
@@ -986,7 +986,7 @@ Public Class Com技术经济分析计算程序
             '生产年份数写入表格
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 5).Value = scnfs
             '————————————————————————————————————————————————————————————————————————————————————————  
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
             '————————————————————————————————————————————————————————————————————————————————————————       
             MsgBox("盈亏平衡点（BEP）已计算完成！")
         End If
@@ -1016,7 +1016,7 @@ Public Class Com技术经济分析计算程序
             '复制
             ExcelApp.ActiveChart.ChartArea.Copy()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
             '————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("复制完成！")
         End If
@@ -1046,7 +1046,7 @@ Public Class Com技术经济分析计算程序
             '复制
             ExcelApp.ActiveChart.ChartArea.Copy()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
             '————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("复制完成！")
         End If
@@ -1075,10 +1075,6 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
             ExcelApp.ActiveChart.Parent.Delete
             '————————————————————————————————————————————————————————————————————————————————————————
-            '清除敏感性分析数据
-            For i = 7 To 137 Step 5
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 8).Value = Nothing
-            Next
             '将敏感性分析变化率重置回5%，格式重置回0%
             For i = 7 To 137 Step 5
                 For j = 1 To 5
@@ -1086,15 +1082,9 @@ Public Class Com技术经济分析计算程序
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i + j - 1, 9).NumberFormatLocal = "0%"
                 Next
             Next
-            For i = 7 To 137
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 10).Value = Nothing
-            Next
-            For i = 7 To 137
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 11).Value = Nothing
-            Next
-            For i = 7 To 137
-                ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 12).Value = Nothing
-            Next
+            '清除敏感性分析数据
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("H7:H141").ClearContents
+            ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("J7:L141").ClearContents
             '清空Excel内已有的输入
             For i = 7 To 137 Step 5
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(i, 29).Value = Nothing
@@ -1112,10 +1102,11 @@ Public Class Com技术经济分析计算程序
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 31).Value = Nothing
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 31).Value = Nothing
+            '——————————————————————————————————————————————————————————————————————————————————————
             '清空盈亏平衡分析计算数据
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("E55:E59").ClearContents
             '——————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 0)
             MsgBox("清空敏感性分析和盈亏平衡分析计算数据完成！")
         End If
     End Sub
@@ -1143,7 +1134,7 @@ Public Class Com技术经济分析计算程序
             Form6.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
@@ -1172,7 +1163,7 @@ Public Class Com技术经济分析计算程序
             Form13.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体中已有的数据
         Form13.ksnf1.Clear()
@@ -1207,7 +1198,7 @@ Public Class Com技术经济分析计算程序
             Form12.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体中已有的数据
         Form12.ksnf1.Clear()
@@ -1244,7 +1235,7 @@ Public Class Com技术经济分析计算程序
             Form7.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体中已有的数据
         Form7.ksnf1.Clear()
@@ -1284,7 +1275,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“逐年衰减系数设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体中已有的数据
         Form2.TextBox1.Clear()
@@ -1328,7 +1319,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“修理费率逐年变化设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体中已有的数据
         Form4.ksnf1.Clear()
@@ -1382,7 +1373,7 @@ Public Class Com技术经济分析计算程序
 
 
         '    '————————————————————————————————————————————————————————————————————————————————————————
-        '    Call 计算后基本处理(ExcelApp)
+        '    Call 计算后基本处理(ExcelApp, 1)
         'End If
     End Sub
     Sub 设置建设期资金运用方式()
@@ -1410,7 +1401,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“建设期资金运用方式设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空已有内容
         Form5.zbjbl_a.Clear()
@@ -1464,7 +1455,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“每次投资设置不同的折旧摊销计算方式.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空已有的全部数据
         '固定资产折旧年限
@@ -1529,7 +1520,7 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“每次投资设置不同的长期贷款还款年限和宽限年限.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '长期贷款还款年限
         Form9.cqdkhknx1.Clear()
@@ -1581,7 +1572,7 @@ Public Class Com技术经济分析计算程序
             Form14.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp)
+            Call 计算后基本处理(ExcelApp, 1)
         End If
         '清空窗体内的数据
         '出资比例
@@ -1856,6 +1847,6 @@ aaaaa：
         '写入计算模式
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "相同"
         '————————————————————————————————————————————————————————————————————————————————————————
-        Call 计算后基本处理(ExcelApp)
+        Call 计算后基本处理(ExcelApp, 0)
     End Sub
 End Class

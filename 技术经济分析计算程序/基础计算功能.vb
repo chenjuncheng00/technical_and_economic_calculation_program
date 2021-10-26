@@ -556,7 +556,7 @@
         '写入Excel
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Cells(35, 4).Value = syl_tzf5
     End Sub
-    Sub 计算前基本处理(ExcelApp As Object, jbcl_model As Integer)
+    Sub 计算前基本处理(ExcelApp As Object, jbcl_mode As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '启动迭代计算
@@ -568,7 +568,7 @@
         '屏蔽事件
         ExcelApp.Application.EnableEvents = False
         '不一定每次都需要关闭Excel自动计算
-        If jbcl_model = 1 Then
+        If jbcl_mode = 1 Then
             '手动计算，关闭excel的自动计算
             ExcelApp.Application.Calculation = XlCalculation.xlCalculationManual
         End If
@@ -578,7 +578,7 @@
         '解锁表格
         Call 解锁表格(ExcelApp)
     End Sub
-    Sub 计算后基本处理(ExcelApp As Object)
+    Sub 计算后基本处理(ExcelApp As Object, js_mode As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         '打开屏幕更新
@@ -587,12 +587,15 @@
         ExcelApp.Application.EnableEvents = True
         '打开excel的自动计算
         ExcelApp.Application.Calculation = XlCalculation.xlCalculationAutomatic
-        '增值税相关计算
-        Call 增值税相关计算(ExcelApp)
-        '流动资金计算
-        Call 流动资金相关计算(ExcelApp)
-        '投资回收期计算
-        Call 投资收益率和投资回收期计算(ExcelApp)
+        '不是每次都需要进行税收、流动资金、收益率、回收期计算
+        If js_mode = 1 Then
+            '增值税相关计算
+            Call 增值税相关计算(ExcelApp)
+            '流动资金计算
+            Call 流动资金相关计算(ExcelApp)
+            '投资回收期计算
+            Call 投资收益率和投资回收期计算(ExcelApp)
+        End If
         '锁定表格
         Call 锁定表格(ExcelApp)
     End Sub

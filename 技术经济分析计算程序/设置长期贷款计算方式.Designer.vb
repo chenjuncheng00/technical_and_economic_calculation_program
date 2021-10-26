@@ -77,6 +77,8 @@ Partial Class 设置长期贷款计算方式
         Me.ranji = New System.Windows.Forms.CheckBox()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.写入参数 = New System.Windows.Forms.Button()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label22
@@ -642,11 +644,34 @@ Partial Class 设置长期贷款计算方式
         Me.写入参数.Text = "写入参数"
         Me.写入参数.UseVisualStyleBackColor = False
         '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(1144, 536)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(932, 229)
+        Me.RichTextBox1.TabIndex = 168
+        Me.RichTextBox1.Text = ""
+        '
+        'Label23
+        '
+        Me.Label23.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label23.Location = New System.Drawing.Point(1310, 464)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(583, 50)
+        Me.Label23.TabIndex = 167
+        Me.Label23.Text = "设置长期贷款计算方式显示"
+        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         '设置长期贷款计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(2108, 806)
+        Me.Controls.Add(Me.RichTextBox1)
+        Me.Controls.Add(Me.Label23)
         Me.Controls.Add(Me.写入参数)
         Me.Controls.Add(Me.Label36)
         Me.Controls.Add(Me.Label35)
@@ -766,4 +791,6 @@ Partial Class 设置长期贷款计算方式
     Friend WithEvents ranji As System.Windows.Forms.CheckBox
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents 写入参数 As System.Windows.Forms.Button
+    Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
+    Friend WithEvents Label23 As System.Windows.Forms.Label
 End Class

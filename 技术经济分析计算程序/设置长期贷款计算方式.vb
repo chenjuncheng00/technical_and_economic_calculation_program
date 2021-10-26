@@ -33,6 +33,8 @@ Public Class 设置长期贷款计算方式
         Me.kxnx8.Clear()
         Me.kxnx9.Clear()
         Me.kxnx10.Clear()
+        '显示
+        Me.RichTextBox1.Clear()
         '——————————————————————————————————————————————————————————————————————————————
         '载入默认值
         '根据已经输入的投资情况，载入默认值
@@ -265,6 +267,8 @@ Public Class 设置长期贷款计算方式
             Me.nuantong.Checked = False
             Me.guangfu.Checked = False
             Me.fengdian.Checked = False
+            '显示
+            Me.RichTextBox1.Clear()
         End If
     End Sub
 
@@ -292,8 +296,9 @@ Public Class 设置长期贷款计算方式
             Call 长期贷款相关计算(ExcelApp, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 7).Value = "不相同"
+            '显示
+            Me.RichTextBox1.Text = "长期贷款计算完成！"
         End If
-        Me.Close()
     End Sub
 
     Private Sub 重置回默认方式_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
@@ -341,10 +346,9 @@ Public Class 设置长期贷款计算方式
             Dim sdsl_model As Integer = 1
             '计算长期贷款
             Call 长期贷款相关计算(ExcelApp, sdsl_model)
-            '————————————————————————————————————————————————————————————————————————————————————————————
-            MsgBox("设置完成，每次投资的长期贷款还款年限和宽限年限均相同！")
+            '显示
+            Me.RichTextBox1.Text = "设置完成，每次投资的长期贷款还款年限和宽限年限均相同！"
         End If
-        Me.Close()
     End Sub
 
     Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
@@ -569,6 +573,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(32, 39).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(43, 39).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>长期贷款计算参数设置写入完成！"
         End If
         '燃机
         If Me.ranji.Checked = True Then
@@ -602,6 +608,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 42).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 42).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>长期贷款计算参数设置写入完成！"
         End If
         '蓄电池
         If Me.xudianchi.Checked = True Then
@@ -635,6 +643,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 45).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 45).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>长期贷款计算参数设置写入完成！"
         End If
         '暖通
         If Me.nuantong.Checked = True Then
@@ -668,6 +678,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 48).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 48).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>长期贷款计算参数设置写入完成！"
         End If
         '光伏
         If Me.guangfu.Checked = True Then
@@ -701,6 +713,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 51).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 51).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>长期贷款计算参数设置写入完成！"
         End If
         '风电
         If Me.fengdian.Checked = True Then
@@ -734,6 +748,8 @@ Public Class 设置长期贷款计算方式
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(25, 54).Value = cqdkhknx10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(36, 54).Value = kxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>长期贷款计算参数设置写入完成！"
         End If
         '常规设备
         For i = 23 To 32
@@ -785,6 +801,5 @@ Public Class 设置长期贷款计算方式
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 7).Value
             End If
         Next
-        MsgBox("计算参数写入完成！")
     End Sub
 End Class

@@ -78,8 +78,7 @@
             Dim ZBJBL = CType(Me.zbjbl_a.Text, Double) / 100
             Dim DKLL = CType(Me.dkll_a.Text, Double) / 100
             Call 建设期默认资金运用模式(ZBJBL, DKLL)
-            MsgBox("已经将资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！")
-            Me.Close()
+            Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！"
         End If
     End Sub
 
@@ -160,9 +159,8 @@
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "相同"
-            MsgBox("已经将资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！")
+            Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！"
         End If
-        Me.Close()
     End Sub
 
     Private Sub 资本金比例为占动态投资比例_逐次计算_Click(sender As Object, e As EventArgs) Handles 资本金比例为占动态投资比例_逐次计算.Click
@@ -207,8 +205,7 @@
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "不相同"
-            MsgBox("已经将资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！")
-            Me.Close()
+            Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！"
         End If
     End Sub
 
@@ -254,8 +251,7 @@
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "不相同"
-            MsgBox("已经将资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！")
-            Me.Close()
+            Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！"
         End If
     End Sub
 
@@ -272,8 +268,7 @@
         Dim XZ = MsgBox("确定要重置回默认计算模式？默认计算模式为每次投资的资本金比例和建设期贷款利率均相同,资本金比例为占动态投资的比例。", vbOKCancel)
         If XZ = vbOK Then
             Call 建设期默认资金运用模式(ZBJBL, DKLL)
-            MsgBox("设置已完成！")
-            Me.Close()
+            Me.RichTextBox1.Text = "计算完成：每次投资的资本金比例和建设期贷款利率均相同,资本金比例为占动态投资的比例！"
         End If
     End Sub
 
@@ -307,7 +302,8 @@
             Me.nuantong.Checked = False
             Me.guangfu.Checked = False
             Me.fengdian.Checked = False
-            MsgBox("清空窗体已完成！")
+            '显示
+            Me.RichTextBox1.Clear()
         End If
     End Sub
 
@@ -337,6 +333,7 @@
         Me.dkll8.Clear()
         Me.dkll9.Clear()
         Me.dkll10.Clear()
+        Me.RichTextBox1.Clear()
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '根据已经输入的投资情况，载入默认值
@@ -569,6 +566,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 22).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(21, 39).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '燃机
         If Me.ranji.Checked = True Then
@@ -602,6 +601,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(25, 22).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 42).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '蓄电池
         If Me.xudianchi.Checked = True Then
@@ -635,6 +636,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(36, 22).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 45).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '暖通
         If Me.nuantong.Checked = True Then
@@ -668,6 +671,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(14, 25).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 48).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '光伏
         If Me.guangfu.Checked = True Then
@@ -701,6 +706,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(25, 25).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 51).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '风电
         If Me.fengdian.Checked = True Then
@@ -734,7 +741,8 @@
             '第10次投资
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(36, 25).Value = zbjbl10
             ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(14, 54).Value = (1 + dkll10 / jsqdkjxcs) ^ jsqdkjxcs - 1
-
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>建设期资金运用方式计算参数设置写入完成！"
         End If
         '————————————————————————————————————————————————————————————————————————————————————————  
         '等于0的参数改为默认值
@@ -789,6 +797,5 @@
                 ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(i, 54).Value = dkll_fl
             End If
         Next
-        MsgBox("计算参数写入完成！")
     End Sub
 End Class

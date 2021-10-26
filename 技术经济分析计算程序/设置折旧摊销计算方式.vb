@@ -45,6 +45,8 @@ Public Class 设置折旧摊销计算方式
         Me.wxzctxnx8.Clear()
         Me.wxzctxnx9.Clear()
         Me.wxzctxnx10.Clear()
+        '显示
+        Me.RichTextBox1.Clear()
         '——————————————————————————————————————————————————————————————————————————————
         '载入默认值
         '根据已经输入的投资情况，载入默认值
@@ -319,6 +321,8 @@ Public Class 设置折旧摊销计算方式
             Me.nuantong.Checked = False
             Me.guangfu.Checked = False
             Me.fengdian.Checked = False
+            '显示
+            Me.RichTextBox1.Clear()
         End If
     End Sub
     Private Sub 确定计算方式_Click(sender As Object, e As EventArgs) Handles 开始计算.Click
@@ -355,8 +359,8 @@ Public Class 设置折旧摊销计算方式
             '写入计算模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 7).Value = "不相同"
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            Me.RichTextBox1.Text = "折旧摊销计算完成！"
         End If
-        Me.Close()
     End Sub
 
     Private Sub 重置回默认方式_Click(sender As Object, e As EventArgs) Handles 重置回默认方式.Click
@@ -414,9 +418,8 @@ Public Class 设置折旧摊销计算方式
             Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 7).Value = "相同"
-            MsgBox("设置完成，每次投资的固定资产折旧和无形资产摊销计算系数就均相同！")
+            Me.RichTextBox1.Text = "设置完成，每次投资的固定资产折旧和无形资产摊销计算系数就均相同！"
         End If
-        Me.Close()
     End Sub
 
     Private Sub 不回收固定资产残值_Click(sender As Object, e As EventArgs) Handles 不回收固定资产残值.Click
@@ -437,10 +440,9 @@ Public Class 设置折旧摊销计算方式
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '将设置状态写入表格
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值"
-            MsgBox("设置完毕！")
+            Me.RichTextBox1.Text = "<不回收固定资产残值>计算完成！"
         End If
         '————————————————————————————————————————————————————————————————————————————————————————————
-        Me.Close()
     End Sub
 
     Private Sub 回收固定资产残值_Click(sender As Object, e As EventArgs) Handles 回收固定资产残值.Click
@@ -460,10 +462,8 @@ Public Class 设置折旧摊销计算方式
             Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
             '将设置状态写入表格
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末回收残值"
-            MsgBox("设置完毕！")
+            Me.RichTextBox1.Text = "<回收固定资产残值>计算完成！"
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————————
-        Me.Close()
     End Sub
 
     Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
@@ -719,6 +719,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 22).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 26).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>折旧摊销计算参数设置写入完成！"
         End If
         '燃机
         If Me.ranji.Checked = True Then
@@ -762,6 +764,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 29).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 29).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 29).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>折旧摊销计算参数设置写入完成！"
         End If
         '蓄电池
         If Me.xudianchi.Checked = True Then
@@ -805,6 +809,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 32).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 32).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 32).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>折旧摊销计算参数设置写入完成！"
         End If
         '暖通
         If Me.nuantong.Checked = True Then
@@ -848,6 +854,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 35).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 35).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 35).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>折旧摊销计算参数设置写入完成！"
         End If
         '光伏
         If Me.guangfu.Checked = True Then
@@ -891,6 +899,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 38).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 38).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 38).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>折旧摊销计算参数设置写入完成！"
         End If
         '风电
         If Me.fengdian.Checked = True Then
@@ -934,6 +944,8 @@ Public Class 设置折旧摊销计算方式
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 41).Value = gdzczjnx10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(24, 41).Value = gdzcczl10
             ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(35, 41).Value = wxzctxnx10
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>折旧摊销计算参数设置写入完成！"
         End If
         '如果数据是0，则改为默认值
         '常规设备
@@ -1006,6 +1018,5 @@ Public Class 设置折旧摊销计算方式
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 41).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 7).Value
             End If
         Next
-        MsgBox("计算参数写入完成！")
     End Sub
 End Class

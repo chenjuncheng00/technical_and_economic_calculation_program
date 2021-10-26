@@ -100,6 +100,7 @@ Partial Class 设置折旧摊销计算方式
         Me.写入参数 = New System.Windows.Forms.Button()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'Label22
@@ -728,7 +729,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.开始计算.BackColor = System.Drawing.SystemColors.ControlLight
         Me.开始计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.开始计算.Location = New System.Drawing.Point(1518, 662)
+        Me.开始计算.Location = New System.Drawing.Point(1518, 615)
         Me.开始计算.Margin = New System.Windows.Forms.Padding(6)
         Me.开始计算.Name = "开始计算"
         Me.开始计算.Size = New System.Drawing.Size(226, 102)
@@ -740,7 +741,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.重置回默认方式.BackColor = System.Drawing.SystemColors.ControlLight
         Me.重置回默认方式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.重置回默认方式.Location = New System.Drawing.Point(1794, 662)
+        Me.重置回默认方式.Location = New System.Drawing.Point(1794, 615)
         Me.重置回默认方式.Margin = New System.Windows.Forms.Padding(6)
         Me.重置回默认方式.Name = "重置回默认方式"
         Me.重置回默认方式.Size = New System.Drawing.Size(226, 102)
@@ -752,7 +753,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.清空窗体数据.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空窗体数据.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空窗体数据.Location = New System.Drawing.Point(2066, 662)
+        Me.清空窗体数据.Location = New System.Drawing.Point(2066, 615)
         Me.清空窗体数据.Margin = New System.Windows.Forms.Padding(6)
         Me.清空窗体数据.Name = "清空窗体数据"
         Me.清空窗体数据.Size = New System.Drawing.Size(226, 102)
@@ -764,7 +765,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.Label33.AutoSize = True
         Me.Label33.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label33.Location = New System.Drawing.Point(309, 697)
+        Me.Label33.Location = New System.Drawing.Point(309, 700)
         Me.Label33.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(543, 33)
@@ -775,7 +776,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.不回收固定资产残值.BackColor = System.Drawing.SystemColors.ControlLight
         Me.不回收固定资产残值.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.不回收固定资产残值.Location = New System.Drawing.Point(74, 767)
+        Me.不回收固定资产残值.Location = New System.Drawing.Point(74, 770)
         Me.不回收固定资产残值.Margin = New System.Windows.Forms.Padding(6)
         Me.不回收固定资产残值.Name = "不回收固定资产残值"
         Me.不回收固定资产残值.Size = New System.Drawing.Size(388, 108)
@@ -787,7 +788,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.回收固定资产残值.BackColor = System.Drawing.SystemColors.ControlLight
         Me.回收固定资产残值.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.回收固定资产残值.Location = New System.Drawing.Point(722, 767)
+        Me.回收固定资产残值.Location = New System.Drawing.Point(722, 770)
         Me.回收固定资产残值.Margin = New System.Windows.Forms.Padding(6)
         Me.回收固定资产残值.Name = "回收固定资产残值"
         Me.回收固定资产残值.Size = New System.Drawing.Size(388, 108)
@@ -799,7 +800,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label34.Location = New System.Drawing.Point(1457, 409)
+        Me.Label34.Location = New System.Drawing.Point(1457, 408)
         Me.Label34.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(576, 33)
@@ -809,7 +810,7 @@ Partial Class 设置折旧摊销计算方式
         'changgui
         '
         Me.changgui.AutoSize = True
-        Me.changgui.Location = New System.Drawing.Point(1236, 477)
+        Me.changgui.Location = New System.Drawing.Point(1236, 472)
         Me.changgui.Name = "changgui"
         Me.changgui.Size = New System.Drawing.Size(186, 28)
         Me.changgui.TabIndex = 143
@@ -819,7 +820,7 @@ Partial Class 设置折旧摊销计算方式
         'fengdian
         '
         Me.fengdian.AutoSize = True
-        Me.fengdian.Location = New System.Drawing.Point(2134, 477)
+        Me.fengdian.Location = New System.Drawing.Point(2134, 472)
         Me.fengdian.Name = "fengdian"
         Me.fengdian.Size = New System.Drawing.Size(138, 28)
         Me.fengdian.TabIndex = 142
@@ -829,7 +830,7 @@ Partial Class 设置折旧摊销计算方式
         'guangfu
         '
         Me.guangfu.AutoSize = True
-        Me.guangfu.Location = New System.Drawing.Point(1969, 477)
+        Me.guangfu.Location = New System.Drawing.Point(1969, 472)
         Me.guangfu.Name = "guangfu"
         Me.guangfu.Size = New System.Drawing.Size(138, 28)
         Me.guangfu.TabIndex = 141
@@ -839,7 +840,7 @@ Partial Class 设置折旧摊销计算方式
         'nuantong
         '
         Me.nuantong.AutoSize = True
-        Me.nuantong.Location = New System.Drawing.Point(1798, 477)
+        Me.nuantong.Location = New System.Drawing.Point(1798, 472)
         Me.nuantong.Name = "nuantong"
         Me.nuantong.Size = New System.Drawing.Size(138, 28)
         Me.nuantong.TabIndex = 140
@@ -849,7 +850,7 @@ Partial Class 设置折旧摊销计算方式
         'xudianchi
         '
         Me.xudianchi.AutoSize = True
-        Me.xudianchi.Location = New System.Drawing.Point(1616, 477)
+        Me.xudianchi.Location = New System.Drawing.Point(1616, 472)
         Me.xudianchi.Name = "xudianchi"
         Me.xudianchi.Size = New System.Drawing.Size(162, 28)
         Me.xudianchi.TabIndex = 139
@@ -859,7 +860,7 @@ Partial Class 设置折旧摊销计算方式
         'ranji
         '
         Me.ranji.AutoSize = True
-        Me.ranji.Location = New System.Drawing.Point(1454, 477)
+        Me.ranji.Location = New System.Drawing.Point(1454, 472)
         Me.ranji.Name = "ranji"
         Me.ranji.Size = New System.Drawing.Size(138, 28)
         Me.ranji.TabIndex = 138
@@ -870,7 +871,7 @@ Partial Class 设置折旧摊销计算方式
         '
         Me.写入参数.BackColor = System.Drawing.SystemColors.ControlLight
         Me.写入参数.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.写入参数.Location = New System.Drawing.Point(1236, 662)
+        Me.写入参数.Location = New System.Drawing.Point(1236, 615)
         Me.写入参数.Margin = New System.Windows.Forms.Padding(6)
         Me.写入参数.Name = "写入参数"
         Me.写入参数.Size = New System.Drawing.Size(224, 102)
@@ -881,30 +882,41 @@ Partial Class 设置折旧摊销计算方式
         'Label35
         '
         Me.Label35.AutoSize = True
-        Me.Label35.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label35.Location = New System.Drawing.Point(1211, 539)
+        Me.Label35.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label35.Location = New System.Drawing.Point(1211, 524)
         Me.Label35.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(922, 28)
+        Me.Label35.Size = New System.Drawing.Size(790, 24)
         Me.Label35.TabIndex = 145
         Me.Label35.Text = "第1步：依次<勾选>并点击<写入参数>，写入不同投资内容对应的计算参数"
         '
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label36.Location = New System.Drawing.Point(1211, 598)
+        Me.Label36.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label36.Location = New System.Drawing.Point(1211, 569)
         Me.Label36.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(754, 28)
+        Me.Label36.Size = New System.Drawing.Size(646, 24)
         Me.Label36.TabIndex = 146
         Me.Label36.Text = "第2步：全部计算参数写入完成后，点击<开始计算>完成计算"
+        '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(1215, 735)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(1077, 158)
+        Me.RichTextBox1.TabIndex = 147
+        Me.RichTextBox1.Text = ""
         '
         '设置折旧摊销计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2334, 909)
+        Me.ClientSize = New System.Drawing.Size(2334, 915)
+        Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.Label36)
         Me.Controls.Add(Me.Label35)
         Me.Controls.Add(Me.写入参数)
@@ -1070,4 +1082,5 @@ Partial Class 设置折旧摊销计算方式
     Friend WithEvents 写入参数 As System.Windows.Forms.Button
     Friend WithEvents Label35 As System.Windows.Forms.Label
     Friend WithEvents Label36 As System.Windows.Forms.Label
+    Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
 End Class

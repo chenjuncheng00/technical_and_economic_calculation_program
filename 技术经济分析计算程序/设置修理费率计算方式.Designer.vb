@@ -445,7 +445,7 @@ Partial Class 设置修理费率计算方式
         'Label19
         '
         Me.Label19.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(973, 634)
+        Me.Label19.Location = New System.Drawing.Point(973, 596)
         Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(583, 50)
@@ -455,11 +455,11 @@ Partial Class 设置修理费率计算方式
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(874, 698)
+        Me.RichTextBox1.Location = New System.Drawing.Point(874, 664)
         Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(780, 193)
+        Me.RichTextBox1.Size = New System.Drawing.Size(780, 227)
         Me.RichTextBox1.TabIndex = 52
         Me.RichTextBox1.Text = ""
         '

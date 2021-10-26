@@ -84,13 +84,14 @@ Partial Class 设置建设期资金运用方式
         Me.ranji = New System.Windows.Forms.CheckBox()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.写入参数 = New System.Windows.Forms.Button()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         '资本金比例为占动态投资比例_逐次计算
         '
         Me.资本金比例为占动态投资比例_逐次计算.BackColor = System.Drawing.SystemColors.ControlLight
         Me.资本金比例为占动态投资比例_逐次计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.资本金比例为占动态投资比例_逐次计算.Location = New System.Drawing.Point(1046, 693)
+        Me.资本金比例为占动态投资比例_逐次计算.Location = New System.Drawing.Point(1046, 684)
         Me.资本金比例为占动态投资比例_逐次计算.Margin = New System.Windows.Forms.Padding(6)
         Me.资本金比例为占动态投资比例_逐次计算.Name = "资本金比例为占动态投资比例_逐次计算"
         Me.资本金比例为占动态投资比例_逐次计算.Size = New System.Drawing.Size(462, 108)
@@ -102,7 +103,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.重置回默认计算模式.BackColor = System.Drawing.SystemColors.ControlLight
         Me.重置回默认计算模式.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.重置回默认计算模式.Location = New System.Drawing.Point(641, 593)
+        Me.重置回默认计算模式.Location = New System.Drawing.Point(631, 525)
         Me.重置回默认计算模式.Margin = New System.Windows.Forms.Padding(6)
         Me.重置回默认计算模式.Name = "重置回默认计算模式"
         Me.重置回默认计算模式.Size = New System.Drawing.Size(344, 102)
@@ -114,7 +115,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.清空数据.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空数据.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空数据.Location = New System.Drawing.Point(280, 593)
+        Me.清空数据.Location = New System.Drawing.Point(275, 525)
         Me.清空数据.Margin = New System.Windows.Forms.Padding(6)
         Me.清空数据.Name = "清空数据"
         Me.清空数据.Size = New System.Drawing.Size(344, 102)
@@ -124,7 +125,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl1
         '
-        Me.zbjbl1.Location = New System.Drawing.Point(1334, 117)
+        Me.zbjbl1.Location = New System.Drawing.Point(1334, 108)
         Me.zbjbl1.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl1.Name = "zbjbl1"
         Me.zbjbl1.Size = New System.Drawing.Size(142, 35)
@@ -134,7 +135,7 @@ Partial Class 设置建设期资金运用方式
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(1010, 107)
+        Me.Label3.Location = New System.Drawing.Point(1010, 98)
         Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(312, 56)
@@ -145,7 +146,7 @@ Partial Class 设置建设期资金运用方式
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label4.Location = New System.Drawing.Point(1480, 107)
+        Me.Label4.Location = New System.Drawing.Point(1480, 98)
         Me.Label4.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(400, 56)
@@ -155,7 +156,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll1
         '
-        Me.dkll1.Location = New System.Drawing.Point(1886, 117)
+        Me.dkll1.Location = New System.Drawing.Point(1886, 108)
         Me.dkll1.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll1.Name = "dkll1"
         Me.dkll1.Size = New System.Drawing.Size(142, 35)
@@ -164,7 +165,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl2
         '
-        Me.zbjbl2.Location = New System.Drawing.Point(1334, 173)
+        Me.zbjbl2.Location = New System.Drawing.Point(1334, 164)
         Me.zbjbl2.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl2.Name = "zbjbl2"
         Me.zbjbl2.Size = New System.Drawing.Size(142, 35)
@@ -174,7 +175,7 @@ Partial Class 设置建设期资金运用方式
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(1010, 163)
+        Me.Label2.Location = New System.Drawing.Point(1010, 154)
         Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(312, 56)
@@ -185,7 +186,7 @@ Partial Class 设置建设期资金运用方式
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(1480, 163)
+        Me.Label1.Location = New System.Drawing.Point(1480, 154)
         Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(400, 56)
@@ -195,7 +196,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll2
         '
-        Me.dkll2.Location = New System.Drawing.Point(1886, 173)
+        Me.dkll2.Location = New System.Drawing.Point(1886, 164)
         Me.dkll2.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll2.Name = "dkll2"
         Me.dkll2.Size = New System.Drawing.Size(142, 35)
@@ -204,7 +205,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl3
         '
-        Me.zbjbl3.Location = New System.Drawing.Point(1334, 229)
+        Me.zbjbl3.Location = New System.Drawing.Point(1334, 220)
         Me.zbjbl3.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl3.Name = "zbjbl3"
         Me.zbjbl3.Size = New System.Drawing.Size(142, 35)
@@ -214,7 +215,7 @@ Partial Class 设置建设期资金运用方式
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(1010, 219)
+        Me.Label6.Location = New System.Drawing.Point(1010, 210)
         Me.Label6.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(312, 56)
@@ -225,7 +226,7 @@ Partial Class 设置建设期资金运用方式
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(1480, 219)
+        Me.Label5.Location = New System.Drawing.Point(1480, 210)
         Me.Label5.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(400, 56)
@@ -235,7 +236,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll3
         '
-        Me.dkll3.Location = New System.Drawing.Point(1886, 229)
+        Me.dkll3.Location = New System.Drawing.Point(1886, 220)
         Me.dkll3.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll3.Name = "dkll3"
         Me.dkll3.Size = New System.Drawing.Size(142, 35)
@@ -244,7 +245,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl4
         '
-        Me.zbjbl4.Location = New System.Drawing.Point(1334, 287)
+        Me.zbjbl4.Location = New System.Drawing.Point(1334, 278)
         Me.zbjbl4.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl4.Name = "zbjbl4"
         Me.zbjbl4.Size = New System.Drawing.Size(142, 35)
@@ -254,7 +255,7 @@ Partial Class 设置建设期资金运用方式
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label8.Location = New System.Drawing.Point(1010, 277)
+        Me.Label8.Location = New System.Drawing.Point(1010, 268)
         Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(312, 56)
@@ -265,7 +266,7 @@ Partial Class 设置建设期资金运用方式
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label7.Location = New System.Drawing.Point(1480, 277)
+        Me.Label7.Location = New System.Drawing.Point(1480, 268)
         Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(400, 56)
@@ -275,7 +276,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll4
         '
-        Me.dkll4.Location = New System.Drawing.Point(1886, 287)
+        Me.dkll4.Location = New System.Drawing.Point(1886, 278)
         Me.dkll4.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll4.Name = "dkll4"
         Me.dkll4.Size = New System.Drawing.Size(142, 35)
@@ -284,7 +285,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl5
         '
-        Me.zbjbl5.Location = New System.Drawing.Point(1334, 343)
+        Me.zbjbl5.Location = New System.Drawing.Point(1334, 334)
         Me.zbjbl5.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl5.Name = "zbjbl5"
         Me.zbjbl5.Size = New System.Drawing.Size(142, 35)
@@ -294,7 +295,7 @@ Partial Class 设置建设期资金运用方式
         'Label12
         '
         Me.Label12.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label12.Location = New System.Drawing.Point(1010, 333)
+        Me.Label12.Location = New System.Drawing.Point(1010, 324)
         Me.Label12.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(312, 56)
@@ -305,7 +306,7 @@ Partial Class 设置建设期资金运用方式
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label11.Location = New System.Drawing.Point(1480, 333)
+        Me.Label11.Location = New System.Drawing.Point(1480, 324)
         Me.Label11.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(400, 56)
@@ -315,7 +316,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll5
         '
-        Me.dkll5.Location = New System.Drawing.Point(1886, 343)
+        Me.dkll5.Location = New System.Drawing.Point(1886, 334)
         Me.dkll5.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll5.Name = "dkll5"
         Me.dkll5.Size = New System.Drawing.Size(142, 35)
@@ -324,7 +325,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl6
         '
-        Me.zbjbl6.Location = New System.Drawing.Point(1334, 401)
+        Me.zbjbl6.Location = New System.Drawing.Point(1334, 392)
         Me.zbjbl6.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl6.Name = "zbjbl6"
         Me.zbjbl6.Size = New System.Drawing.Size(142, 35)
@@ -334,7 +335,7 @@ Partial Class 设置建设期资金运用方式
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label10.Location = New System.Drawing.Point(1010, 391)
+        Me.Label10.Location = New System.Drawing.Point(1010, 382)
         Me.Label10.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(312, 56)
@@ -345,7 +346,7 @@ Partial Class 设置建设期资金运用方式
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label9.Location = New System.Drawing.Point(1480, 391)
+        Me.Label9.Location = New System.Drawing.Point(1480, 382)
         Me.Label9.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(400, 56)
@@ -355,7 +356,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll6
         '
-        Me.dkll6.Location = New System.Drawing.Point(1886, 401)
+        Me.dkll6.Location = New System.Drawing.Point(1886, 392)
         Me.dkll6.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll6.Name = "dkll6"
         Me.dkll6.Size = New System.Drawing.Size(142, 35)
@@ -364,7 +365,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl7
         '
-        Me.zbjbl7.Location = New System.Drawing.Point(1334, 457)
+        Me.zbjbl7.Location = New System.Drawing.Point(1334, 448)
         Me.zbjbl7.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl7.Name = "zbjbl7"
         Me.zbjbl7.Size = New System.Drawing.Size(142, 35)
@@ -374,7 +375,7 @@ Partial Class 设置建设期资金运用方式
         'Label16
         '
         Me.Label16.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label16.Location = New System.Drawing.Point(1010, 447)
+        Me.Label16.Location = New System.Drawing.Point(1010, 438)
         Me.Label16.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(312, 56)
@@ -385,7 +386,7 @@ Partial Class 设置建设期资金运用方式
         'Label15
         '
         Me.Label15.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label15.Location = New System.Drawing.Point(1480, 447)
+        Me.Label15.Location = New System.Drawing.Point(1480, 438)
         Me.Label15.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(400, 56)
@@ -395,7 +396,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll7
         '
-        Me.dkll7.Location = New System.Drawing.Point(1886, 457)
+        Me.dkll7.Location = New System.Drawing.Point(1886, 448)
         Me.dkll7.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll7.Name = "dkll7"
         Me.dkll7.Size = New System.Drawing.Size(142, 35)
@@ -404,7 +405,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl8
         '
-        Me.zbjbl8.Location = New System.Drawing.Point(1334, 515)
+        Me.zbjbl8.Location = New System.Drawing.Point(1334, 506)
         Me.zbjbl8.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl8.Name = "zbjbl8"
         Me.zbjbl8.Size = New System.Drawing.Size(142, 35)
@@ -414,7 +415,7 @@ Partial Class 设置建设期资金运用方式
         'Label14
         '
         Me.Label14.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label14.Location = New System.Drawing.Point(1010, 505)
+        Me.Label14.Location = New System.Drawing.Point(1010, 496)
         Me.Label14.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(312, 56)
@@ -425,7 +426,7 @@ Partial Class 设置建设期资金运用方式
         'Label13
         '
         Me.Label13.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label13.Location = New System.Drawing.Point(1480, 505)
+        Me.Label13.Location = New System.Drawing.Point(1480, 496)
         Me.Label13.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(400, 56)
@@ -435,7 +436,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll8
         '
-        Me.dkll8.Location = New System.Drawing.Point(1886, 515)
+        Me.dkll8.Location = New System.Drawing.Point(1886, 506)
         Me.dkll8.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll8.Name = "dkll8"
         Me.dkll8.Size = New System.Drawing.Size(142, 35)
@@ -444,7 +445,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl9
         '
-        Me.zbjbl9.Location = New System.Drawing.Point(1334, 571)
+        Me.zbjbl9.Location = New System.Drawing.Point(1334, 562)
         Me.zbjbl9.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl9.Name = "zbjbl9"
         Me.zbjbl9.Size = New System.Drawing.Size(142, 35)
@@ -454,7 +455,7 @@ Partial Class 设置建设期资金运用方式
         'Label20
         '
         Me.Label20.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label20.Location = New System.Drawing.Point(1010, 561)
+        Me.Label20.Location = New System.Drawing.Point(1010, 552)
         Me.Label20.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(312, 56)
@@ -465,7 +466,7 @@ Partial Class 设置建设期资金运用方式
         'Label19
         '
         Me.Label19.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(1480, 561)
+        Me.Label19.Location = New System.Drawing.Point(1480, 552)
         Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(400, 56)
@@ -475,7 +476,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll9
         '
-        Me.dkll9.Location = New System.Drawing.Point(1886, 571)
+        Me.dkll9.Location = New System.Drawing.Point(1886, 562)
         Me.dkll9.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll9.Name = "dkll9"
         Me.dkll9.Size = New System.Drawing.Size(142, 35)
@@ -484,7 +485,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl10
         '
-        Me.zbjbl10.Location = New System.Drawing.Point(1334, 629)
+        Me.zbjbl10.Location = New System.Drawing.Point(1334, 620)
         Me.zbjbl10.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl10.Name = "zbjbl10"
         Me.zbjbl10.Size = New System.Drawing.Size(142, 35)
@@ -494,7 +495,7 @@ Partial Class 设置建设期资金运用方式
         'Label18
         '
         Me.Label18.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label18.Location = New System.Drawing.Point(1006, 619)
+        Me.Label18.Location = New System.Drawing.Point(1006, 610)
         Me.Label18.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(328, 56)
@@ -505,7 +506,7 @@ Partial Class 设置建设期资金运用方式
         'Label17
         '
         Me.Label17.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label17.Location = New System.Drawing.Point(1492, 619)
+        Me.Label17.Location = New System.Drawing.Point(1492, 610)
         Me.Label17.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(388, 56)
@@ -515,7 +516,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll10
         '
-        Me.dkll10.Location = New System.Drawing.Point(1886, 629)
+        Me.dkll10.Location = New System.Drawing.Point(1886, 620)
         Me.dkll10.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll10.Name = "dkll10"
         Me.dkll10.Size = New System.Drawing.Size(142, 35)
@@ -526,7 +527,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label21.Location = New System.Drawing.Point(1136, 51)
+        Me.Label21.Location = New System.Drawing.Point(1136, 42)
         Me.Label21.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(741, 33)
@@ -537,7 +538,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.资本金比例为占静态投资比例_逐次计算.BackColor = System.Drawing.SystemColors.ControlLight
         Me.资本金比例为占静态投资比例_逐次计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.资本金比例为占静态投资比例_逐次计算.Location = New System.Drawing.Point(1551, 693)
+        Me.资本金比例为占静态投资比例_逐次计算.Location = New System.Drawing.Point(1551, 684)
         Me.资本金比例为占静态投资比例_逐次计算.Margin = New System.Windows.Forms.Padding(6)
         Me.资本金比例为占静态投资比例_逐次计算.Name = "资本金比例为占静态投资比例_逐次计算"
         Me.资本金比例为占静态投资比例_逐次计算.Size = New System.Drawing.Size(462, 108)
@@ -549,7 +550,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label22.Location = New System.Drawing.Point(120, 51)
+        Me.Label22.Location = New System.Drawing.Point(120, 42)
         Me.Label22.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(741, 33)
@@ -558,7 +559,7 @@ Partial Class 设置建设期资金运用方式
         '
         'zbjbl_a
         '
-        Me.zbjbl_a.Location = New System.Drawing.Point(325, 110)
+        Me.zbjbl_a.Location = New System.Drawing.Point(325, 101)
         Me.zbjbl_a.Margin = New System.Windows.Forms.Padding(6)
         Me.zbjbl_a.Name = "zbjbl_a"
         Me.zbjbl_a.Size = New System.Drawing.Size(142, 35)
@@ -567,7 +568,7 @@ Partial Class 设置建设期资金运用方式
         '
         'dkll_a
         '
-        Me.dkll_a.Location = New System.Drawing.Point(804, 110)
+        Me.dkll_a.Location = New System.Drawing.Point(804, 101)
         Me.dkll_a.Margin = New System.Windows.Forms.Padding(6)
         Me.dkll_a.Name = "dkll_a"
         Me.dkll_a.Size = New System.Drawing.Size(142, 35)
@@ -577,7 +578,7 @@ Partial Class 设置建设期资金运用方式
         'Label23
         '
         Me.Label23.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label23.Location = New System.Drawing.Point(536, 97)
+        Me.Label23.Location = New System.Drawing.Point(536, 88)
         Me.Label23.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(236, 56)
@@ -588,7 +589,7 @@ Partial Class 设置建设期资金运用方式
         'Label24
         '
         Me.Label24.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label24.Location = New System.Drawing.Point(85, 98)
+        Me.Label24.Location = New System.Drawing.Point(85, 89)
         Me.Label24.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(178, 56)
@@ -600,7 +601,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.资本金比例为占静态投资比例_统一设置.BackColor = System.Drawing.SystemColors.ControlLight
         Me.资本金比例为占静态投资比例_统一设置.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.资本金比例为占静态投资比例_统一设置.Location = New System.Drawing.Point(514, 181)
+        Me.资本金比例为占静态投资比例_统一设置.Location = New System.Drawing.Point(514, 157)
         Me.资本金比例为占静态投资比例_统一设置.Margin = New System.Windows.Forms.Padding(6)
         Me.资本金比例为占静态投资比例_统一设置.Name = "资本金比例为占静态投资比例_统一设置"
         Me.资本金比例为占静态投资比例_统一设置.Size = New System.Drawing.Size(462, 108)
@@ -612,7 +613,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.资本金比例为占动态投资比例_统一设置.BackColor = System.Drawing.SystemColors.ControlLight
         Me.资本金比例为占动态投资比例_统一设置.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.资本金比例为占动态投资比例_统一设置.Location = New System.Drawing.Point(36, 181)
+        Me.资本金比例为占动态投资比例_统一设置.Location = New System.Drawing.Point(36, 157)
         Me.资本金比例为占动态投资比例_统一设置.Margin = New System.Windows.Forms.Padding(6)
         Me.资本金比例为占动态投资比例_统一设置.Name = "资本金比例为占动态投资比例_统一设置"
         Me.资本金比例为占动态投资比例_统一设置.Size = New System.Drawing.Size(462, 108)
@@ -624,7 +625,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.Label36.AutoSize = True
         Me.Label36.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label36.Location = New System.Drawing.Point(40, 531)
+        Me.Label36.Location = New System.Drawing.Point(40, 472)
         Me.Label36.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(838, 28)
@@ -635,7 +636,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label35.Location = New System.Drawing.Point(40, 472)
+        Me.Label35.Location = New System.Drawing.Point(40, 413)
         Me.Label35.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(922, 28)
@@ -645,7 +646,7 @@ Partial Class 设置建设期资金运用方式
         'changgui
         '
         Me.changgui.AutoSize = True
-        Me.changgui.Location = New System.Drawing.Point(45, 409)
+        Me.changgui.Location = New System.Drawing.Point(45, 350)
         Me.changgui.Name = "changgui"
         Me.changgui.Size = New System.Drawing.Size(186, 28)
         Me.changgui.TabIndex = 172
@@ -655,7 +656,7 @@ Partial Class 设置建设期资金运用方式
         'fengdian
         '
         Me.fengdian.AutoSize = True
-        Me.fengdian.Location = New System.Drawing.Point(837, 409)
+        Me.fengdian.Location = New System.Drawing.Point(837, 350)
         Me.fengdian.Name = "fengdian"
         Me.fengdian.Size = New System.Drawing.Size(138, 28)
         Me.fengdian.TabIndex = 171
@@ -665,7 +666,7 @@ Partial Class 设置建设期资金运用方式
         'guangfu
         '
         Me.guangfu.AutoSize = True
-        Me.guangfu.Location = New System.Drawing.Point(693, 409)
+        Me.guangfu.Location = New System.Drawing.Point(693, 350)
         Me.guangfu.Name = "guangfu"
         Me.guangfu.Size = New System.Drawing.Size(138, 28)
         Me.guangfu.TabIndex = 170
@@ -675,7 +676,7 @@ Partial Class 设置建设期资金运用方式
         'nuantong
         '
         Me.nuantong.AutoSize = True
-        Me.nuantong.Location = New System.Drawing.Point(549, 409)
+        Me.nuantong.Location = New System.Drawing.Point(549, 350)
         Me.nuantong.Name = "nuantong"
         Me.nuantong.Size = New System.Drawing.Size(138, 28)
         Me.nuantong.TabIndex = 169
@@ -685,7 +686,7 @@ Partial Class 设置建设期资金运用方式
         'xudianchi
         '
         Me.xudianchi.AutoSize = True
-        Me.xudianchi.Location = New System.Drawing.Point(381, 409)
+        Me.xudianchi.Location = New System.Drawing.Point(381, 350)
         Me.xudianchi.Name = "xudianchi"
         Me.xudianchi.Size = New System.Drawing.Size(162, 28)
         Me.xudianchi.TabIndex = 168
@@ -695,7 +696,7 @@ Partial Class 设置建设期资金运用方式
         'ranji
         '
         Me.ranji.AutoSize = True
-        Me.ranji.Location = New System.Drawing.Point(237, 409)
+        Me.ranji.Location = New System.Drawing.Point(237, 350)
         Me.ranji.Name = "ranji"
         Me.ranji.Size = New System.Drawing.Size(138, 28)
         Me.ranji.TabIndex = 167
@@ -706,7 +707,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label34.Location = New System.Drawing.Point(218, 333)
+        Me.Label34.Location = New System.Drawing.Point(218, 291)
         Me.Label34.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(576, 33)
@@ -717,7 +718,7 @@ Partial Class 设置建设期资金运用方式
         '
         Me.写入参数.BackColor = System.Drawing.SystemColors.ControlLight
         Me.写入参数.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.写入参数.Location = New System.Drawing.Point(39, 593)
+        Me.写入参数.Location = New System.Drawing.Point(39, 525)
         Me.写入参数.Margin = New System.Windows.Forms.Padding(6)
         Me.写入参数.Name = "写入参数"
         Me.写入参数.Size = New System.Drawing.Size(224, 102)
@@ -725,11 +726,22 @@ Partial Class 设置建设期资金运用方式
         Me.写入参数.Text = "写入参数"
         Me.写入参数.UseVisualStyleBackColor = False
         '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(36, 650)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(940, 163)
+        Me.RichTextBox1.TabIndex = 176
+        Me.RichTextBox1.Text = ""
+        '
         '设置建设期资金运用方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(2064, 836)
+        Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.写入参数)
         Me.Controls.Add(Me.Label36)
         Me.Controls.Add(Me.Label35)
@@ -862,4 +874,5 @@ Partial Class 设置建设期资金运用方式
     Friend WithEvents ranji As System.Windows.Forms.CheckBox
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents 写入参数 As System.Windows.Forms.Button
+    Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
 End Class
