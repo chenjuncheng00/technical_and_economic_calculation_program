@@ -234,6 +234,8 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = CInt(YYNX_RJ.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = CDbl(KCBL_RJ.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>修理费计算参数设置写入完成！"
         End If
         '蓄电池
         If xudianchi.Checked = True Then
@@ -241,6 +243,8 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = CInt(YYNX_XDC.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = CDbl(KCBL_XDC.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>修理费计算参数设置写入完成！"
         End If
         '暖通
         If nuantong.Checked = True Then
@@ -248,6 +252,8 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = CInt(YYNX_NT.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = CDbl(KCBL_NT.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>修理费计算参数设置写入完成！"
         End If
         '光伏
         If guangfu.Checked = True Then
@@ -255,6 +261,8 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 6).Value = CInt(YYNX_GF.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = CDbl(KCBL_GF.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>修理费计算参数设置写入完成！"
         End If
         '风电
         If fengdian.Checked = True Then
@@ -262,6 +270,8 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 7).Value = CInt(YYNX_FD.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = CDbl(KCBL_FD.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>修理费计算参数设置写入完成！"
         End If
         '常规设备
         If changgui.Checked = True Then
@@ -269,12 +279,12 @@ Public Class 设置修理费率计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 8).Value = CInt(YYNX_CG.Text)
             '扣除比例
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = CDbl(KCBL_CG.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>修理费计算参数设置写入完成！"
         End If
         '————————————————————————————————————————————————————————————————————————————————————————        
         '计算一次工作簿
         ExcelApp.Calculate()
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("已经报废的设备修理费计算基数设置完成！")
     End Sub
 
     Private Sub 设置修理费率计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -451,8 +461,6 @@ Public Class 设置修理费率计算方式
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "常规设备逐年修理费率：" & Me.RichTextBox1.Text
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("常规设备修理费率设置完成！")
     End Sub
 
     Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
@@ -491,8 +499,6 @@ Public Class 设置修理费率计算方式
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "燃机设备逐年修理费率：" & Me.RichTextBox1.Text
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("燃机设备修理费率设置完成！")
     End Sub
 
     Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
@@ -530,8 +536,6 @@ Public Class 设置修理费率计算方式
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("蓄电池设备修理费率设置完成！")
     End Sub
 
     Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click
@@ -570,8 +574,6 @@ Public Class 设置修理费率计算方式
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "暖通设备逐年修理费率：" & Me.RichTextBox1.Text
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("暖通设备修理费率设置完成！")
     End Sub
 
     Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
@@ -596,7 +598,7 @@ Public Class 设置修理费率计算方式
             '修理费计算
             Call 修理费相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
             '————————————————————————————————————————————————————————————————————————————————————————        
-            MsgBox("设备逐年修理费计算完成！")
+            Me.RichTextBox1.Text = "设备逐年修理费计算完成！"
         End If
     End Sub
 
@@ -661,8 +663,6 @@ Public Class 设置修理费率计算方式
             Next
             Me.RichTextBox1.Text = "光伏设备逐年修理费率：" & Me.RichTextBox1.Text
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("光伏设备修理费率设置完成！")
     End Sub
 
     Private Sub 风电_Click(sender As Object, e As EventArgs) Handles 风电.Click
@@ -726,7 +726,5 @@ Public Class 设置修理费率计算方式
             Next
             Me.RichTextBox1.Text = "风电设备逐年修理费率：" & Me.RichTextBox1.Text
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        MsgBox("风电设备修理费率设置完成！")
     End Sub
 End Class
