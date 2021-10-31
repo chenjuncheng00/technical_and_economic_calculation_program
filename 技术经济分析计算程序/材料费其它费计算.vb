@@ -13,6 +13,7 @@
         Dim clfl_mr_glgr_list = clqtfl(3)
         Dim clfl_mr_gf_list = clqtfl(4)
         Dim clfl_mr_fd_list = clqtfl(5)
+        Dim clfl_mr_xdc_list = clqtfl(12)
         '逐年其它费默认值
         Dim qtfl_mr_rj_list = clqtfl(6)
         Dim qtfl_mr_rm_list = clqtfl(7)
@@ -20,6 +21,7 @@
         Dim qtfl_mr_glgr_list = clqtfl(9)
         Dim qtfl_mr_gf_list = clqtfl(10)
         Dim qtfl_mr_fd_list = clqtfl(11)
+        Dim qtfl_mr_xdc_list = clqtfl(13)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算采用的费率
         Dim clfl_rj_list(31) As Double
@@ -28,12 +30,14 @@
         Dim clfl_glgr_list(31) As Double
         Dim clfl_gf_list(31) As Double
         Dim clfl_fd_list(31) As Double
+        Dim clfl_xdc_list(31) As Double
         Dim qtfl_rj_list(31) As Double
         Dim qtfl_rm_list(31) As Double
         Dim qtfl_ljfd_list(31) As Double
         Dim qtfl_glgr_list(31) As Double
         Dim qtfl_gf_list(31) As Double
         Dim qtfl_fd_list(31) As Double
+        Dim qtfl_xdc_list(31) As Double
         If clfl_qtfl_model = 0 Then
             clfl_rj_list = clfl_mr_rj_list
             clfl_rm_list = clfl_mr_rm_list
@@ -41,12 +45,14 @@
             clfl_glgr_list = clfl_mr_glgr_list
             clfl_gf_list = clfl_mr_gf_list
             clfl_fd_list = clfl_mr_fd_list
+            clfl_xdc_list = clfl_mr_xdc_list
             qtfl_rj_list = qtfl_mr_rj_list
             qtfl_rm_list = qtfl_mr_rm_list
             qtfl_ljfd_list = qtfl_mr_ljfd_list
             qtfl_glgr_list = qtfl_mr_glgr_list
             qtfl_gf_list = qtfl_mr_gf_list
             qtfl_fd_list = qtfl_mr_fd_list
+            qtfl_xdc_list = qtfl_mr_xdc_list
         Else
             For i = 3 To 33 '列
                 clfl_rj_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value
@@ -61,6 +67,8 @@
                 qtfl_glgr_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(191, i).Value
                 qtfl_gf_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(192, i).Value
                 qtfl_fd_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value
+                clfl_xdc_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(194, i).Value
+                qtfl_xdc_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(195, i).Value
             Next
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -121,9 +129,9 @@
         '燃机总发电量(万kWh)，10次投资的情况
         Dim rjfdl = GSBSJ(11)
         Dim rjfdl_list = 基础计算功能_10_to_31(tznf_list, rjfdl)
-        '蓄电池总发电量(万kWh)，10次投资的情况
-        Dim xdcfdl = GSBSJ(13)
-        Dim xdcfdl_list = 基础计算功能_10_to_31(tznf_list, xdcfdl)
+        '蓄电池总装机功率(kW)，10次投资的情况
+        Dim xdczjgl = GSBSJ(13)
+        Dim xdczjgl_list = 基础计算功能_10_to_31(tznf_list, xdczjgl)
         '供冷供热总量(万kWh)，10次投资的情况
         Dim glgrl = GSBSJ(15)
         Dim glgrl_list = 基础计算功能_10_to_31(tznf_list, glgrl)
@@ -173,6 +181,11 @@
         Dim ans_qtfl_ljfd = 计算费率修正计算基础功能(tznf_list, ljfdl, ljfdl_list, qtfl_ljfd_list, yynx_ljfd, kcbl_ljfd)
         clfl_ljfd_list = ans_clfl_ljfd(0)
         qtfl_ljfd_list = ans_qtfl_ljfd(0)
+        '蓄电池
+        Dim ans_clfl_xdc = 计算费率修正计算基础功能(tznf_list, xdczjgl, xdczjgl_list, clfl_xdc_list, yynx_xdc, kcbl_xdc)
+        Dim ans_qtfl_xdc = 计算费率修正计算基础功能(tznf_list, xdczjgl, xdczjgl_list, qtfl_xdc_list, yynx_xdc, kcbl_xdc)
+        clfl_xdc_list = ans_clfl_xdc(0)
+        qtfl_xdc_list = ans_qtfl_xdc(0)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算
         Dim ans_clfqtf
@@ -348,12 +361,14 @@
         '供冷供热材料费， 元 / MWh
         '光伏材料费， 元 / kW
         '风电材料费， 元 / kW
-        Dim clf_set_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(222, 22).Value
-        Dim clf_set_rm As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(224, 22).Value
-        Dim clf_set_ljfd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(226, 22).Value
-        Dim clf_set_glgr As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, 22).Value
-        Dim clf_set_gf As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(230, 22).Value
-        Dim clf_set_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(232, 22).Value
+        '蓄电池材料费， 元 / kW，预留功能
+        Dim clf_set_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(221, 22).Value
+        Dim clf_set_rm As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(223, 22).Value
+        Dim clf_set_ljfd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 22).Value
+        Dim clf_set_glgr As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 22).Value
+        Dim clf_set_gf As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(229, 22).Value
+        Dim clf_set_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(231, 22).Value
+        Dim clf_set_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, 22).Value
         '读取Excel中输入的默认其他费率
         '燃机其它费用， 元 / MWh
         '燃煤发电其它费用， 元 / MWh
@@ -361,12 +376,14 @@
         '供冷供热其它费， 元 / MWh
         '光伏其它费用， 元 / kW
         '风电其它费用， 元 / kW
-        Dim qtf_set_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(223, 22).Value
-        Dim qtf_set_rm As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 22).Value
-        Dim qtf_set_ljfd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 22).Value
-        Dim qtf_set_glgr As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(229, 22).Value
-        Dim qtf_set_gf As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(231, 22).Value
-        Dim qtf_set_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, 22).Value
+        '蓄电池其它费， 元 / kW，预留功能
+        Dim qtf_set_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(222, 22).Value
+        Dim qtf_set_rm As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(224, 22).Value
+        Dim qtf_set_ljfd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(226, 22).Value
+        Dim qtf_set_glgr As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, 22).Value
+        Dim qtf_set_gf As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(230, 22).Value
+        Dim qtf_set_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(232, 22).Value
+        Dim qtf_set_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(234, 22).Value
         '逐年材料费默认值
         Dim clfl_rj_list(31)
         Dim clfl_rm_list(31)
@@ -374,6 +391,7 @@
         Dim clfl_glgr_list(31)
         Dim clfl_gf_list(31)
         Dim clfl_fd_list(31)
+        Dim clfl_xdc_list(31)
         '逐年其它费默认值
         Dim qtfl_rj_list(31)
         Dim qtfl_rm_list(31)
@@ -381,6 +399,7 @@
         Dim qtfl_glgr_list(31)
         Dim qtfl_gf_list(31)
         Dim qtfl_fd_list(31)
+        Dim qtfl_xdc_list(31)
         '逐年费率
         For i = 1 To 31
             '逐年材料费默认值
@@ -390,6 +409,7 @@
             clfl_glgr_list(i) = clf_set_glgr
             clfl_gf_list(i) = clf_set_gf
             clfl_fd_list(i) = clf_set_fd
+            clfl_xdc_list(i) = clf_set_xdc
             '逐年其它费默认值
             qtfl_rj_list(i) = qtf_set_rj
             qtfl_rm_list(i) = qtf_set_rm
@@ -397,9 +417,10 @@
             qtfl_glgr_list(i) = qtf_set_glgr
             qtfl_gf_list(i) = qtf_set_gf
             qtfl_fd_list(i) = qtf_set_fd
+            qtfl_xdc_list(i) = qtf_set_xdc
         Next
         '返回结果
-        Dim ans(11)
+        Dim ans(13)
         '逐年材料费默认值
         ans(0) = clfl_rj_list
         ans(1) = clfl_rm_list
@@ -407,6 +428,7 @@
         ans(3) = clfl_glgr_list
         ans(4) = clfl_gf_list
         ans(5) = clfl_fd_list
+        ans(12) = clfl_xdc_list
         '逐年其它费默认值
         ans(6) = qtfl_rj_list
         ans(7) = qtfl_rm_list
@@ -414,6 +436,7 @@
         ans(9) = qtfl_glgr_list
         ans(10) = qtfl_gf_list
         ans(11) = qtfl_fd_list
+        ans(13) = qtfl_xdc_list
         Return ans
     End Function
     Function 材料费其它费计算基数扣除默认设置(ExcelApp As Object)

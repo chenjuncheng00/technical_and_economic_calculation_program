@@ -1344,7 +1344,7 @@ Public Class Com技术经济分析计算程序
         Form4.RichTextBox1.Rtf = Nothing
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
-    Sub 设置材料费和修理费计算方式()
+    Sub 设置材料费和其它费计算方式()
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
@@ -1361,7 +1361,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         MsgBox("功能待开发！")
         Exit Sub
-        'Dim XZ = MsgBox("是否需要设置逐年动态变化的材料费率和修理费率?", vbOKCancel)
+        'Dim XZ = MsgBox("是否需要设置逐年动态变化的材料费率和其它费率?", vbOKCancel)
         'If XZ = vbOK Then
         '    Call 计算前基本处理(ExcelApp, 1)
         '    '————————————————————————————————————————————————————————————————————————————————————————

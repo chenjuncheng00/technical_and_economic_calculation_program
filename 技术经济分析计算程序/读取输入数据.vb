@@ -27,8 +27,8 @@
         Dim rjfdl_list(10) As Double
         '蓄电池总投资(万元)
         Dim xdctz_list(10) As Double
-        '蓄电池总发电量(万kWh)
-        Dim xdcfdl_list(10) As Double
+        '蓄电池总装机功率(kW)
+        Dim xdczjgl_list(10) As Double
         '暖通总投资(万元)
         Dim nttz_list(10) As Double
         '供冷供热总量(万kWh)
@@ -62,7 +62,7 @@
             rjtz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 2 * i + 1).Value
             rjfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(45, 2 * i + 1).Value
             xdctz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 2 * i + 1).Value
-            xdcfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 2 * i + 1).Value
+            xdczjgl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 2 * i + 1).Value
             nttz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 2 * i + 1).Value
             glgrl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(49, 2 * i + 1).Value
             gftz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 2 * i + 1).Value
@@ -87,7 +87,7 @@
             rjtz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(91, 2 * i - 9).Value
             rjfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(92, 2 * i - 9).Value
             xdctz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(93, 2 * i - 9).Value
-            xdcfdl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(94, 2 * i - 9).Value
+            xdczjgl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(94, 2 * i - 9).Value
             nttz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(95, 2 * i - 9).Value
             glgrl_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(96, 2 * i - 9).Value
             gftz_list(i) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(97, 2 * i - 9).Value
@@ -113,7 +113,7 @@
         ans(10) = rjtz_list
         ans(11) = rjfdl_list
         ans(12) = xdctz_list
-        ans(13) = xdcfdl_list
+        ans(13) = xdczjgl_list
         ans(14) = nttz_list
         ans(15) = glgrl_list
         ans(16) = gftz_list
