@@ -1200,14 +1200,7 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体中已有的数据
-        Form12.ksnf1.Clear()
-        Form12.ksnf2.Clear()
-        Form12.ksnf3.Clear()
-        Form12.jsnf1.Clear()
-        Form12.jsnf2.Clear()
-        Form12.jsnf3.Clear()
-        Form12.CheckBox1.Checked = False
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
@@ -1237,15 +1230,7 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体中已有的数据
-        Form7.ksnf1.Clear()
-        Form7.ksnf2.Clear()
-        Form7.ksnf3.Clear()
-        Form7.jsnf1.Clear()
-        Form7.jsnf2.Clear()
-        Form7.jsnf3.Clear()
-        Form7.CheckBox1.Checked = False
-        Form7.CheckBox2.Checked = False
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
@@ -1277,19 +1262,7 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体中已有的数据
-        Form2.TextBox1.Clear()
-        Form2.TextBox2.Clear()
-        Form2.TextBox3.Clear()
-        Form2.TextBox4.Clear()
-        Form2.TextBox5.Clear()
-        Form2.TextBox6.Clear()
-        Form2.TextBox7.Clear()
-        Form2.TextBox8.Clear()
-        Form2.TextBox9.Clear()
-        Form2.TextBox10.Clear()
-        Form2.RichTextBox1.Rtf = Nothing
-        Form2.RichTextBox1.Clear()
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
 
@@ -1321,27 +1294,7 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体中已有的数据
-        Form4.ksnf1.Clear()
-        Form4.ksnf2.Clear()
-        Form4.ksnf3.Clear()
-        Form4.ksnf4.Clear()
-        Form4.ksnf5.Clear()
-        Form4.jsnf1.Clear()
-        Form4.jsnf2.Clear()
-        Form4.jsnf3.Clear()
-        Form4.jsnf4.Clear()
-        Form4.jsnf5.Clear()
-        Form4.ksfl1.Clear()
-        Form4.ksfl2.Clear()
-        Form4.ksfl3.Clear()
-        Form4.ksfl4.Clear()
-        Form4.ksfl5.Clear()
-        Form4.jsfl1.Clear()
-        Form4.jsfl2.Clear()
-        Form4.jsfl3.Clear()
-        Form4.jsfl4.Clear()
-        Form4.RichTextBox1.Rtf = Nothing
+        '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置材料费和其它费计算方式()
@@ -1359,22 +1312,21 @@ Public Class Com技术经济分析计算程序
             Exit Sub
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
-        MsgBox("功能待开发！")
-        Exit Sub
-        'Dim XZ = MsgBox("是否需要设置逐年动态变化的材料费率和其它费率?", vbOKCancel)
-        'If XZ = vbOK Then
-        '    Call 计算前基本处理(ExcelApp, 1)
-        '    '————————————————————————————————————————————————————————————————————————————————————————
-
-
-
-
-
-
-
-        '    '————————————————————————————————————————————————————————————————————————————————————————
-        '    Call 计算后基本处理(ExcelApp, 0)
-        'End If
+        Dim XZ = MsgBox("是否需要设置逐年动态变化的材料费率和其它费率?", vbOKCancel)
+        Dim Form As New 设置材料费和其它费计算方式
+        If XZ = vbOK Then
+            Call 计算前基本处理(ExcelApp, 1)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '读取输入的修理费率变化率（%）
+            Form.ShowDialog() '窗口显示
+            Form.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '计算过程在“材料费率其它费率逐年变化设置.确定”
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0)
+        End If
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置建设期资金运用方式()
         On Error Resume Next
@@ -1403,29 +1355,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空已有内容
-        Form5.zbjbl_a.Clear()
-        Form5.dkll_a.Clear()
-        Form5.zbjbl1.Clear()
-        Form5.zbjbl2.Clear()
-        Form5.zbjbl3.Clear()
-        Form5.zbjbl4.Clear()
-        Form5.zbjbl5.Clear()
-        Form5.zbjbl6.Clear()
-        Form5.zbjbl7.Clear()
-        Form5.zbjbl8.Clear()
-        Form5.zbjbl9.Clear()
-        Form5.zbjbl10.Clear()
-        Form5.dkll1.Clear()
-        Form5.dkll2.Clear()
-        Form5.dkll3.Clear()
-        Form5.dkll4.Clear()
-        Form5.dkll5.Clear()
-        Form5.dkll6.Clear()
-        Form5.dkll7.Clear()
-        Form5.dkll8.Clear()
-        Form5.dkll9.Clear()
-        Form5.dkll10.Clear()
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
     End Sub
@@ -1457,40 +1386,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空已有的全部数据
-        '固定资产折旧年限
-        Form8.gdzczjnx1.Clear()
-        Form8.gdzczjnx2.Clear()
-        Form8.gdzczjnx3.Clear()
-        Form8.gdzczjnx4.Clear()
-        Form8.gdzczjnx5.Clear()
-        Form8.gdzczjnx6.Clear()
-        Form8.gdzczjnx7.Clear()
-        Form8.gdzczjnx8.Clear()
-        Form8.gdzczjnx9.Clear()
-        Form8.gdzczjnx10.Clear()
-        '固定资产残值率
-        Form8.gdzcczl1.Clear()
-        Form8.gdzcczl2.Clear()
-        Form8.gdzcczl3.Clear()
-        Form8.gdzcczl4.Clear()
-        Form8.gdzcczl5.Clear()
-        Form8.gdzcczl6.Clear()
-        Form8.gdzcczl7.Clear()
-        Form8.gdzcczl8.Clear()
-        Form8.gdzcczl9.Clear()
-        Form8.gdzcczl10.Clear()
-        '无形资产摊销年限
-        Form8.wxzctxnx1.Clear()
-        Form8.wxzctxnx2.Clear()
-        Form8.wxzctxnx3.Clear()
-        Form8.wxzctxnx4.Clear()
-        Form8.wxzctxnx5.Clear()
-        Form8.wxzctxnx6.Clear()
-        Form8.wxzctxnx7.Clear()
-        Form8.wxzctxnx8.Clear()
-        Form8.wxzctxnx9.Clear()
-        Form8.wxzctxnx10.Clear()
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
     End Sub
@@ -1522,28 +1417,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '长期贷款还款年限
-        Form9.cqdkhknx1.Clear()
-        Form9.cqdkhknx2.Clear()
-        Form9.cqdkhknx3.Clear()
-        Form9.cqdkhknx4.Clear()
-        Form9.cqdkhknx5.Clear()
-        Form9.cqdkhknx6.Clear()
-        Form9.cqdkhknx7.Clear()
-        Form9.cqdkhknx8.Clear()
-        Form9.cqdkhknx9.Clear()
-        Form9.cqdkhknx10.Clear()
-        '长期贷款宽限年限
-        Form9.kxnx1.Clear()
-        Form9.kxnx2.Clear()
-        Form9.kxnx3.Clear()
-        Form9.kxnx4.Clear()
-        Form9.kxnx5.Clear()
-        Form9.kxnx6.Clear()
-        Form9.kxnx7.Clear()
-        Form9.kxnx8.Clear()
-        Form9.kxnx9.Clear()
-        Form9.kxnx10.Clear()
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
     End Sub
@@ -1574,25 +1447,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体内的数据
-        '出资比例
-        Form14.czbl1.Clear()
-        Form14.czbl2.Clear()
-        Form14.czbl3.Clear()
-        Form14.czbl4.Clear()
-        Form14.czbl5.Clear()
-        '资产处置比例
-        Form14.zcczbl1.Clear()
-        Form14.zcczbl2.Clear()
-        Form14.zcczbl3.Clear()
-        Form14.zcczbl4.Clear()
-        Form14.zcczbl5.Clear()
-        '利润分配比例
-        Form14.lrfpbl1.Clear()
-        Form14.lrfpbl2.Clear()
-        Form14.lrfpbl3.Clear()
-        Form14.lrfpbl4.Clear()
-        Form14.lrfpbl5.Clear()
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
     End Sub

@@ -1098,6 +1098,7 @@ Partial Class 设置材料费和其它费计算方式
         Me.Controls.Add(Me.ksnf1)
         Me.Controls.Add(Me.Label7)
         Me.Name = "设置材料费和其它费计算方式"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "设置材料费和其它费计算方式"
         Me.ResumeLayout(False)
         Me.PerformLayout()

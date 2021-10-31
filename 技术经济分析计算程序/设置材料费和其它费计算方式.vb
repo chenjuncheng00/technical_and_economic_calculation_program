@@ -452,7 +452,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(186, i).Value = clfl_qtfl_gf_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(186, i).Value = clfl_qtfl_gf_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
@@ -516,7 +516,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(187, i).Value = clfl_qtfl_fd_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(187, i).Value = clfl_qtfl_fd_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
@@ -580,7 +580,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value = clfl_qtfl_rj_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value = clfl_qtfl_rj_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
@@ -644,7 +644,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(183, i).Value = clfl_qtfl_rm_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(183, i).Value = clfl_qtfl_rm_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
@@ -708,7 +708,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(185, i).Value = clfl_qtfl_nt_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(185, i).Value = clfl_qtfl_nt_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
@@ -772,7 +772,7 @@
             '逐年材料费和其它费写入Excel
             For i = 3 To 33
                 '设备材料费和其它费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(184, i).Value = clfl_qtfl_ljfd_list(i - 2) / 100
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(184, i).Value = clfl_qtfl_ljfd_list(i - 2)
             Next
             '————————————————————————————————————————————————————————————————————————————————————————        
             '计算一次工作簿
