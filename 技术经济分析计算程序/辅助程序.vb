@@ -83,48 +83,6 @@ Module 辅助程序
             Exit Sub
         End Try
     End Sub
-    Sub 获取本地服务器版本信息并验证(ExcelApp As Object)
-        '屏蔽ctrl+break
-        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
-        '程序开始
-        Try '异常处理，防止无文件
-            Dim fs As New FileStream("\\192.168.9.201\user1\CJC-陈俊丞\综合能源多联供项目计算工具\技术经济分析计算程序\Version.txt", FileMode.Open)
-            Dim sr As New StreamReader(fs)
-            Dim strTemp As String
-            strTemp = sr.ReadLine
-            Dim FWQBBH_String As String = strTemp '服务器版本号，字符串格式
-            sr.Close()
-            fs.Close()
-            Dim FWQBBH = CInt(FWQBBH_String) '将服务器版本号从字符串格式转为整数型格式
-            If FWQBBH > 20190401 Then '如果服务器版本号大于设定的内置版本号信息，则退出程序
-                '保存表格的改动
-                ExcelApp.Application.DisplayAlerts = False
-                ExcelApp.ThisWorkbook.Save()
-                ExcelApp.Application.DisplayAlerts = True
-                '错误提示
-                MsgBox("Version Error！")
-                '直接退出表格
-                ExcelApp.ActiveWorkbook.Close(SaveChanges:=True)
-                ExcelApp.Application.DisplayAlerts = False
-                ExcelApp.Application.Quit()
-                ExcelApp.Application.DisplayAlerts = True
-            End If
-        Catch ex As Exception
-            '发生任何异常，直接退出
-            '保存表格的改动
-            ExcelApp.Application.DisplayAlerts = False
-            ExcelApp.ThisWorkbook.Save()
-            ExcelApp.Application.DisplayAlerts = True
-            '错误提示
-            MsgBox("Version Error！")
-            '直接退出表格
-            ExcelApp.ActiveWorkbook.Close(SaveChanges:=True)
-            ExcelApp.Application.DisplayAlerts = False
-            ExcelApp.Application.Quit()
-            ExcelApp.Application.DisplayAlerts = True
-            Exit Sub
-        End Try
-    End Sub
     Sub 获取本机MAC地址并验证(ExcelApp As Object)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————  
@@ -138,8 +96,8 @@ Module 辅助程序
         wmiObjSet = GetObject("winmgmts:{impersonationLevel=impersonate}").InstancesOf("Win32_NetworkAdapterConfiguration")
         For Each obj In wmiObjSet
             MAC = obj.MACAddress
-            'MAC地址白名单(随便写一个)
-            If MAC = "00:1C:42:23:91:BA" Then
+            'MAC地址白名单(macbook虚拟机，孙依帆笔记本)
+            If MAC = "00:1C:42:23:91:BA" Or MAC = "28:DF:EB:1D:75:2C" Then
                 MACTEST = 1
                 Exit For
             Else
@@ -191,7 +149,7 @@ Module 辅助程序
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #01/01/2022# Then '月/日/年，验证网络时间
+                If GetDate >= #12/01/2021# Then '月/日/年，验证网络时间
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
@@ -206,10 +164,10 @@ Module 辅助程序
                 End If
             End With
         Else '如果网络不通，验证系统本地时间
-            '进程暂停一段时间（2000分钟）
-            Threading.Thread.Sleep(120000000)
+            '进程暂停一段时间，Sleep的参数是毫秒(千分之一秒)
+            Threading.Thread.Sleep(6000000)
             Dim Local_Time = Date.Now '获取系统本地时间
-            Dim Dead_Time = Convert.ToDateTime("2022/01/01 01:00:00") '设定程序有效期截止时间
+            Dim Dead_Time = Convert.ToDateTime("2021/12/01 01:00:00") '设定程序有效期截止时间
             If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
                 '保存表格的改动
                 ExcelApp.Application.DisplayAlerts = False
@@ -231,7 +189,7 @@ Module 辅助程序
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim Local_Time = Date.Now '获取系统本地时间
-        Dim Dead_Time = Convert.ToDateTime("2022/01/01 01:00:00") '设定程序有效期截止时间
+        Dim Dead_Time = Convert.ToDateTime("2021/12/01 01:00:00") '设定程序有效期截止时间
         If Date.Compare(Local_Time, Dead_Time) > 0 Then '大于0，说明系统本地时间大于程序有效期，程序不可以继续使用
             '保存表格的改动
             ExcelApp.Application.DisplayAlerts = False
@@ -266,7 +224,7 @@ Module 辅助程序
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #01/01/2022# Then '月/日/年
+                If GetDate >= #12/01/2021# Then '月/日/年
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
@@ -296,4 +254,46 @@ Module 辅助程序
         'TimedOut 失败
         'Success  成功
     End Function
+    Sub 获取本地服务器版本信息并验证(ExcelApp As Object)
+        '屏蔽ctrl+break
+        ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
+        '程序开始
+        Try '异常处理，防止无文件
+            Dim fs As New FileStream("\\192.168.9.201\user1\CJC-陈俊丞\综合能源多联供项目计算工具\技术经济分析计算程序\Version.txt", FileMode.Open)
+            Dim sr As New StreamReader(fs)
+            Dim strTemp As String
+            strTemp = sr.ReadLine
+            Dim FWQBBH_String As String = strTemp '服务器版本号，字符串格式
+            sr.Close()
+            fs.Close()
+            Dim FWQBBH = CInt(FWQBBH_String) '将服务器版本号从字符串格式转为整数型格式
+            If FWQBBH > 20190401 Then '如果服务器版本号大于设定的内置版本号信息，则退出程序
+                '保存表格的改动
+                ExcelApp.Application.DisplayAlerts = False
+                ExcelApp.ThisWorkbook.Save()
+                ExcelApp.Application.DisplayAlerts = True
+                '错误提示
+                MsgBox("Version Error！")
+                '直接退出表格
+                ExcelApp.ActiveWorkbook.Close(SaveChanges:=True)
+                ExcelApp.Application.DisplayAlerts = False
+                ExcelApp.Application.Quit()
+                ExcelApp.Application.DisplayAlerts = True
+            End If
+        Catch ex As Exception
+            '发生任何异常，直接退出
+            '保存表格的改动
+            ExcelApp.Application.DisplayAlerts = False
+            ExcelApp.ThisWorkbook.Save()
+            ExcelApp.Application.DisplayAlerts = True
+            '错误提示
+            MsgBox("Version Error！")
+            '直接退出表格
+            ExcelApp.ActiveWorkbook.Close(SaveChanges:=True)
+            ExcelApp.Application.DisplayAlerts = False
+            ExcelApp.Application.Quit()
+            ExcelApp.Application.DisplayAlerts = True
+            Exit Sub
+        End Try
+    End Sub
 End Module

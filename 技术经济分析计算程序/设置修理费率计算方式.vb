@@ -519,23 +519,49 @@ Public Class 设置修理费率计算方式
         '计算逐年修理费率，蓄电池设备只可以以投资百分比计算，选择无效
         Dim xlfl_xdc_list = 逐年修理费率计算_base(ExcelApp)
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '逐年修理费写入Excel
-        For i = 3 To 33
-            '设备修理费率
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2) / 100
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '读取并显示计算出的逐年修理费率
-        Dim SJ As Double
-        Dim nf
-        For i = 1 To 31  '根据数组中的元素数量循环
-            nf = i '年份序号
-            SJ = Math.Round(xlfl_xdc_list(i), 2)
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-        Next
-        Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
+        If ComboBox1.Text = "投资额百分比(%)" Then
+            '写入模式：投资额百分比(%)；装机功率(元/kW)
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)"
+            '逐年修理费写入Excel
+            For i = 3 To 33
+                '设备修理费率
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2) / 100
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————        
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————     
+            '读取并显示计算出的逐年修理费率
+            Dim SJ As Double
+            Dim nf
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
+                SJ = Math.Round(xlfl_xdc_list(i), 2)
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+            Next
+            Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
+        ElseIf ComboBox1.Text = "装机功率(元/kW)" Then
+            '写入模式：投资额百分比(%)；装机功率(元/kW)
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "装机功率(元/kW)"
+            '逐年修理费写入Excel
+            For i = 3 To 33
+                '设备修理费率
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2)
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————        
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————     
+            '读取并显示计算出的逐年修理费率
+            Dim SJ As Double
+            Dim nf
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
+                SJ = Math.Round(xlfl_xdc_list(i), 2)
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
+            Next
+            Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
+        End If
     End Sub
 
     Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click

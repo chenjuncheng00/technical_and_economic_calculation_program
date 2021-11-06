@@ -294,6 +294,21 @@
             Me.KCBL_FD.Enabled = False
             Me.KCBL_FD.Text = Nothing
         End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 1).Value > 0 Then
+            Me.xudianchi.Enabled = True
+            Me.xudianchi.Checked = False
+            Me.YYNX_XDC.Enabled = True
+            Me.YYNX_XDC.Text = jsnx - 1
+            Me.KCBL_XDC.Enabled = True
+            Me.KCBL_XDC.Text = 100
+        Else
+            Me.xudianchi.Enabled = False
+            Me.xudianchi.Checked = False
+            Me.YYNX_XDC.Enabled = False
+            Me.YYNX_XDC.Text = Nothing
+            Me.KCBL_XDC.Enabled = False
+            Me.KCBL_XDC.Text = Nothing
+        End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(55, 1).Value > 0 Then
             Me.lajifadian.Enabled = True
             Me.lajifadian.Checked = False
@@ -326,15 +341,15 @@
             '显示
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>材料费和其它费计算参数设置写入完成！"
         End If
-        ''蓄电池
-        'If xudianchi.Checked = True Then
-        '    '运营年限
-        '    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = CInt(YYNX_XDC.Text)
-        '    '扣除比例
-        '    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = CDbl(KCBL_XDC.Text) / 100
-        '    '显示
-        '    Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>材料费和其它费计算参数设置写入完成！"
-        'End If
+        '蓄电池
+        If xudianchi.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = CInt(YYNX_XDC.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = CDbl(KCBL_XDC.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>材料费和其它费计算参数设置写入完成！"
+        End If
         '暖通
         If nuantong.Checked = True Then
             '运营年限
@@ -557,7 +572,69 @@
             Me.RichTextBox1.Text = "风电设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
+    Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年材料费和其它费率，风电设备只可以以投资百分比计算，选择无效
+        Dim clfl_qtfl_xdc_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        If ComboBox1.Text = "材料费率" Then
+            '清空已有的数据，防止出错
+            For i = 3 To 33
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(194, i).Value = 0
+            Next
+            '———————————————————————————————————————————————————————————————————————————————————————— 
+            '逐年材料费和其它费写入Excel
+            For i = 3 To 33
+                '设备材料费和其它费率
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(194, i).Value = clfl_qtfl_xdc_list(i - 2)
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————        
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————     
+            '读取并显示计算出的逐年材料费和其它费率
+            Dim SJ As Double
+            Dim nf
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
+                SJ = Math.Round(clfl_qtfl_xdc_list(i), 2)
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
+            Next
+            Me.RichTextBox1.Text = "蓄电池设备逐年材料费率：" & Me.RichTextBox1.Text
+        ElseIf ComboBox1.Text = "其它费率" Then
+            '清空已有的数据，防止出错
+            For i = 3 To 33
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(195, i).Value = 0
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————    
+            '逐年材料费和其它费写入Excel
+            For i = 3 To 33
+                '设备材料费和其它费率
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(195, i).Value = clfl_qtfl_xdc_list(i - 2)
+            Next
+            '————————————————————————————————————————————————————————————————————————————————————————        
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————     
+            '读取并显示计算出的逐年材料费和其它费率
+            Dim SJ As Double
+            Dim nf
+            For i = 1 To 31  '根据数组中的元素数量循环
+                nf = i '年份序号
+                SJ = Math.Round(clfl_qtfl_xdc_list(i), 2)
+                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
+            Next
+            Me.RichTextBox1.Text = "蓄电池设备逐年其它费率：" & Me.RichTextBox1.Text
+        End If
+    End Sub
     Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
         On Error Resume Next
         '定义Excel对象

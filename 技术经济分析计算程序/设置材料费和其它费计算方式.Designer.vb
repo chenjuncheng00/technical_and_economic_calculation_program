@@ -109,13 +109,19 @@ Partial Class 设置材料费和其它费计算方式
         Me.Label21 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label38 = New System.Windows.Forms.Label()
+        Me.蓄电池 = New System.Windows.Forms.Button()
+        Me.KCBL_XDC = New System.Windows.Forms.TextBox()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.YYNX_XDC = New System.Windows.Forms.TextBox()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.xudianchi = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         '计算
         '
         Me.计算.BackColor = System.Drawing.SystemColors.ControlLight
         Me.计算.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.计算.Location = New System.Drawing.Point(1437, 492)
+        Me.计算.Location = New System.Drawing.Point(1433, 522)
         Me.计算.Margin = New System.Windows.Forms.Padding(6)
         Me.计算.Name = "计算"
         Me.计算.Size = New System.Drawing.Size(224, 82)
@@ -127,10 +133,10 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.风电.BackColor = System.Drawing.SystemColors.ControlLight
         Me.风电.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.风电.Location = New System.Drawing.Point(323, 812)
+        Me.风电.Location = New System.Drawing.Point(233, 812)
         Me.风电.Margin = New System.Windows.Forms.Padding(6)
         Me.风电.Name = "风电"
-        Me.风电.Size = New System.Drawing.Size(224, 82)
+        Me.风电.Size = New System.Drawing.Size(182, 82)
         Me.风电.TabIndex = 195
         Me.风电.Text = "风电"
         Me.风电.UseVisualStyleBackColor = False
@@ -142,7 +148,7 @@ Partial Class 设置材料费和其它费计算方式
         Me.光伏.Location = New System.Drawing.Point(39, 812)
         Me.光伏.Margin = New System.Windows.Forms.Padding(6)
         Me.光伏.Name = "光伏"
-        Me.光伏.Size = New System.Drawing.Size(224, 82)
+        Me.光伏.Size = New System.Drawing.Size(182, 82)
         Me.光伏.TabIndex = 194
         Me.光伏.Text = "光伏"
         Me.光伏.UseVisualStyleBackColor = False
@@ -151,10 +157,10 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.暖通.BackColor = System.Drawing.SystemColors.ControlLight
         Me.暖通.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.暖通.Location = New System.Drawing.Point(594, 701)
+        Me.暖通.Location = New System.Drawing.Point(427, 701)
         Me.暖通.Margin = New System.Windows.Forms.Padding(6)
         Me.暖通.Name = "暖通"
-        Me.暖通.Size = New System.Drawing.Size(224, 82)
+        Me.暖通.Size = New System.Drawing.Size(182, 82)
         Me.暖通.TabIndex = 193
         Me.暖通.Text = "暖通"
         Me.暖通.UseVisualStyleBackColor = False
@@ -163,10 +169,10 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.垃圾发电.BackColor = System.Drawing.SystemColors.ControlLight
         Me.垃圾发电.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.垃圾发电.Location = New System.Drawing.Point(594, 812)
+        Me.垃圾发电.Location = New System.Drawing.Point(621, 701)
         Me.垃圾发电.Margin = New System.Windows.Forms.Padding(6)
         Me.垃圾发电.Name = "垃圾发电"
-        Me.垃圾发电.Size = New System.Drawing.Size(224, 82)
+        Me.垃圾发电.Size = New System.Drawing.Size(182, 82)
         Me.垃圾发电.TabIndex = 192
         Me.垃圾发电.Text = "垃圾发电"
         Me.垃圾发电.UseVisualStyleBackColor = False
@@ -178,7 +184,7 @@ Partial Class 设置材料费和其它费计算方式
         Me.燃机.Location = New System.Drawing.Point(39, 701)
         Me.燃机.Margin = New System.Windows.Forms.Padding(6)
         Me.燃机.Name = "燃机"
-        Me.燃机.Size = New System.Drawing.Size(224, 82)
+        Me.燃机.Size = New System.Drawing.Size(182, 82)
         Me.燃机.TabIndex = 191
         Me.燃机.Text = "燃机"
         Me.燃机.UseVisualStyleBackColor = False
@@ -187,17 +193,17 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.燃煤.BackColor = System.Drawing.SystemColors.ControlLight
         Me.燃煤.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.燃煤.Location = New System.Drawing.Point(323, 701)
+        Me.燃煤.Location = New System.Drawing.Point(233, 701)
         Me.燃煤.Margin = New System.Windows.Forms.Padding(6)
         Me.燃煤.Name = "燃煤"
-        Me.燃煤.Size = New System.Drawing.Size(224, 82)
+        Me.燃煤.Size = New System.Drawing.Size(182, 82)
         Me.燃煤.TabIndex = 190
         Me.燃煤.Text = "燃煤"
         Me.燃煤.UseVisualStyleBackColor = False
         '
         'KCBL_LJFD
         '
-        Me.KCBL_LJFD.Location = New System.Drawing.Point(1519, 419)
+        Me.KCBL_LJFD.Location = New System.Drawing.Point(1519, 459)
         Me.KCBL_LJFD.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_LJFD.Name = "KCBL_LJFD"
         Me.KCBL_LJFD.Size = New System.Drawing.Size(142, 35)
@@ -207,7 +213,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label36
         '
         Me.Label36.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label36.Location = New System.Drawing.Point(1353, 409)
+        Me.Label36.Location = New System.Drawing.Point(1353, 449)
         Me.Label36.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(154, 56)
@@ -217,7 +223,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_LJFD
         '
-        Me.YYNX_LJFD.Location = New System.Drawing.Point(1190, 419)
+        Me.YYNX_LJFD.Location = New System.Drawing.Point(1190, 459)
         Me.YYNX_LJFD.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_LJFD.Name = "YYNX_LJFD"
         Me.YYNX_LJFD.Size = New System.Drawing.Size(142, 35)
@@ -227,7 +233,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label37
         '
         Me.Label37.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label37.Location = New System.Drawing.Point(1029, 410)
+        Me.Label37.Location = New System.Drawing.Point(1029, 450)
         Me.Label37.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(158, 56)
@@ -238,7 +244,7 @@ Partial Class 设置材料费和其它费计算方式
         'lajifadian
         '
         Me.lajifadian.AutoSize = True
-        Me.lajifadian.Location = New System.Drawing.Point(881, 425)
+        Me.lajifadian.Location = New System.Drawing.Point(881, 465)
         Me.lajifadian.Name = "lajifadian"
         Me.lajifadian.Size = New System.Drawing.Size(138, 28)
         Me.lajifadian.TabIndex = 185
@@ -259,7 +265,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label8.Location = New System.Drawing.Point(209, 25)
+        Me.Label8.Location = New System.Drawing.Point(189, 25)
         Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(528, 50)
@@ -269,7 +275,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'KCBL_FD
         '
-        Me.KCBL_FD.Location = New System.Drawing.Point(1519, 369)
+        Me.KCBL_FD.Location = New System.Drawing.Point(1519, 355)
         Me.KCBL_FD.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_FD.Name = "KCBL_FD"
         Me.KCBL_FD.Size = New System.Drawing.Size(142, 35)
@@ -279,7 +285,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label33
         '
         Me.Label33.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label33.Location = New System.Drawing.Point(1353, 359)
+        Me.Label33.Location = New System.Drawing.Point(1353, 345)
         Me.Label33.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(154, 56)
@@ -289,7 +295,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_FD
         '
-        Me.YYNX_FD.Location = New System.Drawing.Point(1190, 369)
+        Me.YYNX_FD.Location = New System.Drawing.Point(1190, 355)
         Me.YYNX_FD.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_FD.Name = "YYNX_FD"
         Me.YYNX_FD.Size = New System.Drawing.Size(142, 35)
@@ -299,7 +305,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label34
         '
         Me.Label34.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label34.Location = New System.Drawing.Point(1029, 360)
+        Me.Label34.Location = New System.Drawing.Point(1029, 346)
         Me.Label34.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(158, 56)
@@ -309,7 +315,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'KCBL_GF
         '
-        Me.KCBL_GF.Location = New System.Drawing.Point(1519, 317)
+        Me.KCBL_GF.Location = New System.Drawing.Point(1519, 303)
         Me.KCBL_GF.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_GF.Name = "KCBL_GF"
         Me.KCBL_GF.Size = New System.Drawing.Size(142, 35)
@@ -319,7 +325,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label31
         '
         Me.Label31.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label31.Location = New System.Drawing.Point(1353, 307)
+        Me.Label31.Location = New System.Drawing.Point(1353, 293)
         Me.Label31.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(154, 56)
@@ -329,7 +335,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_GF
         '
-        Me.YYNX_GF.Location = New System.Drawing.Point(1190, 317)
+        Me.YYNX_GF.Location = New System.Drawing.Point(1190, 303)
         Me.YYNX_GF.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_GF.Name = "YYNX_GF"
         Me.YYNX_GF.Size = New System.Drawing.Size(142, 35)
@@ -339,7 +345,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label32
         '
         Me.Label32.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label32.Location = New System.Drawing.Point(1029, 308)
+        Me.Label32.Location = New System.Drawing.Point(1029, 294)
         Me.Label32.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(158, 56)
@@ -349,7 +355,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'KCBL_NT
         '
-        Me.KCBL_NT.Location = New System.Drawing.Point(1519, 261)
+        Me.KCBL_NT.Location = New System.Drawing.Point(1519, 247)
         Me.KCBL_NT.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_NT.Name = "KCBL_NT"
         Me.KCBL_NT.Size = New System.Drawing.Size(142, 35)
@@ -359,7 +365,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label29
         '
         Me.Label29.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label29.Location = New System.Drawing.Point(1353, 251)
+        Me.Label29.Location = New System.Drawing.Point(1353, 237)
         Me.Label29.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(154, 56)
@@ -369,7 +375,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_NT
         '
-        Me.YYNX_NT.Location = New System.Drawing.Point(1190, 261)
+        Me.YYNX_NT.Location = New System.Drawing.Point(1190, 247)
         Me.YYNX_NT.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_NT.Name = "YYNX_NT"
         Me.YYNX_NT.Size = New System.Drawing.Size(142, 35)
@@ -379,7 +385,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label30
         '
         Me.Label30.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label30.Location = New System.Drawing.Point(1029, 252)
+        Me.Label30.Location = New System.Drawing.Point(1029, 238)
         Me.Label30.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(158, 56)
@@ -389,7 +395,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'KCBL_RM
         '
-        Me.KCBL_RM.Location = New System.Drawing.Point(1519, 205)
+        Me.KCBL_RM.Location = New System.Drawing.Point(1519, 195)
         Me.KCBL_RM.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_RM.Name = "KCBL_RM"
         Me.KCBL_RM.Size = New System.Drawing.Size(142, 35)
@@ -399,7 +405,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label24
         '
         Me.Label24.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label24.Location = New System.Drawing.Point(1353, 195)
+        Me.Label24.Location = New System.Drawing.Point(1353, 185)
         Me.Label24.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(154, 56)
@@ -409,7 +415,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_RM
         '
-        Me.YYNX_RM.Location = New System.Drawing.Point(1190, 205)
+        Me.YYNX_RM.Location = New System.Drawing.Point(1190, 195)
         Me.YYNX_RM.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_RM.Name = "YYNX_RM"
         Me.YYNX_RM.Size = New System.Drawing.Size(142, 35)
@@ -419,7 +425,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label27
         '
         Me.Label27.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label27.Location = New System.Drawing.Point(1029, 196)
+        Me.Label27.Location = New System.Drawing.Point(1029, 186)
         Me.Label27.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(158, 56)
@@ -429,7 +435,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'KCBL_RJ
         '
-        Me.KCBL_RJ.Location = New System.Drawing.Point(1519, 149)
+        Me.KCBL_RJ.Location = New System.Drawing.Point(1519, 139)
         Me.KCBL_RJ.Margin = New System.Windows.Forms.Padding(6)
         Me.KCBL_RJ.Name = "KCBL_RJ"
         Me.KCBL_RJ.Size = New System.Drawing.Size(142, 35)
@@ -439,7 +445,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label28
         '
         Me.Label28.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label28.Location = New System.Drawing.Point(1353, 139)
+        Me.Label28.Location = New System.Drawing.Point(1353, 129)
         Me.Label28.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(154, 56)
@@ -449,7 +455,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'YYNX_RJ
         '
-        Me.YYNX_RJ.Location = New System.Drawing.Point(1190, 149)
+        Me.YYNX_RJ.Location = New System.Drawing.Point(1190, 139)
         Me.YYNX_RJ.Margin = New System.Windows.Forms.Padding(6)
         Me.YYNX_RJ.Name = "YYNX_RJ"
         Me.YYNX_RJ.Size = New System.Drawing.Size(142, 35)
@@ -459,7 +465,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label26
         '
         Me.Label26.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label26.Location = New System.Drawing.Point(1029, 140)
+        Me.Label26.Location = New System.Drawing.Point(1029, 130)
         Me.Label26.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(158, 56)
@@ -481,7 +487,7 @@ Partial Class 设置材料费和其它费计算方式
         'fengdian
         '
         Me.fengdian.AutoSize = True
-        Me.fengdian.Location = New System.Drawing.Point(881, 375)
+        Me.fengdian.Location = New System.Drawing.Point(881, 361)
         Me.fengdian.Name = "fengdian"
         Me.fengdian.Size = New System.Drawing.Size(90, 28)
         Me.fengdian.TabIndex = 161
@@ -491,7 +497,7 @@ Partial Class 设置材料费和其它费计算方式
         'guangfu
         '
         Me.guangfu.AutoSize = True
-        Me.guangfu.Location = New System.Drawing.Point(881, 323)
+        Me.guangfu.Location = New System.Drawing.Point(881, 309)
         Me.guangfu.Name = "guangfu"
         Me.guangfu.Size = New System.Drawing.Size(90, 28)
         Me.guangfu.TabIndex = 160
@@ -501,7 +507,7 @@ Partial Class 设置材料费和其它费计算方式
         'nuantong
         '
         Me.nuantong.AutoSize = True
-        Me.nuantong.Location = New System.Drawing.Point(881, 267)
+        Me.nuantong.Location = New System.Drawing.Point(881, 253)
         Me.nuantong.Name = "nuantong"
         Me.nuantong.Size = New System.Drawing.Size(90, 28)
         Me.nuantong.TabIndex = 159
@@ -511,7 +517,7 @@ Partial Class 设置材料费和其它费计算方式
         'ranmei
         '
         Me.ranmei.AutoSize = True
-        Me.ranmei.Location = New System.Drawing.Point(881, 209)
+        Me.ranmei.Location = New System.Drawing.Point(881, 199)
         Me.ranmei.Name = "ranmei"
         Me.ranmei.Size = New System.Drawing.Size(90, 28)
         Me.ranmei.TabIndex = 158
@@ -521,7 +527,7 @@ Partial Class 设置材料费和其它费计算方式
         'ranji
         '
         Me.ranji.AutoSize = True
-        Me.ranji.Location = New System.Drawing.Point(881, 155)
+        Me.ranji.Location = New System.Drawing.Point(881, 145)
         Me.ranji.Name = "ranji"
         Me.ranji.Size = New System.Drawing.Size(90, 28)
         Me.ranji.TabIndex = 157
@@ -590,7 +596,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.设置剔除.BackColor = System.Drawing.SystemColors.ControlLight
         Me.设置剔除.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.设置剔除.Location = New System.Drawing.Point(881, 492)
+        Me.设置剔除.Location = New System.Drawing.Point(877, 522)
         Me.设置剔除.Margin = New System.Windows.Forms.Padding(6)
         Me.设置剔除.Name = "设置剔除"
         Me.设置剔除.Size = New System.Drawing.Size(224, 82)
@@ -602,7 +608,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.清空窗体.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空窗体.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空窗体.Location = New System.Drawing.Point(1157, 492)
+        Me.清空窗体.Location = New System.Drawing.Point(1153, 522)
         Me.清空窗体.Margin = New System.Windows.Forms.Padding(6)
         Me.清空窗体.Name = "清空窗体"
         Me.清空窗体.Size = New System.Drawing.Size(224, 82)
@@ -612,7 +618,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(881, 667)
+        Me.RichTextBox1.Location = New System.Drawing.Point(881, 673)
         Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
@@ -623,7 +629,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label19
         '
         Me.Label19.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(980, 599)
+        Me.Label19.Location = New System.Drawing.Point(980, 617)
         Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(583, 50)
@@ -1005,11 +1011,79 @@ Partial Class 设置材料费和其它费计算方式
         Me.Label38.Text = "选择需要设置的费率类型"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        '蓄电池
+        '
+        Me.蓄电池.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.蓄电池.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.蓄电池.Location = New System.Drawing.Point(427, 812)
+        Me.蓄电池.Margin = New System.Windows.Forms.Padding(6)
+        Me.蓄电池.Name = "蓄电池"
+        Me.蓄电池.Size = New System.Drawing.Size(182, 82)
+        Me.蓄电池.TabIndex = 209
+        Me.蓄电池.Text = "蓄电池"
+        Me.蓄电池.UseVisualStyleBackColor = False
+        '
+        'KCBL_XDC
+        '
+        Me.KCBL_XDC.Location = New System.Drawing.Point(1519, 406)
+        Me.KCBL_XDC.Margin = New System.Windows.Forms.Padding(6)
+        Me.KCBL_XDC.Name = "KCBL_XDC"
+        Me.KCBL_XDC.Size = New System.Drawing.Size(142, 35)
+        Me.KCBL_XDC.TabIndex = 214
+        Me.KCBL_XDC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label39
+        '
+        Me.Label39.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label39.Location = New System.Drawing.Point(1353, 396)
+        Me.Label39.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(154, 56)
+        Me.Label39.TabIndex = 213
+        Me.Label39.Text = "扣除比例(%)"
+        Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'YYNX_XDC
+        '
+        Me.YYNX_XDC.Location = New System.Drawing.Point(1190, 406)
+        Me.YYNX_XDC.Margin = New System.Windows.Forms.Padding(6)
+        Me.YYNX_XDC.Name = "YYNX_XDC"
+        Me.YYNX_XDC.Size = New System.Drawing.Size(142, 35)
+        Me.YYNX_XDC.TabIndex = 212
+        Me.YYNX_XDC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label40
+        '
+        Me.Label40.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label40.Location = New System.Drawing.Point(1029, 397)
+        Me.Label40.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(158, 56)
+        Me.Label40.TabIndex = 211
+        Me.Label40.Text = "运营年限(年)"
+        Me.Label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'xudianchi
+        '
+        Me.xudianchi.AutoSize = True
+        Me.xudianchi.Location = New System.Drawing.Point(881, 412)
+        Me.xudianchi.Name = "xudianchi"
+        Me.xudianchi.Size = New System.Drawing.Size(114, 28)
+        Me.xudianchi.TabIndex = 210
+        Me.xudianchi.Text = "蓄电池"
+        Me.xudianchi.UseVisualStyleBackColor = True
+        '
         '设置材料费和其它费计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1698, 930)
+        Me.Controls.Add(Me.KCBL_XDC)
+        Me.Controls.Add(Me.Label39)
+        Me.Controls.Add(Me.YYNX_XDC)
+        Me.Controls.Add(Me.Label40)
+        Me.Controls.Add(Me.xudianchi)
+        Me.Controls.Add(Me.蓄电池)
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.Label38)
         Me.Controls.Add(Me.Label20)
@@ -1192,4 +1266,10 @@ Partial Class 设置材料费和其它费计算方式
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
     Friend WithEvents Label38 As System.Windows.Forms.Label
+    Friend WithEvents 蓄电池 As System.Windows.Forms.Button
+    Friend WithEvents KCBL_XDC As System.Windows.Forms.TextBox
+    Friend WithEvents Label39 As System.Windows.Forms.Label
+    Friend WithEvents YYNX_XDC As System.Windows.Forms.TextBox
+    Friend WithEvents Label40 As System.Windows.Forms.Label
+    Friend WithEvents xudianchi As System.Windows.Forms.CheckBox
 End Class

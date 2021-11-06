@@ -928,7 +928,7 @@ Partial Class 设置修理费率计算方式
         '
         Me.蓄电池.BackColor = System.Drawing.SystemColors.ControlLight
         Me.蓄电池.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.蓄电池.Location = New System.Drawing.Point(587, 698)
+        Me.蓄电池.Location = New System.Drawing.Point(587, 809)
         Me.蓄电池.Margin = New System.Windows.Forms.Padding(6)
         Me.蓄电池.Name = "蓄电池"
         Me.蓄电池.Size = New System.Drawing.Size(224, 82)
@@ -940,7 +940,7 @@ Partial Class 设置修理费率计算方式
         '
         Me.风电.BackColor = System.Drawing.SystemColors.ControlLight
         Me.风电.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.风电.Location = New System.Drawing.Point(587, 809)
+        Me.风电.Location = New System.Drawing.Point(316, 809)
         Me.风电.Margin = New System.Windows.Forms.Padding(6)
         Me.风电.Name = "风电"
         Me.风电.Size = New System.Drawing.Size(224, 82)
@@ -952,7 +952,7 @@ Partial Class 设置修理费率计算方式
         '
         Me.光伏.BackColor = System.Drawing.SystemColors.ControlLight
         Me.光伏.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.光伏.Location = New System.Drawing.Point(316, 809)
+        Me.光伏.Location = New System.Drawing.Point(32, 809)
         Me.光伏.Margin = New System.Windows.Forms.Padding(6)
         Me.光伏.Name = "光伏"
         Me.光伏.Size = New System.Drawing.Size(224, 82)
@@ -964,7 +964,7 @@ Partial Class 设置修理费率计算方式
         '
         Me.暖通.BackColor = System.Drawing.SystemColors.ControlLight
         Me.暖通.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.暖通.Location = New System.Drawing.Point(32, 809)
+        Me.暖通.Location = New System.Drawing.Point(587, 698)
         Me.暖通.Margin = New System.Windows.Forms.Padding(6)
         Me.暖通.Name = "暖通"
         Me.暖通.Size = New System.Drawing.Size(224, 82)
@@ -978,9 +978,9 @@ Partial Class 设置修理费率计算方式
         Me.Label38.Location = New System.Drawing.Point(6, 634)
         Me.Label38.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(539, 50)
+        Me.Label38.Size = New System.Drawing.Size(557, 50)
         Me.Label38.TabIndex = 109
-        Me.Label38.Text = "修理费率计算单位选择(仅风电、光伏有效)"
+        Me.Label38.Text = "修理费率计算单位选择(光伏、风电、蓄电池)"
         Me.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ComboBox1
@@ -988,7 +988,7 @@ Partial Class 设置修理费率计算方式
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"投资额百分比(%)", "装机功率(元/kW)"})
-        Me.ComboBox1.Location = New System.Drawing.Point(554, 644)
+        Me.ComboBox1.Location = New System.Drawing.Point(568, 644)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(243, 32)
         Me.ComboBox1.TabIndex = 110

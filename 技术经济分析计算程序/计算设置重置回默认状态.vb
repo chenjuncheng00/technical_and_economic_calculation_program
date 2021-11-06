@@ -56,9 +56,10 @@ Module 计算设置重置回默认状态
         '材料费其它费
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(55, 18).Value = "常规设置"
         '————————————————————————————————————————————————————————————————————————————————————————
-        '光伏、风电修理费计算基数设置
+        '光伏、风电、蓄电池修理费计算基数设置
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)"
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)"
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)"
         '————————————————————————————————————————————————————————————————————————————————————————      
         '计算一次工作簿
         ExcelApp.Calculate()
@@ -485,7 +486,9 @@ Module 计算设置重置回默认状态
                     '燃机修理费率（%）
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i).Value = xlfl_rj_mr_list(i - 2)
                     '蓄电池修理费率（%）
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_mr_list(i - 2)
+                    If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)" Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_mr_list(i - 2)
+                    End If
                     '光伏设备修理费率（%）
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)" Then
                         ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_mr_list(i - 2)
@@ -539,6 +542,7 @@ Module 计算设置重置回默认状态
             Dim clfl_mr_glgr_list = clqtfl(3)
             Dim clfl_mr_gf_list = clqtfl(4)
             Dim clfl_mr_fd_list = clqtfl(5)
+            Dim clfl_mr_xdc_list = clqtfl(12)
             '逐年其它费默认值
             Dim qtfl_mr_rj_list = clqtfl(6)
             Dim qtfl_mr_rm_list = clqtfl(7)
@@ -546,6 +550,7 @@ Module 计算设置重置回默认状态
             Dim qtfl_mr_glgr_list = clqtfl(9)
             Dim qtfl_mr_gf_list = clqtfl(10)
             Dim qtfl_mr_fd_list = clqtfl(11)
+            Dim qtfl_mr_xdc_list = clqtfl(13)
             '写入Excel
             For i = 3 To 33 '列
                 If i - 2 <= jsnx Then
@@ -555,12 +560,14 @@ Module 计算设置重置回默认状态
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(185, i).Value = clfl_mr_glgr_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(186, i).Value = clfl_mr_gf_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(187, i).Value = clfl_mr_fd_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(194, i).Value = clfl_mr_xdc_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(188, i).Value = qtfl_mr_rj_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(189, i).Value = qtfl_mr_rm_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(190, i).Value = qtfl_mr_ljfd_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(191, i).Value = qtfl_mr_glgr_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(192, i).Value = qtfl_mr_gf_list(i - 2)
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = qtfl_mr_fd_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(195, i).Value = qtfl_mr_xdc_list(i - 2)
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(182, i).Value = 0
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(183, i).Value = 0
@@ -574,6 +581,8 @@ Module 计算设置重置回默认状态
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(191, i).Value = 0
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(192, i).Value = 0
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(193, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(194, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(195, i).Value = 0
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
