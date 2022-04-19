@@ -194,19 +194,27 @@
         For i = 1 To year_num
             '年份序号列表
             year_list(i) = year_start - year_0 + 1 + js
-            '投产月份数列表
+            '计算建设期开始月份序号和结束月份序号
+            If i = year_num And year_num > 1 Then
+                '开始和结束的月份序号列表
+                month_start_list(i) = 1
+                month_end_list(i) = month_end
+            ElseIf i <> year_num And year_num > 1 Then
+                '开始和结束的月份序号列表
+                month_start_list(i) = month_start
+                month_end_list(i) = 12
+            Else
+                '开始和结束的月份序号列表
+                month_start_list(i) = month_start
+                month_end_list(i) = month_end
+            End If
+            '计算投产月份数列表
             '如果是投产计划的最后一年，则计算投产月份数
             If i = year_num Then
                 '投产月份数量
                 month_list(i) = 12 - month_end
-                '开始和结束的月份序号列表
-                month_start_list(i) = 1
-                month_end_list(i) = month_end
             Else
                 month_list(i) = 0
-                '开始和结束的月份序号列表
-                month_start_list(i) = month_start
-                month_end_list(i) = 12
             End If
             '投产月份数列表
             js += 1

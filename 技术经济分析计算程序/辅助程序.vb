@@ -96,8 +96,8 @@ Module 辅助程序
         wmiObjSet = GetObject("winmgmts:{impersonationLevel=impersonate}").InstancesOf("Win32_NetworkAdapterConfiguration")
         For Each obj In wmiObjSet
             MAC = obj.MACAddress
-            'MAC地址白名单(macbook虚拟机，孙依帆笔记本)
-            If MAC = "00:1C:42:23:91:BA" Or MAC = "28:DF:EB:1D:75:2C" Then
+            'MAC地址白名单(macbook虚拟机)
+            If MAC = "00:1C:42:23:91:BA" Then
                 MACTEST = 1
                 Exit For
             Else
@@ -149,7 +149,7 @@ Module 辅助程序
                 .send
                 strText = .getResponseHeader("Date")
                 Dim GetDate = DateAdd("h", 8, Split(Replace(strText, " GMT", ""), ",")(1)) '将获取的字符串格式GMT网络时间加8小时转成北京时间，并改成日期格式
-                If GetDate >= #12/01/2021# Then '月/日/年，验证网络时间
+                If GetDate >= #12/01/2022# Then '月/日/年，验证网络时间
                     '保存表格的改动
                     ExcelApp.Application.DisplayAlerts = False
                     ExcelApp.ThisWorkbook.Save()
