@@ -1,4 +1,82 @@
 ﻿Public Class 设置逐年衰减计算方式
+    Public ksnf_list As New List(Of Integer)
+    Public sjl_list As New List(Of Double)
+    Function 逐年负荷率计算_base(ExcelApp As Object, jsksnf As Integer, jsjsnf As Integer)
+        'jsksnf：计算衰减率的项目开始计算衰减率的年份序号
+        'jsjsnf：计算衰减率的项目结束计算衰减率的年份序号
+        On Error Resume Next
+        '读取项目计算年限
+        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
+        '输入的计算结束年份不可以大于项目计算年限
+        If jsjsnf > jsnx Then
+            MsgBox("窗口中输入的计算结束年份不可以超过项目计算年限，请重新输入！")
+            Exit Function
+        End If
+        '检查输入的衰减开始年份
+        If jsnx > 31 Then
+            MsgBox("输入的项目计算年限不可以大于31年，请重新输入！")
+            Exit Function
+        End If
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Then
+                MsgBox("输入的衰减年份不可以大于项目计算年限，请重新输入！")
+                Exit Function
+            End If
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If ksnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个开始年份，请重新输入！")
+                    Exit Function
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '根据逐年衰减率计算出的基础负荷率
+        Dim fhl_base(31) As Double
+        '计算开始年份之前
+        For i = 1 To 31
+            If i < jsksnf Then
+                fhl_base(i) = 0
+            End If
+        Next
+        '计算开始年份到第一个开始衰减的年份
+        For i = 1 To 31
+            If i >= jsksnf And i < ksnf_list(0) Then
+                '小于第一个衰减开始年份的负荷率设置为1
+                fhl_base(i) = 1
+            End If
+        Next
+        '衰减年份的之间的年份
+        Dim yjsj As Double = 0 '已经衰减的系数
+        If n_nf > 1 Then
+            For j = 1 To n_nf - 1
+                For i = 1 To 31
+                    If i >= ksnf_list(j - 1) And i < ksnf_list(j) Then
+                        yjsj += sjl_list(j - 1)
+                        fhl_base(i) = (100 - yjsj) / 100
+                    End If
+                Next
+            Next
+        End If
+        '最后一个衰减年份到计算衰减结束的年份
+        For i = 1 To 31
+            If i >= ksnf_list(n_nf - 1) And i <= jsjsnf Then
+                yjsj += sjl_list(n_nf - 1)
+                fhl_base(i) = (100 - yjsj) / 100
+            End If
+        Next
+        '计算衰减结束的年份到最后
+        For i = 1 To 31
+            If i > jsjsnf Then
+                fhl_base(i) = 0
+            End If
+        Next
+        '返回结果
+        Return fhl_base
+    End Function
     Private Sub 光伏发电_Click(sender As Object, e As EventArgs) Handles 光伏发电.Click
         On Error Resume Next
         '定义Excel对象
@@ -7,304 +85,18 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '定义局部变量
-        Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
-        Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Me.gfjsnf.Text, Integer) '光伏计算结束年份
-        Dim ksnf = CType(Me.gfksnf.Text, Integer) '光伏计算开始年份
-        '读取项目计算年限
-        Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim jsksnf = CType(Me.gfksnf.Text, Integer) '光伏计算开始年份
+        Dim jsjsnf = CType(Me.gfjsnf.Text, Integer) '光伏计算结束年份
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(51, 1).Value > 0 Then '当光伏总发电量大于0，激活功能的条件
-            SJKSNF1 = CType(Me.TextBox1.Text, Integer)
-            SJKSNF2 = CType(Me.TextBox2.Text, Integer)
-            SJKSNF3 = CType(Me.TextBox3.Text, Integer)
-            SJKSNF4 = CType(Me.TextBox7.Text, Integer)
-            SJKSNF5 = CType(Me.TextBox9.Text, Integer)
-            SJL1 = CType(Me.TextBox4.Text, Double)
-            SJL2 = CType(Me.TextBox5.Text, Double)
-            SJL3 = CType(Me.TextBox6.Text, Double)
-            SJL4 = CType(Me.TextBox8.Text, Double)
-            SJL5 = CType(Me.TextBox10.Text, Double)
-            '————————————————————————————————————————————————————————————————————————————————————————  
-            '输入的光伏计算年限不可以大于项目计算年限
-            If jsnx > xmjsnx Then
-                MsgBox("窗口中输入的光伏计算年限不可以超过项目计算年限，请重新输入！")
-                Exit Sub
-            End If
-            '检查输入的衰减开始年份
-            If jsnx > 31 Then
-                MsgBox("输入的项目计算年限不可以大于31年，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 > jsnx Or SJKSNF2 > jsnx Or SJKSNF3 > jsnx Or SJKSNF4 > jsnx Or SJKSNF5 > jsnx Then
-                MsgBox("输入的衰减年份不可以大于项目计算年限，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF1 >= SJKSNF2 Then
-                MsgBox("输入的第1个开始的衰减年份大于等于了第2个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 > 0 And SJKSNF3 > 0 And SJKSNF1 >= SJKSNF3 Then
-                MsgBox("输入的第1个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 > 0 And SJKSNF4 > 0 And SJKSNF1 >= SJKSNF4 Then
-                MsgBox("输入的第1个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 > 0 And SJKSNF5 > 0 And SJKSNF1 >= SJKSNF5 Then
-                MsgBox("输入的第1个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF2 >= SJKSNF3 Then
-                MsgBox("输入的第2个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF2 > 0 And SJKSNF4 > 0 And SJKSNF2 >= SJKSNF4 Then
-                MsgBox("输入的第2个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF2 > 0 And SJKSNF5 > 0 And SJKSNF2 >= SJKSNF5 Then
-                MsgBox("输入的第2个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF2 > 0 And SJKSNF1 = 0 Then
-                MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF3 > 0 And SJKSNF1 = 0 Then
-                MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF4 > 0 And SJKSNF1 = 0 Then
-                MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF5 > 0 And SJKSNF1 = 0 Then
-                MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF3 > 0 And SJKSNF2 = 0 Then
-                MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF4 > 0 And SJKSNF2 = 0 Then
-                MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF5 > 0 And SJKSNF2 = 0 Then
-                MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF4 > 0 And SJKSNF3 = 0 Then
-                MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF5 > 0 And SJKSNF3 = 0 Then
-                MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF5 > 0 And SJKSNF4 = 0 Then
-                MsgBox("衰减开始年份必需从第1个、第2个、第3个和第4个年份开始输入，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 < 0 Or SJKSNF2 < 0 Or SJKSNF3 < 0 Or SJKSNF4 < 0 Or SJKSNF5 < 0 Then
-                MsgBox("输入的第1个、第2个、第3个、第4个和第5个开始的衰减年份不能小于0，请重新输入！")
-                Exit Sub
-            End If
-            If SJKSNF1 < 1 Then
-                MsgBox("输入的第1个开始的衰减年份最小只能是1，请重新输入！")
-                Exit Sub
-            End If
-            '————————————————————————————————————————————————————————————————————————————————————————        
             Me.RichTextBox1.Clear()
             For i = 3 To 33 '清空已有的负荷率，防止出错
                 ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value = 0
             Next
+            '————————————————————————————————————————————————————————————————————————————————————————        
             '光伏发电的基础负荷率
-            Dim fhl_base_gf(31) As Double
-            '输入了5种不同的衰减系数
-            If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
-                Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-                Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                    If i >= ksnf And i < SJKSNF1 Then
-                        fhl_base_gf(i) = 1
-                    End If
-                Next
-                For i = 1 To 31 '收入税收表的列，第1种衰减率
-                    If i >= SJKSNF1 And i < SJKSNF2 Then
-                        JS1 = JS1 + 1
-                        YJSJ1 = SJL1 * JS1
-                        fhl_base_gf(i) = (100 - YJSJ1) / 100
-                    End If
-                Next
-                Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-                Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第2种衰减率
-                    If i >= SJKSNF2 And i < SJKSNF3 Then
-                        JS2 = JS2 + 1
-                        YJSJ2 = SJL2 * JS2
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
-                    End If
-                Next
-                Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-                Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第3种衰减率
-                    If i >= SJKSNF3 And i < SJKSNF4 Then
-                        JS3 = JS3 + 1
-                        YJSJ3 = SJL3 * JS3
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                    End If
-                Next
-                Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-                Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第4种衰减率
-                    If i >= SJKSNF4 And i < SJKSNF5 Then
-                        JS4 = JS4 + 1
-                        YJSJ4 = SJL4 * JS4
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                    End If
-                Next
-                Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
-                Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第4种衰减率
-                    If i >= SJKSNF5 And i <= jsnx Then
-                        JS5 = JS5 + 1
-                        YJSJ5 = SJL5 * JS5
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
-                    End If
-                Next
-            End If
-            '输入了4种不同的衰减系数
-            If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
-                Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-                Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                    If i >= ksnf And i < SJKSNF1 Then
-                        fhl_base_gf(i) = 1
-                    End If
-                Next
-                For i = 1 To 31 '收入税收表的列，第1种衰减率
-                    If i >= SJKSNF1 And i < SJKSNF2 Then
-                        JS1 = JS1 + 1
-                        YJSJ1 = SJL1 * JS1
-                        fhl_base_gf(i) = (100 - YJSJ1) / 100
-                    End If
-                Next
-                Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-                Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第2种衰减率
-                    If i >= SJKSNF2 And i < SJKSNF3 Then
-                        JS2 = JS2 + 1
-                        YJSJ2 = SJL2 * JS2
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
-                    End If
-                Next
-                Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-                Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第3种衰减率
-                    If i >= SJKSNF3 And i < SJKSNF4 Then
-                        JS3 = JS3 + 1
-                        YJSJ3 = SJL3 * JS3
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                    End If
-                Next
-                Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-                Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第4种衰减率
-                    If i >= SJKSNF4 And i <= jsnx Then
-                        JS4 = JS4 + 1
-                        YJSJ4 = SJL4 * JS4
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                    End If
-                Next
-            End If
-            '输入了3种不同的衰减系数
-            If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-                Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-                Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                    If i >= ksnf And i < SJKSNF1 Then
-                        fhl_base_gf(i) = 1
-                    End If
-                Next
-                For i = 1 To 31 '收入税收表的列，第1种衰减率
-                    If i >= SJKSNF1 And i < SJKSNF2 Then
-                        JS1 = JS1 + 1
-                        YJSJ1 = SJL1 * JS1
-                        fhl_base_gf(i) = (100 - YJSJ1) / 100
-                    End If
-                Next
-                Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-                Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第2种衰减率
-                    If i >= SJKSNF2 And i < SJKSNF3 Then
-                        JS2 = JS2 + 1
-                        YJSJ2 = SJL2 * JS2
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
-                    End If
-                Next
-                Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-                Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第2种衰减率
-                    If i >= SJKSNF3 And i <= jsnx Then
-                        JS3 = JS3 + 1
-                        YJSJ3 = SJL3 * JS3
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                    End If
-                Next
-            End If
-            '输入了2种不同的衰减系数
-            If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-                Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-                Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                    If i >= ksnf And i < SJKSNF1 Then
-                        fhl_base_gf(i) = 1
-                    End If
-                Next
-                For i = 1 To 31 '收入税收表的列，第1种衰减率
-                    If i >= SJKSNF1 And i < SJKSNF2 Then
-                        JS1 = JS1 + 1
-                        YJSJ1 = SJL1 * JS1
-                        fhl_base_gf(i) = (100 - YJSJ1) / 100
-                    End If
-                Next
-                Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-                Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '收入税收表的列，第2种衰减率
-                    If i >= SJKSNF2 And i <= jsnx Then
-                        JS2 = JS2 + 1
-                        YJSJ2 = SJL2 * JS2
-                        fhl_base_gf(i) = (100 - YJSJ1 - YJSJ2) / 100
-                    End If
-                Next
-            End If
-            '输入了1种不同的衰减系数
-            If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-                Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-                Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-                For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                    If i >= ksnf And i < SJKSNF1 Then
-                        fhl_base_gf(i) = 1
-                    End If
-                Next
-                For i = 1 To 31 '收入税收表的列，第1种衰减率
-                    If i >= SJKSNF1 And i <= jsnx Then
-                        JS1 = JS1 + 1
-                        YJSJ1 = SJL1 * JS1
-                        fhl_base_gf(i) = (100 - YJSJ1) / 100
-                    End If
-                Next
-            End If
-            '将大于计算年限的负荷率设置为0
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i > jsnx Then
-                    fhl_base_gf(i) = 0
-                End If
-            Next
+            Dim fhl_base_gf = 逐年负荷率计算_base(ExcelApp, jsksnf, jsjsnf)
             '————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.Calculate()
             '光伏逐年衰减系数计算方式
@@ -334,7 +126,7 @@
             Dim nf
             For i = 1 To 31  '根据数组中的元素数量循环
                 nf = i '年份序号
-                SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i).Value) * 100, 2) '读取综合负荷率
+                SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(100, i + 2).Value) * 100, 2) '读取综合负荷率
                 Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
             Next
             Me.RichTextBox1.Text = "光伏发电逐年负荷率：" & Me.RichTextBox1.Text
@@ -360,20 +152,14 @@
         '————————————————————————————————————————————————————————————————————————————————————————————        
         MyBase.KeyPreview = True
         '清空文本框中已有的各种数据
-        Me.TextBox1.Text = Nothing
-        Me.TextBox2.Text = Nothing
-        Me.TextBox3.Text = Nothing
-        Me.TextBox4.Text = Nothing
-        Me.TextBox5.Text = Nothing
-        Me.TextBox6.Text = Nothing
-        Me.TextBox7.Text = Nothing
-        Me.TextBox8.Text = Nothing
-        Me.TextBox9.Text = Nothing
-        Me.TextBox10.Text = Nothing
-        Me.gfksnf.Text = Nothing
-        Me.xdcksnf.Text = Nothing
-        Me.gfjsnf.Text = Nothing
-        Me.xdcjsnf.Text = Nothing
+        Me.开始年份tmp.Clear()
+        Me.衰减率tmp.Clear()
+        Me.开始年份列表.Items.Clear()
+        Me.衰减率列表.Items.Clear()
+        Me.gfksnf.Clear()
+        Me.xdcksnf.Clear()
+        Me.gfjsnf.Clear()
+        Me.xdcjsnf.Clear()
         Me.RichTextBox1.Rtf = Nothing
         Me.RichTextBox1.Clear()
         '是否勾选按照逐年投产月份数折算
@@ -391,303 +177,17 @@
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
-        Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
-        Dim ksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
-        '读取项目计算年限
-        Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim jsksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
+        Dim jsjsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        SJKSNF1 = CType(Me.TextBox1.Text, Integer)
-        SJKSNF2 = CType(Me.TextBox2.Text, Integer)
-        SJKSNF3 = CType(Me.TextBox3.Text, Integer)
-        SJKSNF4 = CType(Me.TextBox7.Text, Integer)
-        SJKSNF5 = CType(Me.TextBox9.Text, Integer)
-        SJL1 = CType(Me.TextBox4.Text, Double)
-        SJL2 = CType(Me.TextBox5.Text, Double)
-        SJL3 = CType(Me.TextBox6.Text, Double)
-        SJL4 = CType(Me.TextBox8.Text, Double)
-        SJL5 = CType(Me.TextBox10.Text, Double)
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '输入的蓄电池计算年限不可以大于项目计算年限
-        If jsnx > xmjsnx Then
-            MsgBox("窗口中输入的蓄电池计算年限不可以超过项目计算年限，请重新输入！")
-            Exit Sub
-        End If
-        '检查输入的衰减开始年份
-        If jsnx > 31 Then
-            MsgBox("输入的项目计算年限不可以大于31年，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > jsnx Or SJKSNF2 > jsnx Or SJKSNF3 > jsnx Or SJKSNF4 > jsnx Or SJKSNF5 > jsnx Then
-            MsgBox("输入的衰减年份不可以大于项目计算年限，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF1 >= SJKSNF2 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第2个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF3 > 0 And SJKSNF1 >= SJKSNF3 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF4 > 0 And SJKSNF1 >= SJKSNF4 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF5 > 0 And SJKSNF1 >= SJKSNF5 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF2 >= SJKSNF3 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF4 > 0 And SJKSNF2 >= SJKSNF4 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF5 > 0 And SJKSNF2 >= SJKSNF5 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF3 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF3 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF3 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF3 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF4 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个、第3个和第4个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 < 0 Or SJKSNF2 < 0 Or SJKSNF3 < 0 Or SJKSNF4 < 0 Or SJKSNF5 < 0 Then
-            MsgBox("输入的第1个、第2个、第3个、第4个和第5个开始的衰减年份不能小于0，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 < 1 Then
-            MsgBox("输入的第1个开始的衰减年份最小只能是1，请重新输入！")
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————               
         Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i).Value = 0
         Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
         '蓄电池供电的基础负荷率
-        Dim fhl_base_xdc(31) As Double
-        '输入了5种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第3种衰减率
-                If i >= SJKSNF3 And i < SJKSNF4 Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-            Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-            Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF4 And i < SJKSNF5 Then
-                    JS4 = JS4 + 1
-                    YJSJ4 = SJL4 * JS4
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                End If
-            Next
-            Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
-            Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF5 And i <= jsnx Then
-                    JS5 = JS5 + 1
-                    YJSJ5 = SJL5 * JS5
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
-                End If
-            Next
-        End If
-        '输入了4种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第3种衰减率
-                If i >= SJKSNF3 And i < SJKSNF4 Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-            Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-            Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF4 And i <= jsnx Then
-                    JS4 = JS4 + 1
-                    YJSJ4 = SJL4 * JS4
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                End If
-            Next
-        End If
-        '输入了3种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF3 And i <= jsnx Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-        End If
-        '输入了2种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i <= jsnx Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-        End If
-        '输入了1种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i <= jsnx Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-        End If
-        '将大于计算年限的负荷率设置为0
-        For i = 1 To 31 '收入税收表的列，第1种衰减率
-            If i > jsnx Then
-                fhl_base_xdc(i) = 0
-            End If
-        Next
+        Dim fhl_base_xdc = 逐年负荷率计算_base(ExcelApp, jsksnf, jsjsnx)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算模式
         Dim jsms As String = "供电"
@@ -718,7 +218,8 @@
         Dim SJ As Double
         Dim nf
         For i = 1 To 31  '根据数组中的元素数量循环
-            SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
+            SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(96, i + 2).Value) * 100, 2) '读取综合负荷率
+            'SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
             nf = i
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
@@ -727,16 +228,12 @@
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Me.TextBox1.Clear()
-            Me.TextBox2.Clear()
-            Me.TextBox3.Clear()
-            Me.TextBox4.Clear()
-            Me.TextBox5.Clear()
-            Me.TextBox6.Clear()
-            Me.TextBox7.Clear()
-            Me.TextBox8.Clear()
-            Me.TextBox9.Clear()
-            Me.TextBox10.Clear()
+            Me.开始年份tmp.Clear()
+            Me.衰减率tmp.Clear()
+            Me.开始年份列表.Items.Clear()
+            Me.衰减率列表.Items.Clear()
+            ksnf_list.Clear()
+            sjl_list.Clear()
             Me.gfjsnf.Clear()
             Me.xdcjsnf.Clear()
             Me.RichTextBox1.Rtf = Nothing
@@ -755,25 +252,27 @@
         '————————————————————————————————————————————————————————————————————————————————————————————     
         Dim XZ = MsgBox("是否加载光伏发电的默认逐年衰减系数和计算年限？", vbOKCancel)
         If XZ = vbOK Then
-            Me.TextBox1.Clear()
-            Me.TextBox2.Clear()
-            Me.TextBox3.Clear()
-            Me.TextBox4.Clear()
-            Me.TextBox5.Clear()
-            Me.TextBox6.Clear()
-            Me.TextBox7.Clear()
-            Me.TextBox8.Clear()
-            Me.TextBox9.Clear()
-            Me.TextBox10.Clear()
+            '清空
+            Me.开始年份tmp.Clear()
+            Me.衰减率tmp.Clear()
+            Me.开始年份列表.Items.Clear()
+            Me.衰减率列表.Items.Clear()
+            ksnf_list.Clear()
+            sjl_list.Clear()
             Me.RichTextBox1.Rtf = Nothing
             Me.RichTextBox1.Clear()
-            Me.TextBox1.Text = 2
-            Me.TextBox2.Text = 3
-            Me.TextBox4.Text = 2.5
-            Me.TextBox5.Text = 0.7
-            Me.gfjsnf.Text = CType(xmjsnx, String)
             Me.xdcksnf.Clear()
             Me.xdcjsnf.Clear()
+            '默认值
+            开始年份列表.Items.Add(2)
+            开始年份列表.Items.Add(3)
+            衰减率列表.Items.Add(2.5)
+            衰减率列表.Items.Add(0.7)
+            ksnf_list.Add(2)
+            ksnf_list.Add(3)
+            sjl_list.Add(2.5)
+            sjl_list.Add(0.7)
+            Me.gfjsnf.Text = CType(xmjsnx, String)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
             Dim JSKSNF As Integer = 0
@@ -795,23 +294,23 @@
         '————————————————————————————————————————————————————————————————————————————————————————————               
         Dim XZ = MsgBox("是否加载蓄电池的默认逐年衰减系数和计算年限？", vbOKCancel)
         If XZ = vbOK Then
-            Me.TextBox1.Clear()
-            Me.TextBox2.Clear()
-            Me.TextBox3.Clear()
-            Me.TextBox4.Clear()
-            Me.TextBox5.Clear()
-            Me.TextBox6.Clear()
-            Me.TextBox7.Clear()
-            Me.TextBox8.Clear()
-            Me.TextBox9.Clear()
-            Me.TextBox10.Clear()
+            '清空
+            Me.开始年份tmp.Clear()
+            Me.衰减率tmp.Clear()
+            Me.开始年份列表.Items.Clear()
+            Me.衰减率列表.Items.Clear()
+            ksnf_list.Clear()
+            sjl_list.Clear()
             Me.RichTextBox1.Rtf = Nothing
             Me.RichTextBox1.Clear()
-            Me.TextBox1.Text = 3
-            Me.TextBox4.Text = 1
-            Me.xdcjsnf.Text = 11
             Me.gfksnf.Clear()
             Me.gfjsnf.Clear()
+            '默认值
+            开始年份列表.Items.Add(3)
+            衰减率列表.Items.Add(1)
+            ksnf_list.Add(3)
+            sjl_list.Add(1)
+            Me.xdcjsnf.Text = 11
             '——————————————————————————————————————————————————————————————————————————————————————————————
             Dim JSKSNF As Integer = 0
             For i = 1 To 15
@@ -832,303 +331,16 @@
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————        
         '定义局部变量
-        Dim SJKSNF1, SJKSNF2, SJKSNF3, SJKSNF4, SJKSNF5 As Integer '衰减开始年份
-        Dim SJL1, SJL2, SJL3, SJL4, SJL5 As Double '衰减率
-        Dim jsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
-        Dim ksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
-        '读取项目计算年限
-        Dim xmjsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        Dim jsksnf = CType(Me.xdcksnf.Text, Integer) '蓄电池计算开始年份
+        Dim jsjsnx = CType(Me.xdcjsnf.Text, Integer) '蓄电池计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————        
-        SJKSNF1 = CType(Me.TextBox1.Text, Integer)
-        SJKSNF2 = CType(Me.TextBox2.Text, Integer)
-        SJKSNF3 = CType(Me.TextBox3.Text, Integer)
-        SJKSNF4 = CType(Me.TextBox7.Text, Integer)
-        SJKSNF5 = CType(Me.TextBox9.Text, Integer)
-        SJL1 = CType(Me.TextBox4.Text, Double)
-        SJL2 = CType(Me.TextBox5.Text, Double)
-        SJL3 = CType(Me.TextBox6.Text, Double)
-        SJL4 = CType(Me.TextBox8.Text, Double)
-        SJL5 = CType(Me.TextBox10.Text, Double)
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '输入的蓄电池计算年限不可以大于项目计算年限
-        If jsnx > xmjsnx Then
-            MsgBox("窗口中输入的蓄电池计算年限不可以超过项目计算年限，请重新输入！")
-            Exit Sub
-        End If
-        '检查输入的衰减开始年份
-        If jsnx > 31 Then
-            MsgBox("输入的项目计算年限不可以大于31年，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > jsnx Or SJKSNF2 > jsnx Or SJKSNF3 > jsnx Or SJKSNF4 > jsnx Or SJKSNF5 > jsnx Then
-            MsgBox("输入的衰减年份不可以大于项目计算年限，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF1 >= SJKSNF2 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第2个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF3 > 0 And SJKSNF1 >= SJKSNF3 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF4 > 0 And SJKSNF1 >= SJKSNF4 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 > 0 And SJKSNF5 > 0 And SJKSNF1 >= SJKSNF5 Then
-            MsgBox("输入的第1个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF2 >= SJKSNF3 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第3个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF4 > 0 And SJKSNF2 >= SJKSNF4 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第4个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF5 > 0 And SJKSNF2 >= SJKSNF5 Then
-            MsgBox("输入的第2个开始的衰减年份大于等于了第5个开始的衰减年份，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF2 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF3 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF1 = 0 Then
-            MsgBox("衰减开始年份必需从第1个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF3 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF2 = 0 Then
-            MsgBox("衰减开始年份必需从第1个和第2个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF4 > 0 And SJKSNF3 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF3 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个和第3个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF5 > 0 And SJKSNF4 = 0 Then
-            MsgBox("衰减开始年份必需从第1个、第2个、第3个和第4个年份开始输入，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 < 0 Or SJKSNF2 < 0 Or SJKSNF3 < 0 Or SJKSNF4 < 0 Or SJKSNF5 < 0 Then
-            MsgBox("输入的第1个、第2个、第3个、第4个和第5个开始的衰减年份不能小于0，请重新输入！")
-            Exit Sub
-        End If
-        If SJKSNF1 < 1 Then
-            MsgBox("输入的第1个开始的衰减年份最小只能是1，请重新输入！")
-            Exit Sub
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————               
         Me.RichTextBox1.Clear()
         For i = 3 To 33 '清空已有的负荷率，防止出错
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i).Value = 0
         Next
         '蓄电池购电基础负荷率
-        Dim fhl_base_xdc(31) As Double
-        '输入了5种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 > 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第3种衰减率
-                If i >= SJKSNF3 And i < SJKSNF4 Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-            Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-            Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF4 And i < SJKSNF5 Then
-                    JS4 = JS4 + 1
-                    YJSJ4 = SJL4 * JS4
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                End If
-            Next
-            Dim YJSJ5 As Double = 0 '第5种衰减率已经衰减了多少，初始值为0
-            Dim JS5 As Integer = 0 '计数，用于记录第5种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF5 And i <= jsnx Then
-                    JS5 = JS5 + 1
-                    YJSJ5 = SJL5 * JS5
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4 - YJSJ5) / 100
-                End If
-            Next
-        End If
-        '输入了4种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 > 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第3种衰减率
-                If i >= SJKSNF3 And i < SJKSNF4 Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-            Dim YJSJ4 As Double = 0 '第4种衰减率已经衰减了多少，初始值为0
-            Dim JS4 As Integer = 0 '计数，用于记录第4种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第4种衰减率
-                If i >= SJKSNF4 And i <= jsnx Then
-                    JS4 = JS4 + 1
-                    YJSJ4 = SJL4 * JS4
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3 - YJSJ4) / 100
-                End If
-            Next
-        End If
-        '输入了3种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 > 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i < SJKSNF3 Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-            Dim YJSJ3 As Double = 0 '第3种衰减率已经衰减了多少，初始值为0
-            Dim JS3 As Integer = 0 '计数，用于记录第3种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF3 And i <= jsnx Then
-                    JS3 = JS3 + 1
-                    YJSJ3 = SJL3 * JS3
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2 - YJSJ3) / 100
-                End If
-            Next
-        End If
-        '输入了2种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 > 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i < SJKSNF2 Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-            Dim YJSJ2 As Double = 0 '第2种衰减率已经衰减了多少，初始值为0
-            Dim JS2 As Integer = 0 '计数，用于记录第2种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '收入税收表的列，第2种衰减率
-                If i >= SJKSNF2 And i <= jsnx Then
-                    JS2 = JS2 + 1
-                    YJSJ2 = SJL2 * JS2
-                    fhl_base_xdc(i) = (100 - YJSJ1 - YJSJ2) / 100
-                End If
-            Next
-        End If
-        '输入了1种不同的衰减系数
-        If SJKSNF1 > 0 And SJKSNF2 = 0 And SJKSNF3 = 0 And SJKSNF4 = 0 And SJKSNF5 = 0 Then
-            Dim YJSJ1 As Double = 0 '第一种衰减率已经衰减了多少，初始值为0
-            Dim JS1 As Integer = 0 '计数，用于记录第一种衰减率已经衰减的年份数量，初始值为0
-            For i = 1 To 31 '小于第一个衰减开始年份的负荷率设置为1
-                If i >= ksnf And i < SJKSNF1 Then
-                    fhl_base_xdc(i) = 1
-                End If
-            Next
-            For i = 1 To 31 '收入税收表的列，第1种衰减率
-                If i >= SJKSNF1 And i <= jsnx Then
-                    JS1 = JS1 + 1
-                    YJSJ1 = SJL1 * JS1
-                    fhl_base_xdc(i) = (100 - YJSJ1) / 100
-                End If
-            Next
-        End If
-        '将大于计算年限的负荷率设置为0
-        For i = 1 To 31 '收入税收表的列，第1种衰减率
-            If i > jsnx Then
-                fhl_base_xdc(i) = 0
-            End If
-        Next
+        Dim fhl_base_xdc = 逐年负荷率计算_base(ExcelApp, jsksnf, jsjsnx)
         '————————————————————————————————————————————————————————————————————————————————————————  
         '计算模式
         Dim jsms As String = "购电"
@@ -1159,10 +371,47 @@
         Dim SJ As Double
         Dim nf
         For i = 1 To 31  '根据数组中的元素数量循环
-            SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
+            SJ = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(97, i + 2).Value) * 100, 2) '读取综合负荷率
+            'SJ = Math.Round((fhl_base_xdc(i)) * 100, 2)
             nf = i
             Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
         Next
         Me.RichTextBox1.Text = "蓄电池购电逐年负荷率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
+        On Error Resume Next
+        Me.开始年份tmp.Clear()
+        Me.衰减率tmp.Clear()
+        Me.开始年份列表.Items.Clear()
+        Me.衰减率列表.Items.Clear()
+        ksnf_list.Clear()
+        sjl_list.Clear()
+        Me.gfksnf.Clear()
+        Me.xdcksnf.Clear()
+        Me.gfjsnf.Clear()
+        Me.xdcjsnf.Clear()
+    End Sub
+
+    Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
+        On Error Resume Next
+        '判断1
+        If 开始年份tmp.Text = Nothing Or 衰减率tmp.Text = Nothing Then
+            MsgBox("输入的开始年份和衰减率都必须不能为空！，请重新输入")
+            Exit Sub
+        End If
+        '开始年份
+        Dim ksnf_text As String = 开始年份tmp.Text
+        Dim ksnf As Integer = CType(ksnf_text, Integer)
+        '衰减率
+        Dim sjl_text As String = 衰减率tmp.Text
+        Dim sjl As Double = CType(sjl_text, Double)
+        '添加数据
+        开始年份列表.Items.Add(ksnf_text)
+        ksnf_list.Add(ksnf)
+        开始年份tmp.Clear()
+        衰减率列表.Items.Add(sjl_text)
+        sjl_list.Add(sjl)
+        衰减率tmp.Clear()
     End Sub
 End Class

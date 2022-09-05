@@ -63,14 +63,14 @@ Module 辅助程序
         '程序开始
         Try '异常处理，防止无文件
             '验证本地C盘是否存在白名单文件，用来区分是不是自己的电脑，是否需要进行自保护程序验证
-            Dim fs As New FileStream("C:\Windows\WhiteList_CJC_jgfosdg.txt", FileMode.Open)
+            Dim fs As New FileStream("C:\Windows\WhiteList_CJC.txt", FileMode.Open)
             Dim sr As New StreamReader(fs)
             Dim strTemp As String
             strTemp = sr.ReadLine
             Dim WhiteList_PC As String = strTemp '获取TXT文本内容
             sr.Close()
             fs.Close()
-            If WhiteList_PC <> "WhiteList_PC_odqfxd" Then '如果不是合格的白名单文件，验证失败，则进行自保护验证
+            If WhiteList_PC <> "WhiteList_PC" Then '如果不是合格的白名单文件，验证失败，则进行自保护验证
                 'Call 获取本地服务器版本信息并验证(ExcelApp)
                 Call 获取本机MAC地址并验证(ExcelApp)
                 Call 网络时间和本地时间交替验证(ExcelApp)

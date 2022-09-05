@@ -23,18 +23,10 @@ Partial Class 设置收入和成本计算年限
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.jsnf1 = New System.Windows.Forms.TextBox()
-        Me.jsnf2 = New System.Windows.Forms.TextBox()
-        Me.jsnf3 = New System.Windows.Forms.TextBox()
-        Me.ksnf3 = New System.Windows.Forms.TextBox()
-        Me.ksnf2 = New System.Windows.Forms.TextBox()
-        Me.ksnf1 = New System.Windows.Forms.TextBox()
+        Me.结束年份tmp = New System.Windows.Forms.TextBox()
+        Me.开始年份tmp = New System.Windows.Forms.TextBox()
         Me.购电容量费成本 = New System.Windows.Forms.Button()
         Me.城市管廊成本 = New System.Windows.Forms.Button()
         Me.充电桩收入 = New System.Windows.Forms.Button()
@@ -46,144 +38,69 @@ Partial Class 设置收入和成本计算年限
         Me.Label9 = New System.Windows.Forms.Label()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.结束年份列表 = New System.Windows.Forms.ListBox()
+        Me.开始年份列表 = New System.Windows.Forms.ListBox()
+        Me.清空输入 = New System.Windows.Forms.Button()
+        Me.添加输入 = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label8.Location = New System.Drawing.Point(6, 34)
+        Me.Label8.Location = New System.Drawing.Point(46, 26)
         Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(828, 50)
+        Me.Label8.Size = New System.Drawing.Size(535, 50)
         Me.Label8.TabIndex = 87
-        Me.Label8.Text = "设置收入和成本的开始年份和结束年份，最多设置3段"
+        Me.Label8.Text = "设置收入和成本的开始年份和结束年份"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label5
-        '
-        Me.Label5.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(426, 253)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(237, 56)
-        Me.Label5.TabIndex = 86
-        Me.Label5.Text = "收入成本结束年份："
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label6
-        '
-        Me.Label6.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(9, 253)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(242, 56)
-        Me.Label6.TabIndex = 85
-        Me.Label6.Text = "收入成本开始年份："
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(426, 175)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(237, 56)
-        Me.Label1.TabIndex = 84
-        Me.Label1.Text = "收入成本结束年份："
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label2
-        '
-        Me.Label2.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(7, 175)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(244, 56)
-        Me.Label2.TabIndex = 83
-        Me.Label2.Text = "收入成本开始年份："
-        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label4.Location = New System.Drawing.Point(426, 103)
+        Me.Label4.Location = New System.Drawing.Point(344, 82)
         Me.Label4.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(237, 56)
         Me.Label4.TabIndex = 82
-        Me.Label4.Text = "收入成本结束年份："
+        Me.Label4.Text = "收入成本结束年份"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(11, 103)
+        Me.Label3.Location = New System.Drawing.Point(42, 82)
         Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(240, 56)
+        Me.Label3.Size = New System.Drawing.Size(233, 56)
         Me.Label3.TabIndex = 81
-        Me.Label3.Text = "收入成本开始年份："
+        Me.Label3.Text = "收入成本开始年份"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'jsnf1
+        '结束年份tmp
         '
-        Me.jsnf1.Location = New System.Drawing.Point(664, 109)
-        Me.jsnf1.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf1.Name = "jsnf1"
-        Me.jsnf1.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf1.TabIndex = 80
-        Me.jsnf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.结束年份tmp.Location = New System.Drawing.Point(390, 587)
+        Me.结束年份tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.结束年份tmp.Name = "结束年份tmp"
+        Me.结束年份tmp.Size = New System.Drawing.Size(142, 35)
+        Me.结束年份tmp.TabIndex = 80
+        Me.结束年份tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'jsnf2
+        '开始年份tmp
         '
-        Me.jsnf2.Location = New System.Drawing.Point(664, 189)
-        Me.jsnf2.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf2.Name = "jsnf2"
-        Me.jsnf2.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf2.TabIndex = 79
-        Me.jsnf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsnf3
-        '
-        Me.jsnf3.Location = New System.Drawing.Point(664, 263)
-        Me.jsnf3.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf3.Name = "jsnf3"
-        Me.jsnf3.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf3.TabIndex = 78
-        Me.jsnf3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksnf3
-        '
-        Me.ksnf3.Location = New System.Drawing.Point(256, 263)
-        Me.ksnf3.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf3.Name = "ksnf3"
-        Me.ksnf3.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf3.TabIndex = 77
-        Me.ksnf3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksnf2
-        '
-        Me.ksnf2.Location = New System.Drawing.Point(256, 189)
-        Me.ksnf2.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf2.Name = "ksnf2"
-        Me.ksnf2.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf2.TabIndex = 76
-        Me.ksnf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksnf1
-        '
-        Me.ksnf1.Location = New System.Drawing.Point(256, 109)
-        Me.ksnf1.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf1.Name = "ksnf1"
-        Me.ksnf1.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf1.TabIndex = 75
-        Me.ksnf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.开始年份tmp.Location = New System.Drawing.Point(87, 584)
+        Me.开始年份tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.开始年份tmp.Name = "开始年份tmp"
+        Me.开始年份tmp.Size = New System.Drawing.Size(142, 35)
+        Me.开始年份tmp.TabIndex = 75
+        Me.开始年份tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         '购电容量费成本
         '
         Me.购电容量费成本.BackColor = System.Drawing.SystemColors.ControlLight
         Me.购电容量费成本.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.购电容量费成本.Location = New System.Drawing.Point(57, 878)
+        Me.购电容量费成本.Location = New System.Drawing.Point(651, 642)
         Me.购电容量费成本.Margin = New System.Windows.Forms.Padding(6)
         Me.购电容量费成本.Name = "购电容量费成本"
         Me.购电容量费成本.Size = New System.Drawing.Size(341, 82)
@@ -195,7 +112,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.城市管廊成本.BackColor = System.Drawing.SystemColors.ControlLight
         Me.城市管廊成本.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.城市管廊成本.Location = New System.Drawing.Point(430, 780)
+        Me.城市管廊成本.Location = New System.Drawing.Point(1024, 550)
         Me.城市管廊成本.Margin = New System.Windows.Forms.Padding(6)
         Me.城市管廊成本.Name = "城市管廊成本"
         Me.城市管廊成本.Size = New System.Drawing.Size(341, 82)
@@ -207,7 +124,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.充电桩收入.BackColor = System.Drawing.SystemColors.ControlLight
         Me.充电桩收入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.充电桩收入.Location = New System.Drawing.Point(57, 780)
+        Me.充电桩收入.Location = New System.Drawing.Point(651, 550)
         Me.充电桩收入.Margin = New System.Windows.Forms.Padding(6)
         Me.充电桩收入.Name = "充电桩收入"
         Me.充电桩收入.Size = New System.Drawing.Size(341, 82)
@@ -219,7 +136,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.人员工资.BackColor = System.Drawing.SystemColors.ControlLight
         Me.人员工资.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.人员工资.Location = New System.Drawing.Point(430, 878)
+        Me.人员工资.Location = New System.Drawing.Point(1024, 642)
         Me.人员工资.Margin = New System.Windows.Forms.Padding(6)
         Me.人员工资.Name = "人员工资"
         Me.人员工资.Size = New System.Drawing.Size(341, 82)
@@ -231,7 +148,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(25, 328)
+        Me.CheckBox1.Location = New System.Drawing.Point(619, 106)
         Me.CheckBox1.Margin = New System.Windows.Forms.Padding(6)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(352, 32)
@@ -242,7 +159,7 @@ Partial Class 设置收入和成本计算年限
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label7.Location = New System.Drawing.Point(365, 315)
+        Me.Label7.Location = New System.Drawing.Point(959, 93)
         Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(298, 56)
@@ -252,7 +169,7 @@ Partial Class 设置收入和成本计算年限
         '
         '人员工资递增比例
         '
-        Me.人员工资递增比例.Location = New System.Drawing.Point(664, 325)
+        Me.人员工资递增比例.Location = New System.Drawing.Point(1258, 103)
         Me.人员工资递增比例.Margin = New System.Windows.Forms.Padding(6)
         Me.人员工资递增比例.Name = "人员工资递增比例"
         Me.人员工资递增比例.Size = New System.Drawing.Size(142, 35)
@@ -263,7 +180,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.CheckBox2.Location = New System.Drawing.Point(25, 384)
+        Me.CheckBox2.Location = New System.Drawing.Point(619, 162)
         Me.CheckBox2.Margin = New System.Windows.Forms.Padding(6)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(688, 32)
@@ -274,7 +191,7 @@ Partial Class 设置收入和成本计算年限
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label9.Location = New System.Drawing.Point(57, 479)
+        Me.Label9.Location = New System.Drawing.Point(651, 257)
         Me.Label9.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(713, 50)
@@ -284,7 +201,7 @@ Partial Class 设置收入和成本计算年限
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(57, 542)
+        Me.RichTextBox1.Location = New System.Drawing.Point(651, 318)
         Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
@@ -296,7 +213,7 @@ Partial Class 设置收入和成本计算年限
         '
         Me.CheckBox3.AutoSize = True
         Me.CheckBox3.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.CheckBox3.Location = New System.Drawing.Point(25, 437)
+        Me.CheckBox3.Location = New System.Drawing.Point(619, 215)
         Me.CheckBox3.Margin = New System.Windows.Forms.Padding(6)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(688, 32)
@@ -304,11 +221,69 @@ Partial Class 设置收入和成本计算年限
         Me.CheckBox3.Text = "充电桩收入逐年计算系数是否乘以逐年负荷达产率？"
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
+        '结束年份列表
+        '
+        Me.结束年份列表.FormattingEnabled = True
+        Me.结束年份列表.ItemHeight = 24
+        Me.结束年份列表.Location = New System.Drawing.Point(390, 149)
+        Me.结束年份列表.Name = "结束年份列表"
+        Me.结束年份列表.Size = New System.Drawing.Size(142, 412)
+        Me.结束年份列表.TabIndex = 112
+        '
+        '开始年份列表
+        '
+        Me.开始年份列表.FormattingEnabled = True
+        Me.开始年份列表.ItemHeight = 24
+        Me.开始年份列表.Location = New System.Drawing.Point(87, 149)
+        Me.开始年份列表.Name = "开始年份列表"
+        Me.开始年份列表.Size = New System.Drawing.Size(142, 412)
+        Me.开始年份列表.TabIndex = 111
+        '
+        '清空输入
+        '
+        Me.清空输入.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.清空输入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.清空输入.Location = New System.Drawing.Point(348, 642)
+        Me.清空输入.Margin = New System.Windows.Forms.Padding(6)
+        Me.清空输入.Name = "清空输入"
+        Me.清空输入.Size = New System.Drawing.Size(233, 82)
+        Me.清空输入.TabIndex = 110
+        Me.清空输入.Text = "清空输入"
+        Me.清空输入.UseVisualStyleBackColor = False
+        '
+        '添加输入
+        '
+        Me.添加输入.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.添加输入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.添加输入.Location = New System.Drawing.Point(46, 642)
+        Me.添加输入.Margin = New System.Windows.Forms.Padding(6)
+        Me.添加输入.Name = "添加输入"
+        Me.添加输入.Size = New System.Drawing.Size(233, 82)
+        Me.添加输入.TabIndex = 109
+        Me.添加输入.Text = "添加输入"
+        Me.添加输入.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label1.Location = New System.Drawing.Point(651, 26)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(713, 50)
+        Me.Label1.TabIndex = 113
+        Me.Label1.Text = "设置收入和成本的计算模式"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         '设置收入和成本计算年限
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(834, 983)
+        Me.ClientSize = New System.Drawing.Size(1440, 755)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.结束年份列表)
+        Me.Controls.Add(Me.开始年份列表)
+        Me.Controls.Add(Me.清空输入)
+        Me.Controls.Add(Me.添加输入)
         Me.Controls.Add(Me.CheckBox3)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.RichTextBox1)
@@ -321,18 +296,10 @@ Partial Class 设置收入和成本计算年限
         Me.Controls.Add(Me.城市管廊成本)
         Me.Controls.Add(Me.充电桩收入)
         Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.jsnf1)
-        Me.Controls.Add(Me.jsnf2)
-        Me.Controls.Add(Me.jsnf3)
-        Me.Controls.Add(Me.ksnf3)
-        Me.Controls.Add(Me.ksnf2)
-        Me.Controls.Add(Me.ksnf1)
+        Me.Controls.Add(Me.结束年份tmp)
+        Me.Controls.Add(Me.开始年份tmp)
         Me.Name = "设置收入和成本计算年限"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "设置收入和成本计算年限"
@@ -341,18 +308,10 @@ Partial Class 设置收入和成本计算年限
 
     End Sub
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents jsnf1 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf2 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf3 As System.Windows.Forms.TextBox
-    Friend WithEvents ksnf3 As System.Windows.Forms.TextBox
-    Friend WithEvents ksnf2 As System.Windows.Forms.TextBox
-    Friend WithEvents ksnf1 As System.Windows.Forms.TextBox
+    Friend WithEvents 结束年份tmp As System.Windows.Forms.TextBox
+    Friend WithEvents 开始年份tmp As System.Windows.Forms.TextBox
     Friend WithEvents 购电容量费成本 As System.Windows.Forms.Button
     Friend WithEvents 城市管廊成本 As System.Windows.Forms.Button
     Friend WithEvents 充电桩收入 As System.Windows.Forms.Button
@@ -364,4 +323,9 @@ Partial Class 设置收入和成本计算年限
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
     Friend WithEvents CheckBox3 As System.Windows.Forms.CheckBox
+    Friend WithEvents 结束年份列表 As System.Windows.Forms.ListBox
+    Friend WithEvents 开始年份列表 As System.Windows.Forms.ListBox
+    Friend WithEvents 清空输入 As System.Windows.Forms.Button
+    Friend WithEvents 添加输入 As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 End Class

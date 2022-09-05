@@ -1165,13 +1165,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0)
         End If
-        '清空窗体中已有的数据
-        Form13.ksnf1.Clear()
-        Form13.ksnf2.Clear()
-        Form13.ksnf3.Clear()
-        Form13.jsnf1.Clear()
-        Form13.jsnf2.Clear()
-        Form13.jsnf3.Clear()
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置接入费计算方式()

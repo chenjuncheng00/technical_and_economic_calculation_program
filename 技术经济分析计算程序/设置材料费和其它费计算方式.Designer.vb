@@ -62,51 +62,18 @@ Partial Class 设置材料费和其它费计算方式
         Me.nuantong = New System.Windows.Forms.CheckBox()
         Me.ranmei = New System.Windows.Forms.CheckBox()
         Me.ranji = New System.Windows.Forms.CheckBox()
-        Me.jsfl5 = New System.Windows.Forms.TextBox()
-        Me.ksfl5 = New System.Windows.Forms.TextBox()
-        Me.jsnf5 = New System.Windows.Forms.TextBox()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.ksnf5 = New System.Windows.Forms.TextBox()
         Me.设置剔除 = New System.Windows.Forms.Button()
         Me.清空窗体 = New System.Windows.Forms.Button()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.jsfl4 = New System.Windows.Forms.TextBox()
-        Me.ksfl4 = New System.Windows.Forms.TextBox()
-        Me.jsnf4 = New System.Windows.Forms.TextBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.ksnf4 = New System.Windows.Forms.TextBox()
-        Me.jsfl3 = New System.Windows.Forms.TextBox()
-        Me.ksfl3 = New System.Windows.Forms.TextBox()
-        Me.jsnf3 = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.ksnf3 = New System.Windows.Forms.TextBox()
-        Me.jsfl2 = New System.Windows.Forms.TextBox()
-        Me.ksfl2 = New System.Windows.Forms.TextBox()
-        Me.jsnf2 = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.ksnf2 = New System.Windows.Forms.TextBox()
-        Me.jsfl1 = New System.Windows.Forms.TextBox()
-        Me.ksfl1 = New System.Windows.Forms.TextBox()
+        Me.结束费率tmp = New System.Windows.Forms.TextBox()
+        Me.开始费率tmp = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.jsnf1 = New System.Windows.Forms.TextBox()
+        Me.结束年份tmp = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.ksnf1 = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
+        Me.开始年份tmp = New System.Windows.Forms.TextBox()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.蓄电池 = New System.Windows.Forms.Button()
@@ -115,6 +82,12 @@ Partial Class 设置材料费和其它费计算方式
         Me.YYNX_XDC = New System.Windows.Forms.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.xudianchi = New System.Windows.Forms.CheckBox()
+        Me.清空输入 = New System.Windows.Forms.Button()
+        Me.添加输入 = New System.Windows.Forms.Button()
+        Me.开始年份列表 = New System.Windows.Forms.ListBox()
+        Me.结束年份列表 = New System.Windows.Forms.ListBox()
+        Me.开始费率列表 = New System.Windows.Forms.ListBox()
+        Me.结束费率列表 = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
         '计算
@@ -157,7 +130,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.暖通.BackColor = System.Drawing.SystemColors.ControlLight
         Me.暖通.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.暖通.Location = New System.Drawing.Point(427, 701)
+        Me.暖通.Location = New System.Drawing.Point(427, 716)
         Me.暖通.Margin = New System.Windows.Forms.Padding(6)
         Me.暖通.Name = "暖通"
         Me.暖通.Size = New System.Drawing.Size(182, 82)
@@ -169,7 +142,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.垃圾发电.BackColor = System.Drawing.SystemColors.ControlLight
         Me.垃圾发电.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.垃圾发电.Location = New System.Drawing.Point(621, 701)
+        Me.垃圾发电.Location = New System.Drawing.Point(621, 716)
         Me.垃圾发电.Margin = New System.Windows.Forms.Padding(6)
         Me.垃圾发电.Name = "垃圾发电"
         Me.垃圾发电.Size = New System.Drawing.Size(182, 82)
@@ -181,7 +154,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.燃机.BackColor = System.Drawing.SystemColors.ControlLight
         Me.燃机.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.燃机.Location = New System.Drawing.Point(39, 701)
+        Me.燃机.Location = New System.Drawing.Point(39, 716)
         Me.燃机.Margin = New System.Windows.Forms.Padding(6)
         Me.燃机.Name = "燃机"
         Me.燃机.Size = New System.Drawing.Size(182, 82)
@@ -193,7 +166,7 @@ Partial Class 设置材料费和其它费计算方式
         '
         Me.燃煤.BackColor = System.Drawing.SystemColors.ControlLight
         Me.燃煤.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.燃煤.Location = New System.Drawing.Point(233, 701)
+        Me.燃煤.Location = New System.Drawing.Point(233, 716)
         Me.燃煤.Margin = New System.Windows.Forms.Padding(6)
         Me.燃煤.Name = "燃煤"
         Me.燃煤.Size = New System.Drawing.Size(182, 82)
@@ -534,64 +507,6 @@ Partial Class 设置材料费和其它费计算方式
         Me.ranji.Text = "燃机"
         Me.ranji.UseVisualStyleBackColor = True
         '
-        'jsfl5
-        '
-        Me.jsfl5.Location = New System.Drawing.Point(643, 580)
-        Me.jsfl5.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsfl5.Name = "jsfl5"
-        Me.jsfl5.Size = New System.Drawing.Size(142, 35)
-        Me.jsfl5.TabIndex = 156
-        Me.jsfl5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksfl5
-        '
-        Me.ksfl5.Location = New System.Drawing.Point(419, 580)
-        Me.ksfl5.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksfl5.Name = "ksfl5"
-        Me.ksfl5.Size = New System.Drawing.Size(142, 35)
-        Me.ksfl5.TabIndex = 155
-        Me.ksfl5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsnf5
-        '
-        Me.jsnf5.Location = New System.Drawing.Point(213, 580)
-        Me.jsnf5.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf5.Name = "jsnf5"
-        Me.jsnf5.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf5.TabIndex = 152
-        Me.jsnf5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label22
-        '
-        Me.Label22.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label22.Location = New System.Drawing.Point(225, 522)
-        Me.Label22.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(132, 56)
-        Me.Label22.TabIndex = 151
-        Me.Label22.Text = "结束年份"
-        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label23
-        '
-        Me.Label23.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label23.Location = New System.Drawing.Point(51, 518)
-        Me.Label23.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(134, 56)
-        Me.Label23.TabIndex = 150
-        Me.Label23.Text = "开始年份"
-        Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ksnf5
-        '
-        Me.ksnf5.Location = New System.Drawing.Point(39, 580)
-        Me.ksnf5.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf5.Name = "ksnf5"
-        Me.ksnf5.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf5.TabIndex = 149
-        Me.ksnf5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
         '设置剔除
         '
         Me.设置剔除.BackColor = System.Drawing.SystemColors.ControlLight
@@ -637,202 +552,28 @@ Partial Class 设置材料费和其它费计算方式
         Me.Label19.Text = "逐年材料费率OR其它费率计算结果显示"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'jsfl4
+        '结束费率tmp
         '
-        Me.jsfl4.Location = New System.Drawing.Point(643, 481)
-        Me.jsfl4.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsfl4.Name = "jsfl4"
-        Me.jsfl4.Size = New System.Drawing.Size(142, 35)
-        Me.jsfl4.TabIndex = 144
-        Me.jsfl4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.结束费率tmp.Location = New System.Drawing.Point(643, 525)
+        Me.结束费率tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.结束费率tmp.Name = "结束费率tmp"
+        Me.结束费率tmp.Size = New System.Drawing.Size(142, 35)
+        Me.结束费率tmp.TabIndex = 120
+        Me.结束费率tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'ksfl4
+        '开始费率tmp
         '
-        Me.ksfl4.Location = New System.Drawing.Point(419, 481)
-        Me.ksfl4.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksfl4.Name = "ksfl4"
-        Me.ksfl4.Size = New System.Drawing.Size(142, 35)
-        Me.ksfl4.TabIndex = 143
-        Me.ksfl4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsnf4
-        '
-        Me.jsnf4.Location = New System.Drawing.Point(213, 481)
-        Me.jsnf4.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf4.Name = "jsnf4"
-        Me.jsnf4.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf4.TabIndex = 140
-        Me.jsnf4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label17
-        '
-        Me.Label17.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label17.Location = New System.Drawing.Point(225, 423)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(132, 56)
-        Me.Label17.TabIndex = 139
-        Me.Label17.Text = "结束年份"
-        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label18
-        '
-        Me.Label18.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label18.Location = New System.Drawing.Point(51, 419)
-        Me.Label18.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(134, 56)
-        Me.Label18.TabIndex = 138
-        Me.Label18.Text = "开始年份"
-        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ksnf4
-        '
-        Me.ksnf4.Location = New System.Drawing.Point(39, 481)
-        Me.ksnf4.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf4.Name = "ksnf4"
-        Me.ksnf4.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf4.TabIndex = 137
-        Me.ksnf4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsfl3
-        '
-        Me.jsfl3.Location = New System.Drawing.Point(643, 380)
-        Me.jsfl3.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsfl3.Name = "jsfl3"
-        Me.jsfl3.Size = New System.Drawing.Size(142, 35)
-        Me.jsfl3.TabIndex = 136
-        Me.jsfl3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksfl3
-        '
-        Me.ksfl3.Location = New System.Drawing.Point(419, 380)
-        Me.ksfl3.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksfl3.Name = "ksfl3"
-        Me.ksfl3.Size = New System.Drawing.Size(142, 35)
-        Me.ksfl3.TabIndex = 135
-        Me.ksfl3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsnf3
-        '
-        Me.jsnf3.Location = New System.Drawing.Point(213, 380)
-        Me.jsnf3.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf3.Name = "jsnf3"
-        Me.jsnf3.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf3.TabIndex = 132
-        Me.jsnf3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label13
-        '
-        Me.Label13.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label13.Location = New System.Drawing.Point(225, 322)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(132, 56)
-        Me.Label13.TabIndex = 131
-        Me.Label13.Text = "结束年份"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label14
-        '
-        Me.Label14.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label14.Location = New System.Drawing.Point(51, 318)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(134, 56)
-        Me.Label14.TabIndex = 130
-        Me.Label14.Text = "开始年份"
-        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ksnf3
-        '
-        Me.ksnf3.Location = New System.Drawing.Point(39, 380)
-        Me.ksnf3.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf3.Name = "ksnf3"
-        Me.ksnf3.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf3.TabIndex = 129
-        Me.ksnf3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsfl2
-        '
-        Me.jsfl2.Location = New System.Drawing.Point(643, 281)
-        Me.jsfl2.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsfl2.Name = "jsfl2"
-        Me.jsfl2.Size = New System.Drawing.Size(142, 35)
-        Me.jsfl2.TabIndex = 128
-        Me.jsfl2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksfl2
-        '
-        Me.ksfl2.Location = New System.Drawing.Point(419, 281)
-        Me.ksfl2.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksfl2.Name = "ksfl2"
-        Me.ksfl2.Size = New System.Drawing.Size(142, 35)
-        Me.ksfl2.TabIndex = 127
-        Me.ksfl2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsnf2
-        '
-        Me.jsnf2.Location = New System.Drawing.Point(213, 281)
-        Me.jsnf2.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf2.Name = "jsnf2"
-        Me.jsnf2.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf2.TabIndex = 124
-        Me.jsnf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label9
-        '
-        Me.Label9.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label9.Location = New System.Drawing.Point(225, 226)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(132, 56)
-        Me.Label9.TabIndex = 123
-        Me.Label9.Text = "结束年份"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label10
-        '
-        Me.Label10.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label10.Location = New System.Drawing.Point(51, 222)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(134, 56)
-        Me.Label10.TabIndex = 122
-        Me.Label10.Text = "开始年份"
-        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ksnf2
-        '
-        Me.ksnf2.Location = New System.Drawing.Point(39, 281)
-        Me.ksnf2.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf2.Name = "ksnf2"
-        Me.ksnf2.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf2.TabIndex = 121
-        Me.ksnf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'jsfl1
-        '
-        Me.jsfl1.Location = New System.Drawing.Point(643, 183)
-        Me.jsfl1.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsfl1.Name = "jsfl1"
-        Me.jsfl1.Size = New System.Drawing.Size(142, 35)
-        Me.jsfl1.TabIndex = 120
-        Me.jsfl1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'ksfl1
-        '
-        Me.ksfl1.Location = New System.Drawing.Point(419, 183)
-        Me.ksfl1.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksfl1.Name = "ksfl1"
-        Me.ksfl1.Size = New System.Drawing.Size(142, 35)
-        Me.ksfl1.TabIndex = 119
-        Me.ksfl1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.开始费率tmp.Location = New System.Drawing.Point(419, 525)
+        Me.开始费率tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.开始费率tmp.Name = "开始费率tmp"
+        Me.开始费率tmp.Size = New System.Drawing.Size(142, 35)
+        Me.开始费率tmp.TabIndex = 119
+        Me.开始费率tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(622, 125)
+        Me.Label2.Location = New System.Drawing.Point(622, 77)
         Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(196, 56)
@@ -843,7 +584,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(401, 125)
+        Me.Label1.Location = New System.Drawing.Point(401, 77)
         Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(178, 56)
@@ -851,19 +592,19 @@ Partial Class 设置材料费和其它费计算方式
         Me.Label1.Text = "开始年份费率"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'jsnf1
+        '结束年份tmp
         '
-        Me.jsnf1.Location = New System.Drawing.Point(213, 183)
-        Me.jsnf1.Margin = New System.Windows.Forms.Padding(6)
-        Me.jsnf1.Name = "jsnf1"
-        Me.jsnf1.Size = New System.Drawing.Size(142, 35)
-        Me.jsnf1.TabIndex = 116
-        Me.jsnf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.结束年份tmp.Location = New System.Drawing.Point(213, 525)
+        Me.结束年份tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.结束年份tmp.Name = "结束年份tmp"
+        Me.结束年份tmp.Size = New System.Drawing.Size(142, 35)
+        Me.结束年份tmp.TabIndex = 116
+        Me.结束年份tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label4.Location = New System.Drawing.Point(225, 121)
+        Me.Label4.Location = New System.Drawing.Point(225, 73)
         Me.Label4.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(132, 56)
@@ -874,7 +615,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(51, 124)
+        Me.Label3.Location = New System.Drawing.Point(51, 76)
         Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(134, 56)
@@ -882,120 +623,21 @@ Partial Class 设置材料费和其它费计算方式
         Me.Label3.Text = "开始年份"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'ksnf1
+        '开始年份tmp
         '
-        Me.ksnf1.Location = New System.Drawing.Point(39, 183)
-        Me.ksnf1.Margin = New System.Windows.Forms.Padding(6)
-        Me.ksnf1.Name = "ksnf1"
-        Me.ksnf1.Size = New System.Drawing.Size(142, 35)
-        Me.ksnf1.TabIndex = 113
-        Me.ksnf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label7
-        '
-        Me.Label7.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label7.Location = New System.Drawing.Point(189, 75)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(528, 50)
-        Me.Label7.TabIndex = 112
-        Me.Label7.Text = "输入开始和结束变化的年份以及逐年变化率"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label5
-        '
-        Me.Label5.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(622, 222)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(196, 56)
-        Me.Label5.TabIndex = 200
-        Me.Label5.Text = "结束年份费率"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label6
-        '
-        Me.Label6.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(401, 222)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(178, 56)
-        Me.Label6.TabIndex = 199
-        Me.Label6.Text = "开始年份费率"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label11
-        '
-        Me.Label11.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label11.Location = New System.Drawing.Point(622, 323)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(196, 56)
-        Me.Label11.TabIndex = 202
-        Me.Label11.Text = "结束年份费率"
-        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label12
-        '
-        Me.Label12.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label12.Location = New System.Drawing.Point(401, 323)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(178, 56)
-        Me.Label12.TabIndex = 201
-        Me.Label12.Text = "开始年份费率"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label15
-        '
-        Me.Label15.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label15.Location = New System.Drawing.Point(622, 421)
-        Me.Label15.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(196, 56)
-        Me.Label15.TabIndex = 204
-        Me.Label15.Text = "结束年份费率"
-        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label16
-        '
-        Me.Label16.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label16.Location = New System.Drawing.Point(401, 421)
-        Me.Label16.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(178, 56)
-        Me.Label16.TabIndex = 203
-        Me.Label16.Text = "开始年份费率"
-        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label20
-        '
-        Me.Label20.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label20.Location = New System.Drawing.Point(622, 522)
-        Me.Label20.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(196, 56)
-        Me.Label20.TabIndex = 206
-        Me.Label20.Text = "结束年份费率"
-        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label21
-        '
-        Me.Label21.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label21.Location = New System.Drawing.Point(401, 522)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(178, 56)
-        Me.Label21.TabIndex = 205
-        Me.Label21.Text = "开始年份费率"
-        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.开始年份tmp.Location = New System.Drawing.Point(39, 525)
+        Me.开始年份tmp.Margin = New System.Windows.Forms.Padding(6)
+        Me.开始年份tmp.Name = "开始年份tmp"
+        Me.开始年份tmp.Size = New System.Drawing.Size(142, 35)
+        Me.开始年份tmp.TabIndex = 113
+        Me.开始年份tmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'ComboBox1
         '
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"材料费率", "其它费率"})
-        Me.ComboBox1.Location = New System.Drawing.Point(542, 644)
+        Me.ComboBox1.Location = New System.Drawing.Point(542, 667)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(243, 32)
         Me.ComboBox1.TabIndex = 208
@@ -1003,7 +645,7 @@ Partial Class 设置材料费和其它费计算方式
         'Label38
         '
         Me.Label38.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label38.Location = New System.Drawing.Point(35, 634)
+        Me.Label38.Location = New System.Drawing.Point(35, 657)
         Me.Label38.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(445, 50)
@@ -1073,11 +715,77 @@ Partial Class 设置材料费和其它费计算方式
         Me.xudianchi.Text = "蓄电池"
         Me.xudianchi.UseVisualStyleBackColor = True
         '
+        '清空输入
+        '
+        Me.清空输入.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.清空输入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.清空输入.Location = New System.Drawing.Point(488, 577)
+        Me.清空输入.Margin = New System.Windows.Forms.Padding(6)
+        Me.清空输入.Name = "清空输入"
+        Me.清空输入.Size = New System.Drawing.Size(233, 72)
+        Me.清空输入.TabIndex = 216
+        Me.清空输入.Text = "清空输入"
+        Me.清空输入.UseVisualStyleBackColor = False
+        '
+        '添加输入
+        '
+        Me.添加输入.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.添加输入.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.添加输入.Location = New System.Drawing.Point(86, 576)
+        Me.添加输入.Margin = New System.Windows.Forms.Padding(6)
+        Me.添加输入.Name = "添加输入"
+        Me.添加输入.Size = New System.Drawing.Size(233, 72)
+        Me.添加输入.TabIndex = 215
+        Me.添加输入.Text = "添加输入"
+        Me.添加输入.UseVisualStyleBackColor = False
+        '
+        '开始年份列表
+        '
+        Me.开始年份列表.FormattingEnabled = True
+        Me.开始年份列表.ItemHeight = 24
+        Me.开始年份列表.Location = New System.Drawing.Point(39, 139)
+        Me.开始年份列表.Name = "开始年份列表"
+        Me.开始年份列表.Size = New System.Drawing.Size(142, 364)
+        Me.开始年份列表.TabIndex = 217
+        '
+        '结束年份列表
+        '
+        Me.结束年份列表.FormattingEnabled = True
+        Me.结束年份列表.ItemHeight = 24
+        Me.结束年份列表.Location = New System.Drawing.Point(213, 139)
+        Me.结束年份列表.Name = "结束年份列表"
+        Me.结束年份列表.Size = New System.Drawing.Size(142, 364)
+        Me.结束年份列表.TabIndex = 218
+        '
+        '开始费率列表
+        '
+        Me.开始费率列表.FormattingEnabled = True
+        Me.开始费率列表.ItemHeight = 24
+        Me.开始费率列表.Location = New System.Drawing.Point(419, 139)
+        Me.开始费率列表.Name = "开始费率列表"
+        Me.开始费率列表.Size = New System.Drawing.Size(142, 364)
+        Me.开始费率列表.TabIndex = 219
+        '
+        '结束费率列表
+        '
+        Me.结束费率列表.FormattingEnabled = True
+        Me.结束费率列表.ItemHeight = 24
+        Me.结束费率列表.Location = New System.Drawing.Point(643, 139)
+        Me.结束费率列表.Name = "结束费率列表"
+        Me.结束费率列表.Size = New System.Drawing.Size(142, 364)
+        Me.结束费率列表.TabIndex = 220
+        '
         '设置材料费和其它费计算方式
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1698, 930)
+        Me.Controls.Add(Me.结束费率列表)
+        Me.Controls.Add(Me.开始费率列表)
+        Me.Controls.Add(Me.结束年份列表)
+        Me.Controls.Add(Me.开始年份列表)
+        Me.Controls.Add(Me.清空输入)
+        Me.Controls.Add(Me.添加输入)
         Me.Controls.Add(Me.KCBL_XDC)
         Me.Controls.Add(Me.Label39)
         Me.Controls.Add(Me.YYNX_XDC)
@@ -1086,14 +794,6 @@ Partial Class 设置材料费和其它费计算方式
         Me.Controls.Add(Me.蓄电池)
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.Label38)
-        Me.Controls.Add(Me.Label20)
-        Me.Controls.Add(Me.Label21)
-        Me.Controls.Add(Me.Label15)
-        Me.Controls.Add(Me.Label16)
-        Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.Label12)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.计算)
         Me.Controls.Add(Me.风电)
         Me.Controls.Add(Me.光伏)
@@ -1134,43 +834,18 @@ Partial Class 设置材料费和其它费计算方式
         Me.Controls.Add(Me.nuantong)
         Me.Controls.Add(Me.ranmei)
         Me.Controls.Add(Me.ranji)
-        Me.Controls.Add(Me.jsfl5)
-        Me.Controls.Add(Me.ksfl5)
-        Me.Controls.Add(Me.jsnf5)
-        Me.Controls.Add(Me.Label22)
-        Me.Controls.Add(Me.Label23)
-        Me.Controls.Add(Me.ksnf5)
         Me.Controls.Add(Me.设置剔除)
         Me.Controls.Add(Me.清空窗体)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.Label19)
-        Me.Controls.Add(Me.jsfl4)
-        Me.Controls.Add(Me.ksfl4)
-        Me.Controls.Add(Me.jsnf4)
-        Me.Controls.Add(Me.Label17)
-        Me.Controls.Add(Me.Label18)
-        Me.Controls.Add(Me.ksnf4)
-        Me.Controls.Add(Me.jsfl3)
-        Me.Controls.Add(Me.ksfl3)
-        Me.Controls.Add(Me.jsnf3)
-        Me.Controls.Add(Me.Label13)
-        Me.Controls.Add(Me.Label14)
-        Me.Controls.Add(Me.ksnf3)
-        Me.Controls.Add(Me.jsfl2)
-        Me.Controls.Add(Me.ksfl2)
-        Me.Controls.Add(Me.jsnf2)
-        Me.Controls.Add(Me.Label9)
-        Me.Controls.Add(Me.Label10)
-        Me.Controls.Add(Me.ksnf2)
-        Me.Controls.Add(Me.jsfl1)
-        Me.Controls.Add(Me.ksfl1)
+        Me.Controls.Add(Me.结束费率tmp)
+        Me.Controls.Add(Me.开始费率tmp)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.jsnf1)
+        Me.Controls.Add(Me.结束年份tmp)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.ksnf1)
-        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.开始年份tmp)
         Me.Name = "设置材料费和其它费计算方式"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "设置材料费和其它费计算方式"
@@ -1219,51 +894,18 @@ Partial Class 设置材料费和其它费计算方式
     Friend WithEvents nuantong As System.Windows.Forms.CheckBox
     Friend WithEvents ranmei As System.Windows.Forms.CheckBox
     Friend WithEvents ranji As System.Windows.Forms.CheckBox
-    Friend WithEvents jsfl5 As System.Windows.Forms.TextBox
-    Friend WithEvents ksfl5 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf5 As System.Windows.Forms.TextBox
-    Friend WithEvents Label22 As System.Windows.Forms.Label
-    Friend WithEvents Label23 As System.Windows.Forms.Label
-    Friend WithEvents ksnf5 As System.Windows.Forms.TextBox
     Friend WithEvents 设置剔除 As System.Windows.Forms.Button
     Friend WithEvents 清空窗体 As System.Windows.Forms.Button
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents jsfl4 As System.Windows.Forms.TextBox
-    Friend WithEvents ksfl4 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf4 As System.Windows.Forms.TextBox
-    Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents ksnf4 As System.Windows.Forms.TextBox
-    Friend WithEvents jsfl3 As System.Windows.Forms.TextBox
-    Friend WithEvents ksfl3 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf3 As System.Windows.Forms.TextBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents ksnf3 As System.Windows.Forms.TextBox
-    Friend WithEvents jsfl2 As System.Windows.Forms.TextBox
-    Friend WithEvents ksfl2 As System.Windows.Forms.TextBox
-    Friend WithEvents jsnf2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents ksnf2 As System.Windows.Forms.TextBox
-    Friend WithEvents jsfl1 As System.Windows.Forms.TextBox
-    Friend WithEvents ksfl1 As System.Windows.Forms.TextBox
+    Friend WithEvents 结束费率tmp As System.Windows.Forms.TextBox
+    Friend WithEvents 开始费率tmp As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents jsnf1 As System.Windows.Forms.TextBox
+    Friend WithEvents 结束年份tmp As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents ksnf1 As System.Windows.Forms.TextBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents 开始年份tmp As System.Windows.Forms.TextBox
     Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
     Friend WithEvents Label38 As System.Windows.Forms.Label
     Friend WithEvents 蓄电池 As System.Windows.Forms.Button
@@ -1272,4 +914,10 @@ Partial Class 设置材料费和其它费计算方式
     Friend WithEvents YYNX_XDC As System.Windows.Forms.TextBox
     Friend WithEvents Label40 As System.Windows.Forms.Label
     Friend WithEvents xudianchi As System.Windows.Forms.CheckBox
+    Friend WithEvents 清空输入 As System.Windows.Forms.Button
+    Friend WithEvents 添加输入 As System.Windows.Forms.Button
+    Friend WithEvents 开始年份列表 As System.Windows.Forms.ListBox
+    Friend WithEvents 结束年份列表 As System.Windows.Forms.ListBox
+    Friend WithEvents 开始费率列表 As System.Windows.Forms.ListBox
+    Friend WithEvents 结束费率列表 As System.Windows.Forms.ListBox
 End Class

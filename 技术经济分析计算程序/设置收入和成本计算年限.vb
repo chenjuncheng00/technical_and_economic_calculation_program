@@ -1,4 +1,7 @@
 ﻿Public Class 设置收入和成本计算年限
+    '开始年份和结束年份的列表
+    Public ksnf_list As New List(Of Integer)
+    Public jsnf_list As New List(Of Integer)
     Private Sub 设置收入和成本计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
@@ -7,12 +10,10 @@
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '清空窗体
-        Me.ksnf1.Clear()
-        Me.ksnf2.Clear()
-        Me.ksnf3.Clear()
-        Me.jsnf1.Clear()
-        Me.jsnf2.Clear()
-        Me.jsnf3.Clear()
+        Me.开始年份列表.Items.Clear()
+        Me.结束年份列表.Items.Clear()
+        Me.开始年份tmp.Clear()
+        Me.结束年份tmp.Clear()
         Me.充电桩收入.Text = Nothing
         Me.购电容量费成本.Text = Nothing
         Me.城市管廊成本.Text = Nothing
@@ -39,8 +40,8 @@
                 Exit For
             End If
         Next
-        Me.ksnf1.Text = CType(JSKSNF, String)
-        Me.jsnf1.Text = CType(jsnx, String)
+        Me.开始年份tmp.Text = CType(JSKSNF, String)
+        Me.结束年份tmp.Text = CType(jsnx, String)
     End Sub
 
     Private Sub 充电桩收入_Click(sender As Object, e As EventArgs) Handles 充电桩收入.Click
@@ -50,43 +51,32 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
-        Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
-        '读取数据
-        ksnf1 = CType(Me.ksnf1.Text, Integer)
-        ksnf2 = CType(Me.ksnf2.Text, Integer)
-        ksnf3 = CType(Me.ksnf3.Text, Integer)
-        jsnf1 = CType(Me.jsnf1.Text, Integer)
-        jsnf2 = CType(Me.jsnf2.Text, Integer)
-        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
         '添加报错功能
-        If ksnf1 > jsnf1 Or ksnf2 > jsnf2 Or ksnf3 > jsnf3 Then
-            MsgBox("开始年份不可以大于结束年份，请重新输入！")
-            Exit Sub
-        End If
-        If ksnf1 <> 0 Or jsnf1 <> 0 Then
-            If ksnf1 < 1 Or jsnf1 < 1 Then
-                MsgBox("开始年份1或者结束年份1不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
+                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
+                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
+                    Exit Sub
+                End If
             End If
-        End If
-        If ksnf2 <> 0 Or jsnf2 <> 0 Then
-            If ksnf2 < 1 Or jsnf2 < 1 Then
-                MsgBox("开始年份2或者结束年份2不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        Next
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
+                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+                Exit For
             End If
-        End If
-        If ksnf3 <> 0 Or jsnf3 <> 0 Then
-            If ksnf3 < 1 Or jsnf3 < 1 Then
-                MsgBox("开始年份3或者结束年份3不可以存在小于1的情况，请重新输入！")
-                Exit Sub
-            End If
-        End If
-        If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
-            MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If jsnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
+                    Exit Sub
+                End If
+            Next
         End If
         '不可以同时勾选
         If Me.CheckBox2.Checked = True And Me.CheckBox3.Checked = True Then
@@ -94,61 +84,83 @@
             Exit Sub
         End If
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '计算在输入的开始年份和结束年份之外的年份序号
+        Dim qtnf_tmp_list As New List(Of Integer)
+        For i = 1 To jsnx
+            qtnf_tmp_list.Add(i)
+        Next
+        Dim tmp_list As New List(Of Integer)
+        For i = 0 To n_nf - 1
+            For j = ksnf_list(i) To jsnf_list(i)
+                tmp_list.Add(j)
+            Next
+        Next
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值    
         '按照逐年投产月份数比例计算
         If Me.CheckBox2.Checked = True Then
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年投产月份比例"
         ElseIf Me.CheckBox3.Checked = True Then
             '乘以逐年达产率
-            '前15年
-            For i = 3 To 17
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                '前15年
+                For i = 3 To 17
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
+                    End If
+                Next
+                '后16年
+                For i = 18 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
+                    End If
+                Next
             Next
-            '后16年
-            For i = 18 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年达产率"
         Else
             '每年都是100%
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "保持每年100%"
         End If
@@ -183,73 +195,85 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
-        Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
-        '读取数据
-        ksnf1 = CType(Me.ksnf1.Text, Integer)
-        ksnf2 = CType(Me.ksnf2.Text, Integer)
-        ksnf3 = CType(Me.ksnf3.Text, Integer)
-        jsnf1 = CType(Me.jsnf1.Text, Integer)
-        jsnf2 = CType(Me.jsnf2.Text, Integer)
-        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
         '添加报错功能
-        If ksnf1 > jsnf1 Or ksnf2 > jsnf2 Or ksnf3 > jsnf3 Then
-            MsgBox("开始年份不可以大于结束年份，请重新输入！")
-            Exit Sub
-        End If
-        If ksnf1 <> 0 Or jsnf1 <> 0 Then
-            If ksnf1 < 1 Or jsnf1 < 1 Then
-                MsgBox("开始年份1或者结束年份1不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
+                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
+                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
+                    Exit Sub
+                End If
             End If
-        End If
-        If ksnf2 <> 0 Or jsnf2 <> 0 Then
-            If ksnf2 < 1 Or jsnf2 < 1 Then
-                MsgBox("开始年份2或者结束年份2不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        Next
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
+                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+                Exit For
             End If
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If jsnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
+                    Exit Sub
+                End If
+            Next
         End If
-        If ksnf3 <> 0 Or jsnf3 <> 0 Then
-            If ksnf3 < 1 Or jsnf3 < 1 Then
-                MsgBox("开始年份3或者结束年份3不可以存在小于1的情况，请重新输入！")
-                Exit Sub
-            End If
-        End If
-        If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
-            MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
-        End If
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '计算在输入的开始年份和结束年份之外的年份序号
+        Dim qtnf_tmp_list As New List(Of Integer)
+        For i = 1 To jsnx
+            qtnf_tmp_list.Add(i)
+        Next
+        Dim tmp_list As New List(Of Integer)
+        For i = 0 To n_nf - 1
+            For j = ksnf_list(i) To jsnf_list(i)
+                tmp_list.Add(j)
+            Next
+        Next
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
         '按照逐年投产月份数比例计算
         If Me.CheckBox2.Checked = True Then
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "逐年投产月份比例"
         Else
             '每年都是100%
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "保持每年100%"
         End If
@@ -285,74 +309,86 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
-        Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
-        '读取数据
-        ksnf1 = CType(Me.ksnf1.Text, Integer)
-        ksnf2 = CType(Me.ksnf2.Text, Integer)
-        ksnf3 = CType(Me.ksnf3.Text, Integer)
-        jsnf1 = CType(Me.jsnf1.Text, Integer)
-        jsnf2 = CType(Me.jsnf2.Text, Integer)
-        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
         '添加报错功能
-        If ksnf1 > jsnf1 Or ksnf2 > jsnf2 Or ksnf3 > jsnf3 Then
-            MsgBox("开始年份不可以大于结束年份，请重新输入！")
-            Exit Sub
-        End If
-        If ksnf1 <> 0 Or jsnf1 <> 0 Then
-            If ksnf1 < 1 Or jsnf1 < 1 Then
-                MsgBox("开始年份1或者结束年份1不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
+                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
+                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
+                    Exit Sub
+                End If
             End If
-        End If
-        If ksnf2 <> 0 Or jsnf2 <> 0 Then
-            If ksnf2 < 1 Or jsnf2 < 1 Then
-                MsgBox("开始年份2或者结束年份2不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        Next
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
+                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+                Exit For
             End If
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If jsnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
+                    Exit Sub
+                End If
+            Next
         End If
-        If ksnf3 <> 0 Or jsnf3 <> 0 Then
-            If ksnf3 < 1 Or jsnf3 < 1 Then
-                MsgBox("开始年份3或者结束年份3不可以存在小于1的情况，请重新输入！")
-                Exit Sub
-            End If
-        End If
-        If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
-            MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
-        End If
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '计算在输入的开始年份和结束年份之外的年份序号
+        Dim qtnf_tmp_list As New List(Of Integer)
+        For i = 1 To jsnx
+            qtnf_tmp_list.Add(i)
+        Next
+        Dim tmp_list As New List(Of Integer)
+        For i = 0 To n_nf - 1
+            For j = ksnf_list(i) To jsnf_list(i)
+                tmp_list.Add(j)
+            Next
+        Next
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
         '按照逐年投产月份数比例计算
         If Me.CheckBox2.Checked = True Then
             '每年都是100%
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "逐年投产月份比例"
         Else
             '每年都是100%
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "保持每年100%"
         End If
@@ -388,43 +424,32 @@
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim ksnf1, ksnf2, ksnf3 As Integer '开始年份
-        Dim jsnf1, jsnf2, jsnf3 As Integer '结束年份
-        '读取数据
-        ksnf1 = CType(Me.ksnf1.Text, Integer)
-        ksnf2 = CType(Me.ksnf2.Text, Integer)
-        ksnf3 = CType(Me.ksnf3.Text, Integer)
-        jsnf1 = CType(Me.jsnf1.Text, Integer)
-        jsnf2 = CType(Me.jsnf2.Text, Integer)
-        jsnf3 = CType(Me.jsnf3.Text, Integer)
         '读取计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
         '添加报错功能
-        If ksnf1 > jsnf1 Or ksnf2 > jsnf2 Or ksnf3 > jsnf3 Then
-            MsgBox("开始年份不可以大于结束年份，请重新输入！")
-            Exit Sub
-        End If
-        If ksnf1 <> 0 Or jsnf1 <> 0 Then
-            If ksnf1 < 1 Or jsnf1 < 1 Then
-                MsgBox("开始年份1或者结束年份1不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
+                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
+                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
+                    Exit Sub
+                End If
             End If
-        End If
-        If ksnf2 <> 0 Or jsnf2 <> 0 Then
-            If ksnf2 < 1 Or jsnf2 < 1 Then
-                MsgBox("开始年份2或者结束年份2不可以存在小于1的情况，请重新输入！")
-                Exit Sub
+        Next
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
+                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+                Exit For
             End If
-        End If
-        If ksnf3 <> 0 Or jsnf3 <> 0 Then
-            If ksnf3 < 1 Or jsnf3 < 1 Then
-                MsgBox("开始年份3或者结束年份3不可以存在小于1的情况，请重新输入！")
-                Exit Sub
-            End If
-        End If
-        If ksnf1 > jsnx Or ksnf2 > jsnx Or ksnf3 > jsnx Or jsnf1 > jsnx Or jsnf2 > jsnx Or jsnf3 > jsnx Then
-            MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If jsnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
+                    Exit Sub
+                End If
+            Next
         End If
         '不可以同时勾选
         If Me.CheckBox1.Checked = True And Me.CheckBox2.Checked = True Then
@@ -432,45 +457,77 @@
             Exit Sub
         End If
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '计算在输入的开始年份和结束年份之外的年份序号
+        Dim qtnf_tmp_list As New List(Of Integer)
+        For i = 1 To jsnx
+            qtnf_tmp_list.Add(i)
+        Next
+        Dim tmp_list As New List(Of Integer)
+        For i = 0 To n_nf - 1
+            For j = ksnf_list(i) To jsnf_list(i)
+                tmp_list.Add(j)
+            Next
+        Next
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
         If Me.CheckBox1.Checked = True Then
             '逐年递增
             Dim ZNDZBL As Double = CType(Me.人员工资递增比例.Text, Double) / 100
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * (1 + ZNDZBL * (i - 4))
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * (1 + ZNDZBL * (i - 4))
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年递增"
         ElseIf Me.CheckBox2.Checked = True Then
             '按照逐年投产月份数比例计算
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年投产月份比例"
         Else
             '人员工资每年都是100%，不逐年递增
-            For i = 3 To 33
-                If i - 2 >= ksnf1 And i - 2 <= jsnf1 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
-                ElseIf i - 2 >= ksnf2 And i - 2 <= jsnf2 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
-                ElseIf i - 2 >= ksnf3 And i - 2 <= jsnf3 And i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
-                End If
+            '正常计算的年份
+            For j = 0 To n_nf - 1
+                For i = 3 To 33
+                    If i - 2 >= ksnf_list(j) And i - 2 <= jsnf_list(j) And i - 2 <= jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
+                    End If
+                Next
+            Next
+            '其他年份
+            For Each qtnf In qtnf_list
+                For i = 3 To 33
+                    If i - 2 = qtnf Or i - 2 > jsnx Then
+                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
+                    End If
+                Next
             Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "保持每年100%"
         End If
@@ -496,5 +553,44 @@
             End If
         Next
         Me.RichTextBox1.Text = "人员工资逐年计算比例结果：：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
+        On Error Resume Next
+        '判断1
+        If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
+            MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
+            Exit Sub
+        End If
+        '开始年份
+        Dim ksnf_text As String = 开始年份tmp.Text
+        Dim ksnf As Integer = CType(ksnf_text, Integer)
+        '结束年份
+        Dim jsnf_text As String = 结束年份tmp.Text
+        Dim jsnf As Integer = CType(jsnf_text, Integer)
+        '判断2
+        If ksnf > jsnf Then
+            MsgBox("输入的开始年份必须小于等于结束年份！，请重新输入")
+            Exit Sub
+        End If
+        '添加数据
+        开始年份列表.Items.Add(ksnf_text)
+        ksnf_list.Add(ksnf)
+        开始年份tmp.Clear()
+        结束年份列表.Items.Add(jsnf_text)
+        jsnf_list.Add(jsnf)
+        结束年份tmp.Clear()
+    End Sub
+
+    Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
+        On Error Resume Next
+        '清空窗体
+        Me.开始年份列表.Items.Clear()
+        Me.结束年份列表.Items.Clear()
+        Me.开始年份tmp.Clear()
+        Me.结束年份tmp.Clear()
+        Me.人员工资递增比例.Clear()
+        ksnf_list.Clear()
+        jsnf_list.Clear()
     End Sub
 End Class

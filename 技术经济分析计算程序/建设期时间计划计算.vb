@@ -195,14 +195,18 @@
             '年份序号列表
             year_list(i) = year_start - year_0 + 1 + js
             '计算建设期开始月份序号和结束月份序号
-            If i = year_num And year_num > 1 Then
-                '开始和结束的月份序号列表
-                month_start_list(i) = 1
-                month_end_list(i) = month_end
-            ElseIf i <> year_num And year_num > 1 Then
-                '开始和结束的月份序号列表
+            If i = 1 And year_num > 1 Then
+                '第一年
                 month_start_list(i) = month_start
                 month_end_list(i) = 12
+            ElseIf i > 1 And i < year_num And year_num > 1 Then
+                '中间年份
+                month_start_list(i) = 1
+                month_end_list(i) = 12
+            ElseIf i = year_num And year_num > 1 Then
+                '最后一年
+                month_start_list(i) = 1
+                month_end_list(i) = month_end
             Else
                 '开始和结束的月份序号列表
                 month_start_list(i) = month_start

@@ -1,72 +1,41 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
 
 Public Class 设置修理费率计算方式
+    '开始年份和结束年份的列表
+    Public ksnf_list As New List(Of Integer)
+    Public jsnf_list As New List(Of Integer)
+    '开始年份和结束年份的费率
+    Public ksfl_list As New List(Of Double)
+    Public jsfl_list As New List(Of Double)
     Function 逐年修理费率计算_base(ExcelApp As Object)
         On Error Resume Next
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '定义局部变量
-        Dim KSNF1, KSNF2, KSNF3, KSNF4, KSNF5 As Integer '开始年份
-        Dim JSNF1, JSNF2, JSNF3, JSNF4, JSNF5 As Integer '结束年份
-        Dim KSNFFL1, KSNFFL2, KSNFFL3, KSNFFL4, KSNFFL5 As Double '开始年份费率
-        Dim JSNFFL1, JSNFFL2, JSNFFL3, JSNFFL4, JSNFFL5 As Double '结束年份费率
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        KSNF1 = CType(Me.ksnf1.Text, Integer)
-        KSNF2 = CType(Me.ksnf2.Text, Integer)
-        KSNF3 = CType(Me.ksnf3.Text, Integer)
-        KSNF4 = CType(Me.ksnf4.Text, Integer)
-        KSNF5 = CType(Me.ksnf5.Text, Integer)
-        JSNF1 = CType(Me.jsnf1.Text, Integer)
-        JSNF2 = CType(Me.jsnf2.Text, Integer)
-        JSNF3 = CType(Me.jsnf3.Text, Integer)
-        JSNF4 = CType(Me.jsnf4.Text, Integer)
-        JSNF5 = CType(Me.jsnf5.Text, Integer)
-        KSNFFL1 = CType(Me.ksfl1.Text, Double)
-        KSNFFL2 = CType(Me.ksfl2.Text, Double)
-        KSNFFL3 = CType(Me.ksfl3.Text, Double)
-        KSNFFL4 = CType(Me.ksfl4.Text, Double)
-        KSNFFL5 = CType(Me.ksfl5.Text, Double)
-        JSNFFL1 = CType(Me.jsfl1.Text, Double)
-        JSNFFL2 = CType(Me.jsfl2.Text, Double)
-        JSNFFL3 = CType(Me.jsfl3.Text, Double)
-        JSNFFL4 = CType(Me.jsfl4.Text, Double)
-        JSNFFL5 = CType(Me.jsfl5.Text, Double)
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        Dim ZDJSNF1 As Integer = Math.Max(JSNF1, JSNF2)
-        Dim ZDJSNF2 As Integer = Math.Max(JSNF3, JSNF4)
-        Dim ZDJSNF3 = Math.Max(ZDJSNF1, ZDJSNF2)
-        Dim ZDJSNF = Math.Max(ZDJSNF3, JSNF5)
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
-        Dim JSKSNF As Integer = 0
-        For i = 1 To 15
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
-                JSKSNF = i
+        Dim ZDJSNF = jsnf_list.Max
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
+        '添加报错功能
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
+                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
+                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
+                    Exit Function
+                End If
+            End If
+        Next
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
+                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
                 Exit For
             End If
         Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '检查输入的开始年份和结束年份
-        If KSNF1 > JSNF1 Or KSNF2 > JSNF2 Or KSNF3 > JSNF3 Or KSNF4 > JSNF4 Or KSNF5 > JSNF5 Then
-            MsgBox("输入的开始年份不可以大于结束年份，请重新输入！")
-            Exit Function
-        End If
-        If (JSNF1 > KSNF2 And KSNF2 <> 0) Or （JSNF2 > KSNF3 And KSNF3 <> 0) Or （JSNF3 > KSNF4 And KSNF4 <> 0) Or （JSNF4 > KSNF5 And KSNF5 <> 0) Then
-            MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
-            Exit Function
-        End If
-        If （JSNF1 = KSNF2 And JSNF1 <> 0 And KSNF2 <> 0） Or （JSNF2 = KSNF3 And JSNF2 <> 0 And KSNF3 <> 0） Or （JSNF3 = KSNF4 And JSNF3 <> 0 And KSNF4 <> 0） Or （JSNF4 = KSNF5 And JSNF4 <> 0 And KSNF5 <> 0） Then
-            MsgBox("输入的后一个开始年份不可以等于上一个结束年份，请重新输入！")
-            Exit Function
-        End If
-        If KSNF2 - JSNF1 > 1 Or KSNF3 - JSNF2 > 1 Or KSNF4 - JSNF3 > 1 Or KSNF5 - JSNF4 > 1 Then
-            MsgBox("输入的后一个开始年份不可以大于上一个结束年份+1，请重新输入！")
-            Exit Function
-        End If
-        If KSNF1 <> JSKSNF And KSNF1 <> 0 Then
-            MsgBox("输入的第一个开始年份必需为有收入的第一个年份，请重新输入！")
-            Exit Function
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If jsnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
+                    Exit Function
+                End If
+            Next
         End If
         If ZDJSNF < jsnx Then
             MsgBox("输入的结束年份均小于项目计算年限，请重新输入！")
@@ -76,102 +45,60 @@ Public Class 设置修理费率计算方式
             MsgBox("输入的结束年份存在大于项目计算年限的情况，请重新输入！")
             Exit Function
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        Dim ZNBHL1 As Double '输入的第1条修理费的逐年变化率
-        If JSNF1 - KSNF1 = 0 Then
-            ZNBHL1 = 0
-        Else
-            ZNBHL1 = (JSNFFL1 - KSNFFL1) / (JSNF1 - KSNF1)
-        End If
-        Dim ZNBHL2 As Double '输入的第2条修理费的逐年变化率
-        If JSNF2 - KSNF2 = 0 Then
-            ZNBHL2 = 0
-        Else
-            ZNBHL2 = (JSNFFL2 - KSNFFL2) / (JSNF2 - KSNF2)
-        End If
-        Dim ZNBHL3 As Double '输入的第3条修理费的逐年变化率
-        If JSNF3 - KSNF3 = 0 Then
-            ZNBHL3 = 0
-        Else
-            ZNBHL3 = (JSNFFL3 - KSNFFL3) / (JSNF3 - KSNF3)
-        End If
-        Dim ZNBHL4 As Double '输入的第4条修理费的逐年变化率
-        If JSNF4 - KSNF4 = 0 Then
-            ZNBHL4 = 0
-        Else
-            ZNBHL4 = (JSNFFL4 - KSNFFL4) / (JSNF4 - KSNF4)
-        End If
-        Dim ZNBHL5 As Double '输入的第5条修理费的逐年变化率
-        If JSNF5 - KSNF5 = 0 Then
-            ZNBHL5 = 0
-        Else
-            ZNBHL5 = (JSNFFL5 - KSNFFL5) / (JSNF5 - KSNF5)
-        End If
-        '设备修理费率列表
-        Dim xlfl_list(31) As Double
-        '计算期第一年到到KSNF1之间的年份，修理费率设置为0
-        Dim js0 As Integer = 0
-        For i = 1 To 31
-            If i >= 1 And i < KSNF1 Then
-                js0 = js0 + 1
-                xlfl_list(i) = 0
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
+        Dim JSKSNF As Integer = 0
+        For i = 1 To 15
+            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
+                JSKSNF = i
+                Exit For
             End If
         Next
-        '计算输入的第1条逐年修理费变化率
-        If KSNF1 > 0 And JSNF1 > 0 Then
-            Dim js1 As Integer = 0
-            For i = 1 To 31
-                If i >= KSNF1 And i <= JSNF1 Then
-                    js1 = js1 + 1
-                    xlfl_list(i) = (KSNFFL1 + (js1 - 1) * ZNBHL1)
-                End If
+        '————————————————————————————————————————————————————————————————————————————————————————   
+        '计算在输入的开始年份和结束年份之外的年份序号
+        Dim qtnf_tmp_list As New List(Of Integer)
+        For i = 1 To jsnx
+            qtnf_tmp_list.Add(i)
+        Next
+        Dim tmp_list As New List(Of Integer)
+        For i = 0 To n_nf - 1
+            For j = ksnf_list(i) To jsnf_list(i)
+                tmp_list.Add(j)
             Next
-        End If
-        '计算第2条逐年修理费变化率
-        If KSNF2 > 0 And JSNF2 > 0 Then
-            Dim js2 As Integer = 0
-            For i = 1 To 31
-                If i >= KSNF2 And i <= JSNF2 Then
-                    js2 = js2 + 1
-                    xlfl_list(i) = (KSNFFL2 + (js2 - 1) * ZNBHL2)
-                End If
-            Next
-        End If
-        '计算第3条逐年修理费变化率
-        If KSNF3 > 0 And JSNF3 > 0 Then
-            Dim js3 As Integer = 0
-            For i = 1 To 31
-                If i >= KSNF3 And i <= JSNF3 Then
-                    js3 = js3 + 1
-                    xlfl_list(i) = (KSNFFL3 + (js3 - 1) * ZNBHL3)
-                End If
-            Next
-        End If
-        '计算第4条逐年修理费变化率
-        If KSNF4 > 0 And JSNF4 > 0 Then
-            Dim js4 As Integer = 0
-            For i = 1 To 31
-                If i >= KSNF4 And i <= JSNF4 Then
-                    js4 = js4 + 1
-                    xlfl_list(i) = (KSNFFL4 + (js4 - 1) * ZNBHL4)
-                End If
-            Next
-        End If
-        '计算第5条逐年修理费变化率
-        If KSNF5 > 0 And JSNF5 > 0 Then
-            Dim js5 As Integer = 0
-            For i = 1 To 31
-                If i >= KSNF5 And i <= JSNF5 Then
-                    js5 = js5 + 1
-                    xlfl_list(i) = (KSNFFL5 + (js5 - 1) * ZNBHL5)
-                End If
-            Next
-        End If
-        '超过最大结束年份的修理费设置为0
-        For i = 1 To 31
-            If i > ZDJSNF Then
-                xlfl_list(i) = 0
+        Next
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '逐年变化率
+        Dim znbhl_list As New List(Of Double)
+        For i = 0 To n_nf - 1
+            Dim znbhl As Double
+            If jsfl_list(i) - ksfl_list(i) = 0 Then
+                znbhl = 0
+            Else
+                znbhl = (jsfl_list(i) - ksfl_list(i)) / (jsnf_list(i) - ksnf_list(i))
             End If
+            znbhl_list.Add(znbhl)
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '设备修理费率列表
+        Dim xlfl_list(31) As Double
+        '需要计算费率的年份
+        For j = 0 To n_nf - 1
+            Dim js As Integer = 0
+            For i = 1 To 31
+                If i >= ksnf_list(j) And i <= jsnf_list(j) Then
+                    js = js + 1
+                    xlfl_list(i) = (ksfl_list(j) + (js - 1) * znbhl_list(j))
+                End If
+            Next
+        Next
+        '其他年份
+        For Each qtnf In qtnf_list
+            For i = 1 To 31
+                If i = qtnf Or i > jsnx Then
+                    xlfl_list(i) = 0
+                End If
+            Next
         Next
         '————————————————————————————————————————————————————————————————————————————————————————     
         '返回计算结果
@@ -180,26 +107,18 @@ Public Class 设置修理费率计算方式
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
         If XZ = vbOK Then
-            Me.ksnf1.Clear()
-            Me.ksnf2.Clear()
-            Me.ksnf3.Clear()
-            Me.ksnf4.Clear()
-            Me.ksnf5.Clear()
-            Me.jsnf1.Clear()
-            Me.jsnf2.Clear()
-            Me.jsnf3.Clear()
-            Me.jsnf4.Clear()
-            Me.jsnf5.Clear()
-            Me.ksfl1.Clear()
-            Me.ksfl2.Clear()
-            Me.ksfl3.Clear()
-            Me.ksfl4.Clear()
-            Me.ksfl5.Clear()
-            Me.jsfl1.Clear()
-            Me.jsfl2.Clear()
-            Me.jsfl3.Clear()
-            Me.jsfl4.Clear()
-            Me.jsfl5.Clear()
+            Me.开始年份tmp.Clear()
+            Me.结束年份tmp.Clear()
+            Me.开始费率tmp.Clear()
+            Me.结束费率tmp.Clear()
+            Me.开始年份列表.Items.Clear()
+            Me.结束年份列表.Items.Clear()
+            Me.开始费率列表.Items.Clear()
+            Me.结束费率列表.Items.Clear()
+            ksnf_list.Clear()
+            jsnf_list.Clear()
+            ksfl_list.Clear()
+            jsfl_list.Clear()
             Me.RichTextBox1.Rtf = Nothing
             Me.ranji.Checked = False
             Me.xudianchi.Checked = False
@@ -295,26 +214,14 @@ Public Class 设置修理费率计算方式
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空表格
-        Me.ksnf1.Clear()
-        Me.ksnf2.Clear()
-        Me.ksnf3.Clear()
-        Me.ksnf4.Clear()
-        Me.ksnf5.Clear()
-        Me.jsnf1.Clear()
-        Me.jsnf2.Clear()
-        Me.jsnf3.Clear()
-        Me.jsnf4.Clear()
-        Me.jsnf5.Clear()
-        Me.ksfl1.Clear()
-        Me.ksfl2.Clear()
-        Me.ksfl3.Clear()
-        Me.ksfl4.Clear()
-        Me.ksfl5.Clear()
-        Me.jsfl1.Clear()
-        Me.jsfl2.Clear()
-        Me.jsfl3.Clear()
-        Me.jsfl4.Clear()
-        Me.jsfl5.Clear()
+        Me.开始年份tmp.Clear()
+        Me.结束年份tmp.Clear()
+        Me.开始费率tmp.Clear()
+        Me.结束费率tmp.Clear()
+        Me.开始年份列表.Items.Clear()
+        Me.结束年份列表.Items.Clear()
+        Me.开始费率列表.Items.Clear()
+        Me.结束费率列表.Items.Clear()
         Me.RichTextBox1.Rtf = Nothing
         '载入默认值
         '各种年限系数的计算开始年份
@@ -325,11 +232,11 @@ Public Class 设置修理费率计算方式
                 Exit For
             End If
         Next
-        Me.ksnf1.Text = JSKSNF
+        Me.开始年份tmp.Text = JSKSNF
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        Me.jsnf1.Text = jsnx
-        Me.ksfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
-        Me.jsfl1.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
+        Me.结束年份tmp.Text = jsnx
+        Me.开始费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
+        Me.结束费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '根据输入的投资情况，确定每个checkbox和投资比例输入是否可以选择和输入，并载入默认值
@@ -344,9 +251,9 @@ Public Class 设置修理费率计算方式
             Me.ranji.Enabled = False
             Me.ranji.Checked = False
             Me.YYNX_RJ.Enabled = False
-            Me.YYNX_RJ.Text = Nothing
+            Me.YYNX_RJ.Clear()
             Me.KCBL_RJ.Enabled = False
-            Me.KCBL_RJ.Text = Nothing
+            Me.KCBL_RJ.Clear()
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value > 0 Then
             Me.xudianchi.Enabled = True
@@ -359,9 +266,9 @@ Public Class 设置修理费率计算方式
             Me.xudianchi.Enabled = False
             Me.xudianchi.Checked = False
             Me.YYNX_XDC.Enabled = False
-            Me.YYNX_XDC.Text = Nothing
+            Me.YYNX_XDC.Clear()
             Me.KCBL_XDC.Enabled = False
-            Me.KCBL_XDC.Text = Nothing
+            Me.KCBL_XDC.Clear()
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 1).Value > 0 Then
             Me.nuantong.Enabled = True
@@ -374,9 +281,9 @@ Public Class 设置修理费率计算方式
             Me.nuantong.Enabled = False
             Me.nuantong.Checked = False
             Me.YYNX_NT.Enabled = False
-            Me.YYNX_NT.Text = Nothing
+            Me.YYNX_NT.Clear()
             Me.KCBL_NT.Enabled = False
-            Me.KCBL_NT.Text = Nothing
+            Me.KCBL_NT.Clear()
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value > 0 Then
             Me.guangfu.Enabled = True
@@ -389,9 +296,9 @@ Public Class 设置修理费率计算方式
             Me.guangfu.Enabled = False
             Me.guangfu.Checked = False
             Me.YYNX_GF.Enabled = False
-            Me.YYNX_GF.Text = Nothing
+            Me.YYNX_GF.Clear()
             Me.KCBL_GF.Enabled = False
-            Me.KCBL_GF.Text = Nothing
+            Me.KCBL_GF.Clear()
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value > 0 Then
             Me.fengdian.Enabled = True
@@ -404,9 +311,9 @@ Public Class 设置修理费率计算方式
             Me.fengdian.Enabled = False
             Me.fengdian.Checked = False
             Me.YYNX_FD.Enabled = False
-            Me.YYNX_FD.Text = Nothing
+            Me.YYNX_FD.Clear()
             Me.KCBL_FD.Enabled = False
-            Me.KCBL_FD.Text = Nothing
+            Me.KCBL_FD.Clear()
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
             Me.changgui.Enabled = True
@@ -419,9 +326,9 @@ Public Class 设置修理费率计算方式
             Me.changgui.Enabled = False
             Me.changgui.Checked = False
             Me.YYNX_CG.Enabled = False
-            Me.YYNX_CG.Text = Nothing
+            Me.YYNX_CG.Clear()
             Me.KCBL_CG.Enabled = False
-            Me.KCBL_CG.Text = Nothing
+            Me.KCBL_CG.Clear()
         End If
     End Sub
 
@@ -752,5 +659,62 @@ Public Class 设置修理费率计算方式
             Next
             Me.RichTextBox1.Text = "风电设备逐年修理费率：" & Me.RichTextBox1.Text
         End If
+    End Sub
+
+    Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
+        On Error Resume Next
+        '判断1
+        If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
+            MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
+            Exit Sub
+        End If
+        If 开始费率tmp.Text = Nothing Or 结束费率tmp.Text = Nothing Then
+            MsgBox("输入的开始年份费率和结束年份费率都必须不能为空！，请重新输入")
+            Exit Sub
+        End If
+        '开始年份
+        Dim ksnf_text As String = 开始年份tmp.Text
+        Dim ksnf As Integer = CType(ksnf_text, Integer)
+        '结束年份
+        Dim jsnf_text As String = 结束年份tmp.Text
+        Dim jsnf As Integer = CType(jsnf_text, Integer)
+        '开始年份费率
+        Dim ksfl_text As String = 开始费率tmp.Text
+        Dim ksfl As Double = CType(ksfl_text, Double)
+        '结束年份费率
+        Dim jsfl_text As String = 结束费率tmp.Text
+        Dim jsfl As Double = CType(jsfl_text, Double)
+        '判断2
+        If ksnf > jsnf Then
+            MsgBox("输入的开始年份必须小于等于结束年份！，请重新输入")
+            Exit Sub
+        End If
+        '添加数据
+        开始年份列表.Items.Add(ksnf_text)
+        ksnf_list.Add(ksnf)
+        开始年份tmp.Clear()
+        结束年份列表.Items.Add(jsnf_text)
+        jsnf_list.Add(jsnf)
+        结束年份tmp.Clear()
+        开始费率列表.Items.Add(ksfl_text)
+        ksfl_list.Add(ksfl)
+        结束费率列表.Items.Add(jsfl_text)
+        jsfl_list.Add(jsfl)
+    End Sub
+
+    Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
+        On Error Resume Next
+        Me.开始年份tmp.Clear()
+        Me.结束年份tmp.Clear()
+        Me.开始费率tmp.Clear()
+        Me.结束费率tmp.Clear()
+        Me.开始年份列表.Items.Clear()
+        Me.结束年份列表.Items.Clear()
+        Me.开始费率列表.Items.Clear()
+        Me.结束费率列表.Items.Clear()
+        ksnf_list.Clear()
+        jsnf_list.Clear()
+        ksfl_list.Clear()
+        jsfl_list.Clear()
     End Sub
 End Class
