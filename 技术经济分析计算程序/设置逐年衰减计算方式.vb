@@ -266,12 +266,12 @@
             '默认值
             开始年份列表.Items.Add(2)
             开始年份列表.Items.Add(3)
-            衰减率列表.Items.Add(2.5)
-            衰减率列表.Items.Add(0.7)
+            衰减率列表.Items.Add(2)
+            衰减率列表.Items.Add(0.55)
             ksnf_list.Add(2)
             ksnf_list.Add(3)
-            sjl_list.Add(2.5)
-            sjl_list.Add(0.7)
+            sjl_list.Add(2)
+            sjl_list.Add(0.55)
             Me.gfjsnf.Text = CType(xmjsnx, String)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '各种年限系数的计算开始年份（补贴收入、销售收入和成本）

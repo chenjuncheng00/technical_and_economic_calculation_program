@@ -39,6 +39,8 @@
         Call 长期贷款计算.长期贷款计算(ExcelApp)
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz)
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
@@ -115,6 +117,8 @@
         Call 长期贷款计算.长期贷款计算(ExcelApp)
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz)
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
@@ -144,6 +148,8 @@
 
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz)
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -256,6 +262,8 @@
         Call 长期贷款计算.长期贷款计算(ExcelApp)
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz)
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
