@@ -55,7 +55,7 @@
     End Sub
 
     Function 分项建设期资金运用计算(ExcelApp As Object, zbj_model As Integer, GSBSJ As Array)
-        'On Error Resume Next
+        On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '只计算出分项建设期资金运用的金额数值，不写入EXCEL
         '要先进行<建设期时间计划计算>，再运行本程序

@@ -527,10 +527,11 @@
                            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(29, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(30, i + 4).Value +
                            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(41, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(42, i + 4).Value +
                            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(65, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(66, i + 4).Value
-            '现金 = 工资 + 含税保险费 + 含税其它费 - 含税光伏风电蓄电池其它费
+            '现金 = 工资 + 含税保险费 + 含税其它费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池其它费
             xj_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(199, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(211, i + 4).Value +
                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(212, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, i + 4).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, i + 4).Value - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
+                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, i + 4).Value - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
+                         (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
         Next
         '第16~31年
         For i = 16 To 31
@@ -552,7 +553,8 @@
                            ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(69, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(70, i - 12).Value
             xj_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(203, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(215, i - 12).Value +
                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(216, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, i - 12).Value - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
+                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, i - 12).Value - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
+                         (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '金额除以周转次数

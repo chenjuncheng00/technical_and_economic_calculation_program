@@ -37,7 +37,7 @@
             zzs_jx_list(i) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(45, i - 12).Value
         Next
         '计算可抵扣增值税
-        Dim ans_kdk = 可抵扣增值税计算_main(kdk_list, zzs_xx_list, zzs_jx_list, kdk_nfs, dkjs)
+        Dim ans_kdk = 可抵扣增值税计算_main(kdk_list, zzs_xx_list, zzs_jx_list, kdk_nfs, jsnx, dkjs)
         Dim ans_ydk_list = ans_kdk(0) '已经被抵扣掉的增值税金额，写入Excel时需要取负值
         Dim ans_zzs_ydk_list = ans_kdk(1) '扣除已经抵扣掉的增值税金额后，剩余的增值税金额
         Dim ans_wdk_list = ans_kdk(2) '未抵扣(逐年未被抵扣掉的建设期可抵扣增值税)
@@ -173,11 +173,12 @@
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
-    Function 可抵扣增值税计算_main(kdk_list As Array, zzs_xx_list As Array, zzs_jx_list As Array, kdk_nfs As Integer, dkjs As Boolean)
+    Function 可抵扣增值税计算_main(kdk_list As Array, zzs_xx_list As Array, zzs_jx_list As Array, kdk_nfs As Integer, jsnx As Integer, dkjs As Boolean)
         'kdk_list：建设期逐年可抵扣增值税总额，列表，长度31
         'zzs_xx_list：逐年销项增值税金额，列表，长度31
         'zzs_jx_list：逐年进项增值税金额，列表，长度31
         'kdk_nfs：建设期可抵扣增值税的最大抵扣年份数
+        'jsnx：项目计算年限
         'dkjs：是否计算建设期可抵扣增值税
 
         '逐年增值税金额(未考虑抵扣的情况)
@@ -192,7 +193,7 @@
         '逐年建设期可抵扣增值税累计值，考虑可抵扣年限的限制
         Dim kdk_lj_list(31) As Double
         For i = 1 To 31
-            For j = Math.Max(i - kdk_nfs, 0) To i
+            For j = Math.Max(i - jsnx, 0) To i
                 kdk_lj_list(i) += kdk_list(j)
             Next
         Next
@@ -204,10 +205,14 @@
         If dkjs = True Then
             For i = 1 To 31
                 '计算已抵扣(已经被抵扣掉的增值税金额)
-                If kdk_lj_list(i) >= zzs_wdk(i) Then
-                    ans_ydk_list(i) = zzs_wdk(i)
+                If i <= kdk_nfs Then
+                    If kdk_lj_list(i) >= zzs_wdk(i) Then
+                        ans_ydk_list(i) = zzs_wdk(i)
+                    Else
+                        ans_ydk_list(i) = kdk_lj_list(i)
+                    End If
                 Else
-                    ans_ydk_list(i) = kdk_lj_list(i)
+                    ans_ydk_list(i) = 0
                 End If
                 '未抵扣(逐年未被抵扣掉的建设期可抵扣增值税)
                 ans_wdk_list(i) = kdk_lj_list(i) - ans_ydk_list(i)

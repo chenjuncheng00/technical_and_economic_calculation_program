@@ -92,12 +92,12 @@
         Dim dkje_gf = jsqzjyy_gf(2)
         Dim dkje_fd = jsqzjyy_fd(2)
         '列表长度转为10
-        Dim ans_dkje_cg = 基础计算功能_31_to_10(tznf_list, dkje_cg)
-        Dim ans_dkje_rj = 基础计算功能_31_to_10(tznf_list, dkje_rj)
-        Dim ans_dkje_xdc = 基础计算功能_31_to_10(tznf_list, dkje_xdc)
-        Dim ans_dkje_nt = 基础计算功能_31_to_10(tznf_list, dkje_nt)
-        Dim ans_dkje_gf = 基础计算功能_31_to_10(tznf_list, dkje_gf)
-        Dim ans_dkje_fd = 基础计算功能_31_to_10(tznf_list, dkje_fd)
+        Dim dkje_10_cg = 基础计算功能_31_to_10(tznf_list, dkje_cg)
+        Dim dkje_10_rj = 基础计算功能_31_to_10(tznf_list, dkje_rj)
+        Dim dkje_10_xdc = 基础计算功能_31_to_10(tznf_list, dkje_xdc)
+        Dim dkje_10_nt = 基础计算功能_31_to_10(tznf_list, dkje_nt)
+        Dim dkje_10_gf = 基础计算功能_31_to_10(tznf_list, dkje_gf)
+        Dim dkje_10_fd = 基础计算功能_31_to_10(tznf_list, dkje_fd)
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年长期贷款还本付息计算
@@ -178,47 +178,47 @@
         Dim ans_DKJS_gf
         Dim ans_DKJS_fd
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Then
-            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资合并计算(dkje_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资合并计算(dkje_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资合并计算(dkje_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资合并计算(dkje_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资合并计算(dkje_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资合并计算(dkje_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资合并计算(dkje_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资合并计算(dkje_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资合并计算(dkje_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资合并计算(dkje_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资合并计算(dkje_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资合并计算(dkje_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Then
-            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资分开计算(dkje_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资分开计算(dkje_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资分开计算(dkje_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资分开计算(dkje_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资分开计算(dkje_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资分开计算(dkje_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Then
-            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资分开计算(dkje_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资分开计算(dkje_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资分开计算(dkje_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资分开计算(dkje_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资分开计算(dkje_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '返回结果
         Dim ans(11)
-        ans(0) = ans_dkje_cg
-        ans(1) = ans_dkje_rj
-        ans(2) = ans_dkje_xdc
-        ans(3) = ans_dkje_nt
-        ans(4) = ans_dkje_gf
-        ans(5) = ans_dkje_fd
+        ans(0) = dkje_10_cg
+        ans(1) = dkje_10_rj
+        ans(2) = dkje_10_xdc
+        ans(3) = dkje_10_nt
+        ans(4) = dkje_10_gf
+        ans(5) = dkje_10_fd
         ans(6) = ans_DKJS_cg
         ans(7) = ans_DKJS_rj
         ans(8) = ans_DKJS_xdc
