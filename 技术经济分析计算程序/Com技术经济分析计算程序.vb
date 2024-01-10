@@ -43,7 +43,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
             '———————————————————————————————————————————————————————————————————————————————————————— 
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
     End Sub
     Sub 确定建设期时间计划()
@@ -339,6 +360,10 @@ Public Class Com技术经济分析计算程序
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             'PART1、PART2、PART3重置回默认状态
             Call 计算设置重置回默认状态_part1(ExcelApp)
@@ -346,7 +371,7 @@ Public Class Com技术经济分析计算程序
             Call 计算设置重置回默认状态_part3(ExcelApp)
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '读取计算年限
@@ -364,7 +389,7 @@ Public Class Com技术经济分析计算程序
             MsgBox("计算年限内逐年投产的月份数量为：" & vbCrLf & XianShi_3)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("确定建设期时间计划完成！")
         End If
@@ -504,6 +529,10 @@ Public Class Com技术经济分析计算程序
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             'PART1、PART2、PART3重置回默认状态
             Call 计算设置重置回默认状态_part1(ExcelApp)
@@ -511,9 +540,9 @@ Public Class Com技术经济分析计算程序
             Call 计算设置重置回默认状态_part3(ExcelApp)
             '————————————————————————————————————————————————————————————————————————————————————————
             '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("清空建设期时间计划完成！")
         End If
     End Sub
@@ -563,15 +592,19 @@ Public Class Com技术经济分析计算程序
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             'PART2、PART3重置回默认状态
             Call 计算设置重置回默认状态_part2(ExcelApp)
             Call 计算设置重置回默认状态_part3(ExcelApp)
             '————————————————————————————————————————————————————————————————————————————————————————
             '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("确定估算表参数设置完成！")
         End If
     End Sub
@@ -621,11 +654,15 @@ Public Class Com技术经济分析计算程序
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定投资数据输入
-            Call 计算功能合并整理.确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 计算功能合并整理.确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("确定投资数据输入完成！")
         End If
     End Sub
@@ -704,15 +741,19 @@ Public Class Com技术经济分析计算程序
                 Dim kcje_xlf_model As Integer = 1
                 'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
                 Dim kcje_clf_qtf_model As Integer = 1
+                'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+                Dim ldzj_model As Integer = 1
+                'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+                Dim kcje_ldzj_model As Integer = 1
                 '————————————————————————————————————————————————————————————————————————————————————————
                 'PART2、PART3重置回默认状态
                 Call 计算设置重置回默认状态_part2(ExcelApp)
                 Call 计算设置重置回默认状态_part3(ExcelApp)
                 '————————————————————————————————————————————————————————————————————————————————————————
                 '年限系数变化后相关计算(包括了投资金额变化后计算、收入成本变化后计算)
-                Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '————————————————————————————————————————————————————————————————————————————————————————
-                Call 计算后基本处理(ExcelApp, 0)
+                Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 MsgBox("清空输入的投资数据完成！")
             End If
         End If
@@ -737,13 +778,36 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————        
             Call 计算前基本处理(ExcelApp, 1)
             '————————————————————————————————————————————————————————————————————————————————————————
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
             '————————————————————————————————————————————————————————————————————————————————————————
             '收入成本变化后计算
-            Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("确定收入成本输入完成！")
         End If
     End Sub
@@ -789,12 +853,36 @@ Public Class Com技术经济分析计算程序
             '计算一次
             ExcelApp.Calculate()
             '———————————————————————————————————————————————————————————————————————————————————————— 
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 0
+            Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            '————————————————————————————————————————————————————————————————————————————————————————
             '收入成本变化后的操作
-            Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '———————————————————————————————————————————————————————————————————————————————————————— 
-            Call 计算后基本处理(ExcelApp, 0)
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("清空收入成本输入完成！")
         End If
     End Sub
@@ -836,7 +924,28 @@ Public Class Com技术经济分析计算程序
                 Call 全投资税后收益率反算成本单价(ExcelApp, FSLJDJSCSMax)
             End If
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————
             '提醒计算完成
             Form1.Show()
@@ -869,7 +978,28 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("D43:D67").ClearContents
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Range("G42:G67").ClearContents
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("反算临界点数据已清空！")
         End If
     End Sub
@@ -898,7 +1028,28 @@ Public Class Com技术经济分析计算程序
             Form10.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————       
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
     End Sub
     Sub 盈亏平衡点计算()
@@ -986,7 +1137,28 @@ Public Class Com技术经济分析计算程序
             '生产年份数写入表格
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(47, 5).Value = scnfs
             '————————————————————————————————————————————————————————————————————————————————————————  
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————       
             MsgBox("盈亏平衡点（BEP）已计算完成！")
         End If
@@ -1016,7 +1188,28 @@ Public Class Com技术经济分析计算程序
             '复制
             ExcelApp.ActiveChart.ChartArea.Copy()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("复制完成！")
         End If
@@ -1046,7 +1239,28 @@ Public Class Com技术经济分析计算程序
             '复制
             ExcelApp.ActiveChart.ChartArea.Copy()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————
             MsgBox("复制完成！")
         End If
@@ -1106,7 +1320,28 @@ Public Class Com技术经济分析计算程序
             '清空盈亏平衡分析计算数据
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("E55:E59").ClearContents
             '——————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             MsgBox("清空敏感性分析和盈亏平衡分析计算数据完成！")
         End If
     End Sub
@@ -1134,7 +1369,28 @@ Public Class Com技术经济分析计算程序
             Form6.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
@@ -1163,7 +1419,28 @@ Public Class Com技术经济分析计算程序
             Form13.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
@@ -1191,7 +1468,28 @@ Public Class Com技术经济分析计算程序
             Form12.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
@@ -1221,7 +1519,28 @@ Public Class Com技术经济分析计算程序
             Form7.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
@@ -1253,7 +1572,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“逐年衰减系数设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
@@ -1285,7 +1625,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“修理费率逐年变化设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
@@ -1316,7 +1677,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“材料费率其它费率逐年变化设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
@@ -1346,7 +1728,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“建设期资金运用方式设置.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
@@ -1377,7 +1780,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“每次投资设置不同的折旧摊销计算方式.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
@@ -1408,7 +1832,28 @@ Public Class Com技术经济分析计算程序
             System.Windows.Forms.Application.DoEvents()
             '计算过程在“每次投资设置不同的长期贷款还款年限和宽限年限.确定”
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
@@ -1438,7 +1883,28 @@ Public Class Com技术经济分析计算程序
             Form14.TopMost = True
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
-            Call 计算后基本处理(ExcelApp, 0)
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer = 0
+            'hscy：计算期末，是否回收资产残值，默认回收
+            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 0
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
@@ -1694,6 +2160,27 @@ aaaaa：
         '写入计算模式
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(168, 7).Value = "相同"
         '————————————————————————————————————————————————————————————————————————————————————————
-        Call 计算后基本处理(ExcelApp, 0)
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer = 0
+        'hscy：计算期末，是否回收资产残值，默认回收
+        Dim hscz As Boolean = True
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim clfl_qtfl_model As Integer = 1
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim sdsl_model As Integer = 0
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
     End Sub
 End Class

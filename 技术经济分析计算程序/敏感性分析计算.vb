@@ -13,6 +13,24 @@ Module 敏感性分析计算
             System.Windows.Forms.Application.DoEvents()
             '————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————  
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
             'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
             Dim zbj_model As Integer
             If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
@@ -20,21 +38,6 @@ Module 敏感性分析计算
             Else
                 zbj_model = 1
             End If
-            'hscy：计算期末，是否回收资产残值
-            Dim hscz As Boolean
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
-                hscz = False
-            Else
-                hscz = True
-            End If
-            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_cg_model As Integer = 1
-            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_qt_model As Integer = 1
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
-            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_xlf_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '将总静态投资写入敏感性分析表格中
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(7, 8).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value
@@ -74,7 +77,7 @@ Module 敏感性分析计算
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '读取计算的结果，内部收益率和回收年限
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(6 + i, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
@@ -95,7 +98,7 @@ Module 敏感性分析计算
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         End If
         '计算一次工作簿
         ExcelApp.Calculate()
@@ -109,10 +112,31 @@ Module 敏感性分析计算
         Dim SRBH As Integer '收入编号
         Dim SRDJ '收入单价
         '————————————————————————————————————————————————————————————————————————————————————————  
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         Dim clfl_qtfl_model As Integer = 1
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim sdsl_model As Integer = 1
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
+        '计算折旧摊销
+        Dim hscz As Boolean = True
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+            zbj_model = 0
+        Else
+            zbj_model = 1
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————  
         For i = 13 To 25 '收入&成本表中的有收入的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 7).Value > 0 Then '存在收入
@@ -133,14 +157,14 @@ Module 敏感性分析计算
                                 '敏感性分析
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (（1 - 2 * MGXFXBHL） + (m - 1) * MGXFXBHL)
                                 '收入变化后相关计算
-                                Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                                 '读取收益率和回收期
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
                             Next
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ '收入单价初始值返回
                             '收入变化后相关计算
-                            Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                         End If
                     End If
                 Next
@@ -158,11 +182,32 @@ Module 敏感性分析计算
         Dim CBBH As Integer '成本编号
         Dim CBDJ '成本单价
         '————————————————————————————————————————————————————————————————————————————————————————        
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         Dim clfl_qtfl_model As Integer = 1
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim sdsl_model As Integer = 1
-        '————————————————————————————————————————————————————————————————————————————————————————  
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
+        '计算折旧摊销
+        Dim hscz As Boolean = True
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+            zbj_model = 0
+        Else
+            zbj_model = 1
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————'————————————————————————————————————————————————————————————————————————————————————————  
         For i = 14 To 27 '收入&成本表中的有成本的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 14).Value > 0 Then '存在成本
                 CBBH = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 28).Value
@@ -182,14 +227,14 @@ Module 敏感性分析计算
                                 '敏感性分析
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (（1 - 2 * MGXFXBHL） + (m - 1) * MGXFXBHL)
                                 '成本变化后相关计算
-                                Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                                 '读取收益率和回收期
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                                 ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(j - 1 + m, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
                             Next
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ '成本单价返回初始值
                             '成本变化后相关计算
-                            Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                         End If
                     End If
                 Next
@@ -205,10 +250,31 @@ Module 敏感性分析计算
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
         If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 29).Value = 1 Then
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
             'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
             Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
             '————————————————————————————————————————————————————————————————————————————————————————  
             '只有当输入了年运行小时数时，才计算
             If ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(137, 8).Value > 0 Then
@@ -274,7 +340,7 @@ Module 敏感性分析计算
                         End If
                     Next
                     '收入和成本变化后相关计算
-                    Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                     '读取计算的结果，内部收益率和回收年限
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(136 + i, 11).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 19).Value
                     ExcelApp.ThisWorkbook.Worksheets("指标数据").Cells(136 + i, 12).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 19).Value
@@ -306,7 +372,7 @@ Module 敏感性分析计算
                     End If
                 Next
                 '收入和成本变化后相关计算
-                Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             End If
         End If
         '计算一次工作簿

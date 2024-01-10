@@ -578,9 +578,20 @@
         '解锁表格
         Call 解锁表格(ExcelApp)
     End Sub
-    Sub 计算后基本处理(ExcelApp As Object, js_mode As Integer)
+    Sub 计算后基本处理(ExcelApp As Object, js_mode As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
+                       clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'hscy：计算期末，是否回收资产残值
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值，预留功能
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值，预留功能
+        '————————————————————————————————————————————————————————————————————————————————————————  
         '打开屏幕更新
         ExcelApp.Application.ScreenUpdating = True
         '打开事件
@@ -592,7 +603,7 @@
             '增值税相关计算
             Call 增值税相关计算(ExcelApp)
             '流动资金计算
-            Call 流动资金相关计算(ExcelApp)
+            Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '投资回收期计算
             Call 投资收益率和投资回收期计算(ExcelApp)
         End If

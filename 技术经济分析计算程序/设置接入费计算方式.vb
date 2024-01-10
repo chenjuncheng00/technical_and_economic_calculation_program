@@ -180,10 +180,34 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '———————————————————————————————————————————————————————————————————————————————————————— 
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim clfl_qtfl_model As Integer = 1
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim sdsl_model As Integer = 1
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
+        '计算折旧摊销
+        Dim hscz As Boolean = True
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+            zbj_model = 0
+        Else
+            zbj_model = 1
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
         '收入和成本变化后相关计算
-        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing
@@ -294,10 +318,34 @@
         '计算一次Excel
         ExcelApp.Calculate()
         '———————————————————————————————————————————————————————————————————————————————————————— 
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_cg_model As Integer = 1
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim xlfl_qt_model As Integer = 1
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim clfl_qtfl_model As Integer = 1
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim sdsl_model As Integer = 1
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_xlf_model As Integer = 1
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
+        '计算折旧摊销
+        Dim hscz As Boolean = True
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        Dim zbj_model As Integer
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+            zbj_model = 0
+        Else
+            zbj_model = 1
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
         '收入和成本变化后相关计算
-        Call 计算功能合并整理.收入成本相关计算(ExcelApp, sdsl_model)
+        Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '清空已有内容
         Me.RichTextBox1.Rtf = Nothing

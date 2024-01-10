@@ -344,6 +344,22 @@ Public Class 设置折旧摊销计算方式
             '计算一次工作簿
             ExcelApp.Calculate()
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             'hscy：计算期末，是否回收资产残值
             Dim hscz As Boolean
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
@@ -351,10 +367,15 @@ Public Class 设置折旧摊销计算方式
             Else
                 hscz = True
             End If
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
             '计算折旧摊销
-            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
+            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model, zbj_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————
             '写入计算模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 7).Value = "不相同"
@@ -410,12 +431,33 @@ Public Class 设置折旧摊销计算方式
             '计算一次工作簿
             ExcelApp.Calculate()
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            'hscy：计算期末，是否回收资产残值
-            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            'hscy：计算期末，是否回收资产残值
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
             '计算折旧摊销
-            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
+            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model, zbj_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(166, 7).Value = "相同"
             Me.RichTextBox1.Text = "设置完成，每次投资的固定资产折旧和无形资产摊销计算系数就均相同！"
@@ -431,12 +473,33 @@ Public Class 设置折旧摊销计算方式
         '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否设置计算期末不回收固定资产残值？？请在确认完建设期时间计划，同时在<估算表>中设置完各种计算年限、输入完逐年静态投资金额后进行本设置！！", vbOKCancel)
         If XZ = vbOK Then
-            'hscy：计算期末，是否回收资产残值
-            Dim hscz As Boolean = False
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            'hscy：计算期末，是否回收资产残值
+            Dim hscz As Boolean = False
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
             '计算折旧摊销
-            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
+            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model, zbj_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '将设置状态写入表格
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值"
@@ -454,12 +517,33 @@ Public Class 设置折旧摊销计算方式
         '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否设置计算期末回收固定资产残值？？", vbOKCancel)
         If XZ = vbOK Then
-            '计算折旧摊销
-            Dim hscz As Boolean = True
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
             'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '计算折旧摊销
-            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model)
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            '计算折旧摊销
+            Call 折旧摊销相关计算(ExcelApp, hscz, sdsl_model, zbj_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '将设置状态写入表格
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末回收残值"
             Me.RichTextBox1.Text = "<回收固定资产残值>计算完成！"

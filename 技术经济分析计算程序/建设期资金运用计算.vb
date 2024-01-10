@@ -4,9 +4,64 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '要先进行<建设期时间计划计算>，再运行本程序
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-
+        '————————————————————————————————————————————————————————————————————————————————————————
         '从估算表读取计算所需数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
+        '10次投资年份序号列表，列表，长度10
+        Dim tznf_list = GSBSJ(0)
+        '分项建设期资金运用计算
+        Dim ans_zjyy = 分项建设期资金运用计算(ExcelApp, zbj_model, GSBSJ)
+        Dim ans_jsqzjyy_cg = ans_zjyy(0)
+        Dim ans_jsqzjyy_rj = ans_zjyy(1)
+        Dim ans_jsqzjyy_xdc = ans_zjyy(2)
+        Dim ans_jsqzjyy_nt = ans_zjyy(3)
+        Dim ans_jsqzjyy_gf = ans_zjyy(4)
+        Dim ans_jsqzjyy_fd = ans_zjyy(5)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '将分项结果累加
+        Dim ans_dttz_list(31) As Double '逐年动态投资金额
+        Dim ans_zbj_list(31) As Double '逐年资本金金额
+        Dim ans_dkje_list(31) As Double '逐年建设期贷款金额
+        Dim ans_dklx_list(31) As Double '逐年建设期贷款利息
+        For i = 1 To 31
+            ans_dttz_list(i) = ans_jsqzjyy_cg(0)(i) + ans_jsqzjyy_rj(0)(i) + ans_jsqzjyy_xdc(0)(i) + ans_jsqzjyy_nt(0)(i) + ans_jsqzjyy_gf(0)(i) + ans_jsqzjyy_fd(0)(i)
+            ans_zbj_list(i) = ans_jsqzjyy_cg(1)(i) + ans_jsqzjyy_rj(1)(i) + ans_jsqzjyy_xdc(1)(i) + ans_jsqzjyy_nt(1)(i) + ans_jsqzjyy_gf(1)(i) + ans_jsqzjyy_fd(1)(i)
+            ans_dkje_list(i) = ans_jsqzjyy_cg(2)(i) + ans_jsqzjyy_rj(2)(i) + ans_jsqzjyy_xdc(2)(i) + ans_jsqzjyy_nt(2)(i) + ans_jsqzjyy_gf(2)(i) + ans_jsqzjyy_fd(2)(i)
+            ans_dklx_list(i) = ans_jsqzjyy_cg(3)(i) + ans_jsqzjyy_rj(3)(i) + ans_jsqzjyy_xdc(3)(i) + ans_jsqzjyy_nt(3)(i) + ans_jsqzjyy_gf(3)(i) + ans_jsqzjyy_fd(3)(i)
+        Next
+        '将列表转为长度10
+        Dim dttz_list = 基础计算功能_31_to_10(tznf_list, ans_dttz_list)
+        Dim zbj_list = 基础计算功能_31_to_10(tznf_list, ans_zbj_list)
+        Dim dkje_list = 基础计算功能_31_to_10(tznf_list, ans_dkje_list)
+        Dim dklx_list = 基础计算功能_31_to_10(tznf_list, ans_dklx_list)
+        '数据写入Excel，写入<估算表>
+        '前5次
+        For i = 1 To 5
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(31, 2 * i + 1).Value = dttz_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(32, 2 * i + 1).Value = zbj_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(33, 2 * i + 1).Value = dkje_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(34, 2 * i + 1).Value = dklx_list(i)
+        Next
+        '6-10次
+        For i = 6 To 10
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(74, 2 * i - 9).Value = dttz_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(75, 2 * i - 9).Value = zbj_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(76, 2 * i - 9).Value = dkje_list(i)
+            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(77, 2 * i - 9).Value = dklx_list(i)
+        Next
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算一次Excel
+        ExcelApp.Calculate()
+    End Sub
+
+    Function 分项建设期资金运用计算(ExcelApp As Object, zbj_model As Integer, GSBSJ As Array)
+        'On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '只计算出分项建设期资金运用的金额数值，不写入EXCEL
+        '要先进行<建设期时间计划计算>，再运行本程序
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'GSBSJ：读取的估算表数据
+        '————————————————————————————————————————————————————————————————————————————————————————
         '10次投资年份序号列表，列表，长度10
         Dim tznf_list = GSBSJ(0)
         '10次的静态投资，列表，长度10
@@ -38,7 +93,7 @@
         For i = 1 To 10
             If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
                 MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，建设期资金运用计算终止！")
-                Exit Sub
+                Exit Function
             End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -144,41 +199,18 @@
         Dim ans_jsqzjyy_gf = 建设期资金运用计算_main(zbj_model, dklx_model, gftz_list, jsq_index_list, dkll_list_gf, year_list, month_start_list, month_end_list, zbjbl_list_gf, dklx_shuru_list)
         '风电
         Dim ans_jsqzjyy_fd = 建设期资金运用计算_main(zbj_model, dklx_model, fdtz_list, jsq_index_list, dkll_list_fd, year_list, month_start_list, month_end_list, zbjbl_list_fd, dklx_shuru_list)
-        '将分项结果累加
-        Dim ans_dttz_list(31) As Double '逐年动态投资金额
-        Dim ans_zbj_list(31) As Double '逐年资本金金额
-        Dim ans_dkje_list(31) As Double '逐年建设期贷款金额
-        Dim ans_dklx_list(31) As Double '逐年建设期贷款利息
-        For i = 1 To 31
-            ans_dttz_list(i) = ans_jsqzjyy_cg(0)(i) + ans_jsqzjyy_rj(0)(i) + ans_jsqzjyy_xdc(0)(i) + ans_jsqzjyy_nt(0)(i) + ans_jsqzjyy_gf(0)(i) + ans_jsqzjyy_fd(0)(i)
-            ans_zbj_list(i) = ans_jsqzjyy_cg(1)(i) + ans_jsqzjyy_rj(1)(i) + ans_jsqzjyy_xdc(1)(i) + ans_jsqzjyy_nt(1)(i) + ans_jsqzjyy_gf(1)(i) + ans_jsqzjyy_fd(1)(i)
-            ans_dkje_list(i) = ans_jsqzjyy_cg(2)(i) + ans_jsqzjyy_rj(2)(i) + ans_jsqzjyy_xdc(2)(i) + ans_jsqzjyy_nt(2)(i) + ans_jsqzjyy_gf(2)(i) + ans_jsqzjyy_fd(2)(i)
-            ans_dklx_list(i) = ans_jsqzjyy_cg(3)(i) + ans_jsqzjyy_rj(3)(i) + ans_jsqzjyy_xdc(3)(i) + ans_jsqzjyy_nt(3)(i) + ans_jsqzjyy_gf(3)(i) + ans_jsqzjyy_fd(3)(i)
-        Next
-        '将列表转为长度10
-        Dim dttz_list = 基础计算功能_31_to_10(tznf_list, ans_dttz_list)
-        Dim zbj_list = 基础计算功能_31_to_10(tznf_list, ans_zbj_list)
-        Dim dkje_list = 基础计算功能_31_to_10(tznf_list, ans_dkje_list)
-        Dim dklx_list = 基础计算功能_31_to_10(tznf_list, ans_dklx_list)
-        '数据写入Excel，写入<估算表>
-        '前5次
-        For i = 1 To 5
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(31, 2 * i + 1).Value = dttz_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(32, 2 * i + 1).Value = zbj_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(33, 2 * i + 1).Value = dkje_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(34, 2 * i + 1).Value = dklx_list(i)
-        Next
-        '6-10次
-        For i = 6 To 10
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(74, 2 * i - 9).Value = dttz_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(75, 2 * i - 9).Value = zbj_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(76, 2 * i - 9).Value = dkje_list(i)
-            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(77, 2 * i - 9).Value = dklx_list(i)
-        Next
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算一次Excel
-        ExcelApp.Calculate()
-    End Sub
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '返回结果
+        Dim ans(5)
+        ans(0) = ans_jsqzjyy_cg
+        ans(1) = ans_jsqzjyy_rj
+        ans(2) = ans_jsqzjyy_xdc
+        ans(3) = ans_jsqzjyy_nt
+        ans(4) = ans_jsqzjyy_gf
+        ans(5) = ans_jsqzjyy_fd
+        Return ans
+    End Function
+
     Function 建设期资金运用计算_main(zbj_model As Integer, dklx_model As Integer, jttz_list As Array,
                                      jsq_index_list As Array, dkll_list As Array, year_list As Array,
                                      month_start_list As Array, month_end_list As Array, zbjbl_list As Array,

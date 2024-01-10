@@ -578,6 +578,10 @@ Public Class 设置所得税减免和增值税退税内容
         Dim kcje_xlf_model As Integer = 1
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
         '———————————————————————————————————————————————————————————————————————————————————————— 
         Dim XZ = MsgBox("是否确定设置的各个参数？", vbOKCancel)
         If XZ = vbOK Then
@@ -594,7 +598,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '在已经设置好的项目方案中，根据选择的收入内容，记录下不进行任何所得税减免时，实际的逐年所得税，然后计算将需要计算的部分的投资和收入都去掉后，剩下的所得税，差值就是需要计算的部分的所得税，然后将这部分按比例减免           
             '记录此时的逐年所得税值（原始值）
             Dim ZNSDS_YSZ(50) As Double
@@ -717,7 +721,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年所得税金额
                 Dim ZNSDS_gf(50) As Double
@@ -763,7 +767,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第二步，仅减去风电的部分        
@@ -812,7 +816,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年所得税金额
                 Dim ZNSDS_fd(50) As Double
@@ -855,7 +859,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
@@ -1058,7 +1062,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '记录此时的逐年所得税金额
             Dim ZNSDS_qt(50) As Double
             '前15年（1-15）
@@ -1164,7 +1168,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '计算此时实际的所得税征收金额
@@ -1246,7 +1250,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '寻找有其它收入的第一年的年份序号
                 Dim QTSRNF_No1 As Integer = 0
                 '前15年（1-15）
@@ -1278,7 +1282,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '计算逐年其它所得税减少金额
                 For i = 1 To 31
                     If i >= QTSRNF_No1 And i <= QTSRNF_No1 + qtsdsmznx - 1 Then
@@ -1325,7 +1329,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '写入计算模式
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "特殊设置"
             '——————————————————————————————————————————————————————————————————————————————
@@ -1613,6 +1617,10 @@ Public Class 设置所得税减免和增值税退税内容
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————————
             '记录此时的逐年增值税税值（原始值）
             Dim ZZS_YSZ(50) As Double
@@ -1735,7 +1743,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年增值税金额
                 Dim ZZS_gf(50) As Double
@@ -1781,7 +1789,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第二步，仅减去风电的部分        
@@ -1830,7 +1838,7 @@ Public Class 设置所得税减免和增值税退税内容
                 '计算一次工作簿
                 ExcelApp.Calculate()
                 '计算税收相关计算
-                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+                Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
                 '————————————————————————————————————————————————————————————————————————————————————
                 '记录此时的逐年增值税金额
                 Dim ZZS_fd(50) As Double
@@ -1873,7 +1881,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
@@ -2076,7 +2084,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '记录此时的逐年增值税金额
             Dim ZZS_qt(50) As Double
@@ -2183,7 +2191,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '计算此时实际的增值税退税比例
@@ -2243,7 +2251,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '设置表格中的收入行隐藏或者显示
             '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格
@@ -2315,6 +2323,10 @@ Public Class 设置所得税减免和增值税退税内容
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————
             '所得税减免
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(44, 18).Value = "常规设置"
@@ -2332,7 +2344,7 @@ Public Class 设置所得税减免和增值税退税内容
             '计算一次工作簿
             ExcelApp.Calculate()
             '计算税收相关计算
-            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '—————————————————————————————————————————————————————————————
             '设置表格中的收入行隐藏或者显示
             '如果增值税退税比例为0，则隐藏增值税退税收入，前15年表格

@@ -586,23 +586,35 @@ Module 计算设置重置回默认状态
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Dim kcje_mr = 材料费其它费计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr_clqtf = 材料费其它费计算基数扣除默认设置(ExcelApp)
             '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = kcje_mr(0)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = kcje_mr(1)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value = kcje_mr(2)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value = kcje_mr(3)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value = kcje_mr(4)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value = kcje_mr(5)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value = kcje_mr(6)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value = kcje_mr(7)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = kcje_mr(8)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value = kcje_mr(9)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value = kcje_mr(10)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value = kcje_mr(11)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value = kcje_mr(12)
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value = kcje_mr(13)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = kcje_mr_clqtf(0)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = kcje_mr_clqtf(1)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 5).Value = kcje_mr_clqtf(2)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 6).Value = kcje_mr_clqtf(3)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 7).Value = kcje_mr_clqtf(4)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 8).Value = kcje_mr_clqtf(5)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 9).Value = kcje_mr_clqtf(6)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 3).Value = kcje_mr_clqtf(7)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 4).Value = kcje_mr_clqtf(8)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 5).Value = kcje_mr_clqtf(9)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 6).Value = kcje_mr_clqtf(10)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 7).Value = kcje_mr_clqtf(11)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value = kcje_mr_clqtf(12)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value = kcje_mr_clqtf(13)
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '流动资金重置回默认值
+        '计算基数扣除默认设置
+        Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
+        '运营年限
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = kcje_mr_ldzj(2)
+        '扣除比例
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(3)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(4)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(5)
         '————————————————————————————————————————————————————————————————————————————————————————      
         '计算一次工作簿
         ExcelApp.Calculate()

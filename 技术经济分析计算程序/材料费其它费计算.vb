@@ -4,6 +4,45 @@
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '计算逐年分项材料费其它费金额
+        Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
+        Dim ans_znclf = ans_clfqtf(0)
+        Dim ans_znqtf = ans_clfqtf(1)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '结果写入Excel
+        '前15年
+        For i = 1 To 15
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 4 + i).Value = ans_znclf(i)
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 4 + i).Value = ans_znqtf(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 4 + i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 4 + i).Value = 0
+            End If
+        Next
+        '16—31年
+        For i = 16 To 31
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value = ans_znclf(i)
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value = ans_znqtf(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value = 0
+            End If
+        Next
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算一次Excel
+        ExcelApp.Calculate()
+    End Sub
+
+    Function 分项逐年材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer)
+        'On Error Resume Next
+        '只计算出分项逐年材料费和其它费的金额数值，不写入EXCEL
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        '————————————————————————————————————————————————————————————————————————————————————————        
         '读取材料费其它费计算默认值
         Dim clqtfl = 默认逐年材料费率其它费率(ExcelApp)
         '逐年材料费默认值
@@ -191,44 +230,84 @@
         Dim ans_clfqtf
         Dim ans_znclf
         Dim ans_znqtf
+        '分项材料费
+        Dim ans_clf_rj
+        Dim ans_clf_lj
+        Dim ans_clf_rm
+        Dim ans_clf_glgr
+        Dim ans_clf_gf
+        Dim ans_clf_fd
+        Dim ans_clf_xdc
+        '分项其它费
+        Dim ans_qtf_rj
+        Dim ans_qtf_lj
+        Dim ans_qtf_rm
+        Dim ans_qtf_glgr
+        Dim ans_qtf_gf
+        Dim ans_qtf_fd
+        Dim ans_qtf_xdc
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "负荷率" Then
             ans_clfqtf = 材料费其它费计算_负荷率(rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list, xdczjgl_list, clfl_rj_list, clfl_rm_list, clfl_ljfd_list,
                                                  clfl_glgr_list, clfl_gf_list, clfl_fd_list, clfl_xdc_list, qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list,
                                                  qtfl_fd_list, qtfl_xdc_list, fhl_list)
             ans_znclf = ans_clfqtf(0)
             ans_znqtf = ans_clfqtf(1)
+            ans_clf_rj = ans_clfqtf(2)
+            ans_clf_lj = ans_clfqtf(3)
+            ans_clf_rm = ans_clfqtf(4)
+            ans_clf_glgr = ans_clfqtf(5)
+            ans_clf_gf = ans_clfqtf(6)
+            ans_clf_fd = ans_clfqtf(7)
+            ans_clf_xdc = ans_clfqtf(8)
+            ans_qtf_rj = ans_clfqtf(9)
+            ans_qtf_lj = ans_clfqtf(10)
+            ans_qtf_rm = ans_clfqtf(11)
+            ans_qtf_glgr = ans_clfqtf(12)
+            ans_qtf_gf = ans_clfqtf(13)
+            ans_qtf_fd = ans_clfqtf(14)
+            ans_qtf_xdc = ans_clfqtf(15)
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "投产量" Then
             ans_clfqtf = 材料费其它费计算_投资量(rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list, xdczjgl_list, clfl_rj_list, clfl_rm_list, clfl_ljfd_list,
                                                  clfl_glgr_list, clfl_gf_list, clfl_fd_list, clfl_xdc_list, qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list,
                                                  qtfl_fd_list, qtfl_xdc_list)
             ans_znclf = ans_clfqtf(0)
             ans_znqtf = ans_clfqtf(1)
+            ans_clf_rj = ans_clfqtf(2)
+            ans_clf_lj = ans_clfqtf(3)
+            ans_clf_rm = ans_clfqtf(4)
+            ans_clf_glgr = ans_clfqtf(5)
+            ans_clf_gf = ans_clfqtf(6)
+            ans_clf_fd = ans_clfqtf(7)
+            ans_clf_xdc = ans_clfqtf(8)
+            ans_qtf_rj = ans_clfqtf(9)
+            ans_qtf_lj = ans_clfqtf(10)
+            ans_qtf_rm = ans_clfqtf(11)
+            ans_qtf_glgr = ans_clfqtf(12)
+            ans_qtf_gf = ans_clfqtf(13)
+            ans_qtf_fd = ans_clfqtf(14)
+            ans_qtf_xdc = ans_clfqtf(15)
         End If
-        '结果写入Excel
-        '前15年
-        For i = 1 To 15
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 4 + i).Value = ans_znclf(i)
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 4 + i).Value = ans_znqtf(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, 4 + i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, 4 + i).Value = 0
-            End If
-        Next
-        '16—31年
-        For i = 16 To 31
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value = ans_znclf(i)
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value = ans_znqtf(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value = 0
-            End If
-        Next
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算一次Excel
-        ExcelApp.Calculate()
-    End Sub
+        '返回结果
+        Dim ans(15)
+        ans(0) = ans_znclf
+        ans(1) = ans_znqtf
+        ans(2) = ans_clf_rj
+        ans(3) = ans_clf_lj
+        ans(4) = ans_clf_rm
+        ans(5) = ans_clf_glgr
+        ans(6) = ans_clf_gf
+        ans(7) = ans_clf_fd
+        ans(8) = ans_clf_xdc
+        ans(9) = ans_qtf_rj
+        ans(10) = ans_qtf_lj
+        ans(11) = ans_qtf_rm
+        ans(12) = ans_qtf_glgr
+        ans(13) = ans_qtf_gf
+        ans(14) = ans_qtf_fd
+        ans(15) = ans_qtf_xdc
+        Return ans
+    End Function
+
     Function 材料费其它费计算_负荷率(rjfdl_list As Array, glgrl_list As Array, gfzjgl_list As Array, rmfdl_list As Array,
                                      fdzjgl_list As Array, ljfdl_list As Array, xdczjgl_list As Array, clfl_rj_list As Array, clfl_rm_list As Array,
                                      clfl_ljfd_list As Array, clfl_glgr_list As Array, clfl_gf_list As Array,
@@ -278,6 +357,22 @@
         Dim gfzjgl_lj As Double = 0
         Dim fdzjgl_lj As Double = 0
         Dim xdczjgl_lj As Double = 0
+        '分项材料费
+        Dim ans_clf_rj(31) As Double
+        Dim ans_clf_lj(31) As Double
+        Dim ans_clf_rm(31) As Double
+        Dim ans_clf_glgr(31) As Double
+        Dim ans_clf_gf(31) As Double
+        Dim ans_clf_fd(31) As Double
+        Dim ans_clf_xdc(31) As Double
+        '分项其它费
+        Dim ans_qtf_rj(31) As Double
+        Dim ans_qtf_lj(31) As Double
+        Dim ans_qtf_rm(31) As Double
+        Dim ans_qtf_glgr(31) As Double
+        Dim ans_qtf_gf(31) As Double
+        Dim ans_qtf_fd(31) As Double
+        Dim ans_qtf_xdc(31) As Double
         '计算逐年材料费其它费金额
         Dim ans_znclf(31) As Double
         Dim ans_znqtf(31) As Double
@@ -286,18 +381,43 @@
             gfzjgl_lj += gfzjgl_list(i - 1)
             fdzjgl_lj += fdzjgl_list(i - 1)
             xdczjgl_lj += xdczjgl_list(i - 1)
-            '计算材料费、其它费
-            ans_znclf(i) = ((rjfdl_lj * clfl_rj_list(i) + ljfdl_lj * clfl_ljfd_list(i) + rmfdl_lj * clfl_rm_list(i) +
-                             glgrl_lj * clfl_glgr_list(i)) * fhl_list(i) + gfzjgl_lj * clfl_gf_list(i) +
-                             fdzjgl_lj * clfl_fd_list(i) + xdczjgl_lj * clfl_xdc_list(i)) / 10000
-            ans_znqtf(i) = ((rjfdl_lj * qtfl_rj_list(i) + ljfdl_lj * qtfl_ljfd_list(i) + rmfdl_lj * qtfl_rm_list(i) +
-                             glgrl_lj * qtfl_glgr_list(i)) * fhl_list(i) + gfzjgl_lj * qtfl_gf_list(i) +
-                             fdzjgl_lj * qtfl_fd_list(i) + xdczjgl_lj * qtfl_xdc_list(i)) / 10000
+            '计算材料费
+            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) * fhl_list(i) / 10000
+            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) * fhl_list(i) / 10000
+            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) * fhl_list(i) / 10000
+            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) * fhl_list(i) / 10000
+            ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
+            ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
+            ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
+            ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
+            '计算其它费
+            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) * fhl_list(i) / 10000
+            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) * fhl_list(i) / 10000
+            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) * fhl_list(i) / 10000
+            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) * fhl_list(i) / 10000
+            ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
+            ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
+            ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
+            ans_znqtf(i) = ans_qtf_rj(i) + ans_qtf_lj(i) + ans_qtf_rm(i) + ans_qtf_glgr(i) + ans_qtf_gf(i) + ans_qtf_fd(i) + ans_qtf_xdc(i)
         Next
         '返回结果
-        Dim ans(1)
+        Dim ans(15)
         ans(0) = ans_znclf
         ans(1) = ans_znqtf
+        ans(2) = ans_clf_rj
+        ans(3) = ans_clf_lj
+        ans(4) = ans_clf_rm
+        ans(5) = ans_clf_glgr
+        ans(6) = ans_clf_gf
+        ans(7) = ans_clf_fd
+        ans(8) = ans_clf_xdc
+        ans(9) = ans_qtf_rj
+        ans(10) = ans_qtf_lj
+        ans(11) = ans_qtf_rm
+        ans(12) = ans_qtf_glgr
+        ans(13) = ans_qtf_gf
+        ans(14) = ans_qtf_fd
+        ans(15) = ans_qtf_xdc
         Return ans
     End Function
     Function 材料费其它费计算_投资量(rjfdl_list As Array, glgrl_list As Array, gfzjgl_list As Array, rmfdl_list As Array,
@@ -339,6 +459,22 @@
         Dim fdzjgl_lj As Double = 0
         Dim ljfdl_lj As Double = 0
         Dim xdczjgl_lj As Double = 0
+        '分项材料费
+        Dim ans_clf_rj(31) As Double
+        Dim ans_clf_lj(31) As Double
+        Dim ans_clf_rm(31) As Double
+        Dim ans_clf_glgr(31) As Double
+        Dim ans_clf_gf(31) As Double
+        Dim ans_clf_fd(31) As Double
+        Dim ans_clf_xdc(31) As Double
+        '分项其它费
+        Dim ans_qtf_rj(31) As Double
+        Dim ans_qtf_lj(31) As Double
+        Dim ans_qtf_rm(31) As Double
+        Dim ans_qtf_glgr(31) As Double
+        Dim ans_qtf_gf(31) As Double
+        Dim ans_qtf_fd(31) As Double
+        Dim ans_qtf_xdc(31) As Double
         '计算逐年材料费其它费金额
         Dim ans_znclf(31) As Double
         Dim ans_znqtf(31) As Double
@@ -351,16 +487,43 @@
             fdzjgl_lj += fdzjgl_list(i - 1)
             ljfdl_lj += ljfdl_list(i - 1)
             xdczjgl_lj += xdczjgl_list(i - 1)
-            '计算材料费、其它费
-            ans_znclf(i) = (rjfdl_lj * clfl_rj_list(i) + ljfdl_lj * clfl_ljfd_list(i) + rmfdl_lj * clfl_rm_list(i) + glgrl_lj * clfl_glgr_list(i) +
-                            gfzjgl_lj * clfl_gf_list(i) + fdzjgl_lj * clfl_fd_list(i) + xdczjgl_lj * clfl_xdc_list(i)) / 10000
-            ans_znqtf(i) = (rjfdl_lj * qtfl_rj_list(i) + ljfdl_lj * qtfl_ljfd_list(i) + rmfdl_lj * qtfl_rm_list(i) + glgrl_lj * qtfl_glgr_list(i) +
-                            gfzjgl_lj * qtfl_gf_list(i) + fdzjgl_lj * qtfl_fd_list(i) + xdczjgl_lj * qtfl_xdc_list(i)) / 10000
+            '计算材料费
+            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) / 10000
+            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) / 10000
+            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) / 10000
+            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) / 10000
+            ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
+            ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
+            ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
+            ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
+            '计算其它费
+            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) / 10000
+            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) / 10000
+            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) / 10000
+            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) / 10000
+            ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
+            ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
+            ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
+            ans_znqtf(i) = ans_qtf_rj(i) + ans_qtf_lj(i) + ans_qtf_rm(i) + ans_qtf_glgr(i) + ans_qtf_gf(i) + ans_qtf_fd(i) + ans_qtf_xdc(i)
         Next
         '返回结果
-        Dim ans(1)
+        Dim ans(15)
         ans(0) = ans_znclf
         ans(1) = ans_znqtf
+        ans(2) = ans_clf_rj
+        ans(3) = ans_clf_lj
+        ans(4) = ans_clf_rm
+        ans(5) = ans_clf_glgr
+        ans(6) = ans_clf_gf
+        ans(7) = ans_clf_fd
+        ans(8) = ans_clf_xdc
+        ans(9) = ans_qtf_rj
+        ans(10) = ans_qtf_lj
+        ans(11) = ans_qtf_rm
+        ans(12) = ans_qtf_glgr
+        ans(13) = ans_qtf_gf
+        ans(14) = ans_qtf_fd
+        ans(15) = ans_qtf_xdc
         Return ans
     End Function
     Function 默认逐年材料费率其它费率(ExcelApp As Object)

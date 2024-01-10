@@ -5,7 +5,42 @@
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '计算逐年分项修理费金额
+        Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        Dim ans_znxlf = ans_xlf(0)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '结果写入Excel
+        '前15年
+        For i = 1 To 15
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value = ans_znxlf(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value = 0
+            End If
+        Next
+        '16—31年
+        For i = 16 To 31
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value = ans_znxlf(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value = 0
+            End If
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算一次工作簿
+        ExcelApp.Calculate()
+    End Sub
 
+    Function 分项逐年修理费计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer)
+        'On Error Resume Next
+        '只计算出分项逐年修理费的金额数值，不写入EXCEL
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '修理费率默认值
         Dim xlfl_mr = 默认逐年修理费率(ExcelApp)
@@ -183,7 +218,7 @@
         For i = 1 To 10
             If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
                 MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，修理费计算终止！")
-                Exit Sub
+                Exit Function
             End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -266,8 +301,12 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算常规设备的逐年修理费率
         Dim ans_cgsb
-        '计算其它设备的修理费
-        Dim ans_qt(31) As Double
+        '燃机、暖通、光伏、风电、蓄电池
+        Dim ans_rj(31) As Double
+        Dim ans_nt(31) As Double
+        Dim ans_gf(31) As Double
+        Dim ans_fd(31) As Double
+        Dim ans_xdc(31) As Double
         '修理费总额
         Dim ans_znxlf(31) As Double
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 11).Value = "方法一" Then
@@ -275,147 +314,140 @@
             ans_cgsb = 设备修理费计算_常规方法(xlfl_cg_list, gdzcyz_list, jsqdklx_list, qttz_list, tcyfs_list, wxzcbl_list, True)
             '燃机、暖通
             For i = 1 To 31
-                ans_qt(i) = (rjtz_lj_list(i) * xlfl_rj_list(i) + nttz_lj_list(i) * xlfl_nt_list(i)) * (tcyfs_list(i) / 12)
+                ans_rj(i) = rjtz_lj_list(i) * xlfl_rj_list(i) * (tcyfs_list(i) / 12)
+                ans_nt(i) = nttz_lj_list(i) * xlfl_nt_list(i) * (tcyfs_list(i) / 12)
             Next
             '光伏
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gftz_lj_list(i) * xlfl_gf_list(i) * (tcyfs_list(i) / 12)
+                    ans_gf(i) = gftz_lj_list(i) * xlfl_gf_list(i) * (tcyfs_list(i) / 12)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gfzj_lj_list(i) * xlfl_gf_list(i) * (tcyfs_list(i) / 12) / 10000
+                    ans_gf(i) = gfzj_lj_list(i) * xlfl_gf_list(i) * (tcyfs_list(i) / 12) / 10000
                 Next
             End If
             '风电
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdtz_lj_list(i) * xlfl_fd_list(i) * (tcyfs_list(i) / 12)
+                    ans_fd(i) = fdtz_lj_list(i) * xlfl_fd_list(i) * (tcyfs_list(i) / 12)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdzj_lj_list(i) * xlfl_fd_list(i) * (tcyfs_list(i) / 12) / 10000
+                    ans_fd(i) = fdzj_lj_list(i) * xlfl_fd_list(i) * (tcyfs_list(i) / 12) / 10000
                 Next
             End If
             '蓄电池
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdctz_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12)
+                    ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdczj_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12) / 10000
+                    ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12) / 10000
                 Next
             End If
             '设备修理费汇总
             For i = 1 To 31
-                ans_znxlf(i) = ans_cgsb(i) + ans_qt(i)
+                ans_znxlf(i) = ans_cgsb(i) + ans_rj(i) + ans_nt(i) + ans_gf(i) + ans_fd(i) + ans_xdc(i)
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 11).Value = "方法二" Then
             '常规设备
             ans_cgsb = 设备修理费计算_常规方法(xlfl_cg_list, gdzcyz_list, jsqdklx_list, qttz_list, tcyfs_list, wxzcbl_list, False)
             '燃机、暖通
             For i = 1 To 31
-                ans_qt(i) = rjtz_lj_list(i) * xlfl_rj_list(i) + nttz_lj_list(i) * xlfl_nt_list(i)
+                ans_rj(i) = rjtz_lj_list(i) * xlfl_rj_list(i)
+                ans_nt(i) = nttz_lj_list(i) * xlfl_nt_list(i)
             Next
             '光伏
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gftz_lj_list(i) * xlfl_gf_list(i)
+                    ans_gf(i) = gftz_lj_list(i) * xlfl_gf_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gfzj_lj_list(i) * xlfl_gf_list(i) / 10000
+                    ans_gf(i) = gfzj_lj_list(i) * xlfl_gf_list(i) / 10000
                 Next
             End If
             '风电
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdtz_lj_list(i) * xlfl_fd_list(i)
+                    ans_fd(i) = fdtz_lj_list(i) * xlfl_fd_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdzj_lj_list(i) * xlfl_fd_list(i) / 10000
+                    ans_fd(i) = fdzj_lj_list(i) * xlfl_fd_list(i) / 10000
                 Next
             End If
             '蓄电池
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdctz_lj_list(i) * xlfl_xdc_list(i)
+                    ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
+                    ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
                 Next
             End If
             '设备修理费汇总
             For i = 1 To 31
-                ans_znxlf(i) = ans_cgsb(i) + ans_qt(i)
+                ans_znxlf(i) = ans_cgsb(i) + ans_rj(i) + ans_nt(i) + ans_gf(i) + ans_fd(i) + ans_xdc(i)
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(7, 11).Value = "方法三" Then
             '常规设备
             ans_cgsb = 设备修理费计算_博微方法(xlfl, jttz_list, gdzcyz_list, jsqdklx_list, qttz_list, tcyfs_list, wxzcbl, False)
             '燃机、暖通
             For i = 1 To 31
-                ans_qt(i) = rjtz_lj_list(i) * xlfl_rj_list(i) + nttz_lj_list(i) * xlfl_nt_list(i)
+                ans_rj(i) = rjtz_lj_list(i) * xlfl_rj_list(i)
+                ans_nt(i) = nttz_lj_list(i) * xlfl_nt_list(i)
             Next
             '光伏
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gftz_lj_list(i) * xlfl_gf_list(i)
+                    ans_gf(i) = gftz_lj_list(i) * xlfl_gf_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += gfzj_lj_list(i) * xlfl_gf_list(i) / 10000
+                    ans_gf(i) = gfzj_lj_list(i) * xlfl_gf_list(i) / 10000
                 Next
             End If
             '风电
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdtz_lj_list(i) * xlfl_fd_list(i)
+                    ans_fd(i) = fdtz_lj_list(i) * xlfl_fd_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += fdzj_lj_list(i) * xlfl_fd_list(i) / 10000
+                    ans_fd(i) = fdzj_lj_list(i) * xlfl_fd_list(i) / 10000
                 Next
             End If
             '蓄电池
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdctz_lj_list(i) * xlfl_xdc_list(i)
+                    ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i)
                 Next
             ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
-                    ans_qt(i) += xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
+                    ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
                 Next
             End If
             '设备修理费汇总
             For i = 1 To 31
-                ans_znxlf(i) = ans_cgsb(i) + ans_qt(i)
+                ans_znxlf(i) = ans_cgsb(i) + ans_rj(i) + ans_nt(i) + ans_gf(i) + ans_fd(i) + ans_xdc(i)
             Next
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '结果写入Excel
-        '前15年
-        For i = 1 To 15
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value = ans_znxlf(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(137, 4 + i).Value = 0
-            End If
-        Next
-        '16—31年
-        For i = 16 To 31
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value = ans_znxlf(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(141, i - 12).Value = 0
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '计算一次工作簿
-        ExcelApp.Calculate()
-    End Sub
+        '返回结果
+        Dim ans(6)
+        ans(0) = ans_znxlf
+        ans(1) = ans_cgsb
+        ans(2) = ans_rj
+        ans(3) = ans_nt
+        ans(4) = ans_gf
+        ans(5) = ans_fd
+        ans(6) = ans_xdc
+        Return ans
+    End Function
+
     Function 设备修理费计算_常规方法(xlfl_list As Array, gdzcyz_list As Array, jsqdklx_list As Array, qttz_list As Array,
                                      tcyfs_list As Array, wxzcbl_list As Array, sfzs As Boolean)
         'xlfl_list：逐年修理费率，列表，长度31

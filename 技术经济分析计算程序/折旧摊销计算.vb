@@ -1,302 +1,32 @@
 ﻿Module 折旧摊销计算
-    Sub 折旧摊销计算(ExcelApp As Object, hscz As Boolean)
+    Sub 折旧摊销计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————        
         'hscy：计算期末，是否回收资产残值
-
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        '————————————————————————————————————————————————————————————————————————————————————————
         Dim GSBSJ = 读取估算表数据(ExcelApp)
+        '10次投资年份序号列表，列表，长度10
+        Dim tznf_list = GSBSJ(0)
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
-        '无形资产所占比例
-        Dim wxzcbl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 5).Value
-        '折旧摊销开始年份
-        Dim ksnf(10) As Integer
-        '10次投资的资产原值
-        Dim gdzcyz(10) As Double
-        Dim wxzcyz(10) As Double
-        '读取开始年份和资产原值，前5年
-        Dim tznf_list = GSBSJ(0)
-        Dim dttz_list = GSBSJ(2)
-        Dim kdkzzs_list = GSBSJ(9)
-        For i = 1 To 5
-            ksnf(i) = tznf_list(i)
-            gdzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * (1 - wxzcbl)
-            wxzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * wxzcbl
-        Next
-        '读取开始年份和资产原值，后5年
-        For i = 6 To 10
-            ksnf(i) = tznf_list(i)
-            gdzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * (1 - wxzcbl)
-            wxzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * wxzcbl
-        Next
-        '读取每年投产月份数
-        Dim tcyfs_list(31) As Integer
-        For i = 1 To 31
-            tcyfs_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-        Next
         '————————————————————————————————————————————————————————————————————————————————————————
-        'jttz_list：逐年静态投资，列表
-        Dim jttz = GSBSJ(1)
-        Dim jttz_list = 基础计算功能_10_to_31(tznf_list, jttz)
-        '燃机总投资(万元)
-        Dim rjtz = GSBSJ(10)
-        Dim rjtz_list = 基础计算功能_10_to_31(tznf_list, rjtz)
-        '蓄电池总投资(万元)
-        Dim xdctz = GSBSJ(12)
-        Dim xdctz_list = 基础计算功能_10_to_31(tznf_list, xdctz)
-        '暖通总投资(万元)
-        Dim nttz = GSBSJ(14)
-        Dim nttz_list = 基础计算功能_10_to_31(tznf_list, nttz)
-        '光伏总投资(万元)
-        Dim gftz = GSBSJ(16)
-        Dim gftz_list = 基础计算功能_10_to_31(tznf_list, gftz)
-        '风电总投资(万元)
-        Dim fdtz = GSBSJ(18)
-        Dim fdtz_list = 基础计算功能_10_to_31(tznf_list, fdtz)
-        '分项投资之和不可以超过总投资
-        For i = 1 To 10
-            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
-                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，折旧摊销计算终止！")
-                Exit Sub
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
-        Dim rjtzbl(10) As Double
-        Dim xdctzbl(10) As Double
-        Dim nttzbl(10) As Double
-        Dim gftzbl(10) As Double
-        Dim fdtzbl(10) As Double
-        Dim qttzbl(10) As Double
-        For i = 1 To 10
-            If jttz(i) > 0 Then
-                rjtzbl(i) = rjtz(i) / jttz(i)
-                xdctzbl(i) = xdctz(i) / jttz(i)
-                nttzbl(i) = nttz(i) / jttz(i)
-                gftzbl(i) = gftz(i) / jttz(i)
-                fdtzbl(i) = fdtz(i) / jttz(i)
-                qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
-            Else
-                rjtzbl(i) = 0
-                xdctzbl(i) = 0
-                nttzbl(i) = 0
-                gftzbl(i) = 0
-                fdtzbl(i) = 0
-                qttzbl(i) = 0
-            End If
-        Next
-        '10次投资不同投资内容的资产原值，按照比例分摊
-        Dim gdzcyz_cg(10) As Double
-        Dim gdzcyz_rj(10) As Double
-        Dim gdzcyz_xdc(10) As Double
-        Dim gdzcyz_nt(10) As Double
-        Dim gdzcyz_gf(10) As Double
-        Dim gdzcyz_fd(10) As Double
-        For i = 1 To 10
-            gdzcyz_cg(i) = gdzcyz(i) * (1 - qttzbl(i))
-            gdzcyz_rj(i) = gdzcyz(i) * rjtzbl(i)
-            gdzcyz_xdc(i) = gdzcyz(i) * xdctzbl(i)
-            gdzcyz_nt(i) = gdzcyz(i) * nttzbl(i)
-            gdzcyz_gf(i) = gdzcyz(i) * gftzbl(i)
-            gdzcyz_fd(i) = gdzcyz(i) * fdtzbl(i)
-        Next
-        Dim wxzcyz_cg(10) As Double
-        Dim wxzcyz_rj(10) As Double
-        Dim wxzcyz_xdc(10) As Double
-        Dim wxzcyz_nt(10) As Double
-        Dim wxzcyz_gf(10) As Double
-        Dim wxzcyz_fd(10) As Double
-        For i = 1 To 10
-            wxzcyz_cg(i) = wxzcyz(i) * (1 - qttzbl(i))
-            wxzcyz_rj(i) = wxzcyz(i) * rjtzbl(i)
-            wxzcyz_xdc(i) = wxzcyz(i) * xdctzbl(i)
-            wxzcyz_nt(i) = wxzcyz(i) * nttzbl(i)
-            wxzcyz_gf(i) = wxzcyz(i) * gftzbl(i)
-            wxzcyz_fd(i) = wxzcyz(i) * fdtzbl(i)
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        '10次投资的固定资产折旧年限，无形资产摊销年限
-        '常规设备
-        Dim gdzczjnx_cg(10) As Integer
-        Dim wxzctxnx_cg(10) As Integer
-        '燃机
-        Dim gdzczjnx_rj(10) As Integer
-        Dim wxzctxnx_rj(10) As Integer
-        '蓄电池
-        Dim gdzczjnx_xdc(10) As Integer
-        Dim wxzctxnx_xdc(10) As Integer
-        '暖通
-        Dim gdzczjnx_nt(10) As Integer
-        Dim wxzctxnx_nt(10) As Integer
-        '光伏
-        Dim gdzczjnx_gf(10) As Integer
-        Dim wxzctxnx_gf(10) As Integer
-        '风电
-        Dim gdzczjnx_fd(10) As Integer
-        Dim wxzctxnx_fd(10) As Integer
-        '10次投资的固定资产残值率，无形资产残值率
-        '常规设备
-        Dim gdzcczl_cg(10) As Double
-        Dim wxzcczl_cg(10) As Double
-        '燃机
-        Dim gdzcczl_rj(10) As Double
-        Dim wxzcczl_rj(10) As Double
-        '蓄电池
-        Dim gdzcczl_xdc(10) As Double
-        Dim wxzcczl_xdc(10) As Double
-        '暖通
-        Dim gdzcczl_nt(10) As Double
-        Dim wxzcczl_nt(10) As Double
-        '光伏
-        Dim gdzcczl_gf(10) As Double
-        Dim wxzcczl_gf(10) As Double
-        '风电
-        Dim gdzcczl_fd(10) As Double
-        Dim wxzcczl_fd(10) As Double
-        '读取计算参数
-        '常规设备
-        For i = 4 To 13
-            gdzczjnx_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value
-            wxzctxnx_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value
-            gdzcczl_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value
-            wxzcczl_cg(i - 3) = 0
-        Next
-        '燃机
-        For i = 1 To 10
-            gdzczjnx_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 29).Value
-            gdzcczl_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 29).Value
-            wxzctxnx_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 29).Value
-            wxzcczl_rj(i) = 0
-        Next
-        '蓄电池
-        For i = 1 To 10
-            gdzczjnx_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 32).Value
-            gdzcczl_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 32).Value
-            wxzctxnx_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 32).Value
-            wxzcczl_xdc(i) = 0
-        Next
-        '暖通
-        For i = 1 To 10
-            gdzczjnx_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 35).Value
-            gdzcczl_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 35).Value
-            wxzctxnx_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 35).Value
-            wxzcczl_nt(i) = 0
-        Next
-        '光伏
-        For i = 1 To 10
-            gdzczjnx_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 38).Value
-            gdzcczl_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 38).Value
-            wxzctxnx_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 38).Value
-            wxzcczl_gf(i) = 0
-        Next
-        '风电
-        For i = 1 To 10
-            gdzczjnx_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 41).Value
-            gdzcczl_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 41).Value
-            wxzctxnx_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 41).Value
-            wxzcczl_fd(i) = 0
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        '折旧摊销计算
-        Dim ans_gdzczj_cg
-        Dim ans_wxzctx_cg
-        Dim ans_gdzczj_rj
-        Dim ans_wxzctx_rj
-        Dim ans_gdzczj_xdc
-        Dim ans_wxzctx_xdc
-        Dim ans_gdzczj_nt
-        Dim ans_wxzctx_nt
-        Dim ans_gdzczj_gf
-        Dim ans_wxzctx_gf
-        Dim ans_gdzczj_fd
-        Dim ans_wxzctx_fd
-        '方法一
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Then
-            '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
-            '燃机
-            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
-            '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
-            '暖通
-            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
-            '光伏
-            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
-            '风电
-            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
-        End If
-        '方法二
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
-            '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
-            '燃机
-            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
-            '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
-            '暖通
-            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
-            '光伏
-            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
-            '风电
-            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
-        End If
-        '方法三
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Then
-            '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
-            '燃机
-            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
-            '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
-            '暖通
-            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
-            '光伏
-            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
-            '风电
-            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
-        End If
-        '方法四
-        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
-            '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
-            '燃机
-            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
-            '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
-            '暖通
-            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
-            '光伏
-            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
-            '风电
-            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————   
+        '分项折旧摊销计算
+        Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model)
+        Dim gdzcyz = ans_zjtx(0)
+        Dim wxzcyz = ans_zjtx(1)
+        Dim ans_gdzczj_cg = ans_zjtx(14)
+        Dim ans_gdzczj_rj = ans_zjtx(15)
+        Dim ans_gdzczj_xdc = ans_zjtx(16)
+        Dim ans_gdzczj_nt = ans_zjtx(17)
+        Dim ans_gdzczj_gf = ans_zjtx(18)
+        Dim ans_gdzczj_fd = ans_zjtx(19)
+        Dim ans_wxzctx_cg = ans_zjtx(20)
+        Dim ans_wxzctx_rj = ans_zjtx(21)
+        Dim ans_wxzctx_xdc = ans_zjtx(22)
+        Dim ans_wxzctx_nt = ans_zjtx(23)
+        Dim ans_wxzctx_gf = ans_zjtx(24)
+        Dim ans_wxzctx_fd = ans_zjtx(25)
         '————————————————————————————————————————————————————————————————————————————————————————   
         '结果写入Excel
         '写入固定资产、无形资产原值
@@ -432,6 +162,342 @@
         '计算一次Excel
         ExcelApp.Calculate()
     End Sub
+    Function 分项逐年折旧摊销金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer)
+        'On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '只计算出分项建设期资金运用的金额数值，不写入EXCEL
+        'hscy：计算期末，是否回收资产残值
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '每次投资资产原值计算
+        '读取输入数据
+        Dim GSBSJ = 读取估算表数据(ExcelApp)
+        '10次投资年份序号列表，列表，长度10
+        Dim tznf_list = GSBSJ(0)
+        '每次投资的可抵扣增值税金额
+        Dim kdkzzs_list = GSBSJ(9)
+        'jttz_list：逐年静态投资，列表
+        Dim jttz = GSBSJ(1)
+        '燃机总投资(万元)
+        Dim rjtz = GSBSJ(10)
+        '蓄电池总投资(万元)
+        Dim xdctz = GSBSJ(12)
+        '暖通总投资(万元)
+        Dim nttz = GSBSJ(14)
+        '光伏总投资(万元)
+        Dim gftz = GSBSJ(16)
+        '风电总投资(万元)
+        Dim fdtz = GSBSJ(18)
+        '无形资产所占比例
+        Dim wxzcbl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 5).Value
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '10次投资的资产原值
+        Dim gdzcyz(10) As Double
+        Dim wxzcyz(10) As Double
+        '读取开始年份和资产原值，前5年
+        Dim dttz_list = GSBSJ(2)
+        For i = 1 To 5
+            gdzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * (1 - wxzcbl)
+            wxzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * wxzcbl
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '分项建设期资金运用计算，列表长度31
+        Dim ans_zjyy = 分项建设期资金运用计算(ExcelApp, zbj_model, GSBSJ)
+        Dim jsqzjyy_cg = ans_zjyy(0)
+        Dim jsqzjyy_rj = ans_zjyy(1)
+        Dim jsqzjyy_xdc = ans_zjyy(2)
+        Dim jsqzjyy_nt = ans_zjyy(3)
+        Dim jsqzjyy_gf = ans_zjyy(4)
+        Dim jsqzjyy_fd = ans_zjyy(5)
+        '获取分项投资的动态投资金额，列表长度31
+        Dim dttz_cg = jsqzjyy_cg(0)
+        Dim dttz_rj = jsqzjyy_rj(0)
+        Dim dttz_xdc = jsqzjyy_xdc(0)
+        Dim dttz_nt = jsqzjyy_nt(0)
+        Dim dttz_gf = jsqzjyy_gf(0)
+        Dim dttz_fd = jsqzjyy_fd(0)
+        '列表长度转为10
+        Dim dttz_10_cg = 基础计算功能_31_to_10(tznf_list, dttz_cg)
+        Dim dttz_10_rj = 基础计算功能_31_to_10(tznf_list, dttz_rj)
+        Dim dttz_10_xdc = 基础计算功能_31_to_10(tznf_list, dttz_xdc)
+        Dim dttz_10_nt = 基础计算功能_31_to_10(tznf_list, dttz_nt)
+        Dim dttz_10_gf = 基础计算功能_31_to_10(tznf_list, dttz_gf)
+        Dim dttz_10_fd = 基础计算功能_31_to_10(tznf_list, dttz_fd)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '根据静态投资比例，分摊“建设期可抵扣增值税金额”，长度10的列表
+        Dim kdkzzs_cg(10) As Double
+        Dim kdkzzs_rj(10) As Double
+        Dim kdkzzs_xdc(10) As Double
+        Dim kdkzzs_nt(10) As Double
+        Dim kdkzzs_gf(10) As Double
+        Dim kdkzzs_fd(10) As Double
+        For i = 1 To 10
+            kdkzzs_cg(i) = kdkzzs_list(i) * (jttz(i) - rjtz(i) - xdctz(i) - nttz(i) - gftz(i) - fdtz(i)) / jttz(i)
+            kdkzzs_rj(i) = kdkzzs_list(i) * rjtz(i) / jttz(i)
+            kdkzzs_xdc(i) = kdkzzs_list(i) * xdctz(i) / jttz(i)
+            kdkzzs_nt(i) = kdkzzs_list(i) * nttz(i) / jttz(i)
+            kdkzzs_gf(i) = kdkzzs_list(i) * gftz(i) / jttz(i)
+            kdkzzs_fd(i) = kdkzzs_list(i) * fdtz(i) / jttz(i)
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算分项固定资产原值，长度10的列表
+        Dim gdzcyz_cg(10) As Double
+        Dim gdzcyz_rj(10) As Double
+        Dim gdzcyz_xdc(10) As Double
+        Dim gdzcyz_nt(10) As Double
+        Dim gdzcyz_gf(10) As Double
+        Dim gdzcyz_fd(10) As Double
+        '计算分项无形资产原值，长度10的列表
+        Dim wxzcyz_cg(10) As Double
+        Dim wxzcyz_rj(10) As Double
+        Dim wxzcyz_xdc(10) As Double
+        Dim wxzcyz_nt(10) As Double
+        Dim wxzcyz_gf(10) As Double
+        Dim wxzcyz_fd(10) As Double
+        For i = 1 To 10
+            gdzcyz_cg(i) = (dttz_10_cg(i) - kdkzzs_cg(i)) * (1 - wxzcbl)
+            gdzcyz_rj(i) = (dttz_10_rj(i) - kdkzzs_rj(i)) * (1 - wxzcbl)
+            gdzcyz_xdc(i) = (dttz_10_xdc(i) - kdkzzs_xdc(i)) * (1 - wxzcbl)
+            gdzcyz_nt(i) = (dttz_10_nt(i) - kdkzzs_nt(i)) * (1 - wxzcbl)
+            gdzcyz_gf(i) = (dttz_10_gf(i) - kdkzzs_gf(i)) * (1 - wxzcbl)
+            gdzcyz_fd(i) = (dttz_10_fd(i) - kdkzzs_fd(i)) * (1 - wxzcbl)
+        Next
+        For i = 1 To 10
+            wxzcyz_cg(i) = (dttz_10_cg(i) - kdkzzs_cg(i)) * wxzcbl
+            wxzcyz_rj(i) = (dttz_10_rj(i) - kdkzzs_rj(i)) * wxzcbl
+            wxzcyz_xdc(i) = (dttz_10_xdc(i) - kdkzzs_xdc(i)) * wxzcbl
+            wxzcyz_nt(i) = (dttz_10_nt(i) - kdkzzs_nt(i)) * wxzcbl
+            wxzcyz_gf(i) = (dttz_10_gf(i) - kdkzzs_gf(i)) * wxzcbl
+            wxzcyz_fd(i) = (dttz_10_fd(i) - kdkzzs_fd(i)) * wxzcbl
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '逐年折旧摊销计算
+        '读取每年投产月份数
+        Dim tcyfs_list(31) As Integer
+        For i = 1 To 31
+            tcyfs_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+        Next
+        '折旧摊销开始年份
+        Dim ksnf(10) As Integer
+        For i = 1 To 5
+            ksnf(i) = tznf_list(i)
+        Next
+        '10次投资的固定资产折旧年限，无形资产摊销年限
+        '常规设备
+        Dim gdzczjnx_cg(10) As Integer
+        Dim wxzctxnx_cg(10) As Integer
+        '燃机
+        Dim gdzczjnx_rj(10) As Integer
+        Dim wxzctxnx_rj(10) As Integer
+        '蓄电池
+        Dim gdzczjnx_xdc(10) As Integer
+        Dim wxzctxnx_xdc(10) As Integer
+        '暖通
+        Dim gdzczjnx_nt(10) As Integer
+        Dim wxzctxnx_nt(10) As Integer
+        '光伏
+        Dim gdzczjnx_gf(10) As Integer
+        Dim wxzctxnx_gf(10) As Integer
+        '风电
+        Dim gdzczjnx_fd(10) As Integer
+        Dim wxzctxnx_fd(10) As Integer
+        '10次投资的固定资产残值率，无形资产残值率
+        '常规设备
+        Dim gdzcczl_cg(10) As Double
+        Dim wxzcczl_cg(10) As Double
+        '燃机
+        Dim gdzcczl_rj(10) As Double
+        Dim wxzcczl_rj(10) As Double
+        '蓄电池
+        Dim gdzcczl_xdc(10) As Double
+        Dim wxzcczl_xdc(10) As Double
+        '暖通
+        Dim gdzcczl_nt(10) As Double
+        Dim wxzcczl_nt(10) As Double
+        '光伏
+        Dim gdzcczl_gf(10) As Double
+        Dim wxzcczl_gf(10) As Double
+        '风电
+        Dim gdzcczl_fd(10) As Double
+        Dim wxzcczl_fd(10) As Double
+        '读取计算参数
+        '常规设备
+        For i = 4 To 13
+            gdzczjnx_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 22).Value
+            wxzctxnx_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 26).Value
+            gdzcczl_cg(i - 3) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i, 24).Value
+            wxzcczl_cg(i - 3) = 0
+        Next
+        '燃机
+        For i = 1 To 10
+            gdzczjnx_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 29).Value
+            gdzcczl_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 29).Value
+            wxzctxnx_rj(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 29).Value
+            wxzcczl_rj(i) = 0
+        Next
+        '蓄电池
+        For i = 1 To 10
+            gdzczjnx_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 32).Value
+            gdzcczl_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 32).Value
+            wxzctxnx_xdc(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 32).Value
+            wxzcczl_xdc(i) = 0
+        Next
+        '暖通
+        For i = 1 To 10
+            gdzczjnx_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 35).Value
+            gdzcczl_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 35).Value
+            wxzctxnx_nt(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 35).Value
+            wxzcczl_nt(i) = 0
+        Next
+        '光伏
+        For i = 1 To 10
+            gdzczjnx_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 38).Value
+            gdzcczl_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 38).Value
+            wxzctxnx_gf(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 38).Value
+            wxzcczl_gf(i) = 0
+        Next
+        '风电
+        For i = 1 To 10
+            gdzczjnx_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 3, 41).Value
+            gdzcczl_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 14, 41).Value
+            wxzctxnx_fd(i) = ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(i + 25, 41).Value
+            wxzcczl_fd(i) = 0
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————   
+        '折旧摊销计算
+        Dim ans_gdzczj_cg
+        Dim ans_wxzctx_cg
+        Dim ans_gdzczj_rj
+        Dim ans_wxzctx_rj
+        Dim ans_gdzczj_xdc
+        Dim ans_wxzctx_xdc
+        Dim ans_gdzczj_nt
+        Dim ans_wxzctx_nt
+        Dim ans_gdzczj_gf
+        Dim ans_wxzctx_gf
+        Dim ans_gdzczj_fd
+        Dim ans_wxzctx_fd
+        '方法一
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Then
+            '常规设备
+            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
+            '燃机
+            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
+            '蓄电池
+            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
+            '暖通
+            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
+            '光伏
+            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
+            '风电
+            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
+        End If
+        '方法二
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
+            '常规设备
+            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
+            '燃机
+            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
+            '蓄电池
+            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
+            '暖通
+            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
+            '光伏
+            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
+            '风电
+            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
+        End If
+        '方法三
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Then
+            '常规设备
+            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
+            '燃机
+            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
+            '蓄电池
+            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
+            '暖通
+            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
+            '光伏
+            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
+            '风电
+            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
+        End If
+        '方法四
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
+            '常规设备
+            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
+            '燃机
+            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
+            '蓄电池
+            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
+            '暖通
+            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
+            '光伏
+            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
+            '风电
+            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '返回结果
+        Dim ans(25)
+        ans(0) = gdzcyz
+        ans(1) = wxzcyz
+        ans(2) = gdzcyz_cg
+        ans(3) = gdzcyz_rj
+        ans(4) = gdzcyz_xdc
+        ans(5) = gdzcyz_nt
+        ans(6) = gdzcyz_gf
+        ans(7) = gdzcyz_fd
+        ans(8) = wxzcyz_cg
+        ans(9) = wxzcyz_rj
+        ans(10) = wxzcyz_xdc
+        ans(11) = wxzcyz_nt
+        ans(12) = wxzcyz_gf
+        ans(13) = wxzcyz_fd
+        ans(14) = ans_gdzczj_cg
+        ans(15) = ans_gdzczj_rj
+        ans(16) = ans_gdzczj_xdc
+        ans(17) = ans_gdzczj_nt
+        ans(18) = ans_gdzczj_gf
+        ans(19) = ans_gdzczj_fd
+        ans(20) = ans_wxzctx_cg
+        ans(21) = ans_wxzctx_rj
+        ans(22) = ans_wxzctx_xdc
+        ans(23) = ans_wxzctx_nt
+        ans(24) = ans_wxzctx_gf
+        ans(25) = ans_wxzctx_fd
+        Return ans
+    End Function
+
     Function 折旧摊销计算_直线法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
                                                   jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10

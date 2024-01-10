@@ -63,9 +63,13 @@
         Dim kcje_xlf_model As Integer = 1
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         Dim kcje_clf_qtf_model As Integer = 1
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        Dim ldzj_model As Integer = 1
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        Dim kcje_ldzj_model As Integer = 1
         '————————————————————————————————————————————————————————————————————————————————————————
         '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '——————————————————————————————————————————————————————————————————————————————————————
         '在表格中写入当前采用的资金运用模式
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
@@ -152,9 +156,13 @@
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
@@ -198,9 +206,13 @@
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
@@ -244,9 +256,13 @@
             Dim kcje_xlf_model As Integer = 1
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
             '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"

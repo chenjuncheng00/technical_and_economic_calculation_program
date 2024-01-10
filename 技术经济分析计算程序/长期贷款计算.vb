@@ -1,81 +1,106 @@
 ﻿Module 长期贷款计算
-    Sub 长期贷款计算(ExcelApp As Object)
+    Sub 长期贷款计算(ExcelApp As Object, zbj_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         '————————————————————————————————————————————————————————————————————————————————————————        
-        '读取输入数据
-        Dim GSBSJ = 读取估算表数据(ExcelApp)
-        '读取开始年份和资产原值
-        Dim tznf_list = GSBSJ(0)
-        Dim dkje = GSBSJ(4) '总的贷款金额，列表长度10
-        '————————————————————————————————————————————————————————————————————————————————————————
-        'jttz_list：逐年静态投资，列表
-        Dim jttz = GSBSJ(1)
-        Dim jttz_list = 基础计算功能_10_to_31(tznf_list, jttz)
-        '燃机总投资(万元)
-        Dim rjtz = GSBSJ(10)
-        Dim rjtz_list = 基础计算功能_10_to_31(tznf_list, rjtz)
-        '蓄电池总投资(万元)
-        Dim xdctz = GSBSJ(12)
-        Dim xdctz_list = 基础计算功能_10_to_31(tznf_list, xdctz)
-        '暖通总投资(万元)
-        Dim nttz = GSBSJ(14)
-        Dim nttz_list = 基础计算功能_10_to_31(tznf_list, nttz)
-        '光伏总投资(万元)
-        Dim gftz = GSBSJ(16)
-        Dim gftz_list = 基础计算功能_10_to_31(tznf_list, gftz)
-        '风电总投资(万元)
-        Dim fdtz = GSBSJ(18)
-        Dim fdtz_list = 基础计算功能_10_to_31(tznf_list, fdtz)
-        '分项投资之和不可以超过总投资
-        For i = 1 To 10
-            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
-                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，长期贷款计算终止！")
-                Exit Sub
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
-        Dim rjtzbl(10) As Double
-        Dim xdctzbl(10) As Double
-        Dim nttzbl(10) As Double
-        Dim gftzbl(10) As Double
-        Dim fdtzbl(10) As Double
-        Dim qttzbl(10) As Double
-        For i = 1 To 10
-            If jttz(i) > 0 Then
-                rjtzbl(i) = rjtz(i) / jttz(i)
-                xdctzbl(i) = xdctz(i) / jttz(i)
-                nttzbl(i) = nttz(i) / jttz(i)
-                gftzbl(i) = gftz(i) / jttz(i)
-                fdtzbl(i) = fdtz(i) / jttz(i)
-                qttzbl(i) = (rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i)) / jttz(i)
-            Else
-                rjtzbl(i) = 0
-                xdctzbl(i) = 0
-                nttzbl(i) = 0
-                gftzbl(i) = 0
-                fdtzbl(i) = 0
-                qttzbl(i) = 0
-            End If
-        Next
-        '10次投资不同内容的贷款本金金额，按比例分摊
-        Dim dkje_cg(10) As Double
-        Dim dkje_rj(10) As Double
-        Dim dkje_xdc(10) As Double
-        Dim dkje_nt(10) As Double
-        Dim dkje_gf(10) As Double
-        Dim dkje_fd(10) As Double
-        For i = 1 To 10
-            dkje_cg(i) = dkje(i) * (1 - qttzbl(i))
-            dkje_rj(i) = dkje(i) * rjtzbl(i)
-            dkje_xdc(i) = dkje(i) * xdctzbl(i)
-            dkje_nt(i) = dkje(i) * nttzbl(i)
-            dkje_gf(i) = dkje(i) * gftzbl(i)
-            dkje_fd(i) = dkje(i) * fdtzbl(i)
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算分项贷款金额
+        Dim ans_cqdk = 分项逐年长期贷款金额计算(ExcelApp, zbj_model)
+        Dim ans_DKJS_cg = ans_cqdk(6)
+        Dim ans_DKJS_rj = ans_cqdk(7)
+        Dim ans_DKJS_xdc = ans_cqdk(8)
+        Dim ans_DKJS_nt = ans_cqdk(9)
+        Dim ans_DKJS_gf = ans_cqdk(10)
+        Dim ans_DKJS_fd = ans_cqdk(11)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '结果累加
+        Dim ans_DKJS_dnbxze(31) As Double '当年还本付息总额
+        Dim ans_DKJS_dnfx(31) As Double '当年付息金额
+        Dim ans_DKJS_dnhb(31) As Double '当年还本金额
+        Dim ans_DKJS_bjye(31) As Double '当年本金剩余金额
+        For i = 1 To 31
+            ans_DKJS_dnbxze(i) = ans_DKJS_cg(0)(i) + ans_DKJS_rj(0)(i) + ans_DKJS_xdc(0)(i) + ans_DKJS_nt(0)(i) + ans_DKJS_gf(0)(i) + ans_DKJS_fd(0)(i)
+            ans_DKJS_dnfx(i) = ans_DKJS_cg(1)(i) + ans_DKJS_rj(1)(i) + ans_DKJS_xdc(1)(i) + ans_DKJS_nt(1)(i) + ans_DKJS_gf(1)(i) + ans_DKJS_fd(1)(i)
+            ans_DKJS_dnhb(i) = ans_DKJS_cg(2)(i) + ans_DKJS_rj(2)(i) + ans_DKJS_xdc(2)(i) + ans_DKJS_nt(2)(i) + ans_DKJS_gf(2)(i) + ans_DKJS_fd(2)(i)
+            ans_DKJS_bjye(i) = ans_DKJS_cg(3)(i) + ans_DKJS_rj(3)(i) + ans_DKJS_xdc(3)(i) + ans_DKJS_nt(3)(i) + ans_DKJS_gf(3)(i) + ans_DKJS_fd(3)(i)
+        Next
+        '结果写入Excel
+        '前15年
+        For i = 1 To 15
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = ans_DKJS_dnbxze(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = ans_DKJS_dnfx(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = ans_DKJS_bjye(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = 0
+            End If
+        Next
+        '16—31年
+        For i = 16 To 31
+            If i <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = ans_DKJS_dnbxze(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = ans_DKJS_dnhb(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = ans_DKJS_dnfx(i)
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = ans_DKJS_bjye(i)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = 0
+                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = 0
+            End If
+        Next
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算一次Excel
+        ExcelApp.Calculate()
+    End Sub
+    Function 分项逐年长期贷款金额计算(ExcelApp As Object, zbj_model As Integer)
+        'On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '只计算出分项建设期资金运用的金额数值，不写入EXCEL
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '读取输入数据
+        Dim GSBSJ = 读取估算表数据(ExcelApp)
+        Dim tznf_list = GSBSJ(0)
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '分项10次建设期贷款金额
+        '分项建设期资金运用计算，列表长度31
+        Dim ans_zjyy = 分项建设期资金运用计算(ExcelApp, zbj_model, GSBSJ)
+        Dim jsqzjyy_cg = ans_zjyy(0)
+        Dim jsqzjyy_rj = ans_zjyy(1)
+        Dim jsqzjyy_xdc = ans_zjyy(2)
+        Dim jsqzjyy_nt = ans_zjyy(3)
+        Dim jsqzjyy_gf = ans_zjyy(4)
+        Dim jsqzjyy_fd = ans_zjyy(5)
+        '获取分项投资的建设期贷款金额，列表长度31
+        Dim dkje_cg = jsqzjyy_cg(2)
+        Dim dkje_rj = jsqzjyy_rj(2)
+        Dim dkje_xdc = jsqzjyy_xdc(2)
+        Dim dkje_nt = jsqzjyy_nt(2)
+        Dim dkje_gf = jsqzjyy_gf(2)
+        Dim dkje_fd = jsqzjyy_fd(2)
+        '列表长度转为10
+        Dim ans_dkje_cg = 基础计算功能_31_to_10(tznf_list, dkje_cg)
+        Dim ans_dkje_rj = 基础计算功能_31_to_10(tznf_list, dkje_rj)
+        Dim ans_dkje_xdc = 基础计算功能_31_to_10(tznf_list, dkje_xdc)
+        Dim ans_dkje_nt = 基础计算功能_31_to_10(tznf_list, dkje_nt)
+        Dim ans_dkje_gf = 基础计算功能_31_to_10(tznf_list, dkje_gf)
+        Dim ans_dkje_fd = 基础计算功能_31_to_10(tznf_list, dkje_fd)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '分项逐年长期贷款还本付息计算
         '宽限期是否付息
         Dim kxqfx As Boolean
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 11).Value = "付息" Then
@@ -184,54 +209,24 @@
             ans_DKJS_gf = 长期贷款计算_等额本金_10次投资分开计算(dkje_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
             ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
         End If
-        '结果累加
-        Dim ans_DKJS_dnbxze(31) As Double '当年还本付息总额
-        Dim ans_DKJS_dnfx(31) As Double '当年付息金额
-        Dim ans_DKJS_dnhb(31) As Double '当年还本金额
-        Dim ans_DKJS_bjye(31) As Double '当年本金剩余金额
-        For i = 1 To 31
-            ans_DKJS_dnbxze(i) = ans_DKJS_cg(0)(i) + ans_DKJS_rj(0)(i) + ans_DKJS_xdc(0)(i) + ans_DKJS_nt(0)(i) + ans_DKJS_gf(0)(i) + ans_DKJS_fd(0)(i)
-            ans_DKJS_dnfx(i) = ans_DKJS_cg(1)(i) + ans_DKJS_rj(1)(i) + ans_DKJS_xdc(1)(i) + ans_DKJS_nt(1)(i) + ans_DKJS_gf(1)(i) + ans_DKJS_fd(1)(i)
-            ans_DKJS_dnhb(i) = ans_DKJS_cg(2)(i) + ans_DKJS_rj(2)(i) + ans_DKJS_xdc(2)(i) + ans_DKJS_nt(2)(i) + ans_DKJS_gf(2)(i) + ans_DKJS_fd(2)(i)
-            ans_DKJS_bjye(i) = ans_DKJS_cg(3)(i) + ans_DKJS_rj(3)(i) + ans_DKJS_xdc(3)(i) + ans_DKJS_nt(3)(i) + ans_DKJS_gf(3)(i) + ans_DKJS_fd(3)(i)
-        Next
-        '结果写入Excel
-        '前15年
-        For i = 1 To 15
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = ans_DKJS_dnbxze(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = ans_DKJS_dnhb(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = ans_DKJS_dnfx(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = ans_DKJS_bjye(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(7, 4 + i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(8, 4 + i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(9, 4 + i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(10, 4 + i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(11, 4 + i).Value = 0
-            End If
-        Next
-        '16—31年
-        For i = 16 To 31
-            If i <= jsnx Then
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = ans_DKJS_bjye(i) + ans_DKJS_dnhb(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = ans_DKJS_dnbxze(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = ans_DKJS_dnhb(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = ans_DKJS_dnfx(i)
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = ans_DKJS_bjye(i)
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(37, i - 12).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(38, i - 12).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(39, i - 12).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(40, i - 12).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("借款还本付息计划表").Cells(41, i - 12).Value = 0
-            End If
-        Next
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算一次Excel
-        ExcelApp.Calculate()
-    End Sub
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '返回结果
+        Dim ans(11)
+        ans(0) = ans_dkje_cg
+        ans(1) = ans_dkje_rj
+        ans(2) = ans_dkje_xdc
+        ans(3) = ans_dkje_nt
+        ans(4) = ans_dkje_gf
+        ans(5) = ans_dkje_fd
+        ans(6) = ans_DKJS_cg
+        ans(7) = ans_DKJS_rj
+        ans(8) = ans_DKJS_xdc
+        ans(9) = ans_DKJS_nt
+        ans(10) = ans_DKJS_gf
+        ans(11) = ans_DKJS_fd
+        Return ans
+    End Function
     Function 长期贷款计算_等额本息_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
                                                     dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
