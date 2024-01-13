@@ -126,10 +126,14 @@
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
         Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
-        '计算还款利润
-        Call 计算还款利润(ExcelApp)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        '—————————————————————————————————————————————————————————————————
+        '计算材料费和其它费
+        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
+        '—————————————————————————————————————————————————————————————————
+        '计算还款利润
+        Call 计算还款利润(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '资金筹措表计算
         Call 投资计划与资金筹措表计算(ExcelApp)
@@ -139,7 +143,7 @@
         '所得税相关计算
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '计算流动资金
+        '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
@@ -166,6 +170,8 @@
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
         Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        '修理费计算
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -199,6 +205,10 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '长期贷款计算
         Call 长期贷款计算.长期贷款计算(ExcelApp, zbj_model)
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        '修理费计算
+        Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -238,7 +248,7 @@
         '所得税相关计算
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '计算流动资金
+        '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
@@ -268,6 +278,9 @@
         Else
             Call 分投资逐次输入达产率(ExcelApp)
         End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '材料费其它费计算，可能和负荷率有关，所以需要计算
+        Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '增值税相关计算
         Call 增值税相关计算(ExcelApp)
@@ -309,10 +322,10 @@
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
         Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
-        '计算还款利润
-        Call 计算还款利润(ExcelApp)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        '计算还款利润
+        Call 计算还款利润(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算材料费和其它费
         Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
@@ -335,7 +348,7 @@
         Call 隐藏收入税收表中收入为0的行(ExcelApp)
         Call 隐藏总成本表中成本为0的行(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '计算流动资金
+        '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)

@@ -1,0 +1,252 @@
+﻿Imports Microsoft.Office.Interop.Excel
+Public Class 设置流动资金计算方式
+    Private Sub 设置流动资金计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        'Checkbox载入成本文字
+        Me.cb_rldl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 9).Value, String)
+        Me.cb_rldl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 9).Value, String)
+        Me.cb_rldl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 9).Value, String)
+        Me.cb_rldl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 9).Value, String)
+        Me.cb_rldl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String)
+        Me.cb_ycl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 9).Value, String)
+        Me.cb_ycl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 9).Value, String)
+        Me.cb_ycl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 9).Value, String)
+        Me.cb_ycl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 9).Value, String)
+        Me.cb_ycl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String)
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '根据输入的成本等内容，判断checkbox是否可以被勾选     
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 14).Value > 0 Then
+            Me.cb_rldl1.Enabled = True
+        Else
+            Me.cb_rldl1.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 14).Value > 0 Then
+            Me.cb_rldl2.Enabled = True
+        Else
+            Me.cb_rldl2.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 14).Value > 0 Then
+            Me.cb_rldl3.Enabled = True
+        Else
+            Me.cb_rldl3.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 14).Value > 0 Then
+            Me.cb_rldl4.Enabled = True
+        Else
+            Me.cb_rldl4.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 14).Value > 0 Then
+            Me.cb_rldl5.Enabled = True
+        Else
+            Me.cb_rldl5.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 14).Value > 0 Then
+            Me.cb_ycl1.Enabled = True
+        Else
+            Me.cb_ycl1.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 14).Value > 0 Then
+            Me.cb_ycl2.Enabled = True
+        Else
+            Me.cb_ycl2.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 14).Value > 0 Then
+            Me.cb_ycl3.Enabled = True
+        Else
+            Me.cb_ycl3.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 14).Value > 0 Then
+            Me.cb_ycl4.Enabled = True
+        Else
+            Me.cb_ycl4.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 14).Value > 0 Then
+            Me.cb_ycl5.Enabled = True
+        Else
+            Me.cb_ycl5.Enabled = False
+        End If
+        '根据输入的分项建设等内容，判断checkbox是否可以被勾选     
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(45, 1).Value > 0 Then
+            Me.jsnr_rj.Enabled = True
+        Else
+            Me.jsnr_rj.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(49, 1).Value > 0 Then
+            Me.jsnr_nt.Enabled = True
+        Else
+            Me.jsnr_nt.Enabled = False
+        End If
+    End Sub
+
+    Private Sub 重置默认_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否将流动资金计算方式重置回默认设置？？", vbOKCancel)
+        If XZ = vbOK Then
+            '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置"
+            '———————————————————————————————————————————————————————————————————————————————————————— 
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '收入和成本变化后相关计算
+            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            '———————————————————————————————————————————————————————————————————————————————————————— 
+            MsgBox("已经将流动资金计算方式重置回默认设置！")
+        End If
+    End Sub
+
+    Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
+        If XZ = vbOK Then
+            If Me.cb_rldl1.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
+            End If
+            If Me.cb_rldl2.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
+            End If
+            If Me.cb_rldl3.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
+            End If
+            If Me.cb_rldl4.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
+            End If
+            If Me.cb_rldl5.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
+            End If
+            If Me.cb_ycl1.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
+            End If
+            If Me.cb_ycl2.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
+            End If
+            If Me.cb_ycl3.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
+            End If
+            If Me.cb_ycl4.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
+            End If
+            If Me.cb_ycl5.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
+            End If
+            If Me.cb_rygz.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = CType(Me.rgf_ft.Text, Double)
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
+            End If
+            If Me.jsnr_rj.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
+            End If
+            If Me.jsnr_nt.Enabled = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 1
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
+            End If
+            '————————————————————————————————————————————————————————————————————
+            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_cg_model As Integer = 1
+            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim xlfl_qt_model As Integer = 1
+            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim clfl_qtfl_model As Integer = 1
+            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim sdsl_model As Integer = 1
+            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_xlf_model As Integer = 1
+            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_clf_qtf_model As Integer = 1
+            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+            Dim ldzj_model As Integer = 1
+            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+            Dim kcje_ldzj_model As Integer = 1
+            '计算折旧摊销
+            Dim hscz As Boolean = True
+            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+            Dim zbj_model As Integer
+            If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
+                zbj_model = 0
+            Else
+                zbj_model = 1
+            End If
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '收入和成本变化后相关计算
+            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            '———————————————————————————————————————————————————————————————————————————————————————— 
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "特殊设置"
+            MsgBox("计算完成！")
+        End If
+    End Sub
+End Class

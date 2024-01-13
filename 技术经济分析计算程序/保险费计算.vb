@@ -9,14 +9,16 @@
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '分项逐年保险费金额计算，列表长度31
         Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model)
-        Dim ans_bxf_qt = ans_bxf(0)
+        Dim ans_bxf_cg = ans_bxf(0)
         Dim ans_bxf_gf = ans_bxf(1)
         Dim ans_bxf_fd = ans_bxf(2)
         Dim ans_bxf_xdc = ans_bxf(3)
+        Dim ans_bxf_rj = ans_bxf(4)
+        Dim ans_bxf_nt = ans_bxf(5)
         '保险费加和
         Dim ans_bxf_all(31) As Double
         For i = 1 To 31
-            ans_bxf_all(i) = ans_bxf_qt(i) + ans_bxf_gf(i) + ans_bxf_fd(i) + ans_bxf_xdc(i)
+            ans_bxf_all(i) = ans_bxf_cg(i) + ans_bxf_gf(i) + ans_bxf_fd(i) + ans_bxf_xdc(i) + ans_bxf_rj(i) + ans_bxf_nt(i)
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算结果写入Excel
@@ -88,52 +90,62 @@
             gdzcyz_lj_gf(i) = gdzcyz_lj_gf(i - 1) + gdzcyz_gf_list(i)
             gdzcyz_lj_fd(i) = gdzcyz_lj_fd(i - 1) + gdzcyz_fd_list(i)
         Next
-        Dim gdzcyz_lj_qt(31) As Double
-        For i = 1 To 31
-            gdzcyz_lj_qt(i) = gdzcyz_lj_cg(i) + gdzcyz_lj_rj(i) + gdzcyz_lj_nt(i)
-        Next
-        '其它项逐年剩余固定资产净值
-        Dim sygdzcjz_qt(31) As Double
-        For i = 1 To 31
-            sygdzcjz_qt(i) = sygdzcjz_cg(i) + sygdzcjz_rj(i) + sygdzcjz_nt(i)
-        Next
+        'Dim gdzcyz_lj_qt(31) As Double
+        'For i = 1 To 31
+        '    gdzcyz_lj_qt(i) = gdzcyz_lj_cg(i) + gdzcyz_lj_rj(i) + gdzcyz_lj_nt(i)
+        'Next
+        ''其它项逐年剩余固定资产净值
+        'Dim sygdzcjz_qt(31) As Double
+        'For i = 1 To 31
+        '    sygdzcjz_qt(i) = sygdzcjz_cg(i) + sygdzcjz_rj(i) + sygdzcjz_nt(i)
+        'Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取保险费计算基数设置
         Dim bxf_mode As String = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(209, 22).Value
         '读取保险费率
-        Dim bxfl_qt As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 5).Value
+        Dim bxfl_cg As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 5).Value
         Dim bxfl_gf As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(211, 22).Value
         Dim bxfl_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(212, 22).Value
         Dim bxfl_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(213, 22).Value
+        Dim bxfl_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(214, 22).Value
+        Dim bxfl_nt As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(215, 22).Value
         '计算逐年保险费
-        Dim ans_bxf_qt(31) As Double
+        Dim ans_bxf_cg(31) As Double
         Dim ans_bxf_gf(31) As Double
         Dim ans_bxf_fd(31) As Double
         Dim ans_bxf_xdc(31) As Double
+        Dim ans_bxf_rj(31) As Double
+        Dim ans_bxf_nt(31) As Double
         If bxf_mode = "净值" Then
             '以固定资产净值为基础进行计算
             For i = 1 To 31
-                ans_bxf_qt(i) = sygdzcjz_qt(i) * bxfl_qt
+                ans_bxf_cg(i) = sygdzcjz_cg(i) * bxfl_cg
                 ans_bxf_gf(i) = sygdzcjz_gf(i) * bxfl_gf
                 ans_bxf_fd(i) = sygdzcjz_fd(i) * bxfl_fd
                 ans_bxf_xdc(i) = sygdzcjz_xdc(i) * bxfl_xdc
+                ans_bxf_rj(i) = sygdzcjz_rj(i) * bxfl_rj
+                ans_bxf_nt(i) = sygdzcjz_nt(i) * bxfl_nt
             Next
         Else
             '以固定资产原值为基础进行计算(默认计算方式)
             For i = 1 To 31
-                ans_bxf_qt(i) = gdzcyz_lj_qt(i) * bxfl_qt
+                ans_bxf_cg(i) = gdzcyz_lj_cg(i) * bxfl_cg
                 ans_bxf_gf(i) = gdzcyz_lj_gf(i) * bxfl_gf
                 ans_bxf_fd(i) = gdzcyz_lj_fd(i) * bxfl_fd
                 ans_bxf_xdc(i) = gdzcyz_lj_xdc(i) * bxfl_xdc
+                ans_bxf_rj(i) = gdzcyz_lj_rj(i) * bxfl_rj
+                ans_bxf_nt(i) = gdzcyz_lj_nt(i) * bxfl_nt
             Next
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '返回结果
-        Dim ans(3)
-        ans(0) = ans_bxf_qt
+        Dim ans(5)
+        ans(0) = ans_bxf_cg
         ans(1) = ans_bxf_gf
         ans(2) = ans_bxf_fd
         ans(3) = ans_bxf_xdc
+        ans(4) = ans_bxf_rj
+        ans(5) = ans_bxf_nt
         Return ans
     End Function
 

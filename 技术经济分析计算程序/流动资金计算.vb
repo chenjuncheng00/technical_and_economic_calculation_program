@@ -475,6 +475,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年修理费，列表长度31
         Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        Dim xlf_rj = ans_xlf(2)
+        Dim xlf_nt = ans_xlf(3)
         Dim xlf_gf = ans_xlf(4)
         Dim xlf_fd = ans_xlf(5)
         Dim xlf_xdc = ans_xlf(6)
@@ -483,17 +485,24 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年保险费，列表长度31
         Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model)
+        Dim bxf_cg = ans_bxf(0)
         Dim bxf_gf = ans_bxf(1)
         Dim bxf_fd = ans_bxf(2)
         Dim bxf_xdc = ans_bxf(3)
+        Dim bxf_rj = ans_bxf(4)
+        Dim bxf_nt = ans_bxf(5)
         '保险费进项税率
         Dim bxf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(210, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年材料费其它费，列表长度31
         Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
+        Dim clf_rj = ans_clfqtf(2)
+        Dim clf_nt = ans_clfqtf(5)
         Dim clf_gf = ans_clfqtf(6)
         Dim clf_fd = ans_clfqtf(7)
         Dim clf_xdc = ans_clfqtf(8)
+        Dim qtf_rj = ans_clfqtf(9)
+        Dim qtf_nt = ans_clfqtf(12)
         Dim qtf_gf = ans_clfqtf(13)
         Dim qtf_fd = ans_clfqtf(14)
         Dim qtf_xdc = ans_clfqtf(15)
@@ -501,61 +510,110 @@
         Dim clf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, 22).Value
         Dim qtf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————   
+        '判断是否为纯新能源项目（投资中仅有：光伏+风电+蓄电池）
+        Dim xnytz_all As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
+        Dim trq_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value
+        Dim mt_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value
+        Dim gd_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value
+        Dim wgzq_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value
+        Dim gdrlf_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value
+        Dim bs_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value
+        Dim shs_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value
+        Dim ssh_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value
+        Dim ns_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value
+        Dim csglf_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value
+        Dim rygz_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value
+        Dim rjtz_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value
+        Dim nttz_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年应收账款、原材料、燃料和动力、现金（去除光伏、风电、蓄电池的相关金额），列表长度32
         Dim yszk_list(32) As Double
         Dim ycl_list(32) As Double
         Dim rldl_list(32) As Double
         Dim xj_list(32) As Double
-        '前15年
-        For i = 1 To 15
-            '应收账款 = 含税经营成本 - 含税蓄电池购电成本 - 含税光伏风电蓄电池修理费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池材料费 - 含税光伏风电蓄电池其它费
-            yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(21, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(22, i + 4).Value -
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(53, i + 4).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(54, i + 4).Value -
-                           (xlf_gf(i) + xlf_fd(i) + xlf_xdc(i)) * (1 + xlf_jxsl) - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
-                           (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl) - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
-            '原材料 = 含税所有的原材料成本 - 含税光伏风电蓄电池材料费
-            ycl_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(77, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(78, i + 4).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(89, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(90, i + 4).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(101, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(102, i + 4).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(113, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(114, i + 4).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(125, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(126, i + 4).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(226, i + 4).Value -
-                          (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl)
-            '燃料和动力
-            rldl_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(5, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(6, i + 4).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(17, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(18, i + 4).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(29, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(30, i + 4).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(41, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(42, i + 4).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(65, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(66, i + 4).Value
-            '现金 = 工资 + 含税保险费 + 含税其它费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池其它费
-            xj_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(199, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(211, i + 4).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(212, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, i + 4).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, i + 4).Value - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
-                         (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
-        Next
-        '第16~31年
-        For i = 16 To 31
-            yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(53, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(45, i - 12).Value -
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(57, i - 12).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(58, i - 12).Value -
-                           (xlf_gf(i) + xlf_fd(i) + xlf_xdc(i)) * (1 + xlf_jxsl) - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
-                           (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl) - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
-            ycl_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(81, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(82, i - 12).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(93, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(94, i - 12).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(105, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(106, i - 12).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(117, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(118, i - 12).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(129, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(130, i - 12).Value +
-                          ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(234, i - 12).Value -
-                          (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl)
-            rldl_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(9, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(10, i - 12).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(21, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(22, i - 12).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(33, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(34, i - 12).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(45, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(46, i - 12).Value +
-                           ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(69, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(70, i - 12).Value
-            xj_list(i) = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(203, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(215, i - 12).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(216, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value +
-                         ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, i - 12).Value - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
-                         (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl)
-        Next
+        If xnytz_all = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value Then
+            '如果是纯新能源项目，则数据都是0
+            For i = 1 To 32
+                yszk_list(i) = 0
+                ycl_list(i) = 0
+                rldl_list(i) = 0
+                xj_list(i) = 0
+            Next
+        Else
+            '如果不是纯新能源项目，则正常计算
+            '前15年
+            For i = 1 To 15
+                '应收账款 = 含税经营成本 - 含税蓄电池购电成本 - 含税光伏风电蓄电池修理费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池材料费 - 含税光伏风电蓄电池其它费
+                yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(21, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(22, i + 4).Value -
+                               ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(53, i + 4).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(54, i + 4).Value -
+                               (xlf_gf(i) + xlf_fd(i) + xlf_xdc(i)) * (1 + xlf_jxsl) - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
+                               (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl) - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl) -
+                               trq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(5, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(6, i + 4).Value) -
+                               mt_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(17, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(18, i + 4).Value) -
+                               gd_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(29, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(30, i + 4).Value) -
+                               wgzq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(41, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(42, i + 4).Value) -
+                               gdrlf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(65, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(66, i + 4).Value) -
+                               rjtz_ldzj_cg * (xlf_rj(i) * (1 + xlf_jxsl) + bxf_rj(i) * (1 + bxf_jxsl) + clf_rj(i) * (1 + clf_jxsl) + qtf_rj(i) * (1 + qtf_jxsl)) -
+                               nttz_ldzj_cg * (xlf_nt(i) * (1 + xlf_jxsl) + bxf_nt(i) * (1 + bxf_jxsl) + clf_nt(i) * (1 + clf_jxsl) + qtf_nt(i) * (1 + qtf_jxsl))
+                '原材料 = 含税所有的原材料成本 - 含税光伏风电蓄电池材料费
+                ycl_list(i) = (1 - bs_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(77, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(78, i + 4).Value) +
+                              (1 - shs_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(89, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(90, i + 4).Value) +
+                              (1 - ssh_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(101, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(102, i + 4).Value) +
+                              (1 - ns_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(113, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(114, i + 4).Value) +
+                              (1 - csglf_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(125, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(126, i + 4).Value) +
+                              ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(225, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(226, i + 4).Value -
+                              (clf_gf(i) + clf_fd(i) + clf_xdc(i) + rjtz_ldzj_cg * clf_rj(i) + nttz_ldzj_cg * clf_nt(i)) * (1 + clf_jxsl)
+                '燃料和动力
+                rldl_list(i) = (1 - trq_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(5, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(6, i + 4).Value) +
+                               (1 - mt_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(17, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(18, i + 4).Value) +
+                               (1 - gd_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(29, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(30, i + 4).Value) +
+                               (1 - wgzq_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(41, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(42, i + 4).Value) +
+                               (1 - gdrlf_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(65, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(66, i + 4).Value)
+                '现金 = 工资 + 含税保险费 + 含税其它费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池其它费
+                xj_list(i) = (1 - rygz_ldzj_cg) * ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(199, i + 4).Value +
+                             ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(211, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(212, i + 4).Value +
+                             ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, i + 4).Value -
+                             (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i) + rjtz_ldzj_cg * bxf_rj(i) + nttz_ldzj_cg * bxf_nt(i)) * (1 + bxf_jxsl) -
+                             (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i) + rjtz_ldzj_cg * qtf_rj(i) + nttz_ldzj_cg * qtf_nt(i)) * (1 + qtf_jxsl)
+            Next
+            '第16~31年
+            For i = 16 To 31
+                '应收账款 = 含税经营成本 - 含税蓄电池购电成本 - 含税光伏风电蓄电池修理费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池材料费 - 含税光伏风电蓄电池其它费
+                yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(53, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(45, i - 12).Value -
+                               ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(57, i - 12).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(58, i - 12).Value -
+                               (xlf_gf(i) + xlf_fd(i) + xlf_xdc(i)) * (1 + xlf_jxsl) - (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i)) * (1 + bxf_jxsl) -
+                               (clf_gf(i) + clf_fd(i) + clf_xdc(i)) * (1 + clf_jxsl) - (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i)) * (1 + qtf_jxsl) -
+                               trq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(9, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(10, i - 12).Value) -
+                               mt_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(21, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(22, i - 12).Value) -
+                               gd_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(33, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(34, i - 12).Value) -
+                               wgzq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(45, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(46, i - 12).Value) -
+                               gdrlf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(69, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(70, i - 12).Value) -
+                               rjtz_ldzj_cg * (xlf_rj(i) * (1 + xlf_jxsl) + bxf_rj(i) * (1 + bxf_jxsl) + clf_rj(i) * (1 + clf_jxsl) + qtf_rj(i) * (1 + qtf_jxsl)) -
+                               nttz_ldzj_cg * (xlf_nt(i) * (1 + xlf_jxsl) + bxf_nt(i) * (1 + bxf_jxsl) + clf_nt(i) * (1 + clf_jxsl) + qtf_nt(i) * (1 + qtf_jxsl))
+                '原材料 = 含税所有的原材料成本 - 含税光伏风电蓄电池材料费
+                ycl_list(i) = (1 - bs_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(81, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(82, i - 12).Value) +
+                              (1 - shs_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(93, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(94, i - 12).Value) +
+                              (1 - ssh_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(105, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(106, i - 12).Value) +
+                              (1 - ns_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(117, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(118, i - 12).Value) +
+                              (1 - csglf_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(129, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(130, i - 12).Value) +
+                              ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(233, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(234, i - 12).Value -
+                              (clf_gf(i) + clf_fd(i) + clf_xdc(i) + rjtz_ldzj_cg * clf_rj(i) + nttz_ldzj_cg * clf_nt(i)) * (1 + clf_jxsl)
+                '燃料和动力
+                rldl_list(i) = (1 - trq_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(9, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(10, i - 12).Value) +
+                               (1 - mt_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(21, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(22, i - 12).Value) +
+                               (1 - gd_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(33, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(34, i - 12).Value) +
+                               (1 - wgzq_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(45, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(46, i - 12).Value) +
+                               (1 - gdrlf_ldzj_cg) * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(69, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(70, i - 12).Value)
+                '现金 = 工资 + 含税保险费 + 含税其它费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池其它费
+                xj_list(i) = (1 - rygz_ldzj_cg) * ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(203, i - 12).Value +
+                             ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(215, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(216, i - 12).Value +
+                             ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, i - 12).Value -
+                             (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i) + rjtz_ldzj_cg * bxf_rj(i) + nttz_ldzj_cg * bxf_nt(i)) * (1 + bxf_jxsl) -
+                             (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i) + rjtz_ldzj_cg * qtf_rj(i) + nttz_ldzj_cg * qtf_nt(i)) * (1 + qtf_jxsl)
+            Next
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '金额除以周转次数
         For i = 1 To 31

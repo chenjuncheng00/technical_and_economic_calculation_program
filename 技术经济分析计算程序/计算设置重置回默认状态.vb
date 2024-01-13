@@ -60,7 +60,10 @@ Module 计算设置重置回默认状态
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)"
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)"
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)"
-        '————————————————————————————————————————————————————————————————————————————————————————      
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '流动资金计算
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置"
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
@@ -615,6 +618,20 @@ Module 计算设置重置回默认状态
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(3)
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(4)
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(5)
+        '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
         '————————————————————————————————————————————————————————————————————————————————————————      
         '计算一次工作簿
         ExcelApp.Calculate()
