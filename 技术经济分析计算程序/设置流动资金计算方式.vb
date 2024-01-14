@@ -150,67 +150,67 @@ Public Class 设置流动资金计算方式
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
-            If Me.cb_rldl1.Enabled = True Then
+            If Me.cb_rldl1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
             End If
-            If Me.cb_rldl2.Enabled = True Then
+            If Me.cb_rldl2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
             End If
-            If Me.cb_rldl3.Enabled = True Then
+            If Me.cb_rldl3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
             End If
-            If Me.cb_rldl4.Enabled = True Then
+            If Me.cb_rldl4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
             End If
-            If Me.cb_rldl5.Enabled = True Then
+            If Me.cb_rldl5.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
             End If
-            If Me.cb_ycl1.Enabled = True Then
+            If Me.cb_ycl1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
             End If
-            If Me.cb_ycl2.Enabled = True Then
+            If Me.cb_ycl2.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
             End If
-            If Me.cb_ycl3.Enabled = True Then
+            If Me.cb_ycl3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
             End If
-            If Me.cb_ycl4.Enabled = True Then
+            If Me.cb_ycl4.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
             End If
-            If Me.cb_ycl5.Enabled = True Then
+            If Me.cb_ycl5.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
             End If
-            If Me.cb_rygz.Enabled = True Then
+            If Me.cb_rygz.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = CType(Me.rgf_ft.Text, Double)
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
             End If
-            If Me.jsnr_rj.Enabled = True Then
+            If Me.jsnr_rj.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
             End If
-            If Me.jsnr_nt.Enabled = True Then
+            If Me.jsnr_nt.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 1
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0

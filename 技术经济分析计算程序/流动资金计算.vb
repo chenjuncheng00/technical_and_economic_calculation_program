@@ -391,9 +391,15 @@
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
         Dim tznf_list = GSBSJ(0)
+        '燃机总发电量(万kWh)，10次投资的情况
+        Dim rjfdl = GSBSJ(11)
+        Dim rjfdl_list = 基础计算功能_10_to_31(tznf_list, rjfdl)
         '蓄电池总装机功率(kW)，10次投资的情况
         Dim xdczjgl = GSBSJ(13)
         Dim xdczjgl_list = 基础计算功能_10_to_31(tznf_list, xdczjgl)
+        '供冷供热总量(万kWh)，10次投资的情况
+        Dim glgrl = GSBSJ(15)
+        Dim glgrl_list = 基础计算功能_10_to_31(tznf_list, glgrl)
         '光伏总装机功率(kW)，10次投资的情况
         Dim gfzjgl = GSBSJ(17)
         Dim gfzjgl_list = 基础计算功能_10_to_31(tznf_list, gfzjgl)
@@ -405,15 +411,27 @@
         Dim ldzjfl_gf_list = ans_fl_mr(0)
         Dim ldzjfl_fd_list = ans_fl_mr(1)
         Dim ldzjfl_xdc_list = ans_fl_mr(2)
+        Dim ldzjfl_rj_list = ans_fl_mr(3)
+        Dim ldzjfl_nt_list = ans_fl_mr(4)
         '计算基数扣除默认设置
         Dim kcje_mr = 流动资金计算基数扣除默认设置(ExcelApp)
-        Dim yynx_xdc = kcje_mr(0)
-        Dim yynx_gf = kcje_mr(1)
-        Dim yynx_fd = kcje_mr(2)
-        Dim kcbl_xdc = kcje_mr(3)
-        Dim kcbl_gf = kcje_mr(4)
-        Dim kcbl_fd = kcje_mr(5)
+        Dim yynx_rj = kcje_mr(0)
+        Dim yynx_xdc = kcje_mr(1)
+        Dim yynx_nt = kcje_mr(2)
+        Dim yynx_gf = kcje_mr(3)
+        Dim yynx_fd = kcje_mr(4)
+        Dim kcbl_rj = kcje_mr(5)
+        Dim kcbl_xdc = kcje_mr(6)
+        Dim kcbl_nt = kcje_mr(7)
+        Dim kcbl_gf = kcje_mr(8)
+        Dim kcbl_fd = kcje_mr(9)
         '根据扣除设置，修改逐年计算基数
+        '燃机
+        Dim ans_ldzjfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, ldzjfl_rj_list, yynx_rj, kcbl_rj)
+        ldzjfl_rj_list = ans_ldzjfl_rj(0)
+        '暖通
+        Dim ans_ldzjfl_nt = 计算费率修正计算基础功能(tznf_list, glgrl, glgrl_list, ldzjfl_nt_list, yynx_nt, kcbl_nt)
+        ldzjfl_nt_list = ans_ldzjfl_nt(0)
         '光伏
         Dim ans_ldzjfl_gf = 计算费率修正计算基础功能(tznf_list, gfzjgl, gfzjgl_list, ldzjfl_gf_list, yynx_gf, kcbl_gf)
         ldzjfl_gf_list = ans_ldzjfl_gf(0)
@@ -440,15 +458,21 @@
         Dim zyldzj_gf = ans_xny(3)
         Dim zyldzj_fd = ans_xny(4)
         Dim zyldzj_xdc = ans_xny(5)
+        '燃机和暖通流动资金计算
+        Dim ans_rjnt = 逐年流动资金计算_燃机和暖通(ExcelApp, rjfdl_list, glgrl_list, ldzjfl_rj_list, ldzjfl_nt_list)
+        Dim ldzj_rj = ans_rjnt(0)
+        Dim ldzj_nt = ans_rjnt(1)
+        Dim zyldzj_rj = ans_rjnt(2)
+        Dim zyldzj_nt = ans_rjnt(3)
         '————————————————————————————————————————————————————————————————————————————————————————
         '数据汇总，列表长度32
         Dim ldzj_all_list(32) As Double
         Dim zyldzj_all_list(32) As Double
         Dim xj_all_list(32) As Double '光伏风电蓄电池的流动资金，全部加到“现金”这一项里
         For i = 1 To 31
-            ldzj_all_list(i) = ldzj_cg(i) + ldzj_gf(i) + ldzj_fd(i) + ldzj_xdc(i)
-            zyldzj_all_list(i) = zyldzj_cg(i) + zyldzj_gf(i) + zyldzj_fd(i) + zyldzj_xdc(i)
-            xj_all_list(i) = xj_cg(i) + ldzj_gf(i) + ldzj_fd(i) + ldzj_xdc(i)
+            ldzj_all_list(i) = ldzj_cg(i) + ldzj_gf(i) + ldzj_fd(i) + ldzj_xdc(i) + ldzj_rj(i) + ldzj_nt(i)
+            zyldzj_all_list(i) = zyldzj_cg(i) + zyldzj_gf(i) + zyldzj_fd(i) + zyldzj_xdc(i) + zyldzj_rj(i) + zyldzj_nt(i)
+            xj_all_list(i) = xj_cg(i) + ldzj_gf(i) + ldzj_fd(i) + ldzj_xdc(i) + ldzj_rj(i) + ldzj_nt(i)
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '返回结果
@@ -555,6 +579,12 @@
                                gd_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(29, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(30, i + 4).Value) -
                                wgzq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(41, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(42, i + 4).Value) -
                                gdrlf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(65, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(66, i + 4).Value) -
+                               bs_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(77, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(78, i + 4).Value) -
+                               shs_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(89, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(90, i + 4).Value) -
+                               ssh_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(101, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(102, i + 4).Value) -
+                               ns_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(113, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(114, i + 4).Value) -
+                               csglf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(125, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(126, i + 4).Value) -
+                               rygz_ldzj_cg * ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(199, i + 4).Value -
                                rjtz_ldzj_cg * (xlf_rj(i) * (1 + xlf_jxsl) + bxf_rj(i) * (1 + bxf_jxsl) + clf_rj(i) * (1 + clf_jxsl) + qtf_rj(i) * (1 + qtf_jxsl)) -
                                nttz_ldzj_cg * (xlf_nt(i) * (1 + xlf_jxsl) + bxf_nt(i) * (1 + bxf_jxsl) + clf_nt(i) * (1 + clf_jxsl) + qtf_nt(i) * (1 + qtf_jxsl))
                 '原材料 = 含税所有的原材料成本 - 含税光伏风电蓄电池材料费
@@ -590,6 +620,12 @@
                                gd_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(33, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(34, i - 12).Value) -
                                wgzq_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(45, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(46, i - 12).Value) -
                                gdrlf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(69, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(70, i - 12).Value) -
+                               bs_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(81, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(82, i - 12).Value) -
+                               shs_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(93, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(94, i - 12).Value) -
+                               ssh_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(105, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(106, i - 12).Value) -
+                               ns_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(117, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(118, i - 12).Value) -
+                               csglf_ldzj_cg * (ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(129, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(130, i - 12).Value) -
+                               rygz_ldzj_cg * ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(203, i - 12).Value -
                                rjtz_ldzj_cg * (xlf_rj(i) * (1 + xlf_jxsl) + bxf_rj(i) * (1 + bxf_jxsl) + clf_rj(i) * (1 + clf_jxsl) + qtf_rj(i) * (1 + qtf_jxsl)) -
                                nttz_ldzj_cg * (xlf_nt(i) * (1 + xlf_jxsl) + bxf_nt(i) * (1 + bxf_jxsl) + clf_nt(i) * (1 + clf_jxsl) + qtf_nt(i) * (1 + qtf_jxsl))
                 '原材料 = 含税所有的原材料成本 - 含税光伏风电蓄电池材料费
@@ -695,26 +731,79 @@
         ans(5) = zyldzj_xdc
         Return ans
     End Function
+    Function 逐年流动资金计算_燃机和暖通(ExcelApp As Object, rjfdl_list As Array, glgrl_list As Array, ldzjfl_rj_list As Array, ldzjfl_nt_list As Array)
+        '燃机和暖通流动资金直接按照费率计算，不用除以周转次数
+        'rjfdl_list, glgrl_list：与下面的量一一对应
+        '燃机总发电量(万kWh)，10次投资的情况，列表，长度31
+        '供冷供热总量(万kWh)，10次投资的情况，列表，长度31
+        'ldzjfl_rj_lis，ldzjfl_nt_list：与下面的流动资金费率一一对应
+        '燃机流动资金费率， 元 / MWh，列表，长度31
+        '暖通流动资金费率， 元 / MWh，列表，长度31
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '是否将燃机或者暖通流动资金使用“新能源”计算模式取计算
+        Dim rj_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value
+        Dim nt_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '自有流动资金比例
+        Dim zyldzjbl_rj As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(11, 23).Value
+        Dim zyldzjbl_nt As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(13, 23).Value
+        '燃机和暖通总量累计值
+        Dim rjfdl_lj As Double = 0
+        Dim glgrl_lj As Double = 0
+        '燃机和暖通，逐年流动资金金额，列表长度32
+        Dim ldzj_rj(32) As Double '流动资金总额
+        Dim ldzj_nt(32) As Double '流动资金总额
+        Dim zyldzj_rj(32) As Double '自有流动资金金额
+        Dim zyldzj_nt(32) As Double '自有流动资金金额
+        For i = 1 To 31
+            '计算前一年累积量，用前一年的累积量进行计算
+            rjfdl_lj += rjfdl_list(i - 1)
+            glgrl_lj += glgrl_list(i - 1)
+            '计算流动资金金额
+            ldzj_rj(i) = rj_mode * rjfdl_lj * ldzjfl_rj_list(i) / 1000
+            ldzj_nt(i) = nt_mode * glgrl_lj * ldzjfl_nt_list(i) / 1000
+            '计算自有流动资金金额
+            zyldzj_rj(i) = rj_mode * ldzj_rj(i) * zyldzjbl_rj
+            zyldzj_nt(i) = nt_mode * ldzj_nt(i) * zyldzjbl_nt
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '返回结果
+        Dim ans(3)
+        ans(0) = ldzj_rj
+        ans(1) = ldzj_nt
+        ans(2) = zyldzj_rj
+        ans(3) = zyldzj_nt
+        Return ans
+    End Function
     Function 默认逐年流动资金费率(ExcelApp As Object)
         '读取Excel中输入的默认流动资金费率
         '光伏、风电、蓄电池流动资金直接根据费率进行计算
         Dim ldzjfl_gf As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(4, 23).Value
         Dim ldzjfl_fd As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(6, 23).Value
         Dim ldzjfl_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(8, 23).Value
+        '燃机和暖通流动资金费率
+        Dim ldzjfl_rj As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(10, 23).Value
+        Dim ldzjfl_nt As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(12, 23).Value
         '逐年费率
         Dim ldzjfl_gf_list(31) As Double
         Dim ldzjfl_fd_list(31) As Double
         Dim ldzjfl_xdc_list(31) As Double
+        Dim ldzjfl_rj_list(31) As Double
+        Dim ldzjfl_nt_list(31) As Double
         For i = 1 To 31
             ldzjfl_gf_list(i) = ldzjfl_gf
             ldzjfl_fd_list(i) = ldzjfl_fd
             ldzjfl_xdc_list(i) = ldzjfl_xdc
+            ldzjfl_rj_list(i) = ldzjfl_rj
+            ldzjfl_nt_list(i) = ldzjfl_nt
         Next
         '返回结果
-        Dim ans(2)
+        Dim ans(4)
         ans(0) = ldzjfl_gf_list
         ans(1) = ldzjfl_fd_list
         ans(2) = ldzjfl_xdc_list
+        ans(3) = ldzjfl_rj_list
+        ans(4) = ldzjfl_nt_list
         Return ans
     End Function
     Function 流动资金计算基数扣除默认设置(ExcelApp As Object)
@@ -727,21 +816,29 @@
 
         '读取计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
+        Dim yynx_nt As Integer = jsnx - 1
         Dim yynx_gf As Integer = jsnx - 1
         Dim yynx_fd As Integer = jsnx - 1
+        Dim kcbl_rj As Double = 0
         Dim kcbl_xdc As Double = 1
+        Dim kcbl_nt As Double = 0
         Dim kcbl_gf As Double = 0
         Dim kcbl_fd As Double = 0
 
         '返回结果
-        Dim ans(5)
-        ans(0) = yynx_xdc
-        ans(1) = yynx_gf
-        ans(2) = yynx_fd
-        ans(3) = kcbl_xdc
-        ans(4) = kcbl_gf
-        ans(5) = kcbl_fd
+        Dim ans(9)
+        ans(0) = yynx_rj
+        ans(1) = yynx_xdc
+        ans(2) = yynx_nt
+        ans(3) = yynx_gf
+        ans(4) = yynx_fd
+        ans(5) = kcbl_rj
+        ans(6) = kcbl_xdc
+        ans(7) = kcbl_nt
+        ans(8) = kcbl_gf
+        ans(9) = kcbl_fd
         Return ans
     End Function
 

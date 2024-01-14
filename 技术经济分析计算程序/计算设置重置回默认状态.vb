@@ -614,10 +614,14 @@ Module 计算设置重置回默认状态
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
         ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = kcje_mr_ldzj(2)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value = kcje_mr_ldzj(3)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value = kcje_mr_ldzj(4)
         '扣除比例
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(3)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(4)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(5)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(5)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(6)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(7)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value = kcje_mr_ldzj(8)
+        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value = kcje_mr_ldzj(9)
         '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0

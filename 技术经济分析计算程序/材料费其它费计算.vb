@@ -382,19 +382,19 @@
             fdzjgl_lj += fdzjgl_list(i - 1)
             xdczjgl_lj += xdczjgl_list(i - 1)
             '计算材料费
-            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) * fhl_list(i) / 10000
-            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) * fhl_list(i) / 10000
-            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) * fhl_list(i) / 10000
-            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) * fhl_list(i) / 10000
+            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) * fhl_list(i) / 1000
+            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) * fhl_list(i) / 1000
+            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) * fhl_list(i) / 1000
+            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) * fhl_list(i) / 1000
             ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
             ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
             ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
             ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
             '计算其它费
-            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) * fhl_list(i) / 10000
-            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) * fhl_list(i) / 10000
-            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) * fhl_list(i) / 10000
-            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) * fhl_list(i) / 10000
+            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) * fhl_list(i) / 1000
+            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) * fhl_list(i) / 1000
+            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) * fhl_list(i) / 1000
+            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) * fhl_list(i) / 1000
             ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
             ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
             ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
@@ -488,19 +488,19 @@
             ljfdl_lj += ljfdl_list(i - 1)
             xdczjgl_lj += xdczjgl_list(i - 1)
             '计算材料费
-            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) / 10000
-            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) / 10000
-            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) / 10000
-            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) / 10000
+            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) / 1000
+            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) / 1000
+            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) / 1000
+            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) / 1000
             ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
             ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
             ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
             ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
             '计算其它费
-            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) / 10000
-            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) / 10000
-            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) / 10000
-            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) / 10000
+            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) / 1000
+            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) / 1000
+            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) / 1000
+            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) / 1000
             ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
             ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
             ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
