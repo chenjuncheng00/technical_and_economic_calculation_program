@@ -406,7 +406,7 @@
         '风电总装机功率(kW)，10次投资的情况
         Dim fdzjgl = GSBSJ(19)
         Dim fdzjgl_list = 基础计算功能_10_to_31(tznf_list, fdzjgl)
-        '流动资金费率
+        '流动资金费率，默认：从EXCEL读取，逐年固定费率
         Dim ans_fl_mr = 默认逐年流动资金费率(ExcelApp)
         Dim ldzjfl_gf_list = ans_fl_mr(0)
         Dim ldzjfl_fd_list = ans_fl_mr(1)
@@ -414,17 +414,40 @@
         Dim ldzjfl_rj_list = ans_fl_mr(3)
         Dim ldzjfl_nt_list = ans_fl_mr(4)
         '计算基数扣除默认设置
-        Dim kcje_mr = 流动资金计算基数扣除默认设置(ExcelApp)
-        Dim yynx_rj = kcje_mr(0)
-        Dim yynx_xdc = kcje_mr(1)
-        Dim yynx_nt = kcje_mr(2)
-        Dim yynx_gf = kcje_mr(3)
-        Dim yynx_fd = kcje_mr(4)
-        Dim kcbl_rj = kcje_mr(5)
-        Dim kcbl_xdc = kcje_mr(6)
-        Dim kcbl_nt = kcje_mr(7)
-        Dim kcbl_gf = kcje_mr(8)
-        Dim kcbl_fd = kcje_mr(9)
+        Dim yynx_rj As Integer
+        Dim yynx_xdc As Integer
+        Dim yynx_nt As Integer
+        Dim yynx_gf As Integer
+        Dim yynx_fd As Integer
+        Dim kcbl_rj As Double
+        Dim kcbl_xdc As Double
+        Dim kcbl_nt As Double
+        Dim kcbl_gf As Double
+        Dim kcbl_fd As Double
+        If kcje_ldzj_model = 0 Then
+            Dim kcje_mr = 流动资金计算基数扣除默认设置(ExcelApp)
+            yynx_rj = kcje_mr(0)
+            yynx_xdc = kcje_mr(1)
+            yynx_nt = kcje_mr(2)
+            yynx_gf = kcje_mr(3)
+            yynx_fd = kcje_mr(4)
+            kcbl_rj = kcje_mr(5)
+            kcbl_xdc = kcje_mr(6)
+            kcbl_nt = kcje_mr(7)
+            kcbl_gf = kcje_mr(8)
+            kcbl_fd = kcje_mr(9)
+        Else
+            yynx_rj = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value
+            yynx_xdc = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value
+            yynx_nt = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value
+            yynx_gf = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value
+            yynx_fd = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value
+            kcbl_rj = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value
+            kcbl_xdc = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value
+            kcbl_nt = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value
+            kcbl_gf = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value
+            kcbl_fd = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value
+        End If
         '根据扣除设置，修改逐年计算基数
         '燃机
         Dim ans_ldzjfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, ldzjfl_rj_list, yynx_rj, kcbl_rj)

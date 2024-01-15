@@ -455,8 +455,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx1 <= 0 Then
                 MsgBox("输入的第1次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx1 <= 0 Then
-                MsgBox("输入的第1次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx1 < 0 Then
+                MsgBox("输入的第1次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -469,8 +469,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx2 <= 0 Then
                 MsgBox("输入的第2次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx2 <= 0 Then
-                MsgBox("输入的第2次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx2 < 0 Then
+                MsgBox("输入的第2次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -483,8 +483,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx3 <= 0 Then
                 MsgBox("输入的第3次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx3 <= 0 Then
-                MsgBox("输入的第3次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx3 < 0 Then
+                MsgBox("输入的第3次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -497,8 +497,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx4 <= 0 Then
                 MsgBox("输入的第4次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx4 <= 0 Then
-                MsgBox("输入的第4次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx4 < 0 Then
+                MsgBox("输入的第4次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -511,8 +511,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx5 <= 0 Then
                 MsgBox("输入的第5次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx5 <= 0 Then
-                MsgBox("输入的第5次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx5 < 0 Then
+                MsgBox("输入的第5次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -525,8 +525,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx6 <= 0 Then
                 MsgBox("输入的第6次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx6 <= 0 Then
-                MsgBox("输入的第6次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx6 < 0 Then
+                MsgBox("输入的第6次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -539,8 +539,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx7 <= 0 Then
                 MsgBox("输入的第7次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx7 <= 0 Then
-                MsgBox("输入的第7次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx7 < 0 Then
+                MsgBox("输入的第7次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -553,8 +553,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx8 <= 0 Then
                 MsgBox("输入的第8次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx8 <= 0 Then
-                MsgBox("输入的第8次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx8 < 0 Then
+                MsgBox("输入的第8次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -567,8 +567,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx9 <= 0 Then
                 MsgBox("输入的第9次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx9 <= 0 Then
-                MsgBox("输入的第9次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx9 < 0 Then
+                MsgBox("输入的第9次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -581,8 +581,8 @@ Public Class 设置长期贷款计算方式
             ElseIf cqdkhknx10 <= 0 Then
                 MsgBox("输入的第10次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
                 Exit Sub
-            ElseIf kxnx10 <= 0 Then
-                MsgBox("输入的第10次投资的长期贷款宽限年限不可以小于等于0，请检查并重新输入！")
+            ElseIf kxnx10 < 0 Then
+                MsgBox("输入的第10次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If

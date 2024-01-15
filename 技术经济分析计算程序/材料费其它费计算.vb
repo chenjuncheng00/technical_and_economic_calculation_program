@@ -266,7 +266,7 @@
             ans_qtf_gf = ans_clfqtf(13)
             ans_qtf_fd = ans_clfqtf(14)
             ans_qtf_xdc = ans_clfqtf(15)
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "投产量" Then
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "投资量" Then
             ans_clfqtf = 材料费其它费计算_投资量(rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list, xdczjgl_list, clfl_rj_list, clfl_rm_list, clfl_ljfd_list,
                                                  clfl_glgr_list, clfl_gf_list, clfl_fd_list, clfl_xdc_list, qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list,
                                                  qtfl_fd_list, qtfl_xdc_list)

@@ -71,16 +71,58 @@ Public Class 设置流动资金计算方式
         Else
             Me.cb_ycl5.Enabled = False
         End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 14).Value > 0 Then
+            Me.cb_rygz.Enabled = True
+            Me.rgf_ft.Enabled = True
+        Else
+            Me.cb_rygz.Enabled = False
+            Me.rgf_ft.Enabled = False
+        End If
         '根据输入的分项建设等内容，判断checkbox是否可以被勾选     
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(44, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(45, 1).Value > 0 Then
             Me.jsnr_rj.Enabled = True
+            Me.YYNX_RJ.Enabled = True
+            Me.KCBL_RJ.Enabled = True
         Else
             Me.jsnr_rj.Enabled = False
+            Me.YYNX_RJ.Enabled = False
+            Me.KCBL_RJ.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(47, 1).Value > 0 Then
+            Me.jsnr_xdc.Enabled = True
+            Me.YYNX_XDC.Enabled = True
+            Me.KCBL_XDC.Enabled = True
+        Else
+            Me.jsnr_xdc.Enabled = False
+            Me.YYNX_XDC.Enabled = False
+            Me.KCBL_XDC.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(48, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(49, 1).Value > 0 Then
             Me.jsnr_nt.Enabled = True
+            Me.YYNX_NT.Enabled = True
+            Me.KCBL_NT.Enabled = True
         Else
             Me.jsnr_nt.Enabled = False
+            Me.YYNX_NT.Enabled = False
+            Me.KCBL_NT.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(51, 1).Value > 0 Then
+            Me.jsnr_gf.Enabled = True
+            Me.YYNX_GF.Enabled = True
+            Me.KCBL_GF.Enabled = True
+        Else
+            Me.jsnr_gf.Enabled = False
+            Me.YYNX_GF.Enabled = False
+            Me.KCBL_GF.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(54, 1).Value > 0 Then
+            Me.jsnr_fd.Enabled = True
+            Me.YYNX_FD.Enabled = True
+            Me.KCBL_FD.Enabled = True
+        Else
+            Me.jsnr_fd.Enabled = False
+            Me.YYNX_FD.Enabled = False
+            Me.KCBL_FD.Enabled = False
         End If
     End Sub
 
@@ -122,9 +164,9 @@ Public Class 设置流动资金计算方式
             'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
             Dim kcje_clf_qtf_model As Integer = 1
             'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim ldzj_model As Integer = 1
+            Dim ldzj_model As Integer = 0
             'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_ldzj_model As Integer = 1
+            Dim kcje_ldzj_model As Integer = 0
             '计算折旧摊销
             Dim hscz As Boolean = True
             'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -150,6 +192,7 @@ Public Class 设置流动资金计算方式
         '————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否确认选择的各项内容？", vbOKCancel)
         If XZ = vbOK Then
+            '成本内容设置
             If Me.cb_rldl1.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 1
             Else
@@ -201,19 +244,42 @@ Public Class 设置流动资金计算方式
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
             End If
             If Me.cb_rygz.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = CType(Me.rgf_ft.Text, Double)
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = CType(Me.rgf_ft.Text, Double) / 100
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
             End If
+            '————————————————————————————————————————————————————————————————————
+            '投资内容设置
+            '燃机
             If Me.jsnr_rj.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 1
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = CType(Me.YYNX_RJ.Text, Integer)
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = CType(Me.KCBL_RJ.Text, Double) / 100
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
             End If
+            '蓄电池
+            If Me.jsnr_xdc.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = CType(Me.YYNX_XDC.Text, Integer)
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = CType(Me.KCBL_XDC.Text, Double) / 100
+            End If
+            '暖通
             If Me.jsnr_nt.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 1
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = CType(Me.YYNX_NT.Text, Integer)
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = CType(Me.KCBL_NT.Text, Double) / 100
             Else
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
+            End If
+            '光伏
+            If Me.jsnr_gf.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value = CType(Me.YYNX_GF.Text, Integer)
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value = CType(Me.KCBL_GF.Text, Double) / 100
+            End If
+            '风电
+            If Me.jsnr_fd.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value = CType(Me.YYNX_FD.Text, Integer)
+                ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value = CType(Me.KCBL_FD.Text, Double) / 100
             End If
             '————————————————————————————————————————————————————————————————————
             'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值

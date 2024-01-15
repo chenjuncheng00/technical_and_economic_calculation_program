@@ -342,7 +342,7 @@
                 For i = 1 To 31
                     ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12)
                 Next
-            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
+            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
                     ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) * (tcyfs_list(i) / 12) / 10000
                 Next
@@ -384,7 +384,7 @@
                 For i = 1 To 31
                     ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i)
                 Next
-            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
+            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
                     ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
                 Next
@@ -426,7 +426,7 @@
                 For i = 1 To 31
                     ans_xdc(i) = xdctz_lj_list(i) * xlfl_xdc_list(i)
                 Next
-            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)" Then
+            ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "装机功率(元/kW)" Then
                 For i = 1 To 31
                     ans_xdc(i) = xdczj_lj_list(i) * xlfl_xdc_list(i) / 10000
                 Next
