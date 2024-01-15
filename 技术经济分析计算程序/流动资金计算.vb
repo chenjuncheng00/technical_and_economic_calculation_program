@@ -1,6 +1,6 @@
 ﻿Module 流动资金计算
     Sub 流动资金相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -10,12 +10,14 @@
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值，预留功能
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值，预留功能
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '分项逐年流动资金计算
-        Dim ans_ldzj = 分项逐年流动资金计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Dim ans_ldzj = 分项逐年流动资金计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         Dim ldzj_all_list = ans_ldzj(0)
         Dim zyldzj_all_list = ans_ldzj(1)
         Dim xj_all_list = ans_ldzj(2)
@@ -375,7 +377,7 @@
         ExcelApp.Calculate()
     End Sub
     Function 分项逐年流动资金计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                                  clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                                  clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -385,8 +387,10 @@
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值，预留功能
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值，预留功能
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
@@ -466,7 +470,7 @@
         ldzjfl_xdc_list = ans_ldzjfl_xdc(0)
         '————————————————————————————————————————————————————————————————————————————————————————
         '常规设备流动资金计算
-        Dim ans_cg = 逐年流动资金计算_常规设备(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model)
+        Dim ans_cg = 逐年流动资金计算_常规设备(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, bxf_model, kcje_bxf_model)
         Dim ldzj_cg = ans_cg(0)
         Dim zyldzj_cg = ans_cg(1)
         Dim yszk_cg = ans_cg(2)
@@ -509,7 +513,7 @@
         Return ans
     End Function
     Function 逐年流动资金计算_常规设备(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                                       clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer)
+                                       clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -519,6 +523,8 @@
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年修理费，列表长度31
         Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
@@ -531,7 +537,7 @@
         Dim xlf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(140, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年保险费，列表长度31
-        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model)
+        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         Dim bxf_cg = ans_bxf(0)
         Dim bxf_gf = ans_bxf(1)
         Dim bxf_fd = ans_bxf(2)

@@ -1,6 +1,20 @@
 ﻿Module 反算收益率临界点
-    Sub 资本金税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '资本金税后收益率，资本金税后收益率，资本金税后收益率，
         '反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入
@@ -13,32 +27,6 @@
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
         '————————————————————————————————————————————————————————————————————————————————————————         
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————
         For i = 13 To 27 '收入&成本表中的有收入的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 7).Value > 0 Then '存在收入
                 SRBH = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 27).Value
@@ -71,7 +59,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算                              
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -80,7 +68,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -93,7 +81,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT + WTJSBC * m '每次增加WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value '将反算出来的单价记在表格中
@@ -106,7 +94,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -121,7 +109,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -130,7 +118,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况， 进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -143,7 +131,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT - WTJSBC * m '每次减少WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value  '将反算出来的单价记在表格中
@@ -159,7 +147,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -171,8 +159,22 @@
         ExcelApp.Calculate()
         Form1.Close()
     End Sub
-    Sub 资本金税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '资本金税后收益率，资本金税后收益率，资本金税后收益率，
         '反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本
@@ -184,32 +186,6 @@
         Dim CBZL '成本总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         For i = 13 To 27 '收入&成本表中的有收入的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 14).Value > 0 Then '存在成本
@@ -243,7 +219,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 - m / JSCSMax)
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -252,7 +228,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -265,7 +241,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT + WTJSBC * m '每次增加WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value  '将反算出来的单价记在表格中
@@ -281,7 +257,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -296,7 +272,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -305,7 +281,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -318,7 +294,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT - WTJSBC * m '每次减少WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -331,7 +307,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -343,8 +319,22 @@
         ExcelApp.Calculate()
         Form1.Close()
     End Sub
-    Sub 资本金税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 资本金税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -355,32 +345,6 @@
         Dim JTTZZEWT As Double = 0 '静态投资总额微调
         Dim WTJSBC As Integer '微调计算步长
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
         '———————————————————————————————————————————————————————————————————————————————————————— 
         For i = 30 To 110 '检索估算表中投资编号，投资编号都是1表示
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, 27).Value = 1 Then
@@ -424,7 +388,7 @@
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                 '设置跳出条件
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                     '将静态投资储存在JTTZWT数组
@@ -441,7 +405,7 @@
                 End If
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -462,7 +426,7 @@
                         Next
                     Next
                     '投资金额变化后计算
-                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                     '设置跳出条件
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value  '将反算出来的总投资记在表格中 
@@ -487,7 +451,7 @@
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         End If
         '如果此时的内部收益率大于设定的临界点内部收益率，则将目前的单价往上加
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then
@@ -508,7 +472,7 @@
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                 '设置跳出条件
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                     '将静态投资储存在JTTZWT数组
@@ -525,7 +489,7 @@
                 End If
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -546,7 +510,7 @@
                         Next
                     Next
                     '投资金额变化后计算
-                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                     '设置跳出条件
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(12, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value  '将反算出来的总投资记在表格中 
@@ -567,7 +531,7 @@
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         End If
         '将反算出的静态投资结果保留为2位小数
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then
@@ -577,8 +541,22 @@
         ExcelApp.Calculate()
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '全投资税后收益率，全投资税后收益率，全投资税后收益率，
         '反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入，反算收入
@@ -590,32 +568,6 @@
         Dim SRZL '收入总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         For i = 13 To 27 '收入&成本表中的有收入的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 7).Value > 0 Then '存在收入
@@ -649,7 +601,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -658,7 +610,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -671,7 +623,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT + WTJSBC * m '每次增加WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value '将反算出来的单价记在表格中
@@ -684,7 +636,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -699,7 +651,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     SRDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value, 4) '用于微调收入单价的初始数据
@@ -708,7 +660,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -721,7 +673,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJWT - WTJSBC * m '每次减小WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value  '将反算出来的单价记在表格中
@@ -737,7 +689,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 5).Value = SRDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / SRDJ) * SRZL, 2)
                         End If
@@ -749,8 +701,22 @@
         ExcelApp.Calculate()
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '全投资税后收益率，全投资税后收益率，全投资税后收益率，
         '反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本，反算成本
@@ -762,32 +728,6 @@
         Dim CBZL '成本总量
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
         Dim WTJSBC '微调计算步长
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
         '————————————————————————————————————————————————————————————————————————————————————————
         For i = 13 To 27 '收入&成本表中的有收入的项
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 14).Value > 0 Then '存在成本
@@ -821,7 +761,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 - m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -830,7 +770,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -843,7 +783,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT + WTJSBC * m '每次增加WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -859,7 +799,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -874,7 +814,7 @@
                                 '反算临界点
                                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ * (1 + m / JSCSMax) '每次改变原单价的千分之0.5
                                 '收入和成本变化后相关计算
-                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                 '设置跳出条件
                                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                     CBDJWT = Math.Round(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value, 4) '用于微调成本单价的初始数据
@@ -883,7 +823,7 @@
                                 End If
                             Next
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '排除收益率恰好等于设定的收益率的情况，进行微调操作
                             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                 '加入微调修正，使得计算结果更加准确
@@ -896,7 +836,7 @@
                                     '反算临界点
                                     ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJWT - WTJSBC * m '每次减小WTJSBC
                                     '收入和成本变化后相关计算
-                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                                    Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                                     '设置跳出条件
                                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value '将反算出来的单价记在表格中
@@ -909,7 +849,7 @@
                             '返回初始单价
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(i, 12).Value = CBDJ
                             '收入和成本变化后相关计算
-                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                             '计算此时的单价比原值变化了百分之多少，从而求出反算总量
                             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 7).Value = Math.Round((ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(j, 4).Value / CBDJ) * CBZL, 2)
                         End If
@@ -921,8 +861,22 @@
         ExcelApp.Calculate()
         Form1.Close()
     End Sub
-    Sub 全投资税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer)
+    Sub 全投资税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
+                                     clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
+                                     kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
         '实例化计算进度显示窗体
         Dim Form1 As New 计算进度显示
@@ -933,32 +887,6 @@
         Dim JTTZZEWT As Double = 0 '静态投资总额微调
         Dim WTJSBC As Integer '微调计算步长
         Dim JSCSMax As Integer = FSLJDJSCSMax '计算次数最大值
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '计算折旧摊销
-        Dim hscz As Boolean = True
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态" Then
-            zbj_model = 0
-        Else
-            zbj_model = 1
-        End If
         '———————————————————————————————————————————————————————————————————————————————————————— 
         For i = 30 To 110 '检索估算表中投资编号，投资编号都是1表示
             If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, 27).Value = 1 Then
@@ -1002,7 +930,7 @@
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                 '设置跳出条件
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                     '将静态投资储存在JTTZWT数组
@@ -1019,7 +947,7 @@
                 End If
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -1040,7 +968,7 @@
                         Next
                     Next
                     '投资金额变化后计算
-                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                     '设置跳出条件
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then '排除收益率恰好等于的情况
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value '将反算出来的总投资记在表格中 
@@ -1065,7 +993,7 @@
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         End If
         '如果此时的内部收益率大于设定的临界点内部收益率，则将目前的单价往上加
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value > ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value And ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then
@@ -1086,7 +1014,7 @@
                     Next
                 Next
                 '投资金额变化后计算
-                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                 '设置跳出条件
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value <= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                     '将静态投资储存在JTTZWT数组
@@ -1103,7 +1031,7 @@
                 End If
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '排除收益率恰好等于设定的收益率的情况，进行微调操作
             If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value < ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                 '加入微调修正，使得计算结果更加准确
@@ -1124,7 +1052,7 @@
                         Next
                     Next
                     '投资金额变化后计算
-                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+                    Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
                     '设置跳出条件
                     If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 22).Value >= ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 4).Value Then
                         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 7).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value  '将反算出来的总投资记在表格中 
@@ -1145,7 +1073,7 @@
                 Next
             Next
             '投资金额变化后计算
-            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+            Call 建设投资相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         End If
         '将反算出的静态投资结果保留为2位小数
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 8).Value = "Y" Then

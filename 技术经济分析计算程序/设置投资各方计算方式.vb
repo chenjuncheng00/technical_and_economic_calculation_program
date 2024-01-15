@@ -271,7 +271,6 @@ Public Class 设置投资各方计算方式
         Me.czbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
         Me.zcczbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
         Me.lrfpbl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(167, 2).Value, String)
-
     End Sub
 
 End Class

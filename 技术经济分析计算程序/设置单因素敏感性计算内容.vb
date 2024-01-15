@@ -528,11 +528,30 @@ Public Class 设置单因素敏感性计算内容
                     End If
                 Next
             Next
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
             '敏感性计算
-            Call 静态投资敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call 收入敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call 成本敏感性分析计算(ExcelApp, MGXFXBHL)
-            Call 年运行小时数敏感性分析(ExcelApp, MGXFXBHL)
+            Call 静态投资敏感性分析计算(ExcelApp, MGXFXBHL, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model,
+                                        kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            Call 收入敏感性分析计算(ExcelApp, MGXFXBHL, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model,
+                                    kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            Call 成本敏感性分析计算(ExcelApp, MGXFXBHL, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model,
+                                    kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            Call 年运行小时数敏感性分析(ExcelApp, MGXFXBHL, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model,
+                                        kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '绘制敏感性分析图并设置格式
             If Me.hzzxt.Checked = True Then
                 Call 绘制单因素敏感性分析图(ExcelApp)

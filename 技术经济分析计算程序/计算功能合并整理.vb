@@ -1,6 +1,7 @@
 ﻿Module 计算功能合并整理
     Sub 确定估算表参数设置(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
-                           sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                           sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
+                           bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '<估算表>中：项目计算年限、长期贷款相关年限、折旧摊销相关年限、可抵扣增值税年限变化后相关计算
@@ -14,14 +15,17 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         Call 年限系数相关计算.年限系数相关计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
-        Call 确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
-        Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 确定投资数据输入(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
     End Sub
     Sub 确定投资数据输入(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
-                         sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
+                         bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '包括：改变建设期投资金额数值后相关计算+材料费其它费计算
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -34,6 +38,8 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
@@ -42,7 +48,7 @@
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
-        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         '计算还款利润
         Call 计算还款利润(ExcelApp)
         '修理费计算
@@ -95,7 +101,7 @@
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -103,7 +109,7 @@
         ExcelApp.Calculate()
     End Sub
     Sub 建设投资相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer,
-                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '仅改变建设期投资金额数值后相关计算
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -117,6 +123,10 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————   
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
@@ -125,7 +135,7 @@
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
-        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '—————————————————————————————————————————————————————————————————
@@ -144,7 +154,7 @@
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -152,7 +162,7 @@
         ExcelApp.Calculate()
     End Sub
     Sub 折旧摊销相关计算(ExcelApp As Object, hscz As Boolean, sdsl_model As Integer, zbj_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer,
-                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         'hscy：计算期末，是否回收资产残值
@@ -165,11 +175,15 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
-        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '计算还款利润
@@ -181,7 +195,7 @@
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -189,7 +203,7 @@
         ExcelApp.Calculate()
     End Sub
     Sub 长期贷款相关计算(ExcelApp As Object, sdsl_model As Integer, zbj_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean,
-                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -202,11 +216,15 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '长期贷款计算
         Call 长期贷款计算.长期贷款计算(ExcelApp, zbj_model)
         '保险费计算
-        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '计算还款利润
@@ -218,7 +236,7 @@
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -226,7 +244,7 @@
         ExcelApp.Calculate()
     End Sub
     Sub 修理费相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                       clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                       clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -237,8 +255,10 @@
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值，预留功能
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值，预留功能
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
@@ -249,7 +269,7 @@
         Call 所得税相关计算(ExcelApp, sdsl_model)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -257,7 +277,7 @@
         ExcelApp.Calculate()
     End Sub
     Sub 收入成本相关计算(ExcelApp As Object, sdsl_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                         clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '仅<收入&成本输入表>中的内容改变后相关计算
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -271,6 +291,8 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
@@ -291,7 +313,7 @@
         Call 隐藏总成本表中成本为0的行(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -299,7 +321,8 @@
         ExcelApp.Calculate()
     End Sub
     Sub 税收相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
-                     sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer)
+                     sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
+                     bxf_model As Integer, kcje_bxf_model As Integer)
         On Error Resume Next
         '影响增值税或者所得税的相关内容计算，包括投资相关、收入成本相关的全部内容
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -313,6 +336,8 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '建设期资金运用计算
         Call 建设期资金运用计算.建设期资金运用计算(ExcelApp, zbj_model)
@@ -321,7 +346,7 @@
         '折旧摊销计算
         Call 折旧摊销计算.折旧摊销计算(ExcelApp, hscz, zbj_model)
         '保险费计算
-        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model)
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
         '修理费计算
         Call 修理费计算.修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
         '计算还款利润
@@ -349,7 +374,41 @@
         Call 隐藏总成本表中成本为0的行(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
-        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '重新计算投资收益率和投资回收期
+        Call 投资收益率和投资回收期计算(ExcelApp)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算一次工作簿
+        ExcelApp.Calculate()
+    End Sub
+    Sub 保险费相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
+                       sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
+                       bxf_model As Integer, kcje_bxf_model As Integer)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
+        'hscy：计算期末，是否回收资产残值
+        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
+        'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '保险费计算
+        Call 保险费计算.保险费计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '增值税相关计算
+        Call 增值税相关计算(ExcelApp)
+        '所得税相关计算
+        Call 所得税相关计算(ExcelApp, sdsl_model)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算流动资金，包括：材料费其它费+修理费+保险费
+        Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————

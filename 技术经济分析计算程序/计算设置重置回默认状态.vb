@@ -64,6 +64,9 @@ Module 计算设置重置回默认状态
         '流动资金计算
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置"
         '———————————————————————————————————————————————————————————————————————————————————————— 
+        '保险费计算
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(60, 18).Value = "常规设置"
+        '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
@@ -608,35 +611,80 @@ Module 计算设置重置回默认状态
         End If
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '流动资金重置回默认值
-        '计算基数扣除默认设置
-        Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
-        '运营年限
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = kcje_mr_ldzj(2)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value = kcje_mr_ldzj(3)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value = kcje_mr_ldzj(4)
-        '扣除比例
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(5)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(6)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(7)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value = kcje_mr_ldzj(8)
-        ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value = kcje_mr_ldzj(9)
-        '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
-        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
-        '————————————————————————————————————————————————————————————————————————————————————————      
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置" Then
+            '计算基数扣除默认设置
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = kcje_mr_ldzj(2)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value = kcje_mr_ldzj(3)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value = kcje_mr_ldzj(4)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(5)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(6)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(7)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value = kcje_mr_ldzj(8)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value = kcje_mr_ldzj(9)
+            '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '保险费重置回默认值
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(60, 18).Value = "常规设置" Then
+            Dim kcje_mr = 设备保险费计算基数扣除默认设置(ExcelApp)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 3).Value = kcje_mr(0)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 4).Value = kcje_mr(1)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 5).Value = kcje_mr(2)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 6).Value = kcje_mr(3)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 7).Value = kcje_mr(4)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 8).Value = kcje_mr(5)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 3).Value = kcje_mr(6)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 4).Value = kcje_mr(7)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 5).Value = kcje_mr(8)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 6).Value = kcje_mr(9)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 7).Value = kcje_mr(10)
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 8).Value = kcje_mr(11)
+            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
+            Dim bxfl_mr = 默认逐年保险费率(ExcelApp)
+            Dim bxfl_cg_list = bxfl_mr(0)
+            Dim bxfl_gf_list = bxfl_mr(1)
+            Dim bxfl_fd_list = bxfl_mr(2)
+            Dim bxfl_xdc_list = bxfl_mr(3)
+            Dim bxfl_rj_list = bxfl_mr(4)
+            Dim bxfl_nt_list = bxfl_mr(5)
+            '写入Excel
+            For i = 3 To 33 '列
+                If i - 2 <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(135, i).Value = bxfl_rj_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(136, i).Value = bxfl_xdc_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(137, i).Value = bxfl_gf_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(138, i).Value = bxfl_nt_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(139, i).Value = bxfl_fd_list(i - 2)
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(140, i).Value = bxfl_cg_list(i - 2)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(135, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(136, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(137, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(138, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(139, i).Value = 0
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(140, i).Value = 0
+                End If
+            Next
+        End If
+        ''————————————————————————————————————————————————————————————————————————————————————————      
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub

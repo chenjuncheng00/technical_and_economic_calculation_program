@@ -39,41 +39,31 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次工作簿
         ExcelApp.Calculate()
-        '建设期时间计划计算
-        Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
-        '————————————————————————————————————————————————————————————————————————————————————————
-        'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        Dim zbj_model As Integer = 0
-        'hscy：计算期末，是否回收资产残值，默认回收
-        Dim hscz As Boolean
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
-            hscz = False
-        Else
-            hscz = True
-        End If
-        'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_cg_model As Integer = 1
-        'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim xlfl_qt_model As Integer = 1
-        'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim clfl_qtfl_model As Integer = 1
-        'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim sdsl_model As Integer = 1
-        'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_xlf_model As Integer = 1
-        'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_clf_qtf_model As Integer = 1
-        'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-        Dim ldzj_model As Integer = 1
-        'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-        Dim kcje_ldzj_model As Integer = 1
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
         '——————————————————————————————————————————————————————————————————————————————————————
         '在表格中写入当前采用的资金运用模式
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "相同"
+        '——————————————————————————————————————————————————————————————————————————————————————
+        '建设期时间计划计算
+        Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '计算模式
+        Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+        Dim zbj_model = ans_mode(0)
+        Dim hscz = ans_mode(1)
+        Dim xlfl_cg_model = ans_mode(2)
+        Dim xlfl_qt_model = ans_mode(3)
+        Dim clfl_qtfl_model = ans_mode(4)
+        Dim sdsl_model = ans_mode(5)
+        Dim kcje_xlf_model = ans_mode(6)
+        Dim kcje_clf_qtf_model = ans_mode(7)
+        Dim ldzj_model = ans_mode(8)
+        Dim kcje_ldzj_model = ans_mode(9)
+        Dim bxf_model = ans_mode(10)
+        Dim kcje_bxf_model = ans_mode(11)
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
+        Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
     End Sub
 
     Private Sub 资本金比例为占动态投资比例_统一设置_Click(sender As Object, e As EventArgs) Handles 资本金比例为占动态投资比例_统一设置.Click
@@ -132,41 +122,32 @@
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿
             ExcelApp.Calculate()
-            '建设期时间计划计算
-            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
             '————————————————————————————————————————————————————————————————————————————————————————
-            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-            Dim zbj_model As Integer = 1
-            'hscy：计算期末，是否回收资产残值，默认回收
-            Dim hscz As Boolean
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
-                hscz = False
-            Else
-                hscz = True
-            End If
-            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_cg_model As Integer = 1
-            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_qt_model As Integer = 1
-            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim clfl_qtfl_model As Integer = 1
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
-            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_xlf_model As Integer = 1
-            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_clf_qtf_model As Integer = 1
-            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim ldzj_model As Integer = 1
-            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_ldzj_model As Integer = 1
-            '————————————————————————————————————————————————————————————————————————————————————————
-            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
-            '————————————————————————————————————————————————————————————————————————————————————————  
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "相同"
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '建设期时间计划计算
+            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '————————————————————————————————————————————————————————————————————————————————————————  
             Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均相同！"
         End If
     End Sub
@@ -182,41 +163,32 @@
         If XZ = vbOK Then
             '计算一次工作簿
             ExcelApp.Calculate()
-            '建设期时间计划计算
-            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
-            '————————————————————————————————————————————————————————————————————————————————————————
-            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-            Dim zbj_model As Integer = 0
-            'hscy：计算期末，是否回收资产残值，默认回收
-            Dim hscz As Boolean
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
-                hscz = False
-            Else
-                hscz = True
-            End If
-            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_cg_model As Integer = 1
-            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_qt_model As Integer = 1
-            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim clfl_qtfl_model As Integer = 1
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
-            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_xlf_model As Integer = 1
-            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_clf_qtf_model As Integer = 1
-            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim ldzj_model As Integer = 1
-            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_ldzj_model As Integer = 1
-            '————————————————————————————————————————————————————————————————————————————————————————
-            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
-            '————————————————————————————————————————————————————————————————————————————————————————  
+            '——————————————————————————————————————————————————————————————————————————————————————
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "动态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "不相同"
+            '——————————————————————————————————————————————————————————————————————————————————————
+            '建设期时间计划计算
+            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '————————————————————————————————————————————————————————————————————————————————————————  
             Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占动态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！"
         End If
     End Sub
@@ -232,41 +204,32 @@
         If XZ = vbOK Then
             '计算一次工作簿
             ExcelApp.Calculate()
-            '建设期时间计划计算
-            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
-            '————————————————————————————————————————————————————————————————————————————————————————
-            'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-            Dim zbj_model As Integer = 1
-            'hscy：计算期末，是否回收资产残值，默认回收
-            Dim hscz As Boolean
-            If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(53, 18).Value = "期末不回收残值" Then
-                hscz = False
-            Else
-                hscz = True
-            End If
-            'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_cg_model As Integer = 1
-            'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim xlfl_qt_model As Integer = 1
-            'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim clfl_qtfl_model As Integer = 1
-            'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim sdsl_model As Integer = 1
-            'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_xlf_model As Integer = 1
-            'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_clf_qtf_model As Integer = 1
-            'ldzj_model：流动资金的计算方式，0：使用默认值，1：从Excel中读取已有的值
-            Dim ldzj_model As Integer = 1
-            'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
-            Dim kcje_ldzj_model As Integer = 1
-            '————————————————————————————————————————————————————————————————————————————————————————
-            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
-            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model)
-            '————————————————————————————————————————————————————————————————————————————————————————  
+            '——————————————————————————————————————————————————————————————————————————————————————
             '在表格中写入当前采用的资金运用模式
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(164, 7).Value = "静态"
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(165, 7).Value = "不相同"
+            '——————————————————————————————————————————————————————————————————————————————————————
+            '建设期时间计划计算
+            Call 建设期时间计划计算.建设期时间计划计算(ExcelApp)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
+            Call 确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '————————————————————————————————————————————————————————————————————————————————————————  
             Me.RichTextBox1.Text = "计算完成：资本金比例计算模式切换为占静态总投资的比例，同时每次投资的资本金比例和建设期贷款利率均不相同！"
         End If
     End Sub
