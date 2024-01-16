@@ -682,10 +682,17 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '金额除以周转次数
         For i = 1 To 31
-            yszk_list(i) = yszk_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-            ycl_list(i) = ycl_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-            rldl_list(i) = rldl_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-            xj_list(i) = xj_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value > 0 Then
+                yszk_list(i) = yszk_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+                ycl_list(i) = ycl_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+                rldl_list(i) = rldl_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+                xj_list(i) = xj_list(i) / ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
+            Else
+                yszk_list(i) = 0
+                ycl_list(i) = 0
+                rldl_list(i) = 0
+                xj_list(i) = 0
+            End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         '自有流动资金比例
@@ -848,13 +855,13 @@
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1
-        Dim yynx_gf As Integer = jsnx - 1
-        Dim yynx_fd As Integer = jsnx - 1
-        Dim kcbl_rj As Double = 0
+        Dim yynx_gf As Integer = 25
+        Dim yynx_fd As Integer = 20
+        Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
-        Dim kcbl_nt As Double = 0
-        Dim kcbl_gf As Double = 0
-        Dim kcbl_fd As Double = 0
+        Dim kcbl_nt As Double = 1
+        Dim kcbl_gf As Double = 1
+        Dim kcbl_fd As Double = 1
 
         '返回结果
         Dim ans(9)

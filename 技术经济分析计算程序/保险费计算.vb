@@ -81,7 +81,7 @@
         Dim gdzcyz_fd_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_fd)
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取保险费计算基数设置
-        Dim bxf_mode As String = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(209, 22).Value
+        Dim bxf_jsjs_mode As String = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(209, 22).Value
         '读取保险费率
         Dim bxfl_cg_list(31) As Double
         Dim bxfl_gf_list(31) As Double
@@ -89,7 +89,7 @@
         Dim bxfl_xdc_list(31) As Double
         Dim bxfl_rj_list(31) As Double
         Dim bxfl_nt_list(31) As Double
-        If bxf_mode = 0 Then
+        If bxf_model = 0 Then
             Dim bxfl_mr = 默认逐年保险费率(ExcelApp)
             bxfl_cg_list = bxfl_mr(0)
             bxfl_gf_list = bxfl_mr(1)
@@ -163,7 +163,7 @@
         Dim ans_bxf_xdc(31) As Double
         Dim ans_bxf_rj(31) As Double
         Dim ans_bxf_nt(31) As Double
-        If bxf_mode = "净值" Then
+        If bxf_jsjs_mode = "净值" Then
             '以固定资产净值为基础进行计算
             For i = 1 To 31
                 ans_bxf_cg(i) = sygdzcjz_cg(i) * bxfl_cg_list(i)
@@ -259,15 +259,15 @@
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1
-        Dim yynx_gf As Integer = jsnx - 1
-        Dim yynx_fd As Integer = jsnx - 1
+        Dim yynx_gf As Integer = 25
+        Dim yynx_fd As Integer = 20
         Dim yynx_cg As Integer = jsnx - 1
-        Dim kcbl_rj As Double = 0
+        Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
-        Dim kcbl_nt As Double = 0
-        Dim kcbl_gf As Double = 0
-        Dim kcbl_fd As Double = 0
-        Dim kcbl_cg As Double = 0
+        Dim kcbl_nt As Double = 1
+        Dim kcbl_gf As Double = 1
+        Dim kcbl_fd As Double = 1
+        Dim kcbl_cg As Double = 1
 
         Dim ans(11)
         ans(0) = yynx_rj

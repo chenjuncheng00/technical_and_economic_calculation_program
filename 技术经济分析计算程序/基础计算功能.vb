@@ -775,13 +775,4 @@
         '返回结果
         Return ZTJC
     End Function
-    Sub 打印数据用于调试(data_list As Array, n_data As Integer)
-        'data_list：数据，列表
-        'n_data：数据数量
-        Dim str_txt As String = ""
-        For i = 1 To n_data
-            str_txt = str_txt & Str(data_list(i)) & "， "
-        Next
-        MsgBox(str_txt)
-    End Sub
 End Module

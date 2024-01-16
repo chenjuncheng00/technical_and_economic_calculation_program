@@ -601,15 +601,15 @@
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1
-        Dim yynx_gf As Integer = jsnx - 1
-        Dim yynx_fd As Integer = jsnx - 1
+        Dim yynx_gf As Integer = 25
+        Dim yynx_fd As Integer = 20
         Dim yynx_cg As Integer = jsnx - 1
-        Dim kcbl_rj As Double = 0
+        Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
-        Dim kcbl_nt As Double = 0
-        Dim kcbl_gf As Double = 0
-        Dim kcbl_fd As Double = 0
-        Dim kcbl_cg As Double = 0
+        Dim kcbl_nt As Double = 1
+        Dim kcbl_gf As Double = 1
+        Dim kcbl_fd As Double = 1
+        Dim kcbl_cg As Double = 1
 
         Dim ans(11)
         ans(0) = yynx_rj
