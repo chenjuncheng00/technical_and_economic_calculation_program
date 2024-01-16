@@ -1,115 +1,11 @@
-﻿Imports System.Diagnostics.Eventing.Reader
-
-Public Class 设置修理费率计算方式
+﻿Public Class 设置保险费率计算方式
     '开始年份和结束年份的列表
     Public ksnf_list As New List(Of Integer)
     Public jsnf_list As New List(Of Integer)
     '开始年份和结束年份的费率
     Public ksfl_list As New List(Of Double)
     Public jsfl_list As New List(Of Double)
-    Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
-        Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
-        If XZ = vbOK Then
-            Me.开始年份tmp.Clear()
-            Me.结束年份tmp.Clear()
-            Me.开始费率tmp.Clear()
-            Me.结束费率tmp.Clear()
-            Me.开始年份列表.Items.Clear()
-            Me.结束年份列表.Items.Clear()
-            Me.开始费率列表.Items.Clear()
-            Me.结束费率列表.Items.Clear()
-            ksnf_list.Clear()
-            jsnf_list.Clear()
-            ksfl_list.Clear()
-            jsfl_list.Clear()
-            Me.RichTextBox1.Rtf = Nothing
-            Me.ranji.Checked = False
-            Me.xudianchi.Checked = False
-            Me.nuantong.Checked = False
-            Me.guangfu.Checked = False
-            Me.fengdian.Checked = False
-            Me.changgui.Checked = False
-            Me.YYNX_RJ.Clear()
-            Me.YYNX_XDC.Clear()
-            Me.YYNX_NT.Clear()
-            Me.YYNX_GF.Clear()
-            Me.YYNX_FD.Clear()
-            Me.YYNX_CG.Clear()
-            Me.KCBL_RJ.Clear()
-            Me.KCBL_XDC.Clear()
-            Me.KCBL_NT.Clear()
-            Me.KCBL_GF.Clear()
-            Me.KCBL_FD.Clear()
-            Me.KCBL_CG.Clear()
-        End If
-    End Sub
-
-    Private Sub 设置剔除_Click(sender As Object, e As EventArgs) Handles 设置剔除.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '燃机
-        If ranji.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = CInt(YYNX_RJ.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 3).Value = CDbl(KCBL_RJ.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>修理费计算参数设置写入完成！"
-        End If
-        '蓄电池
-        If xudianchi.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = CInt(YYNX_XDC.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 4).Value = CDbl(KCBL_XDC.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>修理费计算参数设置写入完成！"
-        End If
-        '暖通
-        If nuantong.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = CInt(YYNX_NT.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 5).Value = CDbl(KCBL_NT.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>修理费计算参数设置写入完成！"
-        End If
-        '光伏
-        If guangfu.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 6).Value = CInt(YYNX_GF.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 6).Value = CDbl(KCBL_GF.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>修理费计算参数设置写入完成！"
-        End If
-        '风电
-        If fengdian.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 7).Value = CInt(YYNX_FD.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 7).Value = CDbl(KCBL_FD.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>修理费计算参数设置写入完成！"
-        End If
-        '常规设备
-        If changgui.Checked = True Then
-            '运营年限
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 8).Value = CInt(YYNX_CG.Text)
-            '扣除比例
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value = CDbl(KCBL_CG.Text) / 100
-            '显示
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>修理费计算参数设置写入完成！"
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算一次工作簿
-        ExcelApp.Calculate()
-    End Sub
-
-    Private Sub 设置修理费率计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub 设置保险费率计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
@@ -138,8 +34,8 @@ Public Class 设置修理费率计算方式
         Me.开始年份tmp.Text = JSKSNF
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         Me.结束年份tmp.Text = jsnx
-        Me.开始费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
-        Me.结束费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value * 100
+        Me.开始费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 5).Value * 100
+        Me.结束费率tmp.Text = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(10, 5).Value * 100
         '————————————————————————————————————————————————————————————————————————————————————————
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '根据输入的投资情况，确定每个checkbox和投资比例输入是否可以选择和输入，并载入默认值
@@ -235,342 +131,6 @@ Public Class 设置修理费率计算方式
         End If
     End Sub
 
-    Private Sub 常规设备_Click(sender As Object, e As EventArgs) Handles 常规设备.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，常规设备只可以以投资百分比计算，选择无效
-        Dim xlfl_cg_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '逐年常规修理费写入Excel
-        For i = 3 To 33
-            '常规设备修理费率（%）
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(159, i).Value = xlfl_cg_list(i - 2) / 100
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '————————————————————————————————————————————————————————————————————————————————————————     
-        '读取并显示计算出的逐年修理费率
-        Dim SJ As Double
-        Dim nf
-        For i = 1 To 31  '根据数组中的元素数量循环
-            nf = i '年份序号
-            SJ = Math.Round(xlfl_cg_list(i), 2)
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-        Next
-        Me.RichTextBox1.Text = "常规设备逐年修理费率：" & Me.RichTextBox1.Text
-    End Sub
-
-    Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，燃机设备只可以以投资百分比计算，选择无效
-        Dim xlfl_rj_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '逐年修理费写入Excel
-        For i = 3 To 33
-            '设备修理费率
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(154, i).Value = xlfl_rj_list(i - 2) / 100
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '————————————————————————————————————————————————————————————————————————————————————————     
-        '读取并显示计算出的逐年修理费率
-        Dim SJ As Double
-        Dim nf
-        For i = 1 To 31  '根据数组中的元素数量循环
-            nf = i '年份序号
-            SJ = Math.Round(xlfl_rj_list(i), 2)
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-        Next
-        Me.RichTextBox1.Text = "燃机设备逐年修理费率：" & Me.RichTextBox1.Text
-    End Sub
-
-    Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，蓄电池设备只可以以投资百分比计算，选择无效
-        Dim xlfl_xdc_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        If ComboBox1.Text = "投资额百分比(%)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "投资额百分比(%)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2) / 100
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_xdc_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
-        ElseIf ComboBox1.Text = "装机功率(元/kW)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(58, 18).Value = "装机功率(元/kW)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(155, i).Value = xlfl_xdc_list(i - 2)
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_xdc_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "蓄电池设备逐年修理费率：" & Me.RichTextBox1.Text
-        End If
-    End Sub
-
-    Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(157, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，暖通设备只可以以投资百分比计算，选择无效
-        Dim xlfl_nt_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '逐年修理费写入Excel
-        For i = 3 To 33
-            '设备修理费率
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(157, i).Value = xlfl_nt_list(i - 2) / 100
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '————————————————————————————————————————————————————————————————————————————————————————     
-        '读取并显示计算出的逐年修理费率
-        Dim SJ As Double
-        Dim nf
-        For i = 1 To 31  '根据数组中的元素数量循环
-            nf = i '年份序号
-            SJ = Math.Round(xlfl_nt_list(i), 2)
-            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-        Next
-        Me.RichTextBox1.Text = "暖通设备逐年修理费率：" & Me.RichTextBox1.Text
-    End Sub
-
-    Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        Dim XZ = MsgBox("是否确定输入的全部修理费计算参数？", vbOKCancel)
-        If XZ = vbOK Then
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————    
-            '计算模式
-            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
-            Dim zbj_model = ans_mode(0)
-            Dim hscz = ans_mode(1)
-            Dim xlfl_cg_model = ans_mode(2)
-            Dim xlfl_qt_model = ans_mode(3)
-            Dim clfl_qtfl_model = ans_mode(4)
-            Dim sdsl_model = ans_mode(5)
-            Dim kcje_xlf_model = ans_mode(6)
-            Dim kcje_clf_qtf_model = ans_mode(7)
-            Dim ldzj_model = ans_mode(8)
-            Dim kcje_ldzj_model = ans_mode(9)
-            Dim bxf_model = ans_mode(10)
-            Dim kcje_bxf_model = ans_mode(11)
-            '————————————————————————————————————————————————————————————————————————————————————————
-            '修理费计算
-            Call 修理费相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            Me.RichTextBox1.Text = "设备逐年修理费计算完成！"
-        End If
-    End Sub
-
-    Private Sub 光伏_Click(sender As Object, e As EventArgs) Handles 光伏.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，光伏设备只可以以投资百分比计算，选择无效
-        Dim xlfl_gf_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        If ComboBox1.Text = "投资额百分比(%)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "投资额百分比(%)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_list(i - 2) / 100
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_gf_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "光伏设备逐年修理费率：" & Me.RichTextBox1.Text
-        ElseIf ComboBox1.Text = "装机功率(元/kW)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(56, 18).Value = "装机功率(元/kW)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(156, i).Value = xlfl_gf_list(i - 2)
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_gf_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "光伏设备逐年修理费率：" & Me.RichTextBox1.Text
-        End If
-    End Sub
-
-    Private Sub 风电_Click(sender As Object, e As EventArgs) Handles 风电.Click
-        On Error Resume Next
-        '定义Excel对象
-        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
-        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '清空已有的数据，防止出错
-        For i = 3 To 33
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = 0
-        Next
-        '清空窗体
-        Me.RichTextBox1.Clear()
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        '计算逐年修理费率，风电设备只可以以投资百分比计算，选择无效
-        Dim xlfl_fd_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        If ComboBox1.Text = "投资额百分比(%)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "投资额百分比(%)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = xlfl_fd_list(i - 2) / 100
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_fd_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "风电设备逐年修理费率：" & Me.RichTextBox1.Text
-        ElseIf ComboBox1.Text = "装机功率(元/kW)" Then
-            '写入模式：投资额百分比(%)；装机功率(元/kW)
-            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(57, 18).Value = "装机功率(元/kW)"
-            '逐年修理费写入Excel
-            For i = 3 To 33
-                '设备修理费率
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(158, i).Value = xlfl_fd_list(i - 2)
-            Next
-            '————————————————————————————————————————————————————————————————————————————————————————        
-            '计算一次工作簿
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————     
-            '读取并显示计算出的逐年修理费率
-            Dim SJ As Double
-            Dim nf
-            For i = 1 To 31  '根据数组中的元素数量循环
-                nf = i '年份序号
-                SJ = Math.Round(xlfl_fd_list(i), 2)
-                Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "元/kW(" & nf & ") " '输出到RichTextBox1
-            Next
-            Me.RichTextBox1.Text = "风电设备逐年修理费率：" & Me.RichTextBox1.Text
-        End If
-    End Sub
-
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
         On Error Resume Next
         '判断1
@@ -626,5 +186,367 @@ Public Class 设置修理费率计算方式
         jsnf_list.Clear()
         ksfl_list.Clear()
         jsfl_list.Clear()
+    End Sub
+
+    Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
+        Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
+        If XZ = vbOK Then
+            Me.开始年份tmp.Clear()
+            Me.结束年份tmp.Clear()
+            Me.开始费率tmp.Clear()
+            Me.结束费率tmp.Clear()
+            Me.开始年份列表.Items.Clear()
+            Me.结束年份列表.Items.Clear()
+            Me.开始费率列表.Items.Clear()
+            Me.结束费率列表.Items.Clear()
+            ksnf_list.Clear()
+            jsnf_list.Clear()
+            ksfl_list.Clear()
+            jsfl_list.Clear()
+            Me.RichTextBox1.Rtf = Nothing
+            Me.ranji.Checked = False
+            Me.xudianchi.Checked = False
+            Me.nuantong.Checked = False
+            Me.guangfu.Checked = False
+            Me.fengdian.Checked = False
+            Me.changgui.Checked = False
+            Me.YYNX_RJ.Clear()
+            Me.YYNX_XDC.Clear()
+            Me.YYNX_NT.Clear()
+            Me.YYNX_GF.Clear()
+            Me.YYNX_FD.Clear()
+            Me.YYNX_CG.Clear()
+            Me.KCBL_RJ.Clear()
+            Me.KCBL_XDC.Clear()
+            Me.KCBL_NT.Clear()
+            Me.KCBL_GF.Clear()
+            Me.KCBL_FD.Clear()
+            Me.KCBL_CG.Clear()
+        End If
+    End Sub
+    Private Sub 常规设备_Click(sender As Object, e As EventArgs) Handles 常规设备.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(140, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，常规设备只可以以投资百分比计算，选择无效
+        Dim bxfl_cg_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年常规保险费写入Excel
+        For i = 3 To 33
+            '常规设备保险费率（%）
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(140, i).Value = bxfl_cg_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_cg_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "常规设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(135, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，燃机设备只可以以投资百分比计算，选择无效
+        Dim bxfl_rj_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年保险费写入Excel
+        For i = 3 To 33
+            '设备保险费率
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(135, i).Value = bxfl_rj_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_rj_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "燃机设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(136, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，蓄电池设备只可以以投资百分比计算，选择无效
+        Dim bxfl_xdc_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年保险费写入Excel
+        For i = 3 To 33
+            '设备保险费率
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(136, i).Value = bxfl_xdc_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_xdc_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "蓄电池设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(138, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，暖通设备只可以以投资百分比计算，选择无效
+        Dim bxfl_nt_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年保险费写入Excel
+        For i = 3 To 33
+            '设备保险费率
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(138, i).Value = bxfl_nt_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_nt_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "暖通设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否确定输入的全部保险费计算参数？", vbOKCancel)
+        If XZ = vbOK Then
+            '计算一次工作簿
+            ExcelApp.Calculate()
+            '————————————————————————————————————————————————————————————————————————————————————————    
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '保险费计算
+            Call 保险费相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, sdsl_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '————————————————————————————————————————————————————————————————————————————————————————        
+            Me.RichTextBox1.Text = "设备逐年保险费计算完成！"
+        End If
+    End Sub
+
+    Private Sub 光伏_Click(sender As Object, e As EventArgs) Handles 光伏.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(137, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，光伏设备只可以以投资百分比计算，选择无效
+        Dim bxfl_gf_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年保险费写入Excel
+        For i = 3 To 33
+            '设备保险费率
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(137, i).Value = bxfl_gf_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_gf_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "光伏设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 风电_Click(sender As Object, e As EventArgs) Handles 风电.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '清空已有的数据，防止出错
+        For i = 3 To 33
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(139, i).Value = 0
+        Next
+        '清空窗体
+        Me.RichTextBox1.Clear()
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '计算逐年保险费率，风电设备只可以以投资百分比计算，选择无效
+        Dim bxfl_fd_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
+        '———————————————————————————————————————————————————————————————————————————————————————— 
+        '逐年保险费写入Excel
+        For i = 3 To 33
+            '设备保险费率
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(139, i).Value = bxfl_fd_list(i - 2) / 100
+        Next
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取并显示计算出的逐年保险费率
+        Dim SJ As Double
+        Dim nf
+        For i = 1 To 31  '根据数组中的元素数量循环
+            nf = i '年份序号
+            SJ = Math.Round(bxfl_fd_list(i), 2)
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & SJ & "%(" & nf & ") " '输出到RichTextBox1
+        Next
+        Me.RichTextBox1.Text = "风电设备逐年保险费率：" & Me.RichTextBox1.Text
+    End Sub
+
+    Private Sub 设置剔除_Click(sender As Object, e As EventArgs) Handles 设置剔除.Click
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '燃机
+        If ranji.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 3).Value = CInt(YYNX_RJ.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 3).Value = CDbl(KCBL_RJ.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<燃机设备>保险费计算参数设置写入完成！"
+        End If
+        '蓄电池
+        If xudianchi.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 4).Value = CInt(YYNX_XDC.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 4).Value = CDbl(KCBL_XDC.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<蓄电池设备>保险费计算参数设置写入完成！"
+        End If
+        '暖通
+        If nuantong.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 5).Value = CInt(YYNX_NT.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 5).Value = CDbl(KCBL_NT.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<暖通设备>保险费计算参数设置写入完成！"
+        End If
+        '光伏
+        If guangfu.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 6).Value = CInt(YYNX_GF.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 6).Value = CDbl(KCBL_GF.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<光伏设备>保险费计算参数设置写入完成！"
+        End If
+        '风电
+        If fengdian.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 7).Value = CInt(YYNX_FD.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 7).Value = CDbl(KCBL_FD.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<风电设备>保险费计算参数设置写入完成！"
+        End If
+        '常规设备
+        If changgui.Checked = True Then
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 8).Value = CInt(YYNX_CG.Text)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 8).Value = CDbl(KCBL_CG.Text) / 100
+            '显示
+            Me.RichTextBox1.Text = Me.RichTextBox1.Text & "<常规设备>保险费计算参数设置写入完成！"
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        '计算一次工作簿
+        ExcelApp.Calculate()
     End Sub
 End Class

@@ -5,103 +5,6 @@
     '开始年份和结束年份的费率
     Public ksfl_list As New List(Of Double)
     Public jsfl_list As New List(Of Double)
-    Function 逐年材料费率和其它费率计算_base(ExcelApp As Object)
-        On Error Resume Next
-        '———————————————————————————————————————————————————————————————————————————————————————— 
-        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        Dim ZDJSNF = jsnf_list.Max
-        '各种年限系数的计算开始年份（补贴收入、销售收入和成本）
-        Dim JSKSNF As Integer = 0
-        For i = 1 To 15
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(5, 4 + i).Value > 0 Then
-                JSKSNF = i
-                Exit For
-            End If
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '输入的年份总数量
-        Dim n_nf As Integer = ksnf_list.LongCount
-        '添加报错功能
-        For i = 0 To n_nf - 1
-            If ksnf_list(i) <> 0 Or jsnf_list(i) <> 0 Then
-                If ksnf_list(i) < 1 Or jsnf_list(i) < 1 Then
-                    MsgBox("开始年份或者结束年份不可以存在小于1的情况，请重新输入！")
-                    Exit Function
-                End If
-            End If
-        Next
-        For i = 0 To n_nf - 1
-            If ksnf_list(i) > jsnx Or jsnf_list(i) > jsnx Then
-                MsgBox("开始年份或者结束年份存在大于计算年限的情况，程序会继续计算，但会自动忽略大于计算年限的年份的值！")
-                Exit For
-            End If
-        Next
-        If n_nf > 1 Then
-            For i = 1 To n_nf - 1
-                If jsnf_list(i - 1) > ksnf_list(i) Then
-                    MsgBox("输入的后一个开始年份不可以小于上一个结束年份，请重新输入！")
-                    Exit Function
-                End If
-            Next
-        End If
-        If ZDJSNF < jsnx Then
-            MsgBox("输入的结束年份均小于项目计算年限，请重新输入！")
-            Exit Function
-        End If
-        If ZDJSNF > jsnx Then
-            MsgBox("输入的结束年份存在大于项目计算年限的情况，请重新输入！")
-            Exit Function
-        End If
-        '————————————————————————————————————————————————————————————————————————————————————————   
-        '计算在输入的开始年份和结束年份之外的年份序号
-        Dim qtnf_tmp_list As New List(Of Integer)
-        For i = 1 To jsnx
-            qtnf_tmp_list.Add(i)
-        Next
-        Dim tmp_list As New List(Of Integer)
-        For i = 0 To n_nf - 1
-            For j = ksnf_list(i) To jsnf_list(i)
-                tmp_list.Add(j)
-            Next
-        Next
-        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '逐年变化率
-        Dim znbhl_list As New List(Of Double)
-        For i = 0 To n_nf - 1
-            Dim znbhl As Double
-            If jsfl_list(i) - ksfl_list(i) = 0 Then
-                znbhl = 0
-            Else
-                znbhl = (jsfl_list(i) - ksfl_list(i)) / (jsnf_list(i) - ksnf_list(i))
-            End If
-            znbhl_list.Add(znbhl)
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '设备材料费和其它费率列表
-        Dim clfl_qtfl_list(31) As Double
-        '需要计算费率的年份
-        For j = 0 To n_nf - 1
-            Dim js As Integer = 0
-            For i = 1 To 31
-                If i >= ksnf_list(j) And i <= jsnf_list(j) Then
-                    js = js + 1
-                    clfl_qtfl_list(i) = (ksfl_list(j) + (js - 1) * znbhl_list(j))
-                End If
-            Next
-        Next
-        '其他年份
-        For Each qtnf In qtnf_list
-            For i = 1 To 31
-                If i = qtnf Or i > jsnx Then
-                    clfl_qtfl_list(i) = 0
-                End If
-            Next
-        Next
-        '————————————————————————————————————————————————————————————————————————————————————————     
-        '返回计算结果
-        Return clfl_qtfl_list
-    End Function
     Private Sub 设置材料费和其它费计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         On Error Resume Next
         '定义Excel对象
@@ -363,7 +266,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，光伏设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_gf_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_gf_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -427,7 +330,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，风电设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_fd_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_fd_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -490,7 +393,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，风电设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_xdc_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_xdc_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -553,7 +456,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，燃机设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_rj_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_rj_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -617,7 +520,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，燃煤设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_rm_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_rm_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -681,7 +584,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，暖通设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_nt_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_nt_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错
@@ -745,7 +648,7 @@
         Me.RichTextBox1.Clear()
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算逐年材料费和其它费率，垃圾发电设备只可以以投资百分比计算，选择无效
-        Dim clfl_qtfl_ljfd_list = 逐年材料费率和其它费率计算_base(ExcelApp)
+        Dim clfl_qtfl_ljfd_list = 逐年费率计算_base(ExcelApp, ksnf_list, jsnf_list, ksfl_list, jsfl_list)
         '———————————————————————————————————————————————————————————————————————————————————————— 
         If ComboBox1.Text = "材料费率" Then
             '清空已有的数据，防止出错

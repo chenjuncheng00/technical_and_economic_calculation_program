@@ -1773,6 +1773,50 @@ Public Class Com技术经济分析计算程序
         '激活表格
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
+    Sub 设置保险费计算方式()
+        On Error Resume Next
+        '定义Excel对象
+        Dim ExcelApp As Excel.Application '定义Excel对象
+        ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
+        '定义局部变量
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '————————————————————————————————————————————————————————————————————————————————————————        
+        Dim ZTJC As Integer = Excel版本号验证(ExcelApp)
+        If ZTJC = 1 Then
+            Call 锁定表格(ExcelApp)
+            ZTJC = 0
+            Exit Sub
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Dim XZ = MsgBox("是否需要设置保险费率计算方式?", vbOKCancel)
+        Dim Form16 As New 设置保险费率计算方式
+        If XZ = vbOK Then
+            Call 计算前基本处理(ExcelApp, 1)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Form16.ShowDialog() '窗口显示
+            Form16.TopMost = True
+            System.Windows.Forms.Application.DoEvents()
+            '————————————————————————————————————————————————————————————————————————————————————————
+            '计算模式
+            Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
+            Dim zbj_model = ans_mode(0)
+            Dim hscz = ans_mode(1)
+            Dim xlfl_cg_model = ans_mode(2)
+            Dim xlfl_qt_model = ans_mode(3)
+            Dim clfl_qtfl_model = ans_mode(4)
+            Dim sdsl_model = ans_mode(5)
+            Dim kcje_xlf_model = ans_mode(6)
+            Dim kcje_clf_qtf_model = ans_mode(7)
+            Dim ldzj_model = ans_mode(8)
+            Dim kcje_ldzj_model = ans_mode(9)
+            Dim bxf_model = ans_mode(10)
+            Dim kcje_bxf_model = ans_mode(11)
+            '————————————————————————————————————————————————————————————————————————————————————————
+            Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        End If
+        '激活表格
+        ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
+    End Sub
 
     Sub 进入维护模式()
         On Error Resume Next

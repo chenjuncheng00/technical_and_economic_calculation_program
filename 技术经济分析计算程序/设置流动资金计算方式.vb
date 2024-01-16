@@ -135,6 +135,20 @@ Public Class 设置流动资金计算方式
         '————————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否将流动资金计算方式重置回默认设置？？", vbOKCancel)
         If XZ = vbOK Then
+            '计算基数扣除默认设置
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
+            '运营年限
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 5).Value = kcje_mr_ldzj(2)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 6).Value = kcje_mr_ldzj(3)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 7).Value = kcje_mr_ldzj(4)
+            '扣除比例
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 3).Value = kcje_mr_ldzj(5)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 4).Value = kcje_mr_ldzj(6)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 5).Value = kcje_mr_ldzj(7)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 6).Value = kcje_mr_ldzj(8)
+            ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value = kcje_mr_ldzj(9)
             '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value = 0
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value = 0
@@ -149,6 +163,7 @@ Public Class 设置流动资金计算方式
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 33).Value = 0
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value = 0
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value = 0
+            '显示计算模式
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置"
             '———————————————————————————————————————————————————————————————————————————————————————— 
             '计算模式
@@ -288,8 +303,10 @@ Public Class 设置流动资金计算方式
             Dim bxf_model = ans_mode(10)
             Dim kcje_bxf_model = ans_mode(11)
             '————————————————————————————————————————————————————————————————————————————————————————
-            '收入和成本变化后相关计算
-            Call 收入成本相关计算(ExcelApp, sdsl_model, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '计算流动资金，包括：材料费其它费+修理费+保险费
+            Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+            '重新计算投资收益率和投资回收期
+            Call 投资收益率和投资回收期计算(ExcelApp)
             MsgBox("计算完成！")
         End If
     End Sub
