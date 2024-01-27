@@ -235,12 +235,8 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取项目计算年限
         Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
-        '————————————————————————————————————————————————————————————————————————————————————————       
-        '读取逐年投产月份数
-        Dim tcyfs_list(31) As Integer
-        For i = 3 To 33
-            tcyfs_list(i - 2) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value
-        Next
+        '获取10次投资,每一次投资的投产月份数
+        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
         '————————————————————————————————————————————————————————————————————————————————————————       
         '接入费计算模式
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
@@ -294,12 +290,12 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————
         '补贴收入逐年计算系数（第2年到计算期最后一年，每年都是100%）
         For i = 3 To 33
-            If i - 2 >= 2 And i - 2 <= jsnx Then
+            If i - 2 >= 1 And i - 2 <= jsnx Then
                 '补贴收入1
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "保持每年100%" Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1
                 ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "逐年投产月份比例" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "逐年达产率" Then
                     '前15年
                     If i - 2 <= 15 Then
@@ -326,7 +322,7 @@ Module 计算设置重置回默认状态
                 If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "保持每年100%" Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1
                 ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "逐年投产月份比例" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "逐年达产率" Then
                     '前15年
                     If i - 2 <= 15 Then
@@ -377,7 +373,7 @@ Module 计算设置重置回默认状态
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
                 If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
                 End If
@@ -396,7 +392,7 @@ Module 计算设置重置回默认状态
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
                 If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
                 End If
@@ -416,7 +412,7 @@ Module 计算设置重置回默认状态
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
                 If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
                 End If
@@ -435,7 +431,7 @@ Module 计算设置重置回默认状态
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年投产月份比例" Then
             For i = 3 To 33
                 If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * tcyfs_list(i - 2) / 12
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * month_10_list(1)(i - 2) / 12
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
                 End If

@@ -210,7 +210,6 @@
         ans(5) = ans_jsqzjyy_fd
         Return ans
     End Function
-
     Function 建设期资金运用计算_main(zbj_model As Integer, dklx_model As Integer, jttz_list As Array,
                                      jsq_index_list As Array, dkll_list As Array, year_list As Array,
                                      month_start_list As Array, month_end_list As Array, zbjbl_list As Array,
@@ -231,7 +230,6 @@
         Dim ans_zbj_list(31) As Double '资本金，列表，长度31
         Dim ans_dkje_list(31) As Double '建设期贷款金额，列表，长度31
         Dim ans_dklx_list(31) As Double '建设期贷款利息，列表，长度31
-
         '最大迭代次数：200
         For i = 1 To 200
             '计算建设期贷款利息
@@ -260,8 +258,7 @@
         Return ans
     End Function
     Function 建设期贷款利息计算_main(jsq_index_list As Array, dkje_list As Array, dkll_list As Array, year_list As Array,
-                                     month_start_list As Array, month_end_list As Array, dklx_model As Integer,
-                                     dklx_shuru_list As Array)
+                                     month_start_list As Array, month_end_list As Array, dklx_model As Integer, dklx_shuru_list As Array)
         'jsq_index_list：是否处于建设期标记，1：处于建设期，0：不处于建设期，列表，长度31
         'dkje_list：逐年贷款金额，列表，长度31
         'dkll_list：逐年贷款利率，列表，长度31
@@ -270,7 +267,6 @@
         'month_end_list：逐年建设结束月份序号，列表，长度31
         'dklx_model：建设期贷款利息计算模式：0：自动计算，1：手动输入
         'dklx_shuru_list：手动输入的建设期贷款利息，列表，长度31
-
         '列表，用于储存计算结果，列表长度31
         Dim ans_dklx_list(31) As Double
         '如果是自动计算模式

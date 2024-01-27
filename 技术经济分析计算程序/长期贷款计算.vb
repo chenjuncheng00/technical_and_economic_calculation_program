@@ -164,11 +164,8 @@
         For i = 1 To 10
             ksnf(i) = tznf_list(i)
         Next
-        '读取每年投产月份数
-        Dim tcyfs(31) As Integer
-        For i = 1 To 31
-            tcyfs(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-        Next
+        '获取10次投资,每一次投资的投产月份数
+        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
         '————————————————————————————————————————————————————————————————————————————————————————
         '长期贷款计算
         Dim ans_DKJS_cg
@@ -178,36 +175,36 @@
         Dim ans_DKJS_gf
         Dim ans_DKJS_fd
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Then
-            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), month_10_list, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), month_10_list, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), month_10_list, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), month_10_list, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), month_10_list, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), month_10_list, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_cg, dknx_cg(1), ksnf, jsnx, dkll_cg(1), kxnx_cg(1), month_10_list, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_rj, dknx_rj(1), ksnf, jsnx, dkll_rj(1), kxnx_rj(1), month_10_list, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_xdc, dknx_xdc(1), ksnf, jsnx, dkll_xdc(1), kxnx_xdc(1), month_10_list, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_nt, dknx_nt(1), ksnf, jsnx, dkll_nt(1), kxnx_nt(1), month_10_list, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_gf, dknx_gf(1), ksnf, jsnx, dkll_gf(1), kxnx_gf(1), month_10_list, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资合并计算(dkje_10_fd, dknx_fd(1), ksnf, jsnx, dkll_fd(1), kxnx_fd(1), month_10_list, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法三" Then
-            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, month_10_list, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, month_10_list, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, month_10_list, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, month_10_list, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, month_10_list, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本息_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, month_10_list, kxqfx)
         End If
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法四" Then
-            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, tcyfs, kxqfx)
-            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, tcyfs, kxqfx)
-            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, tcyfs, kxqfx)
-            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, tcyfs, kxqfx)
-            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, tcyfs, kxqfx)
-            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, tcyfs, kxqfx)
+            ans_DKJS_cg = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_cg, dknx_cg, ksnf, jsnx, dkll_cg, kxnx_cg, month_10_list, kxqfx)
+            ans_DKJS_rj = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_rj, dknx_rj, ksnf, jsnx, dkll_rj, kxnx_rj, month_10_list, kxqfx)
+            ans_DKJS_xdc = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_xdc, dknx_xdc, ksnf, jsnx, dkll_xdc, kxnx_xdc, month_10_list, kxqfx)
+            ans_DKJS_nt = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_nt, dknx_nt, ksnf, jsnx, dkll_nt, kxnx_nt, month_10_list, kxqfx)
+            ans_DKJS_gf = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_gf, dknx_gf, ksnf, jsnx, dkll_gf, kxnx_gf, month_10_list, kxqfx)
+            ans_DKJS_fd = 长期贷款计算_等额本金_10次投资分开计算(dkje_10_fd, dknx_fd, ksnf, jsnx, dkll_fd, kxnx_fd, month_10_list, kxqfx)
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -228,14 +225,14 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本息_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll As Double, kxnx As Integer, month_10_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
         'dknx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
         'kxnx：长期贷款宽限期年份数
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'kxqfx：宽限期内是否付息
 
         '10次投资长期贷款还本付息合并在一起进行计算
@@ -349,16 +346,16 @@
 
         '分次进行计算
         ' 只有第1次投资考虑宽限期，后面不考虑
-        Dim ans_1 = 长期贷款计算_等额本息(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll, kxnx_1, tcyfs_list, kxqfx)
-        Dim ans_2 = 长期贷款计算_等额本息(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll, kxnx_2, tcyfs_list, kxqfx)
-        Dim ans_3 = 长期贷款计算_等额本息(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll, kxnx_3, tcyfs_list, kxqfx)
-        Dim ans_4 = 长期贷款计算_等额本息(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll, kxnx_4, tcyfs_list, kxqfx)
-        Dim ans_5 = 长期贷款计算_等额本息(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll, kxnx_5, tcyfs_list, kxqfx)
-        Dim ans_6 = 长期贷款计算_等额本息(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll, kxnx_6, tcyfs_list, kxqfx)
-        Dim ans_7 = 长期贷款计算_等额本息(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll, kxnx_7, tcyfs_list, kxqfx)
-        Dim ans_8 = 长期贷款计算_等额本息(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll, kxnx_8, tcyfs_list, kxqfx)
-        Dim ans_9 = 长期贷款计算_等额本息(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll, kxnx_9, tcyfs_list, kxqfx)
-        Dim ans_10 = 长期贷款计算_等额本息(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll, kxnx_10, tcyfs_list, kxqfx)
+        Dim ans_1 = 长期贷款计算_等额本息(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll, kxnx_1, month_10_list(1), kxqfx)
+        Dim ans_2 = 长期贷款计算_等额本息(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll, kxnx_2, month_10_list(2), kxqfx)
+        Dim ans_3 = 长期贷款计算_等额本息(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll, kxnx_3, month_10_list(3), kxqfx)
+        Dim ans_4 = 长期贷款计算_等额本息(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll, kxnx_4, month_10_list(4), kxqfx)
+        Dim ans_5 = 长期贷款计算_等额本息(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll, kxnx_5, month_10_list(5), kxqfx)
+        Dim ans_6 = 长期贷款计算_等额本息(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll, kxnx_6, month_10_list(6), kxqfx)
+        Dim ans_7 = 长期贷款计算_等额本息(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll, kxnx_7, month_10_list(7), kxqfx)
+        Dim ans_8 = 长期贷款计算_等额本息(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll, kxnx_8, month_10_list(8), kxqfx)
+        Dim ans_9 = 长期贷款计算_等额本息(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll, kxnx_9, month_10_list(9), kxqfx)
+        Dim ans_10 = 长期贷款计算_等额本息(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll, kxnx_10, month_10_list(10), kxqfx)
         '累加
         For i = 1 To 31 '第1年到第31年
             '当年还本付息总额
@@ -383,14 +380,14 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本金_10次投资合并计算(bj_0_list As Array, dknx_0 As Integer, ksnf_list As Array, jsnx As Integer,
-                                                    dkll As Double, kxnx As Integer, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll As Double, kxnx As Integer, month_10_list As Array, kxqfx As Boolean)
         'bj_0_list: 整个计算期内，逐年新增的贷款本金初始值，列表，长度10
         'dknx_0：长期贷款年限初始值
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll：长期贷款年化利率(复利)
         'kxnx：长期贷款宽限期年份数
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'kxqfx：宽限期内是否付息
 
         '10次投资长期贷款还本付息合并在一起进行计算
@@ -504,16 +501,16 @@
 
         '分次进行计算
         ' 只有第1次投资考虑宽限期，后面不考虑
-        Dim ans_1 = 长期贷款计算_等额本金(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll, kxnx_1, tcyfs_list, kxqfx)
-        Dim ans_2 = 长期贷款计算_等额本金(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll, kxnx_2, tcyfs_list, kxqfx)
-        Dim ans_3 = 长期贷款计算_等额本金(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll, kxnx_3, tcyfs_list, kxqfx)
-        Dim ans_4 = 长期贷款计算_等额本金(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll, kxnx_4, tcyfs_list, kxqfx)
-        Dim ans_5 = 长期贷款计算_等额本金(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll, kxnx_5, tcyfs_list, kxqfx)
-        Dim ans_6 = 长期贷款计算_等额本金(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll, kxnx_6, tcyfs_list, kxqfx)
-        Dim ans_7 = 长期贷款计算_等额本金(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll, kxnx_7, tcyfs_list, kxqfx)
-        Dim ans_8 = 长期贷款计算_等额本金(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll, kxnx_8, tcyfs_list, kxqfx)
-        Dim ans_9 = 长期贷款计算_等额本金(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll, kxnx_9, tcyfs_list, kxqfx)
-        Dim ans_10 = 长期贷款计算_等额本金(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll, kxnx_10, tcyfs_list, kxqfx)
+        Dim ans_1 = 长期贷款计算_等额本金(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll, kxnx_1, month_10_list(1), kxqfx)
+        Dim ans_2 = 长期贷款计算_等额本金(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll, kxnx_2, month_10_list(2), kxqfx)
+        Dim ans_3 = 长期贷款计算_等额本金(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll, kxnx_3, month_10_list(3), kxqfx)
+        Dim ans_4 = 长期贷款计算_等额本金(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll, kxnx_4, month_10_list(4), kxqfx)
+        Dim ans_5 = 长期贷款计算_等额本金(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll, kxnx_5, month_10_list(5), kxqfx)
+        Dim ans_6 = 长期贷款计算_等额本金(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll, kxnx_6, month_10_list(6), kxqfx)
+        Dim ans_7 = 长期贷款计算_等额本金(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll, kxnx_7, month_10_list(7), kxqfx)
+        Dim ans_8 = 长期贷款计算_等额本金(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll, kxnx_8, month_10_list(8), kxqfx)
+        Dim ans_9 = 长期贷款计算_等额本金(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll, kxnx_9, month_10_list(9), kxqfx)
+        Dim ans_10 = 长期贷款计算_等额本金(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll, kxnx_10, month_10_list(10), kxqfx)
         '累加
         For i = 1 To 31 '第1年到第31年
             '当年还本付息总额
@@ -538,14 +535,14 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本息_10次投资分开计算(bj_0_list As Array, dknx_0_list As Array, ksnf_list As Array, jsnx As Integer,
-                                                    dkll_list As Array, kxnx_list As Array, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll_list As Array, kxnx_list As Array, month_10_list As Array, kxqfx As Boolean)
         'bj_0_list: 10次投资，贷款本金初始值，列表，长度10
         'dknx_0_list：10次投资，长期贷款年限初始值，列表，长度10
         'ksnf_list：10次投资，贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll_list：10次投资，长期贷款年化利率(复利)，列表，长度10
         'kxnx_list：10次投资，长期贷款宽限年限，列表，长度10
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'kxqfx：宽限期内是否付息
 
         '10次投资分别计算长期贷款还本付息，再累加在一起
@@ -618,16 +615,16 @@
         Dim BJYE(31) As Double '当年本金余额
 
         '分次进行计算
-        Dim ans_1 = 长期贷款计算_等额本息(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll_1, kxnx_1, tcyfs_list, kxqfx)
-        Dim ans_2 = 长期贷款计算_等额本息(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll_2, kxnx_2, tcyfs_list, kxqfx)
-        Dim ans_3 = 长期贷款计算_等额本息(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll_3, kxnx_3, tcyfs_list, kxqfx)
-        Dim ans_4 = 长期贷款计算_等额本息(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll_4, kxnx_4, tcyfs_list, kxqfx)
-        Dim ans_5 = 长期贷款计算_等额本息(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll_5, kxnx_5, tcyfs_list, kxqfx)
-        Dim ans_6 = 长期贷款计算_等额本息(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll_6, kxnx_6, tcyfs_list, kxqfx)
-        Dim ans_7 = 长期贷款计算_等额本息(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll_7, kxnx_7, tcyfs_list, kxqfx)
-        Dim ans_8 = 长期贷款计算_等额本息(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll_8, kxnx_8, tcyfs_list, kxqfx)
-        Dim ans_9 = 长期贷款计算_等额本息(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll_9, kxnx_9, tcyfs_list, kxqfx)
-        Dim ans_10 = 长期贷款计算_等额本息(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll_10, kxnx_10, tcyfs_list, kxqfx)
+        Dim ans_1 = 长期贷款计算_等额本息(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll_1, kxnx_1, month_10_list(1), kxqfx)
+        Dim ans_2 = 长期贷款计算_等额本息(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll_2, kxnx_2, month_10_list(2), kxqfx)
+        Dim ans_3 = 长期贷款计算_等额本息(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll_3, kxnx_3, month_10_list(3), kxqfx)
+        Dim ans_4 = 长期贷款计算_等额本息(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll_4, kxnx_4, month_10_list(4), kxqfx)
+        Dim ans_5 = 长期贷款计算_等额本息(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll_5, kxnx_5, month_10_list(5), kxqfx)
+        Dim ans_6 = 长期贷款计算_等额本息(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll_6, kxnx_6, month_10_list(6), kxqfx)
+        Dim ans_7 = 长期贷款计算_等额本息(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll_7, kxnx_7, month_10_list(7), kxqfx)
+        Dim ans_8 = 长期贷款计算_等额本息(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll_8, kxnx_8, month_10_list(8), kxqfx)
+        Dim ans_9 = 长期贷款计算_等额本息(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll_9, kxnx_9, month_10_list(9), kxqfx)
+        Dim ans_10 = 长期贷款计算_等额本息(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll_10, kxnx_10, month_10_list(10), kxqfx)
         '累加
         For i = 1 To 31 '第1年到第31年
             '当年还本付息总额
@@ -652,14 +649,14 @@
         Return ans
     End Function
     Function 长期贷款计算_等额本金_10次投资分开计算(bj_0_list As Array, dknx_0_list As Array, ksnf_list As Array, jsnx As Integer,
-                                                    dkll_list As Array, kxnx_list As Array, tcyfs_list As Array, kxqfx As Boolean)
+                                                    dkll_list As Array, kxnx_list As Array, month_10_list As Array, kxqfx As Boolean)
         'bj_0_list: 贷款本金初始值，列表，长度10
         'dknx_0_list：长期贷款年限初始值，列表，长度10
         'ksnf_list：贷款计算的开始年份，列表，长度10
         'jsnx：整个项目的最大计算年限(含建设期)
         'dkll_list：长期贷款年化利率(复利)，列表，长度10
         'kxnx_list：10次投资，长期贷款宽限年限，列表，长度10
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'kxqfx：宽限期内是否付息
 
         '10次投资分别计算长期贷款还本付息，再累加在一起
@@ -732,16 +729,16 @@
         Dim BJYE(31) As Double '当年本金余额
 
         '分次进行计算
-        Dim ans_1 = 长期贷款计算_等额本金(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll_1, kxnx_1, tcyfs_list, kxqfx)
-        Dim ans_2 = 长期贷款计算_等额本金(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll_2, kxnx_2, tcyfs_list, kxqfx)
-        Dim ans_3 = 长期贷款计算_等额本金(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll_3, kxnx_3, tcyfs_list, kxqfx)
-        Dim ans_4 = 长期贷款计算_等额本金(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll_4, kxnx_4, tcyfs_list, kxqfx)
-        Dim ans_5 = 长期贷款计算_等额本金(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll_5, kxnx_5, tcyfs_list, kxqfx)
-        Dim ans_6 = 长期贷款计算_等额本金(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll_6, kxnx_6, tcyfs_list, kxqfx)
-        Dim ans_7 = 长期贷款计算_等额本金(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll_7, kxnx_7, tcyfs_list, kxqfx)
-        Dim ans_8 = 长期贷款计算_等额本金(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll_8, kxnx_8, tcyfs_list, kxqfx)
-        Dim ans_9 = 长期贷款计算_等额本金(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll_9, kxnx_9, tcyfs_list, kxqfx)
-        Dim ans_10 = 长期贷款计算_等额本金(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll_10, kxnx_10, tcyfs_list, kxqfx)
+        Dim ans_1 = 长期贷款计算_等额本金(bj_0_1, dknx_0_1, ksnf_1, jsnx, dkll_1, kxnx_1, month_10_list(1), kxqfx)
+        Dim ans_2 = 长期贷款计算_等额本金(bj_0_2, dknx_0_2, ksnf_2, jsnx, dkll_2, kxnx_2, month_10_list(2), kxqfx)
+        Dim ans_3 = 长期贷款计算_等额本金(bj_0_3, dknx_0_3, ksnf_3, jsnx, dkll_3, kxnx_3, month_10_list(3), kxqfx)
+        Dim ans_4 = 长期贷款计算_等额本金(bj_0_4, dknx_0_4, ksnf_4, jsnx, dkll_4, kxnx_4, month_10_list(4), kxqfx)
+        Dim ans_5 = 长期贷款计算_等额本金(bj_0_5, dknx_0_5, ksnf_5, jsnx, dkll_5, kxnx_5, month_10_list(5), kxqfx)
+        Dim ans_6 = 长期贷款计算_等额本金(bj_0_6, dknx_0_6, ksnf_6, jsnx, dkll_6, kxnx_6, month_10_list(6), kxqfx)
+        Dim ans_7 = 长期贷款计算_等额本金(bj_0_7, dknx_0_7, ksnf_7, jsnx, dkll_7, kxnx_7, month_10_list(7), kxqfx)
+        Dim ans_8 = 长期贷款计算_等额本金(bj_0_8, dknx_0_8, ksnf_8, jsnx, dkll_8, kxnx_8, month_10_list(8), kxqfx)
+        Dim ans_9 = 长期贷款计算_等额本金(bj_0_9, dknx_0_9, ksnf_9, jsnx, dkll_9, kxnx_9, month_10_list(9), kxqfx)
+        Dim ans_10 = 长期贷款计算_等额本金(bj_0_10, dknx_0_10, ksnf_10, jsnx, dkll_10, kxnx_10, month_10_list(10), kxqfx)
         '累加
         For i = 1 To 31 '第1年到第31年
             '当年还本付息总额
@@ -776,7 +773,8 @@
         'tcyfs_list：逐年投产的月份数，列表，长度31
         'kxqfx：宽限期内是否付息
 
-        '某一笔贷款，从贷款发生的第二年才开始计算还本金，还本金不按照投产月份数折算；如果贷款当年存在投产月份数，则计算付息，付息额按照投产月份数折算；
+        '某一笔贷款，从贷款发生的当年才开始计算还本金，还本金按照投产月份数折算；
+        '某一笔贷款，如果贷款当年存在投产月份数，则计算付息，付息额按照投产月份数折算；
         '某一笔贷款，宽限期从贷款发生当年及以后的有投产月份数的第一个年份开始算；
 
         '列表，储存计算过程量
@@ -806,7 +804,7 @@
 
                     '每期付息，每年付息额按照(投产月份数/12)进行折算
                     '如果处于宽限期内，则判断是否付息
-                    If i <= ksnf + kxnx And kxqfx = False Then
+                    If i <= ksnf + kxnx - 1 And kxqfx = False Then
                         DNFX(i) = 0
                     Else
                         DNFX(i) = SYBJ * dkll * (tcyfs_list(i) / 12)
@@ -814,18 +812,18 @@
 
                     '每期还本付息总额
                     '如果处于宽限期，则不还本，则还本付息总额=付息额
-                    If i <= ksnf + kxnx Then
+                    If i <= ksnf + kxnx - 1 Then
                         DNBXZE(i) = DNFX(i)
                     Else
                         DNBXZE(i) = BXZE - ZEFX + DNFX(i)
                     End If
 
                     '每期还本
-                    '贷款发生当年不还本，宽限期内不还本
-                    If i <= ksnf + kxnx Then
+                    '贷款发生当年开始还本，宽限期内不还本，还本金额按照投产月份数比例折算
+                    If i <= ksnf + kxnx - 1 Then
                         DNHB(i) = 0
                     Else
-                        DNHB(i) = Math.Min((DNBXZE(i) - DNFX(i)), SYBJ)
+                        DNHB(i) = Math.Min((DNBXZE(i) - DNFX(i)), SYBJ) * (tcyfs_list(i) / 12)
                     End If
 
                     '累计已经还本金额度
@@ -865,7 +863,8 @@
         'tcyfs_list：逐年投产的月份数，列表，长度31
         'kxqfx：宽限期内是否付息
 
-        '某一笔贷款，从贷款发生的第二年才开始计算还本金，还本金不按照投产月份数折算；如果贷款当年存在投产月份数，则计算付息，付息额按照投产月份数折算；
+        '某一笔贷款，从贷款发生的当年才开始计算还本金，还本金按照投产月份数折算；
+        '某一笔贷款，如果贷款当年存在投产月份数，则计算付息，付息额按照投产月份数折算；
         '某一笔贷款，宽限期从贷款发生当年及以后的有投产月份数的第一个年份开始算；
 
         '列表，储存计算过程量
@@ -893,7 +892,7 @@
 
                     '每期付息，每年付息额按照(投产月份数/12)进行折算
                     '如果处于宽限期内，则判断是否付息
-                    If i <= ksnf + kxnx And kxqfx = False Then
+                    If i <= ksnf + kxnx - 1 And kxqfx = False Then
                         DNFX(i) = 0
                     Else
                         DNFX(i) = SYBJ * dkll * (tcyfs_list(i) / 12)
@@ -901,11 +900,11 @@
 
                     '每期还本,整个还款期内是一个定值
                     '每期还本
-                    '贷款发生当年不还本，宽限期内不还本
-                    If i <= ksnf + kxnx Then
+                    '贷款发生当年开始还本，宽限期内不还本，还本金额按照投产月份数比例折算
+                    If i <= ksnf + kxnx - 1 Then
                         DNHB(i) = 0
                     Else
-                        DNHB(i) = Math.Min(HBJE, SYBJ)
+                        DNHB(i) = Math.Min(HBJE, SYBJ) * (tcyfs_list(i) / 12)
                     End If
                     '累计已经还本金额度
                     YJHB += DNHB(i)
@@ -914,7 +913,7 @@
 
                     '每期还本付息总额
                     '如果处于宽限期，则不还本，则还本付息总额=付息额
-                    If i <= ksnf + kxnx Then
+                    If i <= ksnf + kxnx - 1 Then
                         DNBXZE(i) = DNFX(i)
                     Else
                         DNBXZE(i) = DNFX(i) + DNHB(i)

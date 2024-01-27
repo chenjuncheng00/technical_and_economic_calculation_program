@@ -102,6 +102,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -155,6 +157,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -196,6 +200,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -295,11 +301,7 @@
         'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
-            Call 直接输入综合达产率(ExcelApp)
-        Else
-            Call 分投资逐次输入达产率(ExcelApp)
-        End If
+        Call 逐年达产率计算_main(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '材料费其它费计算，可能和负荷率有关，所以需要计算
         Call 材料费其它费计算.材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
@@ -359,11 +361,7 @@
         Call 投资计划与资金筹措表计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算一次负荷率
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
-            Call 直接输入综合达产率(ExcelApp)
-        Else
-            Call 分投资逐次输入达产率(ExcelApp)
-        End If
+        Call 逐年达产率计算_main(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '增值税相关计算
         Call 增值税相关计算(ExcelApp)

@@ -306,7 +306,6 @@ Public Class Com技术经济分析计算程序
             ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Range("O205:P214").Value = 0
             '清空逐年投产月份和建设期标记
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0
                 ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(162, i).Value = 0
             Next
             '计算一次
@@ -360,21 +359,6 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             '确定估算表参数设置(包括了投资金额变化后计算、收入成本变化后计算)
             Call 计算功能合并整理.确定估算表参数设置(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
-            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            '读取计算年限
-            Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
-            Dim ZNTCYFS(jsnx - 1) As Integer
-            Dim ZNTCYFS_NFXH(jsnx - 1) As Integer '年份序号
-            For i = 0 To jsnx - 1
-                ZNTCYFS(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 3).Value
-                ZNTCYFS_NFXH(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(156, i + 3).Value
-            Next
-            Dim XianShi_3 As String = Nothing
-            For i = 0 To jsnx - 1
-                XianShi_3 = XianShi_3 & ZNTCYFS(i).ToString & "(" & ZNTCYFS_NFXH(i).ToString & ")  "
-            Next
-            MsgBox("计算年限内逐年投产的月份数量为：" & vbCrLf & XianShi_3)
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             Call 计算后基本处理(ExcelApp, 0, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
@@ -494,10 +478,6 @@ Public Class Com技术经济分析计算程序
                     Next
                 Next
             End If
-            '清空逐年投产月份
-            For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0
-            Next
             '计算一次
             ExcelApp.Calculate()
             '————————————————————————————————————————————————————————————————————————————————————————

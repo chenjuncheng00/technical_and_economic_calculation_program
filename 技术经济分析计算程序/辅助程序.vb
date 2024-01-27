@@ -5,7 +5,7 @@ Module 辅助程序
         'n_data：数据数量
         Dim str_txt As String = ""
         For i = 1 To n_data
-            str_txt = str_txt & Str(data_list(i)) & "， "
+            str_txt = str_txt & Str(data_list(i)) & "(" & Str(i) & ")" & "， "
         Next
         MsgBox(str_txt)
     End Sub

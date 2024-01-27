@@ -165,345 +165,85 @@
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
         Dim tznf_list = GSBSJ(0)
+        '计算10次投资，每次建设年份的投产月份数
+        Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
         '燃机总发电量(万kWh)，10次投资的情况
         Dim rjfdl = GSBSJ(11)
-        Dim rjfdl_list = 基础计算功能_10_to_31(tznf_list, rjfdl)
         '蓄电池总装机功率(kW)，10次投资的情况
         Dim xdczjgl = GSBSJ(13)
-        Dim xdczjgl_list = 基础计算功能_10_to_31(tznf_list, xdczjgl)
         '供冷供热总量(万kWh)，10次投资的情况
         Dim glgrl = GSBSJ(15)
-        Dim glgrl_list = 基础计算功能_10_to_31(tznf_list, glgrl)
         '光伏总装机功率(kW)，10次投资的情况
         Dim gfzjgl = GSBSJ(17)
-        Dim gfzjgl_list = 基础计算功能_10_to_31(tznf_list, gfzjgl)
         '燃煤机组总发电量(万kWh)，10次投资的情况
         Dim rmfdl = GSBSJ(21)
-        Dim rmfdl_list = 基础计算功能_10_to_31(tznf_list, rmfdl)
         '风电总装机功率(kW)，10次投资的情况
         Dim fdzjgl = GSBSJ(19)
-        Dim fdzjgl_list = 基础计算功能_10_to_31(tznf_list, fdzjgl)
         '垃圾发电总发电量(万kWh)，10次投资的情况
         Dim ljfdl = GSBSJ(20)
-        Dim ljfdl_list = 基础计算功能_10_to_31(tznf_list, ljfdl)
         '读取逐年负荷率
         Dim fhl_list = 读取逐年负荷率(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '根据扣除设置，修改逐年计算基数
-        '燃机
-        Dim ans_clfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, clfl_rj_list, yynx_rj, kcbl_rj)
-        Dim ans_qtfl_rj = 计算费率修正计算基础功能(tznf_list, rjfdl, rjfdl_list, qtfl_rj_list, yynx_rj, kcbl_rj)
-        clfl_rj_list = ans_clfl_rj(0)
-        qtfl_rj_list = ans_qtfl_rj(0)
-        '暖通
-        Dim ans_clfl_nt = 计算费率修正计算基础功能(tznf_list, glgrl, glgrl_list, clfl_glgr_list, yynx_nt, kcbl_nt)
-        Dim ans_qtfl_nt = 计算费率修正计算基础功能(tznf_list, glgrl, glgrl_list, qtfl_glgr_list, yynx_nt, kcbl_nt)
-        clfl_glgr_list = ans_clfl_nt(0)
-        qtfl_glgr_list = ans_qtfl_nt(0)
-        '光伏
-        Dim ans_clfl_gf = 计算费率修正计算基础功能(tznf_list, gfzjgl, gfzjgl_list, clfl_gf_list, yynx_gf, kcbl_gf)
-        Dim ans_qtfl_gf = 计算费率修正计算基础功能(tznf_list, gfzjgl, gfzjgl_list, qtfl_gf_list, yynx_gf, kcbl_gf)
-        clfl_gf_list = ans_clfl_gf(0)
-        qtfl_gf_list = ans_qtfl_gf(0)
-        '燃煤
-        Dim ans_clfl_rm = 计算费率修正计算基础功能(tznf_list, rmfdl, rmfdl_list, clfl_rm_list, yynx_rm, kcbl_rm)
-        Dim ans_qtfl_rm = 计算费率修正计算基础功能(tznf_list, rmfdl, rmfdl_list, qtfl_rm_list, yynx_rm, kcbl_rm)
-        clfl_rm_list = ans_clfl_rm(0)
-        qtfl_rm_list = ans_qtfl_rm(0)
-        '风电
-        Dim ans_clfl_fd = 计算费率修正计算基础功能(tznf_list, fdzjgl, fdzjgl_list, clfl_fd_list, yynx_fd, kcbl_fd)
-        Dim ans_qtfl_fd = 计算费率修正计算基础功能(tznf_list, fdzjgl, fdzjgl_list, qtfl_fd_list, yynx_fd, kcbl_fd)
-        clfl_fd_list = ans_clfl_fd(0)
-        qtfl_fd_list = ans_qtfl_fd(0)
-        '垃圾发电
-        Dim ans_clfl_ljfd = 计算费率修正计算基础功能(tznf_list, ljfdl, ljfdl_list, clfl_ljfd_list, yynx_ljfd, kcbl_ljfd)
-        Dim ans_qtfl_ljfd = 计算费率修正计算基础功能(tznf_list, ljfdl, ljfdl_list, qtfl_ljfd_list, yynx_ljfd, kcbl_ljfd)
-        clfl_ljfd_list = ans_clfl_ljfd(0)
-        qtfl_ljfd_list = ans_qtfl_ljfd(0)
-        '蓄电池
-        Dim ans_clfl_xdc = 计算费率修正计算基础功能(tznf_list, xdczjgl, xdczjgl_list, clfl_xdc_list, yynx_xdc, kcbl_xdc)
-        Dim ans_qtfl_xdc = 计算费率修正计算基础功能(tznf_list, xdczjgl, xdczjgl_list, qtfl_xdc_list, yynx_xdc, kcbl_xdc)
-        clfl_xdc_list = ans_clfl_xdc(0)
-        qtfl_xdc_list = ans_qtfl_xdc(0)
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '计算
-        Dim ans_clfqtf
-        Dim ans_znclf
-        Dim ans_znqtf
-        '分项材料费
-        Dim ans_clf_rj
-        Dim ans_clf_lj
-        Dim ans_clf_rm
-        Dim ans_clf_glgr
-        Dim ans_clf_gf
-        Dim ans_clf_fd
-        Dim ans_clf_xdc
-        '分项其它费
-        Dim ans_qtf_rj
-        Dim ans_qtf_lj
-        Dim ans_qtf_rm
-        Dim ans_qtf_glgr
-        Dim ans_qtf_gf
-        Dim ans_qtf_fd
-        Dim ans_qtf_xdc
+        '光伏、风电、蓄电池的材料费和其它费只有一种计算模式，不区分“负荷率” OR “投资量”
+        Dim ans_clf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, True, clfl_gf_list, 10000)
+        Dim ans_qtf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, True, qtfl_gf_list, 10000)
+        Dim ans_clf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, True, clfl_fd_list, 10000)
+        Dim ans_qtf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, True, qtfl_fd_list, 10000)
+        Dim ans_clf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, True, clfl_xdc_list, 10000)
+        Dim ans_qtf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, True, qtfl_xdc_list, 10000)
+        '燃机、垃圾发电、燃煤、供冷供热的材料费和其它费区分“负荷率” OR “投资量”，有两种不同的计算模式
+        Dim ans_clf_rj(31) As Double
+        Dim ans_clf_lj(31) As Double
+        Dim ans_clf_rm(31) As Double
+        Dim ans_clf_glgr(31) As Double
+        Dim ans_qtf_rj(31) As Double
+        Dim ans_qtf_lj(31) As Double
+        Dim ans_qtf_rm(31) As Double
+        Dim ans_qtf_glgr(31) As Double
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "负荷率" Then
-            ans_clfqtf = 材料费其它费计算_负荷率(rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list, xdczjgl_list, clfl_rj_list, clfl_rm_list, clfl_ljfd_list,
-                                                 clfl_glgr_list, clfl_gf_list, clfl_fd_list, clfl_xdc_list, qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list,
-                                                 qtfl_fd_list, qtfl_xdc_list, fhl_list)
-            ans_znclf = ans_clfqtf(0)
-            ans_znqtf = ans_clfqtf(1)
-            ans_clf_rj = ans_clfqtf(2)
-            ans_clf_lj = ans_clfqtf(3)
-            ans_clf_rm = ans_clfqtf(4)
-            ans_clf_glgr = ans_clfqtf(5)
-            ans_clf_gf = ans_clfqtf(6)
-            ans_clf_fd = ans_clfqtf(7)
-            ans_clf_xdc = ans_clfqtf(8)
-            ans_qtf_rj = ans_clfqtf(9)
-            ans_qtf_lj = ans_clfqtf(10)
-            ans_qtf_rm = ans_clfqtf(11)
-            ans_qtf_glgr = ans_clfqtf(12)
-            ans_qtf_gf = ans_clfqtf(13)
-            ans_qtf_fd = ans_clfqtf(14)
-            ans_qtf_xdc = ans_clfqtf(15)
+            '将逐年负荷率和材料费率其它费率相乘，得到综合费率
+            Dim fh_clfl_rj_list(31) As Double
+            Dim fh_qtfl_rj_list(31) As Double
+            Dim fh_clfl_ljfd_list(31) As Double
+            Dim fh_qtfl_ljfd_list(31) As Double
+            Dim fh_clfl_rm_list(31) As Double
+            Dim fh_qtfl_rm_list(31) As Double
+            Dim fh_clfl_glgr_list(31) As Double
+            Dim fh_qtfl_glgr_list(31) As Double
+            For i = 1 To 31
+                fh_clfl_rj_list(i) = clfl_rj_list(i) * fhl_list(i)
+                fh_qtfl_rj_list(i) = qtfl_rj_list(i) * fhl_list(i)
+                fh_clfl_ljfd_list(i) = clfl_ljfd_list(i) * fhl_list(i)
+                fh_qtfl_ljfd_list(i) = qtfl_ljfd_list(i) * fhl_list(i)
+                fh_clfl_rm_list(i) = clfl_rm_list(i) * fhl_list(i)
+                fh_qtfl_rm_list(i) = qtfl_rm_list(i) * fhl_list(i)
+                fh_clfl_glgr_list(i) = clfl_glgr_list(i) * fhl_list(i)
+                fh_qtfl_glgr_list(i) = qtfl_glgr_list(i) * fhl_list(i)
+            Next
+            '计算
+            ans_clf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, False, fh_clfl_rj_list, 1000)
+            ans_qtf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, False, fh_qtfl_rj_list, 1000)
+            ans_clf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, False, fh_clfl_ljfd_list, 1000)
+            ans_qtf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, False, fh_qtfl_ljfd_list, 1000)
+            ans_clf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, False, fh_clfl_rm_list, 1000)
+            ans_qtf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, False, fh_qtfl_rm_list, 1000)
+            ans_clf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, False, fh_clfl_glgr_list, 1000)
+            ans_qtf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, False, fh_qtfl_glgr_list, 1000)
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "投资量" Then
-            ans_clfqtf = 材料费其它费计算_投资量(rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list, xdczjgl_list, clfl_rj_list, clfl_rm_list, clfl_ljfd_list,
-                                                 clfl_glgr_list, clfl_gf_list, clfl_fd_list, clfl_xdc_list, qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list,
-                                                 qtfl_fd_list, qtfl_xdc_list)
-            ans_znclf = ans_clfqtf(0)
-            ans_znqtf = ans_clfqtf(1)
-            ans_clf_rj = ans_clfqtf(2)
-            ans_clf_lj = ans_clfqtf(3)
-            ans_clf_rm = ans_clfqtf(4)
-            ans_clf_glgr = ans_clfqtf(5)
-            ans_clf_gf = ans_clfqtf(6)
-            ans_clf_fd = ans_clfqtf(7)
-            ans_clf_xdc = ans_clfqtf(8)
-            ans_qtf_rj = ans_clfqtf(9)
-            ans_qtf_lj = ans_clfqtf(10)
-            ans_qtf_rm = ans_clfqtf(11)
-            ans_qtf_glgr = ans_clfqtf(12)
-            ans_qtf_gf = ans_clfqtf(13)
-            ans_qtf_fd = ans_clfqtf(14)
-            ans_qtf_xdc = ans_clfqtf(15)
+            ans_clf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, True, clfl_rj_list, 1000)
+            ans_qtf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, True, qtfl_rj_list, 1000)
+            ans_clf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, True, clfl_ljfd_list, 1000)
+            ans_qtf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, True, qtfl_ljfd_list, 1000)
+            ans_clf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, True, clfl_rm_list, 1000)
+            ans_qtf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, True, qtfl_rm_list, 1000)
+            ans_clf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, True, clfl_glgr_list, 1000)
+            ans_qtf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, True, qtfl_glgr_list, 1000)
         End If
-        '返回结果
-        Dim ans(15)
-        ans(0) = ans_znclf
-        ans(1) = ans_znqtf
-        ans(2) = ans_clf_rj
-        ans(3) = ans_clf_lj
-        ans(4) = ans_clf_rm
-        ans(5) = ans_clf_glgr
-        ans(6) = ans_clf_gf
-        ans(7) = ans_clf_fd
-        ans(8) = ans_clf_xdc
-        ans(9) = ans_qtf_rj
-        ans(10) = ans_qtf_lj
-        ans(11) = ans_qtf_rm
-        ans(12) = ans_qtf_glgr
-        ans(13) = ans_qtf_gf
-        ans(14) = ans_qtf_fd
-        ans(15) = ans_qtf_xdc
-        Return ans
-    End Function
-
-    Function 材料费其它费计算_负荷率(rjfdl_list As Array, glgrl_list As Array, gfzjgl_list As Array, rmfdl_list As Array,
-                                     fdzjgl_list As Array, ljfdl_list As Array, xdczjgl_list As Array, clfl_rj_list As Array, clfl_rm_list As Array,
-                                     clfl_ljfd_list As Array, clfl_glgr_list As Array, clfl_gf_list As Array,
-                                     clfl_fd_list As Array, clfl_xdc_list As Array, qtfl_rj_list As Array, qtfl_rm_list As Array,
-                                     qtfl_ljfd_list As Array, qtfl_glgr_list As Array, qtfl_gf_list As Array,
-                                     qtfl_fd_list As Array, qtfl_xdc_list As Array, fhl_list As Array)
-        'rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list，xdczjgl_list：与下面的量一一对应
-        '燃机总发电量(万kWh)，10次投资的情况，列表，长度31
-        '供冷供热总量(万kWh)，10次投资的情况，列表，长度31
-        '光伏总装机功率(kW)，10次投资的情况，列表，长度31
-        '燃煤机组总发电量(万kWh)，10次投资的情况，列表，长度31
-        '风电总装机功率(kW)，10次投资的情况，列表，长度31
-        '垃圾发电总发电量(万kWh)，10次投资的情况，列表，长度31
-        '蓄电池总装机功率(kW)，10次投资的情况，列表，长度31
-        'clfl_rj_list, clfl_rm_list, clfl_ljfd_list, clfl_glgr_list, clfl_gf_list, clfl_fd_list，clfl_xdc_list：与下面的材料费率一一对应
-        '燃机材料费， 元 / MWh，列表，长度31
-        '燃煤发电材料费， 元 / MWh，列表，长度31
-        '垃圾发电材料费， 元 / MWh，列表，长度31
-        '供冷供热材料费， 元 / MWh，列表，长度31
-        '光伏材料费， 元 / kW，列表，长度31
-        '风电材料费， 元 / kW，列表，长度31
-        '蓄电池材料费， 元 / kW，列表，长度31
-        'qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list, qtfl_fd_list，qtfl_xdc_list：与下面的其它费率一一对应
-        '燃机其它费用， 元 / MWh，列表，长度31
-        '燃煤发电其它费用， 元 / MWh，列表，长度31
-        '垃圾发电其它费用， 元 / MWh，列表，长度31
-        '供冷供热其它费， 元 / MWh，列表，长度31
-        '光伏其它费用， 元 / kW，列表，长度31
-        '风电其它费用， 元 / kW，列表，长度31
-        '蓄电池其它费用， 元 / kW，列表，长度31
-
-        'fhl_list：除了光伏、风电外的设备乘以这个负荷率，列表，长度31
-
-        '各项内容的累计值
-        Dim rjfdl_lj As Double = 0
-        Dim glgrl_lj As Double = 0
-        Dim rmfdl_lj As Double = 0
-        Dim ljfdl_lj As Double = 0
-        '这几项计算31年总的累计值，然后计算中再乘以负荷率即可
-        For i = 1 To 31
-            rjfdl_lj += rjfdl_list(i)
-            glgrl_lj += glgrl_list(i)
-            rmfdl_lj += rmfdl_list(i)
-            ljfdl_lj += ljfdl_list(i)
-        Next
-        '风电、光伏、蓄电池不乘以负荷率，按照装机kW的累计情况计算
-        Dim gfzjgl_lj As Double = 0
-        Dim fdzjgl_lj As Double = 0
-        Dim xdczjgl_lj As Double = 0
-        '分项材料费
-        Dim ans_clf_rj(31) As Double
-        Dim ans_clf_lj(31) As Double
-        Dim ans_clf_rm(31) As Double
-        Dim ans_clf_glgr(31) As Double
-        Dim ans_clf_gf(31) As Double
-        Dim ans_clf_fd(31) As Double
-        Dim ans_clf_xdc(31) As Double
-        '分项其它费
-        Dim ans_qtf_rj(31) As Double
-        Dim ans_qtf_lj(31) As Double
-        Dim ans_qtf_rm(31) As Double
-        Dim ans_qtf_glgr(31) As Double
-        Dim ans_qtf_gf(31) As Double
-        Dim ans_qtf_fd(31) As Double
-        Dim ans_qtf_xdc(31) As Double
-        '计算逐年材料费其它费金额
+        '数据加和
         Dim ans_znclf(31) As Double
         Dim ans_znqtf(31) As Double
         For i = 1 To 31
-            '计算前一年累积量，用前一年的累积量进行计算
-            gfzjgl_lj += gfzjgl_list(i - 1)
-            fdzjgl_lj += fdzjgl_list(i - 1)
-            xdczjgl_lj += xdczjgl_list(i - 1)
-            '计算材料费
-            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) * fhl_list(i) / 1000
-            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) * fhl_list(i) / 1000
-            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) * fhl_list(i) / 1000
-            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) * fhl_list(i) / 1000
-            ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
-            ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
-            ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
             ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
-            '计算其它费
-            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) * fhl_list(i) / 1000
-            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) * fhl_list(i) / 1000
-            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) * fhl_list(i) / 1000
-            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) * fhl_list(i) / 1000
-            ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
-            ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
-            ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
-            ans_znqtf(i) = ans_qtf_rj(i) + ans_qtf_lj(i) + ans_qtf_rm(i) + ans_qtf_glgr(i) + ans_qtf_gf(i) + ans_qtf_fd(i) + ans_qtf_xdc(i)
-        Next
-        '返回结果
-        Dim ans(15)
-        ans(0) = ans_znclf
-        ans(1) = ans_znqtf
-        ans(2) = ans_clf_rj
-        ans(3) = ans_clf_lj
-        ans(4) = ans_clf_rm
-        ans(5) = ans_clf_glgr
-        ans(6) = ans_clf_gf
-        ans(7) = ans_clf_fd
-        ans(8) = ans_clf_xdc
-        ans(9) = ans_qtf_rj
-        ans(10) = ans_qtf_lj
-        ans(11) = ans_qtf_rm
-        ans(12) = ans_qtf_glgr
-        ans(13) = ans_qtf_gf
-        ans(14) = ans_qtf_fd
-        ans(15) = ans_qtf_xdc
-        Return ans
-    End Function
-    Function 材料费其它费计算_投资量(rjfdl_list As Array, glgrl_list As Array, gfzjgl_list As Array, rmfdl_list As Array,
-                                     fdzjgl_list As Array, ljfdl_list As Array, xdczjgl_list As Array, clfl_rj_list As Array, clfl_rm_list As Array,
-                                     clfl_ljfd_list As Array, clfl_glgr_list As Array, clfl_gf_list As Array,
-                                     clfl_fd_list As Array, clfl_xdc_list As Array, qtfl_rj_list As Array, qtfl_rm_list As Array,
-                                     qtfl_ljfd_list As Array, qtfl_glgr_list As Array, qtfl_gf_list As Array,
-                                     qtfl_fd_list As Array, qtfl_xdc_list As Array)
-        'rjfdl_list, glgrl_list, gfzjgl_list, rmfdl_list, fdzjgl_list, ljfdl_list，xdczjgl_list：与下面的量一一对应
-        '燃机总发电量(万kWh)，10次投资的情况，列表，长度31
-        '供冷供热总量(万kWh)，10次投资的情况，列表，长度31
-        '光伏总装机功率(kW)，10次投资的情况，列表，长度31
-        '燃煤机组总发电量(万kWh)，10次投资的情况，列表，长度31
-        '风电总装机功率(kW)，10次投资的情况，列表，长度31
-        '垃圾发电总发电量(万kWh)，10次投资的情况，列表，长度31
-        '蓄电池总装机功率(kW)，10次投资的情况，列表，长度31
-        'clfl_rj_list, clfl_rm_list, clfl_ljfd_list, clfl_glgr_list, clfl_gf_list, clfl_fd_list，clfl_xdc_list：与下面的材料费率一一对应
-        '燃机材料费， 元 / MWh，列表，长度31
-        '燃煤发电材料费， 元 / MWh，列表，长度31
-        '垃圾发电材料费， 元 / MWh，列表，长度31
-        '供冷供热材料费， 元 / MWh，列表，长度31
-        '光伏材料费， 元 / kW，列表，长度31
-        '风电材料费， 元 / kW，列表，长度31
-        '蓄电池材料费， 元 / kW，列表，长度31
-        'qtfl_rj_list, qtfl_rm_list, qtfl_ljfd_list, qtfl_glgr_list, qtfl_gf_list, qtfl_fd_list，qtfl_xdc_list：与下面的其它费率一一对应
-        '燃机其它费用， 元 / MWh，列表，长度31
-        '燃煤发电其它费用， 元 / MWh，列表，长度31
-        '垃圾发电其它费用， 元 / MWh，列表，长度31
-        '供冷供热其它费， 元 / MWh，列表，长度31
-        '光伏其它费用， 元 / kW，列表，长度31
-        '风电其它费用， 元 / kW，列表，长度31
-        '蓄电池其它费用， 元 / kW，列表，长度31
-
-        '各项内容的累计值
-        Dim rjfdl_lj As Double = 0
-        Dim glgrl_lj As Double = 0
-        Dim gfzjgl_lj As Double = 0
-        Dim rmfdl_lj As Double = 0
-        Dim fdzjgl_lj As Double = 0
-        Dim ljfdl_lj As Double = 0
-        Dim xdczjgl_lj As Double = 0
-        '分项材料费
-        Dim ans_clf_rj(31) As Double
-        Dim ans_clf_lj(31) As Double
-        Dim ans_clf_rm(31) As Double
-        Dim ans_clf_glgr(31) As Double
-        Dim ans_clf_gf(31) As Double
-        Dim ans_clf_fd(31) As Double
-        Dim ans_clf_xdc(31) As Double
-        '分项其它费
-        Dim ans_qtf_rj(31) As Double
-        Dim ans_qtf_lj(31) As Double
-        Dim ans_qtf_rm(31) As Double
-        Dim ans_qtf_glgr(31) As Double
-        Dim ans_qtf_gf(31) As Double
-        Dim ans_qtf_fd(31) As Double
-        Dim ans_qtf_xdc(31) As Double
-        '计算逐年材料费其它费金额
-        Dim ans_znclf(31) As Double
-        Dim ans_znqtf(31) As Double
-        For i = 1 To 31
-            '计算前一年累积量，用前一年的累积量进行计算
-            rjfdl_lj += rjfdl_list(i - 1)
-            glgrl_lj += glgrl_list(i - 1)
-            gfzjgl_lj += gfzjgl_list(i - 1)
-            rmfdl_lj += rmfdl_list(i - 1)
-            fdzjgl_lj += fdzjgl_list(i - 1)
-            ljfdl_lj += ljfdl_list(i - 1)
-            xdczjgl_lj += xdczjgl_list(i - 1)
-            '计算材料费
-            ans_clf_rj(i) = rjfdl_lj * clfl_rj_list(i) / 1000
-            ans_clf_lj(i) = ljfdl_lj * clfl_ljfd_list(i) / 1000
-            ans_clf_rm(i) = rmfdl_lj * clfl_rm_list(i) / 1000
-            ans_clf_glgr(i) = glgrl_lj * clfl_glgr_list(i) / 1000
-            ans_clf_gf(i) = gfzjgl_lj * clfl_gf_list(i) / 10000
-            ans_clf_fd(i) = fdzjgl_lj * clfl_fd_list(i) / 10000
-            ans_clf_xdc(i) = xdczjgl_lj * clfl_xdc_list(i) / 10000
-            ans_znclf(i) = ans_clf_rj(i) + ans_clf_lj(i) + ans_clf_rm(i) + ans_clf_glgr(i) + ans_clf_gf(i) + ans_clf_fd(i) + ans_clf_xdc(i)
-            '计算其它费
-            ans_qtf_rj(i) = rjfdl_lj * qtfl_rj_list(i) / 1000
-            ans_qtf_lj(i) = ljfdl_lj * qtfl_ljfd_list(i) / 1000
-            ans_qtf_rm(i) = rmfdl_lj * qtfl_rm_list(i) / 1000
-            ans_qtf_glgr(i) = glgrl_lj * qtfl_glgr_list(i) / 1000
-            ans_qtf_gf(i) = gfzjgl_lj * qtfl_gf_list(i) / 10000
-            ans_qtf_fd(i) = fdzjgl_lj * qtfl_fd_list(i) / 10000
-            ans_qtf_xdc(i) = xdczjgl_lj * qtfl_xdc_list(i) / 10000
             ans_znqtf(i) = ans_qtf_rj(i) + ans_qtf_lj(i) + ans_qtf_rm(i) + ans_qtf_glgr(i) + ans_qtf_gf(i) + ans_qtf_fd(i) + ans_qtf_xdc(i)
         Next
         '返回结果

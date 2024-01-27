@@ -56,6 +56,8 @@
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '10次投资年份序号列表，列表，长度10
         Dim tznf_list = GSBSJ(0)
+        '计算10次投资，每次建设年份的投产月份数
+        Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
         '分项折旧摊销计算
         Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model)
         '资产原值，列表长度10
@@ -72,13 +74,6 @@
         Dim sygdzcjz_nt = ans_zjtx(17)(2)
         Dim sygdzcjz_gf = ans_zjtx(18)(2)
         Dim sygdzcjz_fd = ans_zjtx(19)(2)
-        '将10次投资的资产原值转为长度31的列表
-        Dim gdzcyz_cg_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_cg)
-        Dim gdzcyz_rj_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_rj)
-        Dim gdzcyz_xdc_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_xdc)
-        Dim gdzcyz_nt_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_nt)
-        Dim gdzcyz_gf_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_gf)
-        Dim gdzcyz_fd_list = 基础计算功能_10_to_31(tznf_list, gdzcyz_fd)
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取保险费计算基数设置
         Dim bxf_jsjs_mode As String = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(209, 22).Value
@@ -156,46 +151,15 @@
             kcbl_cg = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 8).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
+        Dim zs_set As Boolean = True
+        Dim dividend As Double = 1
         '计算逐年保险费
-        Dim ans_bxf_cg(31) As Double
-        Dim ans_bxf_gf(31) As Double
-        Dim ans_bxf_fd(31) As Double
-        Dim ans_bxf_xdc(31) As Double
-        Dim ans_bxf_rj(31) As Double
-        Dim ans_bxf_nt(31) As Double
-        If bxf_jsjs_mode = "净值" Then
-            '以固定资产净值为基础进行计算
-            For i = 1 To 31
-                ans_bxf_cg(i) = sygdzcjz_cg(i) * bxfl_cg_list(i)
-                ans_bxf_gf(i) = sygdzcjz_gf(i) * bxfl_gf_list(i)
-                ans_bxf_fd(i) = sygdzcjz_fd(i) * bxfl_fd_list(i)
-                ans_bxf_xdc(i) = sygdzcjz_xdc(i) * bxfl_xdc_list(i)
-                ans_bxf_rj(i) = sygdzcjz_rj(i) * bxfl_rj_list(i)
-                ans_bxf_nt(i) = sygdzcjz_nt(i) * bxfl_nt_list(i)
-            Next
-        Else
-            '以固定资产原值为基础进行计算(默认计算方式)
-            Dim gdzcyz_lj_cg As Double = 0
-            Dim gdzcyz_lj_rj As Double = 0
-            Dim gdzcyz_lj_xdc As Double = 0
-            Dim gdzcyz_lj_nt As Double = 0
-            Dim gdzcyz_lj_gf As Double = 0
-            Dim gdzcyz_lj_fd As Double = 0
-            For i = 1 To 31
-                gdzcyz_lj_cg += gdzcyz_cg_list(i - 1)
-                gdzcyz_lj_rj += gdzcyz_rj_list(i - 1)
-                gdzcyz_lj_xdc += gdzcyz_xdc_list(i - 1)
-                gdzcyz_lj_nt += gdzcyz_nt_list(i - 1)
-                gdzcyz_lj_gf += gdzcyz_gf_list(i - 1)
-                gdzcyz_lj_fd += gdzcyz_fd_list(i - 1)
-                ans_bxf_cg(i) = gdzcyz_lj_cg * bxfl_cg_list(i)
-                ans_bxf_gf(i) = gdzcyz_lj_gf * bxfl_gf_list(i)
-                ans_bxf_fd(i) = gdzcyz_lj_fd * bxfl_fd_list(i)
-                ans_bxf_xdc(i) = gdzcyz_lj_xdc * bxfl_xdc_list(i)
-                ans_bxf_rj(i) = gdzcyz_lj_rj * bxfl_rj_list(i)
-                ans_bxf_nt(i) = gdzcyz_lj_nt * bxfl_nt_list(i)
-            Next
-        End If
+        Dim ans_bxf_cg = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_cg, yynx_cg, kcbl_cg, zs_set, bxfl_cg_list, dividend)
+        Dim ans_bxf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_gf, yynx_gf, kcbl_gf, zs_set, bxfl_gf_list, dividend)
+        Dim ans_bxf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_fd, yynx_fd, kcbl_fd, zs_set, bxfl_fd_list, dividend)
+        Dim ans_bxf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_xdc, yynx_xdc, kcbl_xdc, zs_set, bxfl_xdc_list, dividend)
+        Dim ans_bxf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_rj, yynx_rj, kcbl_rj, zs_set, bxfl_rj_list, dividend)
+        Dim ans_bxf_nt = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_nt, yynx_nt, kcbl_nt, zs_set, bxfl_nt_list, dividend)
         '————————————————————————————————————————————————————————————————————————————————————————
         '返回结果
         Dim ans(5)

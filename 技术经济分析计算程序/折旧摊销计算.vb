@@ -119,24 +119,17 @@
             End If
         Next
         '———————————————————————————————————————————————————————————————————————————————————————— 
-        '将10次投资的资产原值转为长度31的列表
-        Dim gdzcyz_list = 基础计算功能_10_to_31(tznf_list, gdzcyz)
-        Dim wxzcyz_list = 基础计算功能_10_to_31(tznf_list, wxzcyz)
-        '计算逐年累计固定资产、无形资产原值
-        Dim gdzcyz_lj(31) As Double
-        Dim wxzcyz_lj(31) As Double
-        For i = 1 To 31
-            gdzcyz_lj(i) = gdzcyz_lj(i - 1) + gdzcyz_list(i)
-            wxzcyz_lj(i) = wxzcyz_lj(i - 1) + wxzcyz_list(i)
-        Next
+        '逐年固定资产原值
+        Dim gdzcyz_list = 数据累加合并_10次投资(ExcelApp, tznf_list, gdzcyz, False)
+        Dim wxzcyz_list = 数据累加合并_10次投资(ExcelApp, tznf_list, wxzcyz, False)
         '结果写入Excel
         '前15年
         For i = 1 To 15
             If i <= jsnx Then
                 '固定资产
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 4 + i).Value = gdzcyz_lj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 4 + i).Value = gdzcyz_list(i)
                 '无形资产
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 4 + i).Value = wxzcyz_lj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 4 + i).Value = wxzcyz_list(i)
             Else
                 '固定资产
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 4 + i).Value = 0
@@ -148,9 +141,9 @@
         For i = 16 To 31
             If i <= jsnx Then
                 '固定资产
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(22, i - 12).Value = gdzcyz_lj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(22, i - 12).Value = gdzcyz_list(i)
                 '无形资产
-                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(28, i - 12).Value = wxzcyz_lj(i)
+                ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(28, i - 12).Value = wxzcyz_list(i)
             Else
                 '固定资产
                 ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(22, i - 12).Value = 0
@@ -276,11 +269,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '逐年折旧摊销计算
-        '读取每年投产月份数
-        Dim tcyfs_list(31) As Integer
-        For i = 1 To 31
-            tcyfs_list(i) = ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value
-        Next
+        '获取10次投资,每一次投资的投产月份数
+        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
         '折旧摊销开始年份
         Dim ksnf(10) As Integer
         For i = 1 To 5
@@ -384,86 +374,86 @@
         '方法一
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Then
             '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
+            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), month_10_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), month_10_list, hscz)
             '燃机
-            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
+            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), month_10_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), month_10_list, hscz)
             '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
+            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), month_10_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), month_10_list, hscz)
             '暖通
-            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
+            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), month_10_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), month_10_list, hscz)
             '光伏
-            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
+            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), month_10_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), month_10_list, hscz)
             '风电
-            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
+            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), month_10_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), month_10_list, hscz)
         End If
         '方法二
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
             '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), tcyfs_list, hscz)
+            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_cg, gdzczjnx_cg(1), ksnf, jsnx, gdzcczl_cg(1), month_10_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_cg, wxzctxnx_cg(1), ksnf, jsnx, wxzcczl_cg(1), month_10_list, hscz)
             '燃机
-            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), tcyfs_list, hscz)
+            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_rj, gdzczjnx_rj(1), ksnf, jsnx, gdzcczl_rj(1), month_10_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_rj, wxzctxnx_rj(1), ksnf, jsnx, wxzcczl_rj(1), month_10_list, hscz)
             '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), tcyfs_list, hscz)
+            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_xdc, gdzczjnx_xdc(1), ksnf, jsnx, gdzcczl_xdc(1), month_10_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_xdc, wxzctxnx_xdc(1), ksnf, jsnx, wxzcczl_xdc(1), month_10_list, hscz)
             '暖通
-            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), tcyfs_list, hscz)
+            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_nt, gdzczjnx_nt(1), ksnf, jsnx, gdzcczl_nt(1), month_10_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_nt, wxzctxnx_nt(1), ksnf, jsnx, wxzcczl_nt(1), month_10_list, hscz)
             '光伏
-            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), tcyfs_list, hscz)
+            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_gf, gdzczjnx_gf(1), ksnf, jsnx, gdzcczl_gf(1), month_10_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_gf, wxzctxnx_gf(1), ksnf, jsnx, wxzcczl_gf(1), month_10_list, hscz)
             '风电
-            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), tcyfs_list, hscz)
+            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资合并计算(gdzcyz_fd, gdzczjnx_fd(1), ksnf, jsnx, gdzcczl_fd(1), month_10_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资合并计算(wxzcyz_fd, wxzctxnx_fd(1), ksnf, jsnx, wxzcczl_fd(1), month_10_list, hscz)
         End If
         '方法三
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法三" Then
             '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
+            ans_gdzczj_cg = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, month_10_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, month_10_list, hscz)
             '燃机
-            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
+            ans_gdzczj_rj = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, month_10_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, month_10_list, hscz)
             '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
+            ans_gdzczj_xdc = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, month_10_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, month_10_list, hscz)
             '暖通
-            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
+            ans_gdzczj_nt = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, month_10_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, month_10_list, hscz)
             '光伏
-            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
+            ans_gdzczj_gf = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, month_10_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, month_10_list, hscz)
             '风电
-            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
+            ans_gdzczj_fd = 折旧摊销计算_直线法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, month_10_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_直线法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, month_10_list, hscz)
         End If
         '方法四
         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法四" Then
             '常规设备
-            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, tcyfs_list, hscz)
-            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, tcyfs_list, hscz)
+            ans_gdzczj_cg = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_cg, gdzczjnx_cg, ksnf, jsnx, gdzcczl_cg, month_10_list, hscz)
+            ans_wxzctx_cg = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_cg, wxzctxnx_cg, ksnf, jsnx, wxzcczl_cg, month_10_list, hscz)
             '燃机
-            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, tcyfs_list, hscz)
-            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, tcyfs_list, hscz)
+            ans_gdzczj_rj = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_rj, gdzczjnx_rj, ksnf, jsnx, gdzcczl_rj, month_10_list, hscz)
+            ans_wxzctx_rj = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_rj, wxzctxnx_rj, ksnf, jsnx, wxzcczl_rj, month_10_list, hscz)
             '蓄电池
-            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, tcyfs_list, hscz)
-            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, tcyfs_list, hscz)
+            ans_gdzczj_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_xdc, gdzczjnx_xdc, ksnf, jsnx, gdzcczl_xdc, month_10_list, hscz)
+            ans_wxzctx_xdc = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_xdc, wxzctxnx_xdc, ksnf, jsnx, wxzcczl_xdc, month_10_list, hscz)
             '暖通
-            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, tcyfs_list, hscz)
-            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, tcyfs_list, hscz)
+            ans_gdzczj_nt = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_nt, gdzczjnx_nt, ksnf, jsnx, gdzcczl_nt, month_10_list, hscz)
+            ans_wxzctx_nt = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_nt, wxzctxnx_nt, ksnf, jsnx, wxzcczl_nt, month_10_list, hscz)
             '光伏
-            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, tcyfs_list, hscz)
-            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, tcyfs_list, hscz)
+            ans_gdzczj_gf = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_gf, gdzczjnx_gf, ksnf, jsnx, gdzcczl_gf, month_10_list, hscz)
+            ans_wxzctx_gf = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_gf, wxzctxnx_gf, ksnf, jsnx, wxzcczl_gf, month_10_list, hscz)
             '风电
-            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, tcyfs_list, hscz)
-            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, tcyfs_list, hscz)
+            ans_gdzczj_fd = 折旧摊销计算_年数总和法_10次投资分开计算(gdzcyz_fd, gdzczjnx_fd, ksnf, jsnx, gdzcczl_fd, month_10_list, hscz)
+            ans_wxzctx_fd = 折旧摊销计算_年数总和法_10次投资分开计算(wxzcyz_fd, wxzctxnx_fd, ksnf, jsnx, wxzcczl_fd, month_10_list, hscz)
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -499,13 +489,13 @@
     End Function
 
     Function 折旧摊销计算_直线法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
-                                                  jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+                                                  jsnx As Integer, czl As Double, month_10_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
         'jsnx：项目总的计算年限
         'czl：残值率
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'hscy：计算期末，是否回收资产残值
 
         '10次投资的固定资产折旧或者无形资产摊销合并在一起进行计算
@@ -607,16 +597,16 @@
         Dim SYJZ(31) As Double '逐年剩余资产净值
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_直线法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_直线法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_直线法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_直线法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_直线法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_直线法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_直线法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_直线法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_直线法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_直线法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_直线法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl, month_10_list(1))
+        Dim ans_2 = 折旧摊销计算_直线法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl, month_10_list(2))
+        Dim ans_3 = 折旧摊销计算_直线法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl, month_10_list(3))
+        Dim ans_4 = 折旧摊销计算_直线法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl, month_10_list(4))
+        Dim ans_5 = 折旧摊销计算_直线法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl, month_10_list(5))
+        Dim ans_6 = 折旧摊销计算_直线法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl, month_10_list(6))
+        Dim ans_7 = 折旧摊销计算_直线法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl, month_10_list(7))
+        Dim ans_8 = 折旧摊销计算_直线法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl, month_10_list(8))
+        Dim ans_9 = 折旧摊销计算_直线法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl, month_10_list(9))
+        Dim ans_10 = 折旧摊销计算_直线法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl, month_10_list(10))
         '累加
         For i = 1 To 31 '第1年到第31年
             '逐年折旧摊销费金额
@@ -648,14 +638,14 @@
         Return ans
     End Function
     Function 折旧摊销计算_年数总和法_10次投资合并计算(zcyz_list As Array, zjtxnx_0 As Integer, ksnf_list As Array,
-                                                      jsnx As Integer, czl As Double, tcyfs_list As Array, hscz As Boolean)
+                                                      jsnx As Integer, czl As Double, month_10_list As Array, hscz As Boolean)
 
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf_list：折旧摊销计算的开始年份初始值，列表，长度10
         'jsnx：项目总的计算年限
         'czl：残值率
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'hscy：计算期末，是否回收资产残值
 
         '10次投资的固定资产折旧或者无形资产摊销合并在一起进行计算
@@ -758,16 +748,16 @@
         Dim ZJL(31) As Double '逐年折旧率
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl, month_10_list(1))
+        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl, month_10_list(2))
+        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl, month_10_list(3))
+        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl, month_10_list(4))
+        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl, month_10_list(5))
+        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl, month_10_list(6))
+        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl, month_10_list(7))
+        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl, month_10_list(8))
+        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl, month_10_list(9))
+        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl, month_10_list(10))
 
         '累加
         For i = 1 To 31 '第1年到第31年
@@ -806,13 +796,13 @@
         Return ans
     End Function
     Function 折旧摊销计算_直线法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
-                                                  jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+                                                  jsnx As Integer, czl_list As Array, month_10_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
         'ksnf_list：折旧摊销计算的开始年份，列表，长度10
         'jsnx：项目总的计算年限
         'czl_list：残值率，列表，长度10
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'hscy：计算期末，是否回收资产残值
 
         '10次投资分别计算固定资产折旧或者无形资产摊销，再累加在一起
@@ -874,16 +864,16 @@
         Dim SYJZ(31) As Double '逐年剩余资产净值
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_直线法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl_1, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_直线法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl_2, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_直线法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl_3, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_直线法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl_4, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_直线法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl_5, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_直线法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl_6, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_直线法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl_7, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_直线法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl_8, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_直线法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl_9, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_直线法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl_10, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_直线法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl_1, month_10_list(1))
+        Dim ans_2 = 折旧摊销计算_直线法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl_2, month_10_list(2))
+        Dim ans_3 = 折旧摊销计算_直线法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl_3, month_10_list(3))
+        Dim ans_4 = 折旧摊销计算_直线法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl_4, month_10_list(4))
+        Dim ans_5 = 折旧摊销计算_直线法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl_5, month_10_list(5))
+        Dim ans_6 = 折旧摊销计算_直线法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl_6, month_10_list(6))
+        Dim ans_7 = 折旧摊销计算_直线法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl_7, month_10_list(7))
+        Dim ans_8 = 折旧摊销计算_直线法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl_8, month_10_list(8))
+        Dim ans_9 = 折旧摊销计算_直线法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl_9, month_10_list(9))
+        Dim ans_10 = 折旧摊销计算_直线法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl_10, month_10_list(10))
         '累加
         For i = 1 To 31 '第1年到第31年
             '逐年折旧摊销费金额
@@ -915,13 +905,13 @@
         Return ans
     End Function
     Function 折旧摊销计算_年数总和法_10次投资分开计算(zcyz_list As Array, zjtxnx_0_list As Array, ksnf_list As Array,
-                                                      jsnx As Integer, czl_list As Array, tcyfs_list As Array, hscz As Boolean)
+                                                      jsnx As Integer, czl_list As Array, month_10_list As Array, hscz As Boolean)
         'zcyz_list：资产原值，列表，长度10
         'zjtxnx_0_list：折旧摊销年限数初始值，列表，长度10
         'ksnf_list：折旧摊销计算的开始年份初始值，列表，长度10
         'jsnx：项目总的计算年限
         'czl_list：残值率，列表，长度10
-        'tcyfs_list：逐年投产的月份数，列表，长度31
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'hscy：计算期末，是否回收资产残值
 
         '10次投资分别计算固定资产折旧或者无形资产摊销，再累加在一起
@@ -984,16 +974,16 @@
         Dim ZJL(31) As Double '逐年折旧率
 
         '分次进行计算
-        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl_1, tcyfs_list)
-        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl_2, tcyfs_list)
-        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl_3, tcyfs_list)
-        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl_4, tcyfs_list)
-        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl_5, tcyfs_list)
-        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl_6, tcyfs_list)
-        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl_7, tcyfs_list)
-        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl_8, tcyfs_list)
-        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl_9, tcyfs_list)
-        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl_10, tcyfs_list)
+        Dim ans_1 = 折旧摊销计算_年数总和法(zcyz_1, zjtxnx_0_1, ksnf_1, jsnx, czl_1, month_10_list(1))
+        Dim ans_2 = 折旧摊销计算_年数总和法(zcyz_2, zjtxnx_0_2, ksnf_2, jsnx, czl_2, month_10_list(2))
+        Dim ans_3 = 折旧摊销计算_年数总和法(zcyz_3, zjtxnx_0_3, ksnf_3, jsnx, czl_3, month_10_list(3))
+        Dim ans_4 = 折旧摊销计算_年数总和法(zcyz_4, zjtxnx_0_4, ksnf_4, jsnx, czl_4, month_10_list(4))
+        Dim ans_5 = 折旧摊销计算_年数总和法(zcyz_5, zjtxnx_0_5, ksnf_5, jsnx, czl_5, month_10_list(5))
+        Dim ans_6 = 折旧摊销计算_年数总和法(zcyz_6, zjtxnx_0_6, ksnf_6, jsnx, czl_6, month_10_list(6))
+        Dim ans_7 = 折旧摊销计算_年数总和法(zcyz_7, zjtxnx_0_7, ksnf_7, jsnx, czl_7, month_10_list(7))
+        Dim ans_8 = 折旧摊销计算_年数总和法(zcyz_8, zjtxnx_0_8, ksnf_8, jsnx, czl_8, month_10_list(8))
+        Dim ans_9 = 折旧摊销计算_年数总和法(zcyz_9, zjtxnx_0_9, ksnf_9, jsnx, czl_9, month_10_list(9))
+        Dim ans_10 = 折旧摊销计算_年数总和法(zcyz_10, zjtxnx_0_10, ksnf_10, jsnx, czl_10, month_10_list(10))
 
         '累加
         For i = 1 To 31 '第1年到第31年
@@ -1031,8 +1021,7 @@
         ans(3) = ZJL
         Return ans
     End Function
-    Function 折旧摊销计算_直线法(zcyz As Double, zjtxnx_0 As Integer, ksnf As Integer, jsnx As Integer,
-                                 czl As Double, tcyfs_list As Array)
+    Function 折旧摊销计算_直线法(zcyz As Double, zjtxnx_0 As Integer, ksnf As Integer, jsnx As Integer, czl As Double, tcyfs_list As Array)
         'zcyz：资产原值
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf：折旧摊销计算的开始年份
@@ -1045,8 +1034,8 @@
         Dim ZJTXFLJ(31) As Double '逐年折旧摊销费金额累计
         Dim SYJZ(31) As Double '逐年剩余资产净值
 
-        '折旧摊销一定从资产原值产生年份的后一年开始计算，从后一年开始，按照投产月份数进行折算
-
+        '折旧摊销从资产原值产生年份的的当年开始计算，按照投产月份数进行折算
+        'Call 打印数据用于调试(tcyfs_list, 31)
         If zcyz <> 0 And zjtxnx_0 <> 0 And ksnf <> 0 And jsnx <> 0 Then
             '对折旧摊销年限进行修正
             Dim zjtxnx As Integer
@@ -1059,7 +1048,7 @@
             '每年折旧摊销的金额
             Dim ZJTXJE As Double = zcyz * (1 - czl) / zjtxnx
             Dim YJZJTX As Double = 0 '已经折旧摊销的资产累计，初始值是0
-            For i = ksnf + 1 To 31 'i表示年份序号
+            For i = ksnf To 31 'i表示年份序号
                 If YJZJTX < zcyz * (1 - czl) Then
                     '还剩余的可以折旧摊销的资产
                     Dim SYKZJTX As Double = zcyz * (1 - czl) - YJZJTX
@@ -1089,8 +1078,7 @@
         ans(2) = SYJZ
         Return ans
     End Function
-    Function 折旧摊销计算_年数总和法(zcyz As Double, zjtxnx_0 As Integer, ksnf_0 As Integer, jsnx As Integer,
-                                     czl As Double, tcyfs_list As Array)
+    Function 折旧摊销计算_年数总和法(zcyz As Double, zjtxnx_0 As Integer, ksnf_0 As Integer, jsnx As Integer, czl As Double, tcyfs_list As Array)
         'zcyz：资产原值
         'zjtxnx_0：折旧摊销年限数初始值
         'ksnf_0：折旧摊销计算的开始年份初始值
@@ -1104,7 +1092,7 @@
         Dim SYJZ(31) As Double '逐年剩余资产净值
         Dim ZJL(31) As Double '逐年折旧率
 
-        '折旧摊销一定从资产原值产生年份的后一年开始计算，从后一年开始，按照投产月份数进行折算
+        '折旧摊销从资产原值产生年份之后，第一个完整运行12个月的年份开始计算，不按照投产月份数进行折算
 
         If zcyz <> 0 And zjtxnx_0 <> 0 And ksnf_0 <> 0 And jsnx <> 0 Then
             '对开始年限进行修正，如果处于建设期内，及时有投产月份数，但是不足12个月，年数总和法不计算折旧率

@@ -44,7 +44,7 @@
         Next
         '写入<投资计划与资金筹措表>
         For i = 1 To 31
-            ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value = ans_month_list(i)
+            'ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 2).Value = ans_month_list(i)
             ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(162, i + 2).Value = ans_jsq_index_list(i)
         Next
         '———————————————————————————————————————————————————————————————————————————————————————— 
@@ -286,5 +286,70 @@
         '返回结果
         Return ans
     End Function
-
+    Function 逐年投产月份数_10次投资(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '读取输入数据
+        '项目计算年限
+        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        '读取输入的建设期时间计划数据
+        Dim jsqsjjhsj = 读取建设期时间计划数据(ExcelApp)
+        '开始年份列表
+        Dim year_start_list = jsqsjjhsj(0)
+        '结束年份列表
+        Dim year_end_list = jsqsjjhsj(1)
+        '开始月份列表
+        Dim month_start_list = jsqsjjhsj(2)
+        '结束月份列表
+        Dim month_end_list = jsqsjjhsj(3)
+        '-------------------------------------------------------------------------------------------------------------------------------------------------------------
+        '计算自动计算的结果
+        Dim ans_zd = 建设期时间计划计算_自动计算(year_start_list, year_end_list, month_start_list, month_end_list)
+        Dim ans_year_list = ans_zd(0)
+        Dim ans_month_list = ans_zd(1)
+        Dim ans_month_start_list = ans_zd(2)
+        Dim ans_month_end_list = ans_zd(3)
+        '-------------------------------------------------------------------------------------------------------------------------------------------------------------
+        Dim js As Integer = 1
+        '10次投资，计算每次投资的建设年份编号
+        Dim year_10_list(10) As Integer
+        '10次投资，每个建设期年份的投产月份数
+        Dim tcyf_list(10) As Integer
+        '10次投资，计算每次投资的逐年投产月份数
+        Dim month_10_list(10)
+        For i = 1 To 31
+            If ans_year_list(i) > 0 Then
+                Dim tmp_month(31) As Integer
+                For j = 1 To 31
+                    If j < ans_year_list(i) Then
+                        tmp_month(j) = 0
+                    ElseIf j = ans_year_list(i) Then
+                        tmp_month(j) = ans_month_list(i)
+                    ElseIf j > ans_year_list(i) And j <= jsnx Then
+                        tmp_month(j) = 12
+                    Else
+                        tmp_month(j) = 0
+                    End If
+                Next
+                month_10_list(js) = tmp_month
+                year_10_list(js) = ans_year_list(i)
+                tcyf_list(js) = ans_month_list(i)
+                js = js + 1
+            End If
+        Next
+        For i = js + 1 To 10
+            Dim tmp_month(31) As Integer
+            For j = 1 To 31
+                tmp_month(j) = 0
+            Next
+            month_10_list(i) = tmp_month
+            year_10_list(js) = 0
+        Next
+        '返回结果
+        Dim ans(2)
+        ans(0) = year_10_list
+        ans(1) = month_10_list
+        ans(2) = tcyf_list
+        Return ans
+    End Function
 End Module

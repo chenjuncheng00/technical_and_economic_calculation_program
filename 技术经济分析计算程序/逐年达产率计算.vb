@@ -1,6 +1,17 @@
 ﻿Module 逐年达产率计算
-    Sub 直接输入综合达产率(ExcelApp As Object)
+    Sub 逐年达产率计算_main(ExcelApp As Object)
+        '获取10次投资,每一次投资的投产月份数
+        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 19).Value = "直接输入" Then
+            Call 直接输入综合达产率(ExcelApp, month_10_list)
+        Else
+            Call 分投资逐次输入达产率(ExcelApp, month_10_list)
+        End If
+    End Sub
+
+    Sub 直接输入综合达产率(ExcelApp As Object, month_10_list As Array)
         On Error Resume Next
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         '————————————————————————————————————————————————————————————————————————————————————————        
         For i = 3 To 17
             '综合负荷率，前15年
@@ -21,13 +32,13 @@
         '检测建设期，将没有投产月份数量的年份负荷率设置为0
         For i = 3 To 17 '投资计划与资金筹措表列号
             '前15年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
+            If month_10_list(1)(i - 2) = 0 Then '如果当年投产的月份数=0                
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
             End If
         Next
         For i = 2 To 17 '投资计划与资金筹措表列号           
             '后16年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
+            If month_10_list(1)(i + 14) = 0 Then '如果当年投产的月份数=0                
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
             End If
         Next
@@ -69,8 +80,9 @@
         '计算一次Excel
         ExcelApp.Calculate()
     End Sub
-    Sub 分投资逐次输入达产率(ExcelApp As Object)
+    Sub 分投资逐次输入达产率(ExcelApp As Object, month_10_list As Array)
         On Error Resume Next
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         '————————————————————————————————————————————————————————————————————————————————————————        
         '10次投资综合达产率计算
         Call 十次投资综合达产率计算(ExcelApp)
@@ -96,13 +108,13 @@
         '检测建设期，将没有投产月份数量的年份负荷率设置为0
         For i = 3 To 17 '投资计划与资金筹措表列号
             '前15年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value = 0 Then '如果当年投产的月份数=0                
+            If month_10_list(1)(i - 2) = 0 Then '如果当年投产的月份数=0                
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value = 0 '负荷率设置为0
             End If
         Next
         For i = 2 To 17 '投资计划与资金筹措表列号          
             '后16年
-            If ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i + 16).Value = 0 Then '如果当年投产的月份数=0                
+            If month_10_list(1)(i + 14) = 0 Then '如果当年投产的月份数=0                
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i).Value = 0 '负荷率设置为0
             End If
         Next
