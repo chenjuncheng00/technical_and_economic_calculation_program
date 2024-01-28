@@ -298,21 +298,21 @@
         Dim qtf_set_fd As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(232, 22).Value
         Dim qtf_set_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(234, 22).Value
         '逐年材料费默认值
-        Dim clfl_rj_list(31)
-        Dim clfl_rm_list(31)
-        Dim clfl_ljfd_list(31)
-        Dim clfl_glgr_list(31)
-        Dim clfl_gf_list(31)
-        Dim clfl_fd_list(31)
-        Dim clfl_xdc_list(31)
+        Dim clfl_rj_list(31) As Double
+        Dim clfl_rm_list(31) As Double
+        Dim clfl_ljfd_list(31) As Double
+        Dim clfl_glgr_list(31) As Double
+        Dim clfl_gf_list(31) As Double
+        Dim clfl_fd_list(31) As Double
+        Dim clfl_xdc_list(31) As Double
         '逐年其它费默认值
-        Dim qtfl_rj_list(31)
-        Dim qtfl_rm_list(31)
-        Dim qtfl_ljfd_list(31)
-        Dim qtfl_glgr_list(31)
-        Dim qtfl_gf_list(31)
-        Dim qtfl_fd_list(31)
-        Dim qtfl_xdc_list(31)
+        Dim qtfl_rj_list(31) As Double
+        Dim qtfl_rm_list(31) As Double
+        Dim qtfl_ljfd_list(31) As Double
+        Dim qtfl_glgr_list(31) As Double
+        Dim qtfl_gf_list(31) As Double
+        Dim qtfl_fd_list(31) As Double
+        Dim qtfl_xdc_list(31) As Double
         '逐年费率
         For i = 1 To 31
             '逐年材料费默认值

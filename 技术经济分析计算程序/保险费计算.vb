@@ -180,12 +180,12 @@
         Dim bxfl_rj As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(214, 22).Value
         Dim bxfl_nt As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(215, 22).Value
         '逐年修理费率默认值，每年都一样
-        Dim bxfl_cg_list(31)
-        Dim bxfl_rj_list(31)
-        Dim bxfl_xdc_list(31)
-        Dim bxfl_gf_list(31)
-        Dim bxfl_nt_list(31)
-        Dim bxfl_fd_list(31)
+        Dim bxfl_cg_list(31) As Double
+        Dim bxfl_rj_list(31) As Double
+        Dim bxfl_xdc_list(31) As Double
+        Dim bxfl_gf_list(31) As Double
+        Dim bxfl_nt_list(31) As Double
+        Dim bxfl_fd_list(31) As Double
         For i = 1 To 31
             bxfl_cg_list(i) = bxfl_cg
             bxfl_rj_list(i) = bxfl_rj

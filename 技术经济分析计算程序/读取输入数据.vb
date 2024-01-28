@@ -236,18 +236,18 @@
                 js_1 += 1
             Next
         Next
-        '手动输入的投产月份，列表
+        '手动输入的投产月份，列表：v5.9.3，本功能取消，不读取数据
         Dim year_shuru_list(10) As Integer
         Dim month_shuru_list(10) As Integer
-        '计数
-        Dim js_2 As Integer = 1
-        For i = 172 To 180 Step 2 '行
-            For j = 2 To 10 Step 8 '列
-                year_shuru_list(js_2) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(i, j).Value
-                month_shuru_list(js_2) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(i, j + 2).Value
-                js_2 += 1
-            Next
-        Next
+        ''计数
+        'Dim js_2 As Integer = 1
+        'For i = 172 To 180 Step 2 '行
+        '    For j = 2 To 10 Step 8 '列
+        '        year_shuru_list(js_2) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(i, j).Value
+        '        month_shuru_list(js_2) = ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(i, j + 2).Value
+        '        js_2 += 1
+        '    Next
+        'Next
         '读取手动输入的建设期贷款利息金额
         Dim dklx_shuru_list(10) As Double
         For i = 1 To 5
@@ -283,6 +283,7 @@
         For i = 16 To 31
             ans_fhl(i) = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 14).Value
         Next
+        '——————————————————————————————————————————————————————————————————
         '返回结果
         Return ans_fhl
     End Function

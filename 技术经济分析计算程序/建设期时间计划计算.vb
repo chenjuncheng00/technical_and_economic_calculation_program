@@ -352,4 +352,16 @@
         ans(2) = tcyf_list
         Return ans
     End Function
+    Function 计算项目运营年限(jsnx As Integer, month_10_list As Array)
+        'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        '————————————————————————————————————————————————————————————————————————————————————————       
+        Dim yynx As Integer
+        If month_10_list(1)(1) > 0 Then
+            yynx = jsnx
+        Else
+            yynx = jsnx - 1
+        End If
+        Return yynx
+    End Function
 End Module

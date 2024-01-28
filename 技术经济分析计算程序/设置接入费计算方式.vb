@@ -102,81 +102,23 @@
         Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        '写入数值
-        '按照逐年达产率进行计算
+        '写入计算模式
         If Me.CheckBox1.Checked = True Then
-            '正常计算的年份
-            For j = 0 To n_nf - 1
-                '前15年
-                For i = 3 To 17
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                    End If
-                Next
-                '后16年
-                For i = 18 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                    End If
-                Next
-            Next
-            '其他年份
-            For Each qtnf In qtnf_list
-                '前15年
-                For i = 3 To 17
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value = qtnf Or ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value > jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                    End If
-                Next
-                '后16年
-                For i = 18 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value = qtnf Or ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value > jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                    End If
-                Next
-            Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率"
-            '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            '————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         ElseIf Me.CheckBox2.Checked = True Then
-            '逐年投产月份比例
-            '正常计算的年份
-            For j = 0 To n_nf - 1
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * ExcelApp.ThisWorkbook.Worksheets("投资计划与资金筹措表").Cells(157, i).Value / 12
-                    End If
-                Next
-            Next
-            '其他年份
-            For Each qtnf In qtnf_list
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value = qtnf Or ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value > jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                    End If
-                Next
-            Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年投产月份比例"
         Else
-            '每年都是100%
-            '正常计算的年份
-            For j = 0 To n_nf - 1
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1
-                    End If
-                Next
-            Next
-            '其他年份
-            For Each qtnf In qtnf_list
-                For i = 3 To 33
-                    If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value = qtnf Or ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value > jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                    End If
-                Next
-            Next
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "保持每年100%"
         End If
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '获取10次投资,每一次投资的投产月份数
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        '读取基础负荷率
+        Dim fhl_base = 读取逐年负荷率(ExcelApp)
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '写入数值
+        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
         '计算一次Excel
         ExcelApp.Calculate()
         '———————————————————————————————————————————————————————————————————————————————————————— 

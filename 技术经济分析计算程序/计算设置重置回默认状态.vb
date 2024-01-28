@@ -238,126 +238,14 @@ Module 计算设置重置回默认状态
         '获取10次投资,每一次投资的投产月份数
         Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
         '————————————————————————————————————————————————————————————————————————————————————————       
-        '接入费计算模式
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值" Then
-            '接入费计算模式（第2年到计算期最后一年，根据逐年达产率增加值计算）
-            '第1年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
-            '第2-15年
-            For i = 4 To 17
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '第16年
-            ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 3).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-            '第17-31年
-            For i = 19 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= 2 And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-            '将小于0的结果设置为0
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "保持每年100%" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率" Then
-            '前15年
-            For i = 3 To 17
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                End If
-            Next
-            '16-31年
-            For i = 18 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                End If
-            Next
-        End If
+        '接入费逐年达产率
+        Dim qtnf_list As New List(Of Integer) '生成一个空的List
+        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
         '————————————————————————————————————————————————————————————————————————————————————————
-        '补贴收入逐年计算系数（第2年到计算期最后一年，每年都是100%）
-        For i = 3 To 33
-            If i - 2 >= 1 And i - 2 <= jsnx Then
-                '补贴收入1
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "保持每年100%" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "逐年投产月份比例" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "逐年达产率" Then
-                    '前15年
-                    If i - 2 <= 15 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                        '16-31年
-                    ElseIf i - 2 >= 16 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                    End If
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(42, 18).Value = "逐年达产率增加值" Then
-                    '第1年
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
-                    '第2-15年
-                    If i - 2 >= 2 And i - 2 <= 15 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                    End If
-                    '第16年
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 3).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-                    '第17-31年
-                    If i - 2 >= 17 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                    End If
-                End If
-                '补贴收入2
-                If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "保持每年100%" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "逐年投产月份比例" Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "逐年达产率" Then
-                    '前15年
-                    If i - 2 <= 15 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                        '16-31年
-                    ElseIf i - 2 >= 16 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                    End If
-                ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(43, 18).Value = "逐年达产率增加值" Then
-                    '第1年
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
-                    '第2-15年
-                    If i - 2 >= 2 And i - 2 <= 15 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                    End If
-                    '第16年
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 3).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-                    '第17-31年
-                    If i - 2 >= 17 Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                    End If
-                End If
-                '光伏补贴收入
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(165, i).Value = 1
-            Else
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(163, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(164, i).Value = 0
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(165, i).Value = 0
-            End If
-        Next
+        '补贴收入逐年达产率
+        Call 补贴收入逐年达产率计算_main(ExcelApp, jsnx, month_10_list)
         '—————————————————————————————————————————————————————————————————————————————————————
         '所得税减免
-        '此处不再需要
-        '—————————————————————————————————————————————————————————————————————————————————————
-        '增值税退税
         '此处不再需要
         '—————————————————————————————————————————————————————————————————————————————————————
         '光伏逐年衰减系数
@@ -369,101 +257,18 @@ Module 计算设置重置回默认状态
         '风力发电逐年系数	
         '此处不再需要
         '—————————————————————————————————————————————————————————————————
-        '购电容量费成本
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "逐年投产月份比例" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(49, 18).Value = "保持每年100%" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(145, i).Value = 0
-                End If
-            Next
-        End If
-        '—————————————————————————————————————————————————————————————————
-        '城市管廊成本
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "逐年投产月份比例" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(50, 18).Value = "保持每年100%" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(146, i).Value = 0
-                End If
-            Next
-        End If
-        '—————————————————————————————————————————————————————————————————
-        '人员工资
-        '如果是逐年递增情况，不进行修改
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年投产月份比例" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "保持每年100%" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 0
-                End If
-            Next
-        End If
-        '—————————————————————————————————————————————————————————————————
-        '充电桩收入
-        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年投产月份比例" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1 * month_10_list(1)(i - 2) / 12
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "保持每年100%" Then
-            For i = 3 To 33
-                If i - 2 <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 1
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                End If
-            Next
-        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(52, 18).Value = "逐年达产率" Then
-            For i = 3 To 33
-                '前15年
-                If i - 2 <= 15 Then
-                    If i - 2 <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                    End If
-                    '16-31年
-                ElseIf i - 2 >= 16 Then
-                    If i - 2 <= jsnx Then
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 16).Value
-                    Else
-                        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(144, i).Value = 0
-                    End If
-                End If
-            Next
-        End If
+        '固定收入成本逐年达产率：购电容量费成本、城市管廊成本、人员工资、充电桩收入
+        Call 固定收入成本逐年达产率计算(ExcelApp, jsnx, month_10_list)
         '——————————————————————————————————————————————————————————————————————————————————————
+        '增值税退税
+        For i = 3 To 33
+            If i - 2 <= jsnx Then
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 5).Value
+            Else
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(172, i).Value = 0
+            End If
+        Next
+        '—————————————————————————————————————————————————————————————————————————————————————
         '修理费率重置回默认值
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(54, 18).Value = "常规设置" Then
             '修理费率默认值

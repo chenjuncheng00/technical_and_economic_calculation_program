@@ -65,6 +65,21 @@ Module 辅助程序
         ExcelApp.ThisWorkbook.Worksheets("投资方4现金流量表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
+    Function Excel版本号验证(ExcelApp As Object)
+        On Error Resume Next
+        '————————————————————————————————————————————————————————————————————————————————————————
+        Dim ZTJC As Integer
+        '验证Excel表格的更新时间
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20210903 Then
+            MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
+            ZTJC = 1
+        Else
+            ZTJC = 0
+        End If
+        Call 自保护程序(ExcelApp)
+        '返回结果
+        Return ZTJC
+    End Function
     Sub 自保护程序(ExcelApp As Object)
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled

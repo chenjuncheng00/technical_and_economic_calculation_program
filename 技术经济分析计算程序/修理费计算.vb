@@ -318,7 +318,7 @@
         '计算静态投资最大值
         Dim jttz_max As Double = new_jttz.Max
         '静态投资修正转换
-        Dim jttz_list = 计算基数修正计算基础功能(tznf_list, tcyf_list, jttz_cg, yynx_cg, kcbl_cg, True)(0)
+        Dim jttz_list = 计算基数累加修正计算_10次投资(tznf_list, tcyf_list, jttz_cg, yynx_cg, kcbl_cg, True)(0)
         '计算出的逐年修理费金额，列表
         '根据累计出资比例折算修理费
         Dim ans_znxlf_list(31) As Double
@@ -398,13 +398,13 @@
             wxzcbl_list(i) = wxzcbl_set
         Next
         '前5项逐年修理费率默认值，每年都一样
-        Dim xlfl_cg_list(31)
-        Dim xlfl_rj_list(31)
-        Dim xlfl_xdc_list(31)
-        Dim xlfl_gf_list(31)
-        Dim xlfl_nt_list(31)
+        Dim xlfl_cg_list(31) As Double
+        Dim xlfl_rj_list(31) As Double
+        Dim xlfl_xdc_list(31) As Double
+        Dim xlfl_gf_list(31) As Double
+        Dim xlfl_nt_list(31) As Double
         '风电设备修理费率（%），逐年变化
-        Dim xlfl_fd_list(31)
+        Dim xlfl_fd_list(31) As Double
         For i = 1 To 31
             xlfl_cg_list(i) = xlf_set_cg
             xlfl_rj_list(i) = xlf_set_rj
