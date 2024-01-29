@@ -7,7 +7,7 @@
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '计算逐年分项材料费其它费金额
-        Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
+        Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model, jsnx)
         Dim ans_znclf = ans_clfqtf(0)
         Dim ans_znqtf = ans_clfqtf(1)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -36,12 +36,12 @@
         '计算一次Excel
         ExcelApp.Calculate()
     End Sub
-
-    Function 分项逐年材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer)
+    Function 分项逐年材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '只计算出分项逐年材料费和其它费的金额数值，不写入EXCEL
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————        
         '读取材料费其它费计算默认值
         Dim clqtfl = 默认逐年材料费率其它费率(ExcelApp)
@@ -126,7 +126,7 @@
         Dim kcbl_rm As Double
         Dim kcbl_fd As Double
         Dim kcbl_ljfd As Double
-        Dim kcje_mr = 材料费其它费计算基数扣除默认设置(ExcelApp)
+        Dim kcje_mr = 材料费其它费计算基数扣除默认设置(jsnx)
         If kcje_clf_qtf_model = 0 Then
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
@@ -159,8 +159,6 @@
             kcbl_ljfd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
-        '项目计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '材料费其它费计算模式
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
@@ -184,13 +182,22 @@
         '读取逐年负荷率
         Dim fhl_list = 读取逐年负荷率(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
+        '材料费和其它费也属于固定成本，根据设置决定是否按投产月份数折算
+        '根据投资量计算时，使用设定决定是否折算
+        Dim zs_set As Boolean
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
+            zs_set = True
+        Else
+            zs_set = False
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————s
         '光伏、风电、蓄电池的材料费和其它费只有一种计算模式，不区分“负荷率” OR “投资量”
-        Dim ans_clf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, True, clfl_gf_list, 10000)
-        Dim ans_qtf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, True, qtfl_gf_list, 10000)
-        Dim ans_clf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, True, clfl_fd_list, 10000)
-        Dim ans_qtf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, True, qtfl_fd_list, 10000)
-        Dim ans_clf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, True, clfl_xdc_list, 10000)
-        Dim ans_qtf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, True, qtfl_xdc_list, 10000)
+        Dim ans_clf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, zs_set, clfl_gf_list, 10000)
+        Dim ans_qtf_gf = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, zs_set, qtfl_gf_list, 10000)
+        Dim ans_clf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, zs_set, clfl_fd_list, 10000)
+        Dim ans_qtf_fd = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, zs_set, qtfl_fd_list, 10000)
+        Dim ans_clf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, zs_set, clfl_xdc_list, 10000)
+        Dim ans_qtf_xdc = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, zs_set, qtfl_xdc_list, 10000)
         '燃机、垃圾发电、燃煤、供冷供热的材料费和其它费区分“负荷率” OR “投资量”，有两种不同的计算模式
         Dim ans_clf_rj(31) As Double
         Dim ans_clf_lj(31) As Double
@@ -220,7 +227,7 @@
                 fh_clfl_glgr_list(i) = clfl_glgr_list(i) * fhl_list(i)
                 fh_qtfl_glgr_list(i) = qtfl_glgr_list(i) * fhl_list(i)
             Next
-            '计算
+            '根据负荷率计算时，不按照投产月份比例进行折算
             ans_clf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, False, fh_clfl_rj_list, 1000)
             ans_qtf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, False, fh_qtfl_rj_list, 1000)
             ans_clf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, False, fh_clfl_ljfd_list, 1000)
@@ -230,14 +237,14 @@
             ans_clf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, False, fh_clfl_glgr_list, 1000)
             ans_qtf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, False, fh_qtfl_glgr_list, 1000)
         ElseIf ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(11, 11).Value = "投资量" Then
-            ans_clf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, True, clfl_rj_list, 1000)
-            ans_qtf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, True, qtfl_rj_list, 1000)
-            ans_clf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, True, clfl_ljfd_list, 1000)
-            ans_qtf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, True, qtfl_ljfd_list, 1000)
-            ans_clf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, True, clfl_rm_list, 1000)
-            ans_qtf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, True, qtfl_rm_list, 1000)
-            ans_clf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, True, clfl_glgr_list, 1000)
-            ans_qtf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, True, qtfl_glgr_list, 1000)
+            ans_clf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, zs_set, clfl_rj_list, 1000)
+            ans_qtf_rj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, zs_set, qtfl_rj_list, 1000)
+            ans_clf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, zs_set, clfl_ljfd_list, 1000)
+            ans_qtf_lj = 计算逐年总金额_10次投资(tznf_list, tcyf_list, ljfdl, yynx_ljfd, kcbl_ljfd, zs_set, qtfl_ljfd_list, 1000)
+            ans_clf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, zs_set, clfl_rm_list, 1000)
+            ans_qtf_rm = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rmfdl, yynx_rm, kcbl_rm, zs_set, qtfl_rm_list, 1000)
+            ans_clf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, zs_set, clfl_glgr_list, 1000)
+            ans_qtf_glgr = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, zs_set, qtfl_glgr_list, 1000)
         End If
         '数据加和
         Dim ans_znclf(31) As Double
@@ -352,7 +359,7 @@
         ans(13) = qtfl_xdc_list
         Return ans
     End Function
-    Function 材料费其它费计算基数扣除默认设置(ExcelApp As Object)
+    Function 材料费其它费计算基数扣除默认设置(jsnx As Integer)
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -368,8 +375,6 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
         'kcbl_ljfd：垃圾发电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
 
-        '读取计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1

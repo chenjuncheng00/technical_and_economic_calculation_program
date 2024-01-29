@@ -244,9 +244,9 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————
         '补贴收入逐年达产率
         Call 补贴收入逐年达产率计算_main(ExcelApp, jsnx, month_10_list)
-        '—————————————————————————————————————————————————————————————————————————————————————
-        '所得税减免
-        '此处不再需要
+        '—————————————————————————————————————————————————————————————————
+        '固定收入成本逐年达产率：购电容量费成本、城市管廊成本、人员工资、充电桩收入
+        Call 固定收入成本逐年达产率计算(ExcelApp, jsnx, month_10_list)
         '—————————————————————————————————————————————————————————————————————————————————————
         '光伏逐年衰减系数
         '此处不再需要
@@ -256,9 +256,9 @@ Module 计算设置重置回默认状态
         '—————————————————————————————————————————————————————————————————
         '风力发电逐年系数	
         '此处不再需要
-        '—————————————————————————————————————————————————————————————————
-        '固定收入成本逐年达产率：购电容量费成本、城市管廊成本、人员工资、充电桩收入
-        Call 固定收入成本逐年达产率计算(ExcelApp, jsnx, month_10_list)
+        '—————————————————————————————————————————————————————————————————————————————————————
+        '所得税减免
+        '此处不再需要
         '——————————————————————————————————————————————————————————————————————————————————————
         '增值税退税
         For i = 3 To 33
@@ -323,7 +323,7 @@ Module 计算设置重置回默认状态
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '其它设备计算基数扣除默认设置
-            Dim kcje_mr = 设备修理费计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = kcje_mr(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = kcje_mr(1)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = kcje_mr(2)
@@ -393,7 +393,7 @@ Module 计算设置重置回默认状态
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Dim kcje_mr_clqtf = 材料费其它费计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr_clqtf = 材料费其它费计算基数扣除默认设置(jsnx)
             '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = kcje_mr_clqtf(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = kcje_mr_clqtf(1)
@@ -414,7 +414,7 @@ Module 计算设置重置回默认状态
         '流动资金重置回默认值
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置" Then
             '计算基数扣除默认设置
-            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx)
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
@@ -445,7 +445,7 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————
         '保险费重置回默认值
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(60, 18).Value = "常规设置" Then
-            Dim kcje_mr = 设备保险费计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 3).Value = kcje_mr(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 4).Value = kcje_mr(1)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 5).Value = kcje_mr(2)

@@ -135,8 +135,10 @@ Public Class 设置流动资金计算方式
         '————————————————————————————————————————————————————————————————————————————————————————————————
         Dim XZ = MsgBox("是否将流动资金计算方式重置回默认设置？？", vbOKCancel)
         If XZ = vbOK Then
+            '项目计算年限
+            Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
             '计算基数扣除默认设置
-            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx)
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)

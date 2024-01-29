@@ -1801,7 +1801,7 @@ Public Class Com技术经济分析计算程序
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取计数
         Dim Form3 As New 进入维护模式
-        If (ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value <3 And ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value >= 0) Then '最多只可以连续错3次。单元格Z2
+        If (ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value < 3 And ExcelApp.Worksheets("建设期时间计划表").Cells(2, 26).Value >= 0) Then '最多只可以连续错3次。单元格Z2
             Form3.ShowDialog() '窗口显示
             Form3.TopMost = True
             System.Windows.Forms.Application.DoEvents()
@@ -1841,10 +1841,10 @@ Public Class Com技术经济分析计算程序
         '自保护程序
         Call 自保护程序(ExcelApp)
         '验证Excel表格的更新时间
-        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value <20210903 Then
-            MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！" ）
+        If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20210903 Then
+            MsgBox（"Excel文件版本已过期，无法配合最新的计算程序使用，需要更新到最新版本才可以使用！本Excel文件仅可以查看已有的计算结果，不可能用于新的计算！"）
             '跳过投资各方收益表格操作，防止多次报错
-                   Exit Sub
+            Exit Sub
         End If
         '投资各方收益
         Call 投资各方收益率表格操作()

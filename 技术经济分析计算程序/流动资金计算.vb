@@ -17,10 +17,12 @@
         '————————————————————————————————————————————————————————————————————————————————————————        
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
         '获取10次投资,每一次投资的投产月份数
-        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        Dim tcyf_list = ans_month(2)
         '————————————————————————————————————————————————————————————————————————————————————————        
         '分项逐年流动资金计算
-        Dim ans_ldzj = 分项逐年流动资金计算(ExcelApp, month_10_list, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        Dim ans_ldzj = 分项逐年流动资金计算(ExcelApp, month_10_list, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model, jsnx)
         Dim ldzj_all_list = ans_ldzj(0)
         Dim zyldzj_all_list = ans_ldzj(1)
         Dim xj_all_list = ans_ldzj(2)
@@ -380,7 +382,7 @@
         ExcelApp.Calculate()
     End Sub
     Function 分项逐年流动资金计算(ExcelApp As Object, month_10_list As Array, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
-                                  clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
+                                  clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
@@ -395,6 +397,7 @@
         'kcje_ldzj_model：流动资金计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '投资年份，10次投资的情况
@@ -411,6 +414,18 @@
         Dim gfzjgl = GSBSJ(17)
         '风电总装机功率(kW)，10次投资的情况
         Dim fdzjgl = GSBSJ(19)
+        '静态投资(万元)，10次投资的情况
+        Dim jttz = GSBSJ(1)
+        '燃机总投资(万元)
+        Dim rjtz = GSBSJ(10)
+        '暖通总投资(万元)
+        Dim nttz = GSBSJ(14)
+        '蓄电池总投资(万元)，10次投资的情况
+        Dim xdctz = GSBSJ(12)
+        '光伏总投资(万元)，10次投资的情况
+        Dim gftz = GSBSJ(16)
+        '风电总投资(万元)，10次投资的情况
+        Dim fdtz = GSBSJ(18)
         '流动资金费率，默认：从EXCEL读取，逐年固定费率
         Dim ans_fl_mr = 默认逐年流动资金费率(ExcelApp)
         Dim ldzjfl_gf_list = ans_fl_mr(0)
@@ -430,7 +445,7 @@
         Dim kcbl_gf As Double
         Dim kcbl_fd As Double
         If kcje_ldzj_model = 0 Then
-            Dim kcje_mr = 流动资金计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr = 流动资金计算基数扣除默认设置(jsnx)
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
             yynx_nt = kcje_mr(2)
@@ -454,16 +469,38 @@
             kcbl_fd = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(57, 7).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
+        '是否将燃机或者暖通流动资金使用“新能源”计算模式取计算，0：采用常规计算模型；1：采用新能源计算模式
+        Dim rj_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value
+        Dim nt_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value
+        '————————————————————————————————————————————————————————————————————————————————————————  
+        '除了光伏风电蓄电池以外的其它设备静态投资
+        Dim qttz(10) As Double
+        For i = 1 To 10
+            qttz(i) = jttz(i) - gftz(i) - fdtz(i) - xdctz(i) - rjtz(i) * rj_mode - nttz(i) * nt_mode
+        Next
+        Dim yynx_qt As Integer = 计算项目运营年限(jsnx, month_10_list)
+        '逐年其它静态总投资
+        Dim qttz_list = 计算基数累加修正计算_10次投资(tznf_list, tcyf_list, qttz, yynx_qt, 1, False)(0)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '常规设备流动资金计算
-        Dim ans_cg = 逐年流动资金计算_常规设备(ExcelApp, month_10_list, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, bxf_model, kcje_bxf_model)
+        Dim ans_cg = 逐年流动资金计算_常规设备(ExcelApp, month_10_list, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, bxf_model, kcje_bxf_model, jsnx, qttz_list)
         Dim ldzj_cg = ans_cg(0)
         Dim zyldzj_cg = ans_cg(1)
         Dim yszk_cg = ans_cg(2)
         Dim ycl_cg = ans_cg(3)
         Dim rldl_cg = ans_cg(4)
         Dim xj_cg = ans_cg(5)
+        '————————————————————————————————————————————————————————————————————————————————————————s
+        '光伏风电蓄电池流动资金和，燃机暖通流动资金也属于固定费用，根据设置决定是否按投产月份数折算
+        Dim zs_set As Boolean
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
+            zs_set = True
+        Else
+            zs_set = False
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————s
         '光伏风电蓄电池流动资金计算
-        Dim ans_xny = 逐年流动资金计算_光伏风电蓄电池(ExcelApp, tznf_list, tcyf_list, gfzjgl, fdzjgl, xdczjgl, ldzjfl_gf_list, ldzjfl_fd_list, ldzjfl_xdc_list, yynx_gf, yynx_fd, yynx_xdc, kcbl_gf, kcbl_fd, kcbl_xdc)
+        Dim ans_xny = 逐年流动资金计算_光伏风电蓄电池(ExcelApp, tznf_list, tcyf_list, gfzjgl, fdzjgl, xdczjgl, ldzjfl_gf_list, ldzjfl_fd_list, ldzjfl_xdc_list, yynx_gf, yynx_fd, yynx_xdc, kcbl_gf, kcbl_fd, kcbl_xdc, zs_set)
         Dim ldzj_gf = ans_xny(0)
         Dim ldzj_fd = ans_xny(1)
         Dim ldzj_xdc = ans_xny(2)
@@ -471,7 +508,7 @@
         Dim zyldzj_fd = ans_xny(4)
         Dim zyldzj_xdc = ans_xny(5)
         '燃机和暖通流动资金计算
-        Dim ans_rjnt = 逐年流动资金计算_燃机和暖通(ExcelApp, tznf_list, tcyf_list, rjfdl, glgrl, ldzjfl_rj_list, ldzjfl_nt_list, yynx_rj, yynx_nt, kcbl_rj, kcbl_nt)
+        Dim ans_rjnt = 逐年流动资金计算_燃机和暖通(ExcelApp, tznf_list, tcyf_list, rjfdl, glgrl, ldzjfl_rj_list, ldzjfl_nt_list, yynx_rj, yynx_nt, kcbl_rj, kcbl_nt, zs_set, rj_mode, nt_mode)
         Dim ldzj_rj = ans_rjnt(0)
         Dim ldzj_nt = ans_rjnt(1)
         Dim zyldzj_rj = ans_rjnt(2)
@@ -497,11 +534,13 @@
         ans(5) = rldl_cg
         Return ans
     End Function
-    Function 逐年流动资金计算_常规设备(ExcelApp As Object, month_10_list As Array, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean,
-                                       zbj_model As Integer, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
+    Function 逐年流动资金计算_常规设备(ExcelApp As Object, month_10_list As Array, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer,
+                                       hscz As Boolean, zbj_model As Integer, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, bxf_model As Integer,
+                                       kcje_bxf_model As Integer, jsnx As Integer, qttz_list As Array)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————   
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        'tcyf_list：10次投资的投产月份数，列表，长度10
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -511,9 +550,11 @@
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'jsnx：项目计算年限
+        'qttz_list：除了光伏风电蓄电池以外的其它设备静态投资，列表，长度31
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年修理费，列表长度31
-        Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, jsnx)
         Dim xlf_rj = ans_xlf(2)
         Dim xlf_nt = ans_xlf(3)
         Dim xlf_gf = ans_xlf(4)
@@ -523,7 +564,7 @@
         Dim xlf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(140, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年保险费，列表长度31
-        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
+        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model, jsnx)
         Dim bxf_cg = ans_bxf(0)
         Dim bxf_gf = ans_bxf(1)
         Dim bxf_fd = ans_bxf(2)
@@ -534,7 +575,7 @@
         Dim bxf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(210, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项逐年材料费其它费，列表长度31
-        Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model)
+        Dim ans_clfqtf = 分项逐年材料费其它费计算(ExcelApp, clfl_qtfl_model, kcje_clf_qtf_model, jsnx)
         Dim clf_rj = ans_clfqtf(2)
         Dim clf_nt = ans_clfqtf(5)
         Dim clf_gf = ans_clfqtf(6)
@@ -549,9 +590,6 @@
         Dim clf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, 22).Value
         Dim qtf_jxsl As Double = ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, 22).Value
         '————————————————————————————————————————————————————————————————————————————————————————   
-        '判断是否为纯新能源项目（投资中仅有：光伏+风电+蓄电池）
-        Dim xnytz_all As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(46, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value + ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(53, 1).Value
-        '———————————————————————————————————————————————————————————————————————————————————————— 
         '流动资金常规计算模式设置，0：采用常规计算模型；1：采用新能源计算模式
         Dim trq_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 33).Value
         Dim mt_ldzj_cg As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 33).Value
@@ -572,18 +610,9 @@
         Dim ycl_list(32) As Double
         Dim rldl_list(32) As Double
         Dim xj_list(32) As Double
-        If xnytz_all = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value Then
-            '如果是纯新能源项目，则数据都是0
-            For i = 1 To 32
-                yszk_list(i) = 0
-                ycl_list(i) = 0
-                rldl_list(i) = 0
-                xj_list(i) = 0
-            Next
-        Else
-            '如果不是纯新能源项目，则正常计算
-            '前15年
-            For i = 1 To 15
+        '前15年
+        For i = 1 To 15
+            If qttz_list(i) > 0 Then
                 '应收账款 = 含税经营成本 - 含税蓄电池购电成本 - 含税光伏风电蓄电池修理费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池材料费 - 含税光伏风电蓄电池其它费
                 yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(21, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(22, i + 4).Value -
                                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(53, i + 4).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(54, i + 4).Value -
@@ -622,9 +651,17 @@
                              ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(227, i + 4).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(228, i + 4).Value -
                              (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i) + rjtz_ldzj_cg * bxf_rj(i) + nttz_ldzj_cg * bxf_nt(i)) * (1 + bxf_jxsl) -
                              (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i) + rjtz_ldzj_cg * qtf_rj(i) + nttz_ldzj_cg * qtf_nt(i)) * (1 + qtf_jxsl)
-            Next
-            '第16~31年
-            For i = 16 To 31
+            Else
+                '如果其它部分投资=0，则全部采用“新能源”计算模式
+                yszk_list(i) = 0
+                ycl_list(i) = 0
+                rldl_list(i) = 0
+                xj_list(i) = 0
+            End If
+        Next
+        '第16~31年
+        For i = 16 To 31
+            If qttz_list(i) > 0 Then
                 '应收账款 = 含税经营成本 - 含税蓄电池购电成本 - 含税光伏风电蓄电池修理费 - 含税光伏风电蓄电池保险费 - 含税光伏风电蓄电池材料费 - 含税光伏风电蓄电池其它费
                 yszk_list(i) = ExcelApp.ThisWorkbook.Worksheets("总成本表").Cells(53, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(45, i - 12).Value -
                                ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(57, i - 12).Value - ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(58, i - 12).Value -
@@ -663,8 +700,14 @@
                              ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(235, i - 12).Value + ExcelApp.ThisWorkbook.Worksheets("成本税收表").Cells(236, i - 12).Value -
                              (bxf_gf(i) + bxf_fd(i) + bxf_xdc(i) + rjtz_ldzj_cg * bxf_rj(i) + nttz_ldzj_cg * bxf_nt(i)) * (1 + bxf_jxsl) -
                              (qtf_gf(i) + qtf_fd(i) + qtf_xdc(i) + rjtz_ldzj_cg * qtf_rj(i) + nttz_ldzj_cg * qtf_nt(i)) * (1 + qtf_jxsl)
-            Next
-        End If
+            Else
+                '如果其它部分投资=0，则全部采用“新能源”计算模式
+                yszk_list(i) = 0
+                ycl_list(i) = 0
+                rldl_list(i) = 0
+                xj_list(i) = 0
+            End If
+        Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '金额除以周转次数
         For i = 1 To 31
@@ -703,7 +746,7 @@
     End Function
     Function 逐年流动资金计算_光伏风电蓄电池(ExcelApp As Object, tznf_list As Array, tcyf_list As Array, gfzjgl As Array, fdzjgl As Array, xdczjgl As Array,
                                              ldzjfl_gf_list As Array, ldzjfl_fd_list As Array, ldzjfl_xdc_list As Array, yynx_gf As Integer, yynx_fd As Integer,
-                                             yynx_xdc As Integer, kcbl_gf As Double, kcbl_fd As Double, kcbl_xdc As Double)
+                                             yynx_xdc As Integer, kcbl_gf As Double, kcbl_fd As Double, kcbl_xdc As Double, zs_set As Boolean)
         'tznf_list：10次投资的年份序号，列表，长度10
         'tcyf_list：10次投资的投产月份数，列表，长度10
         '光伏风电蓄电池流动资金直接按照费率计算，不用除以周转次数
@@ -717,15 +760,16 @@
         '蓄电池流动资金费率， 元 / kW，列表，长度31
         'yynx：运营年限
         'kcbl：超过运营年限后的扣除比例
+        'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
         '————————————————————————————————————————————————————————————————————————————————————————  
         '自有流动资金比例
         Dim zyldzjbl_gf As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(5, 23).Value
         Dim zyldzjbl_fd As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(7, 23).Value
         Dim zyldzjbl_xdc As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(9, 23).Value
         '计算风电、光伏、蓄电池，逐年流动资金金额初始值，列表长度31
-        Dim ldzj_gf_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, True, ldzjfl_gf_list, 10000)
-        Dim ldzj_fd_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, True, ldzjfl_fd_list, 10000)
-        Dim ldzj_xdc_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, True, ldzjfl_xdc_list, 10000)
+        Dim ldzj_gf_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gfzjgl, yynx_gf, kcbl_gf, zs_set, ldzjfl_gf_list, 10000)
+        Dim ldzj_fd_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, fdzjgl, yynx_fd, kcbl_fd, zs_set, ldzjfl_fd_list, 10000)
+        Dim ldzj_xdc_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, xdczjgl, yynx_xdc, kcbl_xdc, zs_set, ldzjfl_xdc_list, 10000)
         '风电、光伏、蓄电池，逐年流动资金金额，列表长度32
         Dim ldzj_gf(32) As Double '流动资金总额
         Dim ldzj_fd(32) As Double '流动资金总额
@@ -755,7 +799,8 @@
         Return ans
     End Function
     Function 逐年流动资金计算_燃机和暖通(ExcelApp As Object, tznf_list As Array, tcyf_list As Array, rjfdl As Array, glgrl As Array, ldzjfl_rj_list As Array,
-                                         ldzjfl_nt_list As Array, yynx_rj As Integer, yynx_nt As Integer, kcbl_rj As Double, kcbl_nt As Double)
+                                         ldzjfl_nt_list As Array, yynx_rj As Integer, yynx_nt As Integer, kcbl_rj As Double, kcbl_nt As Double, zs_set As Boolean,
+                                         rj_mode As Integer, nt_mode As Integer)
         'tznf_list：10次投资的年份序号，列表，长度10
         'tcyf_list：10次投资的投产月份数，列表，长度10
         '燃机和暖通流动资金直接按照费率计算，不用除以周转次数
@@ -767,17 +812,16 @@
         '暖通流动资金费率， 元 / MWh，列表，长度31
         'yynx：运营年限
         'kcbl：超过运营年限后的扣除比例
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        '是否将燃机或者暖通流动资金使用“新能源”计算模式取计算
-        Dim rj_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(30, 33).Value
-        Dim nt_mode As Integer = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(32, 33).Value
+        'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
+        'rj_mode：是否将燃机流动资金使用“新能源”计算模式取计算，0：采用常规计算模型；1：采用新能源计算模式
+        'nt_mode：是否将暖通流动资金使用“新能源”计算模式取计算，0：采用常规计算模型；1：采用新能源计算模式
         '————————————————————————————————————————————————————————————————————————————————————————  
         '自有流动资金比例
         Dim zyldzjbl_rj As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(11, 23).Value
         Dim zyldzjbl_nt As Double = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(13, 23).Value
         '计算燃机、暖通，逐年流动资金金额初始值，列表长度31
-        Dim ldzj_rj_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, True, ldzjfl_rj_list, 1000)
-        Dim ldzj_nt_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, True, ldzjfl_nt_list, 1000)
+        Dim ldzj_rj_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, rjfdl, yynx_rj, kcbl_rj, zs_set, ldzjfl_rj_list, 1000)
+        Dim ldzj_nt_raw = 计算逐年总金额_10次投资(tznf_list, tcyf_list, glgrl, yynx_nt, kcbl_nt, zs_set, ldzjfl_nt_list, 1000)
         '燃机和暖通，逐年流动资金金额，列表长度32
         Dim ldzj_rj(32) As Double '流动资金总额
         Dim ldzj_nt(32) As Double '流动资金总额
@@ -831,7 +875,7 @@
         ans(4) = ldzjfl_nt_list
         Return ans
     End Function
-    Function 流动资金计算基数扣除默认设置(ExcelApp As Object)
+    Function 流动资金计算基数扣除默认设置(jsnx As Integer)
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_gf：光伏每次投资运营年限数量（年）
         'yynx_fd：风电每次投资运营年限数量（年）
@@ -839,8 +883,6 @@
         'kcbl_gf：光伏每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
 
-        '读取计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1

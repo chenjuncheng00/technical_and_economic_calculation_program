@@ -25,15 +25,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————        
         Call 逐年综合达产率_写入EXCEL(ExcelApp, jsnx, month_10_list)
         '————————————————————————————————————————————————————————————————————————————————————————————————
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '接入费逐年达产率
-        Dim qtnf_list As New List(Of Integer) '生成一个空的List
-        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
-        '补贴收入逐年达产率
-        Call 补贴收入逐年达产率计算_main(ExcelApp, jsnx, month_10_list)
-        '固定收入成本逐年达产率：购电容量费成本、城市管廊成本、人员工资、充电桩收入
-        Call 固定收入成本逐年达产率计算(ExcelApp, jsnx, month_10_list)
+        '此处不要计算：接入费逐年达产率、补贴收入逐年达产率、固定收入成本逐年达产率（购电容量费成本、城市管廊成本、人员工资、充电桩收入）
+        '此处不要计算：光伏逐年达产率、风电逐年达产率、蓄电池逐年达产率
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次Excel
         ExcelApp.Calculate()
@@ -47,20 +40,12 @@
         'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
         '————————————————————————————————————————————————————————————————————————————————————————        
         '10次投资综合达产率计算
-        Dim zs_set As Boolean = True
-        Call 十次投资综合达产率计算(ExcelApp, jsnx, month_10_list, tznf_list, tcyf_list, zs_set)
+        Call 十次投资综合达产率计算(ExcelApp, jsnx, month_10_list, tznf_list, tcyf_list, True)
         '————————————————————————————————————————————————————————————————————————————————————————        
         Call 逐年综合达产率_写入EXCEL(ExcelApp, jsnx, month_10_list)
         '————————————————————————————————————————————————————————————————————————————————————————————————
-        '计算一次工作簿
-        ExcelApp.Calculate()
-        '接入费逐年达产率
-        Dim qtnf_list As New List(Of Integer) '生成一个空的List
-        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
-        '补贴收入逐年达产率
-        Call 补贴收入逐年达产率计算_main(ExcelApp, jsnx, month_10_list)
-        '固定收入成本逐年达产率：购电容量费成本、城市管廊成本、人员工资、充电桩收入
-        Call 固定收入成本逐年达产率计算(ExcelApp, jsnx, month_10_list)
+        '此处不要计算：接入费逐年达产率、补贴收入逐年达产率、固定收入成本逐年达产率（购电容量费成本、城市管廊成本、人员工资、充电桩收入）
+        '此处不要计算：光伏逐年达产率、风电逐年达产率、蓄电池逐年达产率
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '计算一次Excel
         ExcelApp.Calculate()
@@ -320,7 +305,7 @@
             Next
         ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(51, 18).Value = "逐年递增" Then
             For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * (1 + ZNDZBL * (i - 4))
+                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(147, i).Value = 1 * (1 + ZNDZBL * (i - 3))
             Next
         End If
         For Each qtnf In qtnf_list

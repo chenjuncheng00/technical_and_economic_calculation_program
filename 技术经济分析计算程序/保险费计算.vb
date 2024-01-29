@@ -10,7 +10,7 @@
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '分项逐年保险费金额计算，列表长度31
-        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model)
+        Dim ans_bxf = 分项逐年保险费金额计算(ExcelApp, hscz, zbj_model, bxf_model, kcje_bxf_model, jsnx)
         Dim ans_bxf_cg = ans_bxf(0)
         Dim ans_bxf_gf = ans_bxf(1)
         Dim ans_bxf_fd = ans_bxf(2)
@@ -42,7 +42,7 @@
         Next
     End Sub
 
-    Function 分项逐年保险费金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
+    Function 分项逐年保险费金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '光伏、风电、蓄电池的保险费要单独计算
         '只计算出分项保险费金额数值，不写入EXCEL
@@ -51,6 +51,7 @@
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'bxf_model：保险费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_bxf_model：保险费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取输入数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
@@ -59,7 +60,7 @@
         '计算10次投资，每次建设年份的投产月份数
         Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
         '分项折旧摊销计算
-        Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model)
+        Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model, jsnx)
         '资产原值，列表长度10
         Dim gdzcyz_cg = ans_zjtx(2)
         Dim gdzcyz_rj = ans_zjtx(3)
@@ -123,7 +124,7 @@
         Dim kcbl_fd As Double
         Dim kcbl_cg As Double
         If kcje_bxf_model = 0 Then
-            Dim kcje_mr = 设备保险费计算基数扣除默认设置(ExcelApp)
+            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx)
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
             yynx_nt = kcje_mr(2)
@@ -151,7 +152,13 @@
             kcbl_cg = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(110, 8).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
-        Dim zs_set As Boolean = True
+        '保险费也属于固定成本，根据设置决定是否按投产月份数折算
+        Dim zs_set As Boolean
+        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 11).Value = "折算" Then
+            zs_set = True
+        Else
+            zs_set = False
+        End If
         Dim dividend As Double = 1
         '计算逐年保险费
         Dim ans_bxf_cg = 计算逐年总金额_10次投资(tznf_list, tcyf_list, gdzcyz_cg, yynx_cg, kcbl_cg, zs_set, bxfl_cg_list, dividend)
@@ -204,7 +211,7 @@
         ans(5) = bxfl_nt_list
         Return ans
     End Function
-    Function 设备保险费计算基数扣除默认设置(ExcelApp As Object)
+    Function 设备保险费计算基数扣除默认设置(jsnx As Integer)
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -218,8 +225,6 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
         'kcbl_cg：常规设备每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
 
-        '读取计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1

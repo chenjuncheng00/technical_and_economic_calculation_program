@@ -7,7 +7,7 @@
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算分项贷款金额
-        Dim ans_cqdk = 分项逐年长期贷款金额计算(ExcelApp, zbj_model)
+        Dim ans_cqdk = 分项逐年长期贷款金额计算(ExcelApp, zbj_model, jsnx)
         Dim ans_DKJS_cg = ans_cqdk(6)
         Dim ans_DKJS_rj = ans_cqdk(7)
         Dim ans_DKJS_xdc = ans_cqdk(8)
@@ -63,7 +63,7 @@
         '计算一次Excel
         ExcelApp.Calculate()
     End Sub
-    Function 分项逐年长期贷款金额计算(ExcelApp As Object, zbj_model As Integer)
+    Function 分项逐年长期贷款金额计算(ExcelApp As Object, zbj_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '只计算出分项建设期资金运用的金额数值，不写入EXCEL
@@ -72,8 +72,6 @@
         '读取输入数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         Dim tznf_list = GSBSJ(0)
-        '项目计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项10次建设期贷款金额
         '分项建设期资金运用计算，列表长度31

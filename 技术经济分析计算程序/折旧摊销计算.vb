@@ -5,14 +5,11 @@
         'hscy：计算期末，是否回收资产残值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         '————————————————————————————————————————————————————————————————————————————————————————
-        Dim GSBSJ = 读取估算表数据(ExcelApp)
-        '10次投资年份序号列表，列表，长度10
-        Dim tznf_list = GSBSJ(0)
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '————————————————————————————————————————————————————————————————————————————————————————
         '分项折旧摊销计算
-        Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model)
+        Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model, jsnx)
         Dim gdzcyz = ans_zjtx(0)
         Dim wxzcyz = ans_zjtx(1)
         Dim ans_gdzczj_cg = ans_zjtx(14)
@@ -39,14 +36,15 @@
         ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 4).Value = gdzcyz_all
         ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 4).Value = wxzcyz_all
         '各种方法结果的累加
-        '固定资产折旧
+        Dim gdzcyz_list(31) As Double '固定资产折旧
         Dim ans_gdzczj_zjtxf(31) As Double '逐年折旧摊销费
         Dim ans_gdzczj_zjtxflj(31) As Double '逐年折旧摊销费累计值
         Dim ans_gdzczj_syjz(31) As Double '逐年剩余固定资产净值
         '无形资产摊销
+        Dim wxzcyz_list(31) As Double '无形资产摊销
         Dim ans_wxzctx_zjtxf(31) As Double '逐年折旧摊销费
         Dim ans_wxzctx_zjtxflj(31) As Double '逐年折旧摊销费累计值
-        Dim ans_wxzctx_syjz(31) As Double '逐年剩余固定资产净值
+        Dim ans_wxzctx_syjz(31) As Double '逐年剩余无形资产净值
         For i = 1 To 31
             ans_gdzczj_zjtxf(i) = ans_gdzczj_cg(0)(i) + ans_gdzczj_rj(0)(i) + ans_gdzczj_xdc(0)(i) + ans_gdzczj_nt(0)(i) + ans_gdzczj_gf(0)(i) + ans_gdzczj_fd(0)(i)
             ans_gdzczj_zjtxflj(i) = ans_gdzczj_cg(1)(i) + ans_gdzczj_rj(1)(i) + ans_gdzczj_xdc(1)(i) + ans_gdzczj_nt(1)(i) + ans_gdzczj_gf(1)(i) + ans_gdzczj_fd(1)(i)
@@ -54,6 +52,8 @@
             ans_wxzctx_zjtxf(i) = ans_wxzctx_cg(0)(i) + ans_wxzctx_rj(0)(i) + ans_wxzctx_xdc(0)(i) + ans_wxzctx_nt(0)(i) + ans_wxzctx_gf(0)(i) + ans_wxzctx_fd(0)(i)
             ans_wxzctx_zjtxflj(i) = ans_wxzctx_cg(1)(i) + ans_wxzctx_rj(1)(i) + ans_wxzctx_xdc(1)(i) + ans_wxzctx_nt(1)(i) + ans_wxzctx_gf(1)(i) + ans_wxzctx_fd(1)(i)
             ans_wxzctx_syjz(i) = ans_wxzctx_cg(2)(i) + ans_wxzctx_rj(2)(i) + ans_wxzctx_xdc(2)(i) + ans_wxzctx_nt(2)(i) + ans_wxzctx_gf(2)(i) + ans_wxzctx_fd(2)(i)
+            gdzcyz_list(i) = ans_gdzczj_zjtxflj(i) + ans_gdzczj_syjz(i)
+            wxzcyz_list(i) = ans_wxzctx_zjtxflj(i) + ans_wxzctx_syjz(i)
         Next
         '前15年
         For i = 1 To 15
@@ -120,8 +120,6 @@
         Next
         '———————————————————————————————————————————————————————————————————————————————————————— 
         '逐年固定资产原值
-        Dim gdzcyz_list = 数据累加合并_10次投资(ExcelApp, tznf_list, gdzcyz, False)
-        Dim wxzcyz_list = 数据累加合并_10次投资(ExcelApp, tznf_list, wxzcyz, False)
         '结果写入Excel
         '前15年
         For i = 1 To 15
@@ -155,15 +153,13 @@
         '计算一次Excel
         ExcelApp.Calculate()
     End Sub
-    Function 分项逐年折旧摊销金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer)
+    Function 分项逐年折旧摊销金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '只计算出分项建设期资金运用的金额数值，不写入EXCEL
         'hscy：计算期末，是否回收资产残值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '项目计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+        'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '每次投资资产原值计算
         '读取输入数据
@@ -184,6 +180,9 @@
         Dim gftz = GSBSJ(16)
         '风电总投资(万元)
         Dim fdtz = GSBSJ(18)
+        '获取10次投资,每一次投资的投产月份数
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
         '无形资产所占比例
         Dim wxzcbl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 5).Value
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -269,8 +268,6 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————
         '逐年折旧摊销计算
-        '获取10次投资,每一次投资的投产月份数
-        Dim month_10_list = 逐年投产月份数_10次投资(ExcelApp)(1)
         '折旧摊销开始年份
         Dim ksnf(10) As Integer
         For i = 1 To 5
@@ -1035,7 +1032,6 @@
         Dim SYJZ(31) As Double '逐年剩余资产净值
 
         '折旧摊销从资产原值产生年份的的当年开始计算，按照投产月份数进行折算
-        'Call 打印数据用于调试(tcyfs_list, 31)
         If zcyz <> 0 And zjtxnx_0 <> 0 And ksnf <> 0 And jsnx <> 0 Then
             '对折旧摊销年限进行修正
             Dim zjtxnx As Integer
@@ -1078,10 +1074,10 @@
         ans(2) = SYJZ
         Return ans
     End Function
-    Function 折旧摊销计算_年数总和法(zcyz As Double, zjtxnx_0 As Integer, ksnf_0 As Integer, jsnx As Integer, czl As Double, tcyfs_list As Array)
+    Function 折旧摊销计算_年数总和法(zcyz As Double, zjtxnx_0 As Integer, ksnf As Integer, jsnx As Integer, czl As Double, tcyfs_list As Array)
         'zcyz：资产原值
         'zjtxnx_0：折旧摊销年限数初始值
-        'ksnf_0：折旧摊销计算的开始年份初始值
+        'ksnf：折旧摊销计算的开始年份初始值
         'jsnx：项目总的计算年限
         'czl：残值率
         'tcyfs_list：逐年投产的月份数，列表，长度31
@@ -1092,18 +1088,8 @@
         Dim SYJZ(31) As Double '逐年剩余资产净值
         Dim ZJL(31) As Double '逐年折旧率
 
-        '折旧摊销从资产原值产生年份之后，第一个完整运行12个月的年份开始计算，不按照投产月份数进行折算
-
-        If zcyz <> 0 And zjtxnx_0 <> 0 And ksnf_0 <> 0 And jsnx <> 0 Then
-            '对开始年限进行修正，如果处于建设期内，及时有投产月份数，但是不足12个月，年数总和法不计算折旧率
-            Dim ksnf As Integer = ksnf_0
-            For i = ksnf + 1 To 31
-                If tcyfs_list(i) = 12 Then
-                    ksnf = i - 1
-                    Exit For
-                End If
-            Next
-
+        '折旧摊销从资产原值产生年份的的当年开始计算，按照投产月份数进行折算
+        If zcyz <> 0 And zjtxnx_0 <> 0 And ksnf <> 0 And jsnx <> 0 Then
             '对折旧摊销年限进行修正
             Dim zjtxnx As Integer
             If ksnf + zjtxnx_0 <= jsnx Then
@@ -1115,12 +1101,12 @@
             '计算年份和
             Dim NFH As Integer = (1 + zjtxnx) * zjtxnx / 2
             Dim YJZJTX As Double = 0 '已经折旧摊销的资产累计，初始值是0
-            For i = ksnf + 1 To 31 'i表示年份序号
+            For i = ksnf To 31 'i表示年份序号
                 If YJZJTX < zcyz * (1 - czl) Then
                     '还剩余的可以折旧摊销的资产
                     Dim SYKZJTX As Double = zcyz * (1 - czl) - YJZJTX
                     '计算逐年折旧率
-                    ZJL(i) = Math.Max((zjtxnx - (i - ksnf + 1) + 2) * (1 - czl) / NFH, 0)
+                    ZJL(i) = Math.Max((tcyfs_list(i) / 12) * (zjtxnx - (i - ksnf + 1) + 2) * (1 - czl) / NFH, 0)
                     '当年折旧摊销费金额
                     ZJTXF(i) = Math.Min(zcyz * ZJL(i), SYKZJTX)
                     '已经折旧摊销的资产累计

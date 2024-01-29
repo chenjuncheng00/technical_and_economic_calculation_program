@@ -109,7 +109,7 @@
                 tmp_list.Add(j)
             Next
         Next
-        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list)
+        Dim qtnf_list = qtnf_tmp_list.Except(tmp_list).ToList()
         '————————————————————————————————————————————————————————————————————————————————————————
         '逐年变化率
         Dim znbhl_list As New List(Of Double)

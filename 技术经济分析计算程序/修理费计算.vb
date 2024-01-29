@@ -9,7 +9,7 @@
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '计算逐年分项修理费金额
-        Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model)
+        Dim ans_xlf = 分项逐年修理费计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, jsnx)
         Dim ans_znxlf = ans_xlf(0)
         '————————————————————————————————————————————————————————————————————————————————————————
         '结果写入Excel
@@ -34,13 +34,14 @@
         ExcelApp.Calculate()
     End Sub
 
-    Function 分项逐年修理费计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer)
+    Function 分项逐年修理费计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, jsnx As Integer)
         'On Error Resume Next
         '只计算出分项逐年修理费的金额数值，不写入EXCEL
         '————————————————————————————————————————————————————————————————————————————————————————        
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
+        'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————
         '修理费率默认值
         Dim xlfl_mr = 默认逐年修理费率(ExcelApp)
@@ -121,7 +122,7 @@
         Dim kcbl_fd As Double
         Dim kcbl_cg As Double
         '读取默认值
-        Dim kcje_mr = 设备修理费计算基数扣除默认设置(ExcelApp)
+        Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx)
         If kcje_xlf_model = 0 Then
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
@@ -150,8 +151,6 @@
             kcbl_cg = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
-        '项目计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         '修理费率
         Dim xlfl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value
         '读取输入数据
@@ -323,7 +322,11 @@
         '根据累计出资比例折算修理费
         Dim ans_znxlf_list(31) As Double
         For i = 1 To 31
-            ans_znxlf_list(i) = (jttz_list(i) / jttz_max) * xlf_max
+            If xlf_max > 0 Then
+                ans_znxlf_list(i) = (jttz_list(i) / jttz_max) * xlf_max
+            Else
+                ans_znxlf_list(i) = 0
+            End If
         Next
         '返回结果
         Return ans_znxlf_list
@@ -440,7 +443,7 @@
         ans(6) = wxzcbl_list
         Return ans
     End Function
-    Function 设备修理费计算基数扣除默认设置(ExcelApp As Object)
+    Function 设备修理费计算基数扣除默认设置(jsnx As Integer)
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -454,8 +457,6 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
         'kcbl_cg：常规设备每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
 
-        '读取计算年限
-        Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
         Dim yynx_rj As Integer = jsnx - 1
         Dim yynx_xdc As Integer = 10
         Dim yynx_nt As Integer = jsnx - 1
