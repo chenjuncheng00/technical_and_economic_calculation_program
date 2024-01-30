@@ -1,7 +1,5 @@
 ﻿Module 修理费计算
     Sub 修理费计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -35,13 +33,46 @@
     End Sub
 
     Function 分项逐年修理费计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, jsnx As Integer)
-        'On Error Resume Next
         '只计算出分项逐年修理费的金额数值，不写入EXCEL
         '————————————————————————————————————————————————————————————————————————————————————————        
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'jsnx：项目计算年限
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '修理费率
+        Dim xlfl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value
+        '无形资产所占比例
+        Dim wxzcbl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 5).Value
+        '计算10次投资，每次建设年份的投产月份数
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        Dim tcyf_list = ans_month(2)
+        '读取输入数据
+        Dim GSBSJ = 读取估算表数据(ExcelApp)
+        Dim tznf_list = GSBSJ(0)
+        Dim dttz_list = GSBSJ(2)
+        Dim kdkzzs_list = GSBSJ(9)
+        'jttz_list：逐年静态投资，列表
+        Dim jttz = GSBSJ(1)
+        'jsqdklx_list：逐年建设期贷款利息，列表
+        Dim jsqdklx = GSBSJ(5)
+        '燃机总投资(万元)
+        Dim rjtz = GSBSJ(10)
+        '蓄电池总投资(万元)
+        Dim xdctz = GSBSJ(12)
+        '蓄电池装机(kW)
+        Dim xdczj = GSBSJ(13)
+        '暖通总投资(万元)
+        Dim nttz = GSBSJ(14)
+        '光伏总投资(万元)
+        Dim gftz = GSBSJ(16)
+        '光伏装机功率(kW)
+        Dim gfzj = GSBSJ(17)
+        '风电总投资(万元)
+        Dim fdtz = GSBSJ(18)
+        '风电装机功率(kW)
+        Dim fdzj = GSBSJ(19)
         '————————————————————————————————————————————————————————————————————————————————————————
         '修理费率默认值
         Dim xlfl_mr = 默认逐年修理费率(ExcelApp)
@@ -122,7 +153,7 @@
         Dim kcbl_fd As Double
         Dim kcbl_cg As Double
         '读取默认值
-        Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx)
+        Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx, month_10_list)
         If kcje_xlf_model = 0 Then
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
@@ -151,18 +182,6 @@
             kcbl_cg = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(104, 8).Value
         End If
         '————————————————————————————————————————————————————————————————————————————————————————
-        '修理费率
-        Dim xlfl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(9, 5).Value
-        '读取输入数据
-        Dim GSBSJ = 读取估算表数据(ExcelApp)
-        Dim tznf_list = GSBSJ(0)
-        Dim dttz_list = GSBSJ(2)
-        Dim kdkzzs_list = GSBSJ(9)
-        '无形资产所占比例
-        Dim wxzcbl As Double = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(8, 5).Value
-        '计算10次投资，每次建设年份的投产月份数
-        Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
-        '————————————————————————————————————————————————————————————————————————————————————————
         '10次投资的数据，用于计算10次投资的固定资产原值和无形资产原值
         Dim gdzcyz(10) As Double
         Dim wxzcyz(10) As Double
@@ -170,33 +189,6 @@
         For i = 1 To 10
             gdzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * (1 - wxzcbl)
             wxzcyz(i) = (dttz_list(i) - kdkzzs_list(i)) * wxzcbl
-        Next
-        'jttz_list：逐年静态投资，列表
-        Dim jttz = GSBSJ(1)
-        'jsqdklx_list：逐年建设期贷款利息，列表
-        Dim jsqdklx = GSBSJ(5)
-        '燃机总投资(万元)
-        Dim rjtz = GSBSJ(10)
-        '蓄电池总投资(万元)
-        Dim xdctz = GSBSJ(12)
-        '蓄电池装机(kW)
-        Dim xdczj = GSBSJ(13)
-        '暖通总投资(万元)
-        Dim nttz = GSBSJ(14)
-        '光伏总投资(万元)
-        Dim gftz = GSBSJ(16)
-        '光伏装机功率(kW)
-        Dim gfzj = GSBSJ(17)
-        '风电总投资(万元)
-        Dim fdtz = GSBSJ(18)
-        '风电装机功率(kW)
-        Dim fdzj = GSBSJ(19)
-        '分项投资之和不可以超过总投资
-        For i = 1 To 10
-            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
-                MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，修理费计算终止！")
-                Exit Function
-            End If
         Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '10次投资其它投资金额占当年静态投资金额的比例，长度10的列表
@@ -443,7 +435,10 @@
         ans(6) = wxzcbl_list
         Return ans
     End Function
-    Function 设备修理费计算基数扣除默认设置(jsnx As Integer)
+    Function 设备修理费计算基数扣除默认设置(jsnx As Integer, month_10_list As Array)
+        'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        '————————————————————————————————————————————————————————————————————————————————————————       
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -457,12 +452,13 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
         'kcbl_cg：常规设备每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
 
-        Dim yynx_rj As Integer = jsnx - 1
+        Dim yynx = 计算项目运营年限(jsnx, month_10_list)
+        Dim yynx_rj As Integer = yynx
         Dim yynx_xdc As Integer = 10
-        Dim yynx_nt As Integer = jsnx - 1
+        Dim yynx_nt As Integer = yynx
         Dim yynx_gf As Integer = 25
         Dim yynx_fd As Integer = 20
-        Dim yynx_cg As Integer = jsnx - 1
+        Dim yynx_cg As Integer = yynx
         Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
         Dim kcbl_nt As Double = 1

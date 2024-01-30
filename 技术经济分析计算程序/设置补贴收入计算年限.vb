@@ -3,7 +3,6 @@
     Public ksnf_list As New List(Of Integer)
     Public jsnf_list As New List(Of Integer)
     Private Sub 补贴收入1_Click(sender As Object, e As EventArgs) Handles 补贴收入1.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -120,9 +119,7 @@
         Next
         Me.RichTextBox1.Text = bq1 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
-
     Private Sub 补贴收入2_Click(sender As Object, e As EventArgs) Handles 补贴收入2.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -234,7 +231,6 @@
         Me.RichTextBox1.Text = bq2 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
     Private Sub 光伏补贴收入_Click(sender As Object, e As EventArgs) Handles 光伏补贴收入.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -345,7 +341,6 @@
         Next
         Me.RichTextBox1.Text = "光伏补贴计算年份(显示100%的年份表示有光伏补贴，显示0%的表示没有光伏补贴)：" & Me.RichTextBox1.Text
     End Sub
-
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("确定要清空本窗体输入的的全部内容？", vbOKCancel)
         If XZ = vbOK Then
@@ -363,9 +358,7 @@
             MsgBox("清空窗体已完成！")
         End If
     End Sub
-
     Private Sub 设置补贴收入计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -398,9 +391,7 @@
         Me.开始年份tmp.Text = CType(JSKSNF, String)
         Me.结束年份tmp.Text = CType(jsnx, String)
     End Sub
-
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
-        On Error Resume Next
         '判断1
         If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
             MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
@@ -425,9 +416,7 @@
         jsnf_list.Add(jsnf)
         结束年份tmp.Clear()
     End Sub
-
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         '清空窗体
         Me.开始年份列表.Items.Clear()
         Me.结束年份列表.Items.Clear()

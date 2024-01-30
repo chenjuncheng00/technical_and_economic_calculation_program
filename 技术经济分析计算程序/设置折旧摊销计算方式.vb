@@ -2,7 +2,6 @@
 
 Public Class 设置折旧摊销计算方式
     Private Sub 设置折旧摊销计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -57,12 +56,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx1.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value > 0 Then
                 Me.gdzcczl1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value * 100, String)
             Else
                 Me.gdzcczl1.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 26).Value > 0 Then
                 Me.wxzctxnx1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(4, 26).Value, String)
             Else
                 Me.wxzctxnx1.Text = CType(wxzctxnx, String)
@@ -75,12 +74,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx2.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value > 0 Then
                 Me.gdzcczl2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value * 100, String)
             Else
                 Me.gdzcczl2.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 26).Value > 0 Then
                 Me.wxzctxnx2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(5, 26).Value, String)
             Else
                 Me.wxzctxnx2.Text = CType(wxzctxnx, String)
@@ -93,12 +92,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx3.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value > 0 Then
                 Me.gdzcczl3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value * 100, String)
             Else
                 Me.gdzcczl3.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 26).Value > 0 Then
                 Me.wxzctxnx3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(6, 26).Value, String)
             Else
                 Me.wxzctxnx3.Text = CType(wxzctxnx, String)
@@ -111,12 +110,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx4.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value > 0 Then
                 Me.gdzcczl4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value * 100, String)
             Else
                 Me.gdzcczl4.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 26).Value > 0 Then
                 Me.wxzctxnx4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(7, 26).Value, String)
             Else
                 Me.wxzctxnx4.Text = CType(wxzctxnx, String)
@@ -129,12 +128,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx5.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value > 0 Then
                 Me.gdzcczl5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value * 100, String)
             Else
                 Me.gdzcczl5.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 26).Value > 0 Then
                 Me.wxzctxnx5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(8, 26).Value, String)
             Else
                 Me.wxzctxnx5.Text = CType(wxzctxnx, String)
@@ -147,12 +146,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx6.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value > 0 Then
                 Me.gdzcczl6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value * 100, String)
             Else
                 Me.gdzcczl6.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 26).Value > 0 Then
                 Me.wxzctxnx6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(9, 26).Value, String)
             Else
                 Me.wxzctxnx6.Text = CType(wxzctxnx, String)
@@ -165,12 +164,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx7.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value > 0 Then
                 Me.gdzcczl7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value * 100, String)
             Else
                 Me.gdzcczl7.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 26).Value > 0 Then
                 Me.wxzctxnx7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(10, 26).Value, String)
             Else
                 Me.wxzctxnx7.Text = CType(wxzctxnx, String)
@@ -183,12 +182,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx8.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value > 0 Then
                 Me.gdzcczl8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value * 100, String)
             Else
                 Me.gdzcczl8.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 26).Value > 0 Then
                 Me.wxzctxnx8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(11, 26).Value, String)
             Else
                 Me.wxzctxnx8.Text = CType(wxzctxnx, String)
@@ -201,12 +200,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx9.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value > 0 Then
                 Me.gdzcczl9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value * 100, String)
             Else
                 Me.gdzcczl9.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 26).Value > 0 Then
                 Me.wxzctxnx9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(12, 26).Value, String)
             Else
                 Me.wxzctxnx9.Text = CType(wxzctxnx, String)
@@ -219,12 +218,12 @@ Public Class 设置折旧摊销计算方式
             Else
                 Me.gdzczjnx10.Text = CType(gdzczjnx, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 23).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value > 0 Then
                 Me.gdzcczl10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value * 100, String)
             Else
                 Me.gdzcczl10.Text = CType(gdzcczl, String)
             End If
-            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 24).Value > 0 Then
+            If ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 26).Value > 0 Then
                 Me.wxzctxnx10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("折旧摊销表").Cells(13, 26).Value, String)
             Else
                 Me.wxzctxnx10.Text = CType(wxzctxnx, String)
@@ -326,7 +325,6 @@ Public Class 设置折旧摊销计算方式
         End If
     End Sub
     Private Sub 确定计算方式_Click(sender As Object, e As EventArgs) Handles 开始计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -370,7 +368,6 @@ Public Class 设置折旧摊销计算方式
     End Sub
 
     Private Sub 重置回默认方式_Click(sender As Object, e As EventArgs) Handles 重置回默认方式.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp      
@@ -440,7 +437,6 @@ Public Class 设置折旧摊销计算方式
     End Sub
 
     Private Sub 不回收固定资产残值_Click(sender As Object, e As EventArgs) Handles 不回收固定资产残值.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp      
@@ -475,7 +471,6 @@ Public Class 设置折旧摊销计算方式
     End Sub
 
     Private Sub 回收固定资产残值_Click(sender As Object, e As EventArgs) Handles 回收固定资产残值.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp      
@@ -508,52 +503,171 @@ Public Class 设置折旧摊销计算方式
     End Sub
 
     Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        ''长期贷款计算方法需要采用方法三或者方法四
-        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(6, 11).Value = "方法二" Then
-        '    MsgBox("折旧摊销计算方式，请选择计算方法三或者方法四，计算终止！")
-        '    Exit Sub
-        'End If
+        '定义局部变量
+        Dim gdzczjnx1, gdzczjnx2, gdzczjnx3, gdzczjnx4, gdzczjnx5, gdzczjnx6, gdzczjnx7, gdzczjnx8, gdzczjnx9, gdzczjnx10 As Integer '固定资产折旧年限
+        Dim wxzctxnx1, wxzctxnx2, wxzctxnx3, wxzctxnx4, wxzctxnx5, wxzctxnx6, wxzctxnx7, wxzctxnx8, wxzctxnx9, wxzctxnx10 As Integer '无形资产摊销年限
+        Dim gdzcczl1, gdzcczl2, gdzcczl3, gdzcczl4, gdzcczl5, gdzcczl6, gdzcczl7, gdzcczl8, gdzcczl9, gdzcczl10 As Double '固定资产残值率
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '固定资产折旧年限
-        Dim gdzczjnx1 = CType(Me.gdzczjnx1.Text, Integer)
-        Dim gdzczjnx2 = CType(Me.gdzczjnx2.Text, Integer)
-        Dim gdzczjnx3 = CType(Me.gdzczjnx3.Text, Integer)
-        Dim gdzczjnx4 = CType(Me.gdzczjnx4.Text, Integer)
-        Dim gdzczjnx5 = CType(Me.gdzczjnx5.Text, Integer)
-        Dim gdzczjnx6 = CType(Me.gdzczjnx6.Text, Integer)
-        Dim gdzczjnx7 = CType(Me.gdzczjnx7.Text, Integer)
-        Dim gdzczjnx8 = CType(Me.gdzczjnx8.Text, Integer)
-        Dim gdzczjnx9 = CType(Me.gdzczjnx9.Text, Integer)
-        Dim gdzczjnx10 = CType(Me.gdzczjnx10.Text, Integer)
+        If Me.gdzczjnx1.Text = "" Then
+            gdzczjnx1 = 0
+        Else
+            gdzczjnx1 = CType(Me.gdzczjnx1.Text, Integer)
+        End If
+        If Me.gdzczjnx2.Text = "" Then
+            gdzczjnx2 = 0
+        Else
+            gdzczjnx2 = CType(Me.gdzczjnx2.Text, Integer)
+        End If
+        If Me.gdzczjnx3.Text = "" Then
+            gdzczjnx3 = 0
+        Else
+            gdzczjnx3 = CType(Me.gdzczjnx3.Text, Integer)
+        End If
+        If Me.gdzczjnx4.Text = "" Then
+            gdzczjnx4 = 0
+        Else
+            gdzczjnx4 = CType(Me.gdzczjnx4.Text, Integer)
+        End If
+        If Me.gdzczjnx5.Text = "" Then
+            gdzczjnx5 = 0
+        Else
+            gdzczjnx5 = CType(Me.gdzczjnx5.Text, Integer)
+        End If
+        If Me.gdzczjnx6.Text = "" Then
+            gdzczjnx6 = 0
+        Else
+            gdzczjnx6 = CType(Me.gdzczjnx6.Text, Integer)
+        End If
+        If Me.gdzczjnx7.Text = "" Then
+            gdzczjnx7 = 0
+        Else
+            gdzczjnx7 = CType(Me.gdzczjnx7.Text, Integer)
+        End If
+        If Me.gdzczjnx8.Text = "" Then
+            gdzczjnx8 = 0
+        Else
+            gdzczjnx8 = CType(Me.gdzczjnx8.Text, Integer)
+        End If
+        If Me.gdzczjnx9.Text = "" Then
+            gdzczjnx9 = 0
+        Else
+            gdzczjnx9 = CType(Me.gdzczjnx9.Text, Integer)
+        End If
+        If Me.gdzczjnx10.Text = "" Then
+            gdzczjnx10 = 0
+        Else
+            gdzczjnx10 = CType(Me.gdzczjnx10.Text, Integer)
+        End If
         '固定资产残值率
-        Dim gdzcczl1 = CType(Me.gdzcczl1.Text, Double) / 100
-        Dim gdzcczl2 = CType(Me.gdzcczl2.Text, Double) / 100
-        Dim gdzcczl3 = CType(Me.gdzcczl3.Text, Double) / 100
-        Dim gdzcczl4 = CType(Me.gdzcczl4.Text, Double) / 100
-        Dim gdzcczl5 = CType(Me.gdzcczl5.Text, Double) / 100
-        Dim gdzcczl6 = CType(Me.gdzcczl6.Text, Double) / 100
-        Dim gdzcczl7 = CType(Me.gdzcczl7.Text, Double) / 100
-        Dim gdzcczl8 = CType(Me.gdzcczl8.Text, Double) / 100
-        Dim gdzcczl9 = CType(Me.gdzcczl9.Text, Double) / 100
-        Dim gdzcczl10 = CType(Me.gdzcczl10.Text, Double) / 100
+        If Me.gdzcczl1.Text = "" Then
+            gdzcczl1 = 0
+        Else
+            gdzcczl1 = CType(Me.gdzcczl1.Text, Double) / 100
+        End If
+        If Me.gdzcczl2.Text = "" Then
+            gdzcczl2 = 0
+        Else
+            gdzcczl2 = CType(Me.gdzcczl2.Text, Double) / 100
+        End If
+        If Me.gdzcczl3.Text = "" Then
+            gdzcczl3 = 0
+        Else
+            gdzcczl3 = CType(Me.gdzcczl3.Text, Double) / 100
+        End If
+        If Me.gdzcczl4.Text = "" Then
+            gdzcczl4 = 0
+        Else
+            gdzcczl4 = CType(Me.gdzcczl4.Text, Double) / 100
+        End If
+        If Me.gdzcczl5.Text = "" Then
+            gdzcczl5 = 0
+        Else
+            gdzcczl5 = CType(Me.gdzcczl5.Text, Double) / 100
+        End If
+        If Me.gdzcczl6.Text = "" Then
+            gdzcczl6 = 0
+        Else
+            gdzcczl6 = CType(Me.gdzcczl6.Text, Double) / 100
+        End If
+        If Me.gdzcczl7.Text = "" Then
+            gdzcczl7 = 0
+        Else
+            gdzcczl7 = CType(Me.gdzcczl7.Text, Double) / 100
+        End If
+        If Me.gdzcczl8.Text = "" Then
+            gdzcczl8 = 0
+        Else
+            gdzcczl8 = CType(Me.gdzcczl8.Text, Double) / 100
+        End If
+        If Me.gdzcczl9.Text = "" Then
+            gdzcczl9 = 0
+        Else
+            gdzcczl9 = CType(Me.gdzcczl9.Text, Double) / 100
+        End If
+        If Me.gdzcczl10.Text = "" Then
+            gdzcczl10 = 0
+        Else
+            gdzcczl10 = CType(Me.gdzcczl10.Text, Double) / 100
+        End If
+
         '无形资产摊销年限
-        Dim wxzctxnx1 = CType(Me.wxzctxnx1.Text, Integer)
-        Dim wxzctxnx2 = CType(Me.wxzctxnx2.Text, Integer)
-        Dim wxzctxnx3 = CType(Me.wxzctxnx3.Text, Integer)
-        Dim wxzctxnx4 = CType(Me.wxzctxnx4.Text, Integer)
-        Dim wxzctxnx5 = CType(Me.wxzctxnx5.Text, Integer)
-        Dim wxzctxnx6 = CType(Me.wxzctxnx6.Text, Integer)
-        Dim wxzctxnx7 = CType(Me.wxzctxnx7.Text, Integer)
-        Dim wxzctxnx8 = CType(Me.wxzctxnx8.Text, Integer)
-        Dim wxzctxnx9 = CType(Me.wxzctxnx9.Text, Integer)
-        Dim wxzctxnx10 = CType(Me.wxzctxnx10.Text, Integer)
+        If Me.wxzctxnx1.Text = "" Then
+            wxzctxnx1 = 0
+        Else
+            wxzctxnx1 = CType(Me.wxzctxnx1.Text, Integer)
+        End If
+        If Me.wxzctxnx2.Text = "" Then
+            wxzctxnx2 = 0
+        Else
+            wxzctxnx2 = CType(Me.wxzctxnx2.Text, Integer)
+        End If
+        If Me.wxzctxnx3.Text = "" Then
+            wxzctxnx3 = 0
+        Else
+            wxzctxnx3 = CType(Me.wxzctxnx3.Text, Integer)
+        End If
+        If Me.wxzctxnx4.Text = "" Then
+            wxzctxnx4 = 0
+        Else
+            wxzctxnx4 = CType(Me.wxzctxnx4.Text, Integer)
+        End If
+        If Me.wxzctxnx5.Text = "" Then
+            wxzctxnx5 = 0
+        Else
+            wxzctxnx5 = CType(Me.wxzctxnx5.Text, Integer)
+        End If
+        If Me.wxzctxnx6.Text = "" Then
+            wxzctxnx6 = 0
+        Else
+            wxzctxnx6 = CType(Me.wxzctxnx6.Text, Integer)
+        End If
+        If Me.wxzctxnx7.Text = "" Then
+            wxzctxnx7 = 0
+        Else
+            wxzctxnx7 = CType(Me.wxzctxnx7.Text, Integer)
+        End If
+        If Me.wxzctxnx8.Text = "" Then
+            wxzctxnx8 = 0
+        Else
+            wxzctxnx8 = CType(Me.wxzctxnx8.Text, Integer)
+        End If
+        If Me.wxzctxnx9.Text = "" Then
+            wxzctxnx9 = 0
+        Else
+            wxzctxnx9 = CType(Me.wxzctxnx9.Text, Integer)
+        End If
+        If Me.wxzctxnx10.Text = "" Then
+            wxzctxnx10 = 0
+        Else
+            wxzctxnx10 = CType(Me.wxzctxnx10.Text, Integer)
+        End If
         '————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————
         '读取项目总的计算年限
@@ -585,8 +699,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf1 + wxzctxnx1 > jsnx Then
                 MsgBox("输入的第1次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx1 <= 0 Or wxzctxnx1 <= 0 Then
-                MsgBox("输入的第1次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx1 < 0 Or wxzctxnx1 < 0 Then
+                MsgBox("输入的第1次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -599,8 +713,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf2 + wxzctxnx2 > jsnx Then
                 MsgBox("输入的第2次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx2 <= 0 Or wxzctxnx2 <= 0 Then
-                MsgBox("输入的第2次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx2 < 0 Or wxzctxnx2 < 0 Then
+                MsgBox("输入的第2次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -613,8 +727,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf3 + wxzctxnx3 > jsnx Then
                 MsgBox("输入的第3次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx3 <= 0 Or wxzctxnx3 <= 0 Then
-                MsgBox("输入的第3次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx3 < 0 Or wxzctxnx3 < 0 Then
+                MsgBox("输入的第3次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             Else
             End If
@@ -628,8 +742,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf4 + wxzctxnx4 > jsnx Then
                 MsgBox("输入的第4次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx4 <= 0 Or wxzctxnx4 <= 0 Then
-                MsgBox("输入的第4次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx4 < 0 Or wxzctxnx4 < 0 Then
+                MsgBox("输入的第4次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -642,8 +756,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf5 + wxzctxnx5 > jsnx Then
                 MsgBox("输入的第5次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx5 <= 0 Or wxzctxnx5 <= 0 Then
-                MsgBox("输入的第5次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx5 < 0 Or wxzctxnx5 < 0 Then
+                MsgBox("输入的第5次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -656,8 +770,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf6 + wxzctxnx6 > jsnx Then
                 MsgBox("输入的第6次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx6 <= 0 Or wxzctxnx6 <= 0 Then
-                MsgBox("输入的第6次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx6 < 0 Or wxzctxnx6 < 0 Then
+                MsgBox("输入的第6次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -670,8 +784,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf7 + wxzctxnx7 > jsnx Then
                 MsgBox("输入的第7次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx7 <= 0 Or wxzctxnx7 <= 0 Then
-                MsgBox("输入的第7次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx7 < 0 Or wxzctxnx7 < 0 Then
+                MsgBox("输入的第7次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -684,8 +798,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf8 + wxzctxnx8 > jsnx Then
                 MsgBox("输入的第8次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx8 <= 0 Or wxzctxnx8 <= 0 Then
-                MsgBox("输入的第8次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx8 < 0 Or wxzctxnx8 < 0 Then
+                MsgBox("输入的第8次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -698,8 +812,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf9 + wxzctxnx9 > jsnx Then
                 MsgBox("输入的第9次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx9 <= 0 Or wxzctxnx9 <= 0 Then
-                MsgBox("输入的第9次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx9 < 0 Or wxzctxnx9 < 0 Then
+                MsgBox("输入的第9次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If
@@ -712,8 +826,8 @@ Public Class 设置折旧摊销计算方式
             ElseIf tznf10 + wxzctxnx10 > jsnx Then
                 MsgBox("输入的第10次投资无形资产摊销年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf gdzczjnx10 <= 0 Or wxzctxnx10 <= 0 Then
-                MsgBox("输入的第10次投资固定资产折旧年限或者无形资产摊销年限不可以小于等于0，请检查并重新输入！")
+            ElseIf gdzczjnx10 < 0 Or wxzctxnx10 < 0 Then
+                MsgBox("输入的第10次投资固定资产折旧年限或者无形资产摊销年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             End If
         End If

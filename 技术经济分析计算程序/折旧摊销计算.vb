@@ -1,7 +1,5 @@
 ﻿Module 折旧摊销计算
     Sub 折旧摊销计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         'hscy：计算期末，是否回收资产残值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -154,8 +152,6 @@
         ExcelApp.Calculate()
     End Sub
     Function 分项逐年折旧摊销金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer, jsnx As Integer)
-        'On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '只计算出分项建设期资金运用的金额数值，不写入EXCEL
         'hscy：计算期末，是否回收资产残值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置

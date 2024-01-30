@@ -2,7 +2,6 @@
 
 Public Class 进入维护模式
     Private Sub 确定_Click(sender As Object, e As EventArgs) Handles 确定.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp

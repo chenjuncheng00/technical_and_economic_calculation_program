@@ -1,7 +1,5 @@
 ﻿Module 建设期时间计划计算
     Sub 建设期时间计划计算(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '读取输入数据
         '读取输入的建设期时间计划数据
         Dim jsqsjjhsj = 读取建设期时间计划数据(ExcelApp)
@@ -287,8 +285,6 @@
         Return ans
     End Function
     Function 逐年投产月份数_10次投资(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '读取输入数据
         '项目计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
@@ -310,7 +306,7 @@
         Dim ans_month_start_list = ans_zd(2)
         Dim ans_month_end_list = ans_zd(3)
         '-------------------------------------------------------------------------------------------------------------------------------------------------------------
-        Dim js As Integer = 1
+        Dim js As Integer = 0
         '10次投资，计算每次投资的建设年份编号
         Dim year_10_list(10) As Integer
         '10次投资，每个建设期年份的投产月份数
@@ -319,6 +315,7 @@
         Dim month_10_list(10)
         For i = 1 To 31
             If ans_year_list(i) > 0 Then
+                js = js + 1
                 Dim tmp_month(31) As Integer
                 For j = 1 To 31
                     If j < ans_year_list(i) Then
@@ -334,7 +331,6 @@
                 month_10_list(js) = tmp_month
                 year_10_list(js) = ans_year_list(i)
                 tcyf_list(js) = ans_month_list(i)
-                js = js + 1
             End If
         Next
         For i = js + 1 To 10

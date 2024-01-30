@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 Public Class 设置流动资金计算方式
     Private Sub 设置流动资金计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -127,7 +126,6 @@ Public Class 设置流动资金计算方式
     End Sub
 
     Private Sub 重置默认_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -137,8 +135,12 @@ Public Class 设置流动资金计算方式
         If XZ = vbOK Then
             '项目计算年限
             Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
+            '计算10次投资，每次建设年份的投产月份数
+            Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+            Dim month_10_list = ans_month(1)
+            Dim tcyf_list = ans_month(2)
             '计算基数扣除默认设置
-            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx)
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx, month_10_list)
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
@@ -191,7 +193,6 @@ Public Class 设置流动资金计算方式
     End Sub
 
     Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp

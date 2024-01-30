@@ -2,7 +2,6 @@
 
 Public Class 设置所得税减免和增值税退税内容
     Private Sub 设置所得税减免和增值税退税内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -428,7 +427,6 @@ Public Class 设置所得税减免和增值税退税内容
     End Sub
 
     Private Sub 所得税减免_Click(sender As Object, e As EventArgs) Handles 所得税减免.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1449,7 +1447,6 @@ Public Class 设置所得税减免和增值税退税内容
     End Sub
 
     Private Sub 增值税退税_Click(sender As Object, e As EventArgs) Handles 增值税退税.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -2256,7 +2253,6 @@ Public Class 设置所得税减免和增值税退税内容
     End Sub
 
     Private Sub 重置默认_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp

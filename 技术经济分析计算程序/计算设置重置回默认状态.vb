@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Office.Interop
 Module 计算设置重置回默认状态
     Sub 计算设置重置回默认状态_part1(ExcelApp As Object)
-        On Error Resume Next
         '<确定建设期时间计划>、<清空建设期时间计划>，彻底重置回初始状态
         '————————————————————————————————————————————————————————————————————————————————————————
 
@@ -71,8 +70,6 @@ Module 计算设置重置回默认状态
         ExcelApp.Calculate()
     End Sub
     Sub 计算设置重置回默认状态_part2(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '<确定建设期时间计划>、<清空建设期时间计划>，<确定估算表参数设置>涉及到的内容
         '————————————————————————————————————————————————————————————————————————————————————————        
         '建设期资金运用方式
@@ -230,7 +227,6 @@ Module 计算设置重置回默认状态
         ExcelApp.Calculate()
     End Sub
     Sub 计算设置重置回默认状态_part3(ExcelApp As Object)
-        On Error Resume Next
         '与计算年限相关的内容
         '————————————————————————————————————————————————————————————————————————————————————————
         '读取项目计算年限
@@ -240,7 +236,7 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————       
         '接入费逐年达产率
         Dim qtnf_list As New List(Of Integer) '生成一个空的List
-        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
+        Call 接入费逐年达产率计算(ExcelApp, jsnx, month_10_list, qtnf_list)
         '————————————————————————————————————————————————————————————————————————————————————————
         '补贴收入逐年达产率
         Call 补贴收入逐年达产率计算_main(ExcelApp, jsnx, month_10_list)
@@ -323,7 +319,7 @@ Module 计算设置重置回默认状态
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
             '其它设备计算基数扣除默认设置
-            Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx)
+            Dim kcje_mr = 设备修理费计算基数扣除默认设置(jsnx, month_10_list)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 3).Value = kcje_mr(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 4).Value = kcje_mr(1)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(103, 5).Value = kcje_mr(2)
@@ -393,7 +389,7 @@ Module 计算设置重置回默认状态
                 End If
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————————————————————
-            Dim kcje_mr_clqtf = 材料费其它费计算基数扣除默认设置(jsnx)
+            Dim kcje_mr_clqtf = 材料费其它费计算基数扣除默认设置(jsnx, month_10_list)
             '设备材料费其它费计算基数扣除计算模式写入Excel，供其它程序调用
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 3).Value = kcje_mr_clqtf(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(106, 4).Value = kcje_mr_clqtf(1)
@@ -414,7 +410,7 @@ Module 计算设置重置回默认状态
         '流动资金重置回默认值
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(59, 18).Value = "常规设置" Then
             '计算基数扣除默认设置
-            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx)
+            Dim kcje_mr_ldzj = 流动资金计算基数扣除默认设置(jsnx, month_10_list)
             '运营年限
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 3).Value = kcje_mr_ldzj(0)
             ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(56, 4).Value = kcje_mr_ldzj(1)
@@ -445,7 +441,7 @@ Module 计算设置重置回默认状态
         '————————————————————————————————————————————————————————————————————————————————————————
         '保险费重置回默认值
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(60, 18).Value = "常规设置" Then
-            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx)
+            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx, month_10_list)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 3).Value = kcje_mr(0)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 4).Value = kcje_mr(1)
             ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(109, 5).Value = kcje_mr(2)

@@ -18,7 +18,6 @@ Public Class Com技术经济分析计算程序
         MyBase.New()
     End Sub
     Sub 一键出表()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -62,7 +61,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 确定建设期时间计划()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -345,7 +343,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 清空时间计划表数据()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -491,7 +488,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 确定估算表参数设置()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -537,7 +533,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 确定投资数据输入()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -579,7 +574,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 清空投资数据输入()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -665,7 +659,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 确定收入成本输入()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -707,7 +700,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 清空收入成本输入()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -772,7 +764,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 反算临界点()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -839,7 +830,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 清空反算临界点数据()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -882,7 +872,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 敏感性分析计算()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -925,7 +914,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 盈亏平衡点计算()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1030,7 +1018,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 复制敏感性分析图()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1049,10 +1036,14 @@ Public Class Com技术经济分析计算程序
             '————————————————————————————————————————————————————————————————————————————————————————
             Call 计算前基本处理(ExcelApp, 1)
             '————————————————————————————————————————————————————————————————————————————————————————
-            '激活表格
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
-            '复制
-            ExcelApp.ActiveChart.ChartArea.Copy()
+            Try
+                '激活表格
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+                '复制
+                ExcelApp.ActiveChart.ChartArea.Copy()
+            Catch ex As Exception
+                'MsgBox("单因素敏感性分析图不存在！")
+            End Try
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算模式
             Dim ans_mode = 计算模式_从EXCEL读取(ExcelApp)
@@ -1075,7 +1066,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 复制盈亏平衡分析图()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1120,7 +1110,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 清空敏感性分析和盈亏平衡分析计算数据()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1140,8 +1129,12 @@ Public Class Com技术经济分析计算程序
             Call 计算前基本处理(ExcelApp, 1)
             '————————————————————————————————————————————————————————————————————————————————————————
             '删除敏感性分析图表
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
-            ExcelApp.ActiveChart.Parent.Delete
+            Try
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+                ExcelApp.ActiveChart.Parent.Delete
+            Catch ex As Exception
+                '不进行操作
+            End Try
             '————————————————————————————————————————————————————————————————————————————————————————
             '将敏感性分析变化率重置回5%，格式重置回0%
             For i = 7 To 137 Step 5
@@ -1194,7 +1187,6 @@ Public Class Com技术经济分析计算程序
         End If
     End Sub
     Sub 设置所得税减免和增值税退税内容()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1238,7 +1230,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置收入和成本计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1281,7 +1272,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置接入费计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1326,7 +1316,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置补贴收入计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1371,7 +1360,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置逐年衰减计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1418,7 +1406,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置修理费计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1464,7 +1451,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置材料费和其它费计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1510,7 +1496,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置建设期资金运用方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1556,7 +1541,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置折旧摊销计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1602,7 +1586,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置长期贷款计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1648,7 +1631,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 设置投资各方收益计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1692,7 +1674,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Activate()
     End Sub
     Sub 设置流动资金计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1736,7 +1717,6 @@ Public Class Com技术经济分析计算程序
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Activate()
     End Sub
     Sub 设置保险费计算方式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1781,7 +1761,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 进入维护模式()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1816,7 +1795,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 打开表格自动运行()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -1859,7 +1837,6 @@ Public Class Com技术经济分析计算程序
     End Sub
 
     Sub 投资各方收益率表格操作()
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp

@@ -3,7 +3,6 @@
     Public ksnf_list As New List(Of Integer)
     Public jsnf_list As New List(Of Integer)
     Private Sub 设置收入和成本计算年限_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -45,7 +44,6 @@
     End Sub
 
     Private Sub 充电桩收入_Click(sender As Object, e As EventArgs) Handles 充电桩收入.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -153,7 +151,6 @@
         Me.RichTextBox1.Text = srbq1 & "逐年负荷率：" & Me.RichTextBox1.Text
     End Sub
     Private Sub 购电容量费成本_Click(sender As Object, e As EventArgs) Handles 购电容量费成本.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -254,7 +251,6 @@
     End Sub
 
     Private Sub 城市管廊成本_Click(sender As Object, e As EventArgs) Handles 城市管廊成本.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -356,7 +352,6 @@
     End Sub
 
     Private Sub 人员工资_Click(sender As Object, e As EventArgs) Handles 人员工资.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -419,7 +414,12 @@
         End If
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '逐年递增
-        Dim ZNDZBL As Double = CType(Me.人员工资递增比例.Text, Double) / 100
+        Dim ZNDZBL As Double
+        If Me.人员工资递增比例.Text = "" Then
+            ZNDZBL = 0
+        Else
+            ZNDZBL = CType(Me.人员工资递增比例.Text, Double) / 100
+        End If
         '获取10次投资,每一次投资的投产月份数
         Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
         Dim month_10_list = ans_month(1)
@@ -466,7 +466,6 @@
     End Sub
 
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
-        On Error Resume Next
         '判断1
         If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
             MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
@@ -493,7 +492,6 @@
     End Sub
 
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         '清空窗体
         Me.开始年份列表.Items.Clear()
         Me.结束年份列表.Items.Clear()

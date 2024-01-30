@@ -2,7 +2,6 @@
     Sub 资本金税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -162,7 +161,6 @@
     Sub 资本金税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -322,7 +320,6 @@
     Sub 资本金税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -544,7 +541,6 @@
     Sub 全投资税后收益率反算收入单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -704,7 +700,6 @@
     Sub 全投资税后收益率反算成本单价(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -864,7 +859,6 @@
     Sub 全投资税后收益率反算静态投资(ExcelApp As Object, FSLJDJSCSMax As Integer, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                      clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                      kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值

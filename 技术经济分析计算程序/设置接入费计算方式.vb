@@ -3,7 +3,6 @@
     Public ksnf_list As New List(Of Integer)
     Public jsnf_list As New List(Of Integer)
     Private Sub 设置接入费计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -49,7 +48,6 @@
     End Sub
 
     Private Sub 确定参数_Click(sender As Object, e As EventArgs) Handles 确定参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -103,7 +101,9 @@
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入计算模式
-        If Me.CheckBox1.Checked = True Then
+        If Me.CheckBox1.Checked = False And Me.CheckBox2.Checked = False Then
+            ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值"
+        ElseIf Me.CheckBox1.Checked = True Then
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率"
         ElseIf Me.CheckBox2.Checked = True Then
             ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年投产月份比例"
@@ -114,11 +114,9 @@
         '获取10次投资,每一次投资的投产月份数
         Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
         Dim month_10_list = ans_month(1)
-        '读取基础负荷率
-        Dim fhl_base = 读取逐年负荷率(ExcelApp)
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '写入数值
-        Call 接入费逐年达产率计算(ExcelApp, jsnx, qtnf_list)
+        Call 接入费逐年达产率计算(ExcelApp, jsnx, month_10_list, qtnf_list)
         '计算一次Excel
         ExcelApp.Calculate()
         '———————————————————————————————————————————————————————————————————————————————————————— 
@@ -157,7 +155,6 @@
     End Sub
 
     Private Sub 默认方式_Click(sender As Object, e As EventArgs) Handles 默认方式.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -210,42 +207,15 @@
         Dim qtnf_list = qtnf_tmp_list.Except(tmp_list).ToList()
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        '正常计算的年份
-        '第1年
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 3).Value = ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 3).Value
-        '第2-15年
-        For j = 0 To n_nf - 1
-            For i = 4 To 17
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, i - 1).Value)
-                End If
-            Next
-        Next
-        '第16年
-        ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, 18).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, 2).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(103, 17).Value)
-        '第17-31年
-        For j = 0 To n_nf - 1
-            For i = 19 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value >= ksnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnf_list(j) And ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value <= jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 1 * (ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15).Value - ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(106, i - 15 - 1).Value)
-                End If
-            Next
-        Next
-        '其他年份
-        For Each qtnf In qtnf_list
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value = qtnf Or ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(168, i).Value > jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-                End If
-            Next
-        Next
-        '将小于0的结果设置为0
-        For i = 3 To 33
-            If ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value < 0 Then
-                ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i).Value = 0
-            End If
-        Next
+        '获取10次投资,每一次投资的投产月份数
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '写入计算模式
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年达产率增加值"
+        '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+        '写入数值
+        Call 接入费逐年达产率计算(ExcelApp, jsnx, month_10_list, qtnf_list)
         '计算一次Excel
         ExcelApp.Calculate()
         '———————————————————————————————————————————————————————————————————————————————————————— 
@@ -284,7 +254,6 @@
     End Sub
 
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
-        On Error Resume Next
         '判断1
         If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
             MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
@@ -311,7 +280,6 @@
     End Sub
 
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         '清空窗体
         Me.开始年份列表.Items.Clear()
         Me.结束年份列表.Items.Clear()

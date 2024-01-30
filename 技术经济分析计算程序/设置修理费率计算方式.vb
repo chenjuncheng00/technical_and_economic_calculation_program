@@ -45,7 +45,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 设置剔除_Click(sender As Object, e As EventArgs) Handles 设置剔除.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -110,7 +109,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 设置修理费率计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -236,7 +234,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 常规设备_Click(sender As Object, e As EventArgs) Handles 常规设备.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -274,7 +271,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -312,7 +308,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -375,7 +370,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -413,7 +407,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -446,7 +439,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 光伏_Click(sender As Object, e As EventArgs) Handles 光伏.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -509,7 +501,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 风电_Click(sender As Object, e As EventArgs) Handles 风电.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -572,7 +563,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
-        On Error Resume Next
         '判断1
         If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
             MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
@@ -613,7 +603,6 @@ Public Class 设置修理费率计算方式
     End Sub
 
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         Me.开始年份tmp.Clear()
         Me.结束年份tmp.Clear()
         Me.开始费率tmp.Clear()

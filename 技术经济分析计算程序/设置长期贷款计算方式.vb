@@ -2,7 +2,6 @@
 
 Public Class 设置长期贷款计算方式
     Private Sub 设置长期贷款计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -273,7 +272,6 @@ Public Class 设置长期贷款计算方式
     End Sub
 
     Private Sub 确定计算方式_Click(sender As Object, e As EventArgs) Handles 开始计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -315,7 +313,6 @@ Public Class 设置长期贷款计算方式
     End Sub
 
     Private Sub 重置回默认方式_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp      
@@ -378,41 +375,117 @@ Public Class 设置长期贷款计算方式
     End Sub
 
     Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '——————————————————————————————————————————————————————————————————————————————————————————————
-        '——————————————————————————————————————————————————————————————————————————————————————————————
-        ''长期贷款计算方法需要采用方法三或者方法四
-        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-        '    MsgBox("长期借款计算方式，请选择计算方法三或者方法四，计算终止！")
-        '    Exit Sub
-        'End If
+        '定义局部变量
+        Dim cqdkhknx1, cqdkhknx2, cqdkhknx3, cqdkhknx4, cqdkhknx5, cqdkhknx6, cqdkhknx7, cqdkhknx8, cqdkhknx9, cqdkhknx10 As Integer '长期贷款还款年限
+        Dim kxnx1, kxnx2, kxnx3, kxnx4, kxnx5, kxnx6, kxnx7, kxnx8, kxnx9, kxnx10 As Integer '贷款宽限年限
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的数据
         '长期贷款还款年限
-        Dim cqdkhknx1 = CType(Me.cqdkhknx1.Text, Integer)
-        Dim cqdkhknx2 = CType(Me.cqdkhknx2.Text, Integer)
-        Dim cqdkhknx3 = CType(Me.cqdkhknx3.Text, Integer)
-        Dim cqdkhknx4 = CType(Me.cqdkhknx4.Text, Integer)
-        Dim cqdkhknx5 = CType(Me.cqdkhknx5.Text, Integer)
-        Dim cqdkhknx6 = CType(Me.cqdkhknx6.Text, Integer)
-        Dim cqdkhknx7 = CType(Me.cqdkhknx7.Text, Integer)
-        Dim cqdkhknx8 = CType(Me.cqdkhknx8.Text, Integer)
-        Dim cqdkhknx9 = CType(Me.cqdkhknx9.Text, Integer)
-        Dim cqdkhknx10 = CType(Me.cqdkhknx10.Text, Integer)
+        If Me.cqdkhknx1.Text = "" Then
+            cqdkhknx1 = 0
+        Else
+            cqdkhknx1 = CType(Me.cqdkhknx1.Text, Integer)
+        End If
+        If Me.cqdkhknx2.Text = "" Then
+            cqdkhknx2 = 0
+        Else
+            cqdkhknx2 = CType(Me.cqdkhknx2.Text, Integer)
+        End If
+        If Me.cqdkhknx3.Text = "" Then
+            cqdkhknx3 = 0
+        Else
+            cqdkhknx3 = CType(Me.cqdkhknx3.Text, Integer)
+        End If
+        If Me.cqdkhknx4.Text = "" Then
+            cqdkhknx4 = 0
+        Else
+            cqdkhknx4 = CType(Me.cqdkhknx4.Text, Integer)
+        End If
+        If Me.cqdkhknx5.Text = "" Then
+            cqdkhknx5 = 0
+        Else
+            cqdkhknx5 = CType(Me.cqdkhknx5.Text, Integer)
+        End If
+        If Me.cqdkhknx6.Text = "" Then
+            cqdkhknx6 = 0
+        Else
+            cqdkhknx6 = CType(Me.cqdkhknx6.Text, Integer)
+        End If
+        If Me.cqdkhknx7.Text = "" Then
+            cqdkhknx7 = 0
+        Else
+            cqdkhknx7 = CType(Me.cqdkhknx7.Text, Integer)
+        End If
+        If Me.cqdkhknx8.Text = "" Then
+            cqdkhknx8 = 0
+        Else
+            cqdkhknx8 = CType(Me.cqdkhknx8.Text, Integer)
+        End If
+        If Me.cqdkhknx9.Text = "" Then
+            cqdkhknx9 = 0
+        Else
+            cqdkhknx9 = CType(Me.cqdkhknx9.Text, Integer)
+        End If
+        If Me.cqdkhknx10.Text = "" Then
+            cqdkhknx10 = 0
+        Else
+            cqdkhknx10 = CType(Me.cqdkhknx10.Text, Integer)
+        End If
         '长期贷款宽限年限
-        Dim kxnx1 = CType(Me.kxnx1.Text, Integer)
-        Dim kxnx2 = CType(Me.kxnx2.Text, Integer)
-        Dim kxnx3 = CType(Me.kxnx3.Text, Integer)
-        Dim kxnx4 = CType(Me.kxnx4.Text, Integer)
-        Dim kxnx5 = CType(Me.kxnx5.Text, Integer)
-        Dim kxnx6 = CType(Me.kxnx6.Text, Integer)
-        Dim kxnx7 = CType(Me.kxnx7.Text, Integer)
-        Dim kxnx8 = CType(Me.kxnx8.Text, Integer)
-        Dim kxnx9 = CType(Me.kxnx9.Text, Integer)
-        Dim kxnx10 = CType(Me.kxnx10.Text, Integer)
+        If Me.kxnx1.Text = "" Then
+            kxnx1 = 0
+        Else
+            kxnx1 = CType(Me.kxnx1.Text, Integer)
+        End If
+        If Me.kxnx2.Text = "" Then
+            kxnx2 = 0
+        Else
+            kxnx2 = CType(Me.kxnx2.Text, Integer)
+        End If
+        If Me.kxnx3.Text = "" Then
+            kxnx3 = 0
+        Else
+            kxnx3 = CType(Me.kxnx3.Text, Integer)
+        End If
+        If Me.kxnx4.Text = "" Then
+            kxnx4 = 0
+        Else
+            kxnx4 = CType(Me.kxnx4.Text, Integer)
+        End If
+        If Me.kxnx5.Text = "" Then
+            kxnx5 = 0
+        Else
+            kxnx5 = CType(Me.kxnx5.Text, Integer)
+        End If
+        If Me.kxnx6.Text = "" Then
+            kxnx6 = 0
+        Else
+            kxnx6 = CType(Me.kxnx6.Text, Integer)
+        End If
+        If Me.kxnx7.Text = "" Then
+            kxnx7 = 0
+        Else
+            kxnx7 = CType(Me.kxnx7.Text, Integer)
+        End If
+        If Me.kxnx8.Text = "" Then
+            kxnx8 = 0
+        Else
+            kxnx8 = CType(Me.kxnx8.Text, Integer)
+        End If
+        If Me.kxnx9.Text = "" Then
+            kxnx9 = 0
+        Else
+            kxnx9 = CType(Me.kxnx9.Text, Integer)
+        End If
+        If Me.kxnx10.Text = "" Then
+            kxnx10 = 0
+        Else
+            kxnx10 = CType(Me.kxnx10.Text, Integer)
+        End If
         '——————————————————————————————————————————————————————————————————————————————————————————————
         '读取项目总的计算年限
         Dim jsnx As Integer = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value
@@ -432,8 +505,8 @@ Public Class 设置长期贷款计算方式
             If tznf1 + cqdkhknx1 > jsnx Then
                 MsgBox("输入的第1次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx1 <= 0 Then
-                MsgBox("输入的第1次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx1 < 0 Then
+                MsgBox("输入的第1次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx1 < 0 Then
                 MsgBox("输入的第1次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -446,8 +519,8 @@ Public Class 设置长期贷款计算方式
             If tznf2 + cqdkhknx2 > jsnx Then
                 MsgBox("输入的第2次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx2 <= 0 Then
-                MsgBox("输入的第2次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx2 < 0 Then
+                MsgBox("输入的第2次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx2 < 0 Then
                 MsgBox("输入的第2次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -460,8 +533,8 @@ Public Class 设置长期贷款计算方式
             If tznf3 + cqdkhknx3 > jsnx Then
                 MsgBox("输入的第3次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx3 <= 0 Then
-                MsgBox("输入的第3次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx3 < 0 Then
+                MsgBox("输入的第3次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx3 < 0 Then
                 MsgBox("输入的第3次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -474,8 +547,8 @@ Public Class 设置长期贷款计算方式
             If tznf4 + cqdkhknx4 > jsnx Then
                 MsgBox("输入的第4次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx4 <= 0 Then
-                MsgBox("输入的第4次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx4 < 0 Then
+                MsgBox("输入的第4次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx4 < 0 Then
                 MsgBox("输入的第4次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -488,8 +561,8 @@ Public Class 设置长期贷款计算方式
             If tznf5 + cqdkhknx5 > jsnx Then
                 MsgBox("输入的第5次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx5 <= 0 Then
-                MsgBox("输入的第5次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx5 < 0 Then
+                MsgBox("输入的第5次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx5 < 0 Then
                 MsgBox("输入的第5次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -502,8 +575,8 @@ Public Class 设置长期贷款计算方式
             If tznf6 + cqdkhknx6 > jsnx Then
                 MsgBox("输入的第6次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx6 <= 0 Then
-                MsgBox("输入的第6次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx6 < 0 Then
+                MsgBox("输入的第6次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx6 < 0 Then
                 MsgBox("输入的第6次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -516,8 +589,8 @@ Public Class 设置长期贷款计算方式
             If tznf7 + cqdkhknx7 > jsnx Then
                 MsgBox("输入的第7次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx7 <= 0 Then
-                MsgBox("输入的第7次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx7 < 0 Then
+                MsgBox("输入的第7次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx7 < 0 Then
                 MsgBox("输入的第7次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -530,8 +603,8 @@ Public Class 设置长期贷款计算方式
             If tznf8 + cqdkhknx8 > jsnx Then
                 MsgBox("输入的第8次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx8 <= 0 Then
-                MsgBox("输入的第8次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx8 < 0 Then
+                MsgBox("输入的第8次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx8 < 0 Then
                 MsgBox("输入的第8次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -544,8 +617,8 @@ Public Class 设置长期贷款计算方式
             If tznf9 + cqdkhknx9 > jsnx Then
                 MsgBox("输入的第9次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx9 <= 0 Then
-                MsgBox("输入的第9次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx9 < 0 Then
+                MsgBox("输入的第9次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx9 < 0 Then
                 MsgBox("输入的第9次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")
@@ -558,8 +631,8 @@ Public Class 设置长期贷款计算方式
             If tznf10 + cqdkhknx10 > jsnx Then
                 MsgBox("输入的第10次投资的长期贷款还款年限超出允许范围，请检查并重新输入！")
                 Exit Sub
-            ElseIf cqdkhknx10 <= 0 Then
-                MsgBox("输入的第10次投资的长期贷款还款年限不可以小于等于0，请检查并重新输入！")
+            ElseIf cqdkhknx10 < 0 Then
+                MsgBox("输入的第10次投资的长期贷款还款年限不可以小于0，请检查并重新输入！")
                 Exit Sub
             ElseIf kxnx10 < 0 Then
                 MsgBox("输入的第10次投资的长期贷款宽限年限不可以小于0，请检查并重新输入！")

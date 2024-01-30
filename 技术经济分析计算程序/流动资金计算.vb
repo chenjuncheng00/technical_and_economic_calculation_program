@@ -1,8 +1,6 @@
 ﻿Module 流动资金计算
     Sub 流动资金相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
                          clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————   
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -157,17 +155,6 @@
             '计算一次Excel
             ExcelApp.Calculate()
             '————————————————————————————————————————————————————————————————————————————————————————
-            '计算期末最后一年减去自有流动资金
-            For i = 3 To 33
-                If ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(64, i).Value = jsnx Then
-                    ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(66, i).Value = ExcelApp.ThisWorkbook.Worksheets("流动资金估算表").Cells(32, 20).Value
-                Else
-                    ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(66, i).Value = 0
-                End If
-            Next
-            '计算一次Excel
-            ExcelApp.Calculate()
-            '————————————————————————————————————————————————————————————————————————————————————————
         Else
             '如果第一年没有收入和成本，则流动资金的计算年份与项目计算年份不是一一对应，流动资金计算年份比项目计算年份提前一年，流动资金计算年限等于项目计算年限-1
             '流动资金当期增加额计算系数,
@@ -304,13 +291,6 @@
             '计算一次Excel
             ExcelApp.Calculate()
             '———————————————————————————————————————————————————————————————————————————————————————— 
-            '计算期末最后一年不减去自有流动资金
-            For i = 3 To 33
-                ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(66, i).Value = 0
-            Next
-            '计算一次Excel
-            ExcelApp.Calculate()
-            '———————————————————————————————————————————————————————————————————————————————————————— 
             '计算期末偿还流动资金本金
             '前15年
             For i = 1 To 15
@@ -339,8 +319,6 @@
         Call 建设期流动资金计算(ExcelApp)
     End Sub
     Sub 建设期流动资金计算(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '从估算表读取计算所需数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         '10次投资年份序号列表，列表，长度10
@@ -383,8 +361,6 @@
     End Sub
     Function 分项逐年流动资金计算(ExcelApp As Object, month_10_list As Array, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
                                   clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer, jsnx As Integer)
-        'On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————   
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -426,6 +402,7 @@
         Dim gftz = GSBSJ(16)
         '风电总投资(万元)，10次投资的情况
         Dim fdtz = GSBSJ(18)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '流动资金费率，默认：从EXCEL读取，逐年固定费率
         Dim ans_fl_mr = 默认逐年流动资金费率(ExcelApp)
         Dim ldzjfl_gf_list = ans_fl_mr(0)
@@ -445,7 +422,7 @@
         Dim kcbl_gf As Double
         Dim kcbl_fd As Double
         If kcje_ldzj_model = 0 Then
-            Dim kcje_mr = 流动资金计算基数扣除默认设置(jsnx)
+            Dim kcje_mr = 流动资金计算基数扣除默认设置(jsnx, month_10_list)
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
             yynx_nt = kcje_mr(2)
@@ -537,8 +514,6 @@
     Function 逐年流动资金计算_常规设备(ExcelApp As Object, month_10_list As Array, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer,
                                        hscz As Boolean, zbj_model As Integer, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, bxf_model As Integer,
                                        kcje_bxf_model As Integer, jsnx As Integer, qttz_list As Array)
-        'On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————   
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'tcyf_list：10次投资的投产月份数，列表，长度10
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -875,7 +850,10 @@
         ans(4) = ldzjfl_nt_list
         Return ans
     End Function
-    Function 流动资金计算基数扣除默认设置(jsnx As Integer)
+    Function 流动资金计算基数扣除默认设置(jsnx As Integer, month_10_list As Array)
+        'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        '————————————————————————————————————————————————————————————————————————————————————————       
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_gf：光伏每次投资运营年限数量（年）
         'yynx_fd：风电每次投资运营年限数量（年）
@@ -883,9 +861,10 @@
         'kcbl_gf：光伏每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
 
-        Dim yynx_rj As Integer = jsnx - 1
+        Dim yynx = 计算项目运营年限(jsnx, month_10_list)
+        Dim yynx_rj As Integer = yynx
         Dim yynx_xdc As Integer = 10
-        Dim yynx_nt As Integer = jsnx - 1
+        Dim yynx_nt As Integer = yynx
         Dim yynx_gf As Integer = 25
         Dim yynx_fd As Integer = 20
         Dim kcbl_rj As Double = 1

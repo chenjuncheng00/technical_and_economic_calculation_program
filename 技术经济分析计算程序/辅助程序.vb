@@ -10,8 +10,6 @@ Module 辅助程序
         MsgBox(str_txt)
     End Sub
     Sub 解锁表格(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '解锁表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").unProtect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").unProtect(Password:="wscjc")
@@ -38,8 +36,6 @@ Module 辅助程序
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").unProtect(Password:="wscjc")
     End Sub
     Sub 锁定表格(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '锁定表格
         ExcelApp.ThisWorkbook.Worksheets("估算表").Protect(Password:="wscjc")
         ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Protect(Password:="wscjc")
@@ -66,8 +62,6 @@ Module 辅助程序
         ExcelApp.ThisWorkbook.Worksheets("投资方5现金流量表").Protect(Password:="wscjc")
     End Sub
     Function Excel版本号验证(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         Dim ZTJC As Integer
         '验证Excel表格的更新时间
         If ExcelApp.ThisWorkbook.Worksheets("建设期时间计划表").Cells(3, 29).Value < 20210903 Then
@@ -107,8 +101,6 @@ Module 辅助程序
         End Try
     End Sub
     Sub 获取本机MAC地址并验证(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————  
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '程序开始
@@ -144,8 +136,6 @@ Module 辅助程序
         End If
     End Sub
     Sub 网络时间和本地时间交替验证(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -207,8 +197,6 @@ Module 辅助程序
         End If
     End Sub
     Sub 获取系统时间并验证(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         Dim Local_Time = Date.Now '获取系统本地时间
@@ -228,8 +216,6 @@ Module 辅助程序
         End If
     End Sub
     Sub 程序联网验证(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '屏蔽ctrl+break
         ExcelApp.Application.EnableCancelKey = XlEnableCancelKey.xlDisabled
         '程序开始

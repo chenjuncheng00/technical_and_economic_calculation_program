@@ -2,7 +2,6 @@
 Imports Microsoft.Office.Interop.Excel
 Public Class 设置投资各方计算方式
     Private Sub 确定参数_Click(sender As Object, e As EventArgs) Handles 确定参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -162,7 +161,6 @@ Public Class 设置投资各方计算方式
     End Sub
 
     Private Sub 重置默认_Click(sender As Object, e As EventArgs) Handles 重置默认.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -225,7 +223,6 @@ Public Class 设置投资各方计算方式
     End Sub
 
     Private Sub 设置投资各方计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp

@@ -2,9 +2,8 @@
     Sub 确定估算表参数设置(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
                            sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
                            bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '<估算表>中：项目计算年限、长期贷款相关年限、折旧摊销相关年限、可抵扣增值税年限变化后相关计算
+        '————————————————————————————————————————————————————————————————————————————————————————
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -26,7 +25,6 @@
     Sub 确定投资数据输入(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
                          sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
                          bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         '包括：改变建设期投资金额数值后相关计算+材料费其它费计算
         '————————————————————————————————————————————————————————————————————————————————————————
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -112,7 +110,6 @@
     End Sub
     Sub 建设投资相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer,
                          clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         '仅改变建设期投资金额数值后相关计算
         '————————————————————————————————————————————————————————————————————————————————————————
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -167,8 +164,6 @@
     End Sub
     Sub 折旧摊销相关计算(ExcelApp As Object, hscz As Boolean, sdsl_model As Integer, zbj_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer,
                          clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         'hscy：计算期末，是否回收资产残值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -210,8 +205,6 @@
     End Sub
     Sub 长期贷款相关计算(ExcelApp As Object, sdsl_model As Integer, zbj_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean,
                          clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'xlfl_cg_model： 常规设备修理费率的计算方式， 0： 使用默认值， 1： 从Excel中读取已有的值
@@ -251,8 +244,6 @@
     End Sub
     Sub 修理费相关计算(ExcelApp As Object, xlfl_cg_model As Integer, xlfl_qt_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
                        clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -284,7 +275,6 @@
     End Sub
     Sub 收入成本相关计算(ExcelApp As Object, sdsl_model As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
                          clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         '仅<收入&成本输入表>中的内容改变后相关计算
         '————————————————————————————————————————————————————————————————————————————————————————
         'sdsl_model：所得税率的计算模式，0：使用默认值，1：从Excel中读取已有的值
@@ -325,7 +315,6 @@
     Sub 税收相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
                      sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
                      bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         '影响增值税或者所得税的相关内容计算，包括投资相关、收入成本相关的全部内容
         '————————————————————————————————————————————————————————————————————————————————————————
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -382,8 +371,6 @@
     Sub 保险费相关计算(ExcelApp As Object, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer, clfl_qtfl_model As Integer,
                        sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer,
                        bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值

@@ -54,8 +54,6 @@
     End Function
     Function 逐年费率计算_base(ExcelApp As Object, ksnf_list As List(Of Integer), jsnf_list As List(Of Integer),
                                ksfl_list As List(Of Double), jsfl_list As List(Of Double))
-        On Error Resume Next
-        '———————————————————————————————————————————————————————————————————————————————————————— 
         '设置设备逐年费率（修理费、保险费、材料费其它费），费率可以逐年变化
         'ksnf_list：开始年份列表
         'jsnf_list：结束年份列表
@@ -146,5 +144,84 @@
         '————————————————————————————————————————————————————————————————————————————————————————     
         '返回计算结果
         Return ans_fl_list
+    End Function
+    Function 逐年衰减率计算_base(ExcelApp As Object, jsksnf As Integer, jsjsnf As Integer, ksnf_list As List(Of Integer), sjl_list As List(Of Double))
+        '光伏、蓄电池逐年衰减率计算
+        'jsksnf：计算衰减率的项目开始计算衰减率的年份序号
+        'jsjsnf：计算衰减率的项目结束计算衰减率的年份序号
+        'ksnf_list：开始年份列表
+        'sjl_list：逐年衰减率
+        '————————————————————————————————————————————————————————————————————————————————————————     
+        '读取项目计算年限
+        Dim jsnx = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 7).Value '项目计算年限
+        '输入的年份总数量
+        Dim n_nf As Integer = ksnf_list.LongCount
+        '输入的计算结束年份不可以大于项目计算年限
+        If jsjsnf > jsnx Then
+            MsgBox("窗口中输入的计算结束年份不可以超过项目计算年限，请重新输入！")
+            Exit Function
+        End If
+        '检查输入的衰减开始年份
+        If jsnx > 31 Then
+            MsgBox("输入的项目计算年限不可以大于31年，请重新输入！")
+            Exit Function
+        End If
+        For i = 0 To n_nf - 1
+            If ksnf_list(i) > jsnx Then
+                MsgBox("输入的衰减年份不可以大于项目计算年限，请重新输入！")
+                Exit Function
+            End If
+        Next
+        If n_nf > 1 Then
+            For i = 1 To n_nf - 1
+                If ksnf_list(i - 1) > ksnf_list(i) Then
+                    MsgBox("输入的后一个开始年份不可以小于上一个开始年份，请重新输入！")
+                    Exit Function
+                End If
+            Next
+        End If
+        '————————————————————————————————————————————————————————————————————————————————————————
+        '根据逐年衰减率计算出的基础负荷率
+        Dim fhl_base(31) As Double
+        '计算开始年份之前
+        For i = 1 To 31
+            If i < jsksnf Then
+                fhl_base(i) = 0
+            End If
+        Next
+        '计算开始年份到第一个开始衰减的年份
+        For i = 1 To 31
+            If i >= jsksnf And i < ksnf_list(0) Then
+                '小于第一个衰减开始年份的负荷率设置为1
+                fhl_base(i) = 1
+            End If
+        Next
+        '衰减年份的之间的年份
+        Dim yjsj As Double = 0 '已经衰减的系数
+        If n_nf > 1 Then
+            For j = 1 To n_nf - 1
+                For i = 1 To 31
+                    If i >= ksnf_list(j - 1) And i < ksnf_list(j) Then
+                        yjsj += sjl_list(j - 1)
+                        fhl_base(i) = (100 - yjsj) / 100
+                    End If
+                Next
+            Next
+        End If
+        '最后一个衰减年份到计算衰减结束的年份
+        For i = 1 To 31
+            If i >= ksnf_list(n_nf - 1) And i <= jsjsnf Then
+                yjsj += sjl_list(n_nf - 1)
+                fhl_base(i) = (100 - yjsj) / 100
+            End If
+        Next
+        '计算衰减结束的年份到最后
+        For i = 1 To 31
+            If i > jsjsnf Then
+                fhl_base(i) = 0
+            End If
+        Next
+        '返回结果
+        Return fhl_base
     End Function
 End Module

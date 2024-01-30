@@ -6,7 +6,6 @@
     Public ksfl_list As New List(Of Double)
     Public jsfl_list As New List(Of Double)
     Private Sub 设置材料费和其它费计算方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -143,9 +142,7 @@
             Me.KCBL_LJFD.Clear()
         End If
     End Sub
-
     Private Sub 设置剔除_Click(sender As Object, e As EventArgs) Handles 设置剔除.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -217,7 +214,6 @@
         '计算一次工作簿
         ExcelApp.Calculate()
     End Sub
-
     Private Sub 清空窗体_Click(sender As Object, e As EventArgs) Handles 清空窗体.Click
         Dim XZ = MsgBox("是否清空窗体中的全部内容？", vbOKCancel)
         If XZ = vbOK Then
@@ -254,9 +250,7 @@
             Me.KCBL_LJFD.Clear()
         End If
     End Sub
-
     Private Sub 光伏_Click(sender As Object, e As EventArgs) Handles 光伏.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -318,9 +312,7 @@
             Me.RichTextBox1.Text = "光伏设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
     Private Sub 风电_Click(sender As Object, e As EventArgs) Handles 风电.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -383,7 +375,6 @@
         End If
     End Sub
     Private Sub 蓄电池_Click(sender As Object, e As EventArgs) Handles 蓄电池.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -446,7 +437,6 @@
         End If
     End Sub
     Private Sub 燃机_Click(sender As Object, e As EventArgs) Handles 燃机.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -508,9 +498,7 @@
             Me.RichTextBox1.Text = "燃机设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
     Private Sub 燃煤_Click(sender As Object, e As EventArgs) Handles 燃煤.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -572,9 +560,7 @@
             Me.RichTextBox1.Text = "燃煤设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
     Private Sub 暖通_Click(sender As Object, e As EventArgs) Handles 暖通.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -636,9 +622,7 @@
             Me.RichTextBox1.Text = "暖通设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
     Private Sub 垃圾发电_Click(sender As Object, e As EventArgs) Handles 垃圾发电.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -700,9 +684,7 @@
             Me.RichTextBox1.Text = "垃圾发电设备逐年其它费率：" & Me.RichTextBox1.Text
         End If
     End Sub
-
     Private Sub 计算_Click(sender As Object, e As EventArgs) Handles 计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -733,9 +715,7 @@
             Me.RichTextBox1.Text = "设备逐年材料费和其它费计算完成！"
         End If
     End Sub
-
     Private Sub 添加输入_Click(sender As Object, e As EventArgs) Handles 添加输入.Click
-        On Error Resume Next
         '判断1
         If 开始年份tmp.Text = Nothing Or 结束年份tmp.Text = Nothing Then
             MsgBox("输入的开始年份和结束年份都必须不能为空！，请重新输入")
@@ -774,9 +754,7 @@
         结束费率列表.Items.Add(jsfl_text)
         jsfl_list.Add(jsfl)
     End Sub
-
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         Me.开始年份tmp.Clear()
         Me.结束年份tmp.Clear()
         Me.开始费率tmp.Clear()

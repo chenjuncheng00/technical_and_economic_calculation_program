@@ -1,6 +1,5 @@
 ﻿Module 材料费其它费计算
     Sub 材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer)
-        On Error Resume Next
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -37,12 +36,36 @@
         ExcelApp.Calculate()
     End Sub
     Function 分项逐年材料费其它费计算(ExcelApp As Object, clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, jsnx As Integer)
-        'On Error Resume Next
         '只计算出分项逐年材料费和其它费的金额数值，不写入EXCEL
         'clfl_qtfl_model：材料费率、其它费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_clf_qtf_model：材料费、其它费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值
         'jsnx：项目计算年限
         '————————————————————————————————————————————————————————————————————————————————————————        
+        '材料费其它费计算模式
+        Dim GSBSJ = 读取估算表数据(ExcelApp)
+        '投资年份，10次投资的情况
+        Dim tznf_list = GSBSJ(0)
+        '计算10次投资，每次建设年份的投产月份数
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        Dim tcyf_list = ans_month(2)
+        '燃机总发电量(万kWh)，10次投资的情况
+        Dim rjfdl = GSBSJ(11)
+        '蓄电池总装机功率(kW)，10次投资的情况
+        Dim xdczjgl = GSBSJ(13)
+        '供冷供热总量(万kWh)，10次投资的情况
+        Dim glgrl = GSBSJ(15)
+        '光伏总装机功率(kW)，10次投资的情况
+        Dim gfzjgl = GSBSJ(17)
+        '燃煤机组总发电量(万kWh)，10次投资的情况
+        Dim rmfdl = GSBSJ(21)
+        '风电总装机功率(kW)，10次投资的情况
+        Dim fdzjgl = GSBSJ(19)
+        '垃圾发电总发电量(万kWh)，10次投资的情况
+        Dim ljfdl = GSBSJ(20)
+        '读取逐年负荷率
+        Dim fhl_list = 读取逐年负荷率(ExcelApp)
+        '————————————————————————————————————————————————————————————————————————————————————————
         '读取材料费其它费计算默认值
         Dim clqtfl = 默认逐年材料费率其它费率(ExcelApp)
         '逐年材料费默认值
@@ -126,7 +149,7 @@
         Dim kcbl_rm As Double
         Dim kcbl_fd As Double
         Dim kcbl_ljfd As Double
-        Dim kcje_mr = 材料费其它费计算基数扣除默认设置(jsnx)
+        Dim kcje_mr = 材料费其它费计算基数扣除默认设置(jsnx, month_10_list)
         If kcje_clf_qtf_model = 0 Then
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
@@ -158,29 +181,6 @@
             kcbl_fd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 8).Value
             kcbl_ljfd = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(107, 9).Value
         End If
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '材料费其它费计算模式
-        Dim GSBSJ = 读取估算表数据(ExcelApp)
-        '投资年份，10次投资的情况
-        Dim tznf_list = GSBSJ(0)
-        '计算10次投资，每次建设年份的投产月份数
-        Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
-        '燃机总发电量(万kWh)，10次投资的情况
-        Dim rjfdl = GSBSJ(11)
-        '蓄电池总装机功率(kW)，10次投资的情况
-        Dim xdczjgl = GSBSJ(13)
-        '供冷供热总量(万kWh)，10次投资的情况
-        Dim glgrl = GSBSJ(15)
-        '光伏总装机功率(kW)，10次投资的情况
-        Dim gfzjgl = GSBSJ(17)
-        '燃煤机组总发电量(万kWh)，10次投资的情况
-        Dim rmfdl = GSBSJ(21)
-        '风电总装机功率(kW)，10次投资的情况
-        Dim fdzjgl = GSBSJ(19)
-        '垃圾发电总发电量(万kWh)，10次投资的情况
-        Dim ljfdl = GSBSJ(20)
-        '读取逐年负荷率
-        Dim fhl_list = 读取逐年负荷率(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
         '材料费和其它费也属于固定成本，根据设置决定是否按投产月份数折算
         '根据投资量计算时，使用设定决定是否折算
@@ -359,7 +359,10 @@
         ans(13) = qtfl_xdc_list
         Return ans
     End Function
-    Function 材料费其它费计算基数扣除默认设置(jsnx As Integer)
+    Function 材料费其它费计算基数扣除默认设置(jsnx As Integer, month_10_list As Array)
+        'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        '————————————————————————————————————————————————————————————————————————————————————————       
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -375,13 +378,14 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
         'kcbl_ljfd：垃圾发电每次投资运营年限结束后，上次投资计算材料费其它费的扣除比例（%）
 
-        Dim yynx_rj As Integer = jsnx - 1
+        Dim yynx = 计算项目运营年限(jsnx, month_10_list)
+        Dim yynx_rj As Integer = yynx
         Dim yynx_xdc As Integer = 10
-        Dim yynx_nt As Integer = jsnx - 1
+        Dim yynx_nt As Integer = yynx
         Dim yynx_gf As Integer = 25
-        Dim yynx_rm As Integer = jsnx - 1
+        Dim yynx_rm As Integer = yynx
         Dim yynx_fd As Integer = 20
-        Dim yynx_ljfd As Integer = jsnx - 1
+        Dim yynx_ljfd As Integer = yynx
         Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
         Dim kcbl_nt As Double = 1

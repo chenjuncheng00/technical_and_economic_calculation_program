@@ -1,7 +1,5 @@
 ﻿Module 建设期资金运用计算
     Sub 建设期资金运用计算(ExcelApp As Object, zbj_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '要先进行<建设期时间计划计算>，再运行本程序
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -55,8 +53,6 @@
     End Sub
 
     Function 分项建设期资金运用计算(ExcelApp As Object, zbj_model As Integer, GSBSJ As Array)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————
         '只计算出分项建设期资金运用的金额数值，不写入EXCEL
         '要先进行<建设期时间计划计算>，再运行本程序
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
@@ -91,7 +87,7 @@
         Dim cgtz_list = 基础计算功能_10_to_31(tznf_list, cgtz)
         '分项投资之和不可以超过总投资
         For i = 1 To 10
-            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) Then
+            If rjtz(i) + xdctz(i) + nttz(i) + gftz(i) + fdtz(i) > jttz(i) * 1.02 Then
                 MsgBox("每一年的分项投资之和不可以超过当年的总静态投资金额，建设期资金运用计算终止！")
                 Exit Function
             End If

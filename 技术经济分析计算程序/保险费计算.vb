@@ -43,7 +43,6 @@
     End Sub
 
     Function 分项逐年保险费金额计算(ExcelApp As Object, hscz As Boolean, zbj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer, jsnx As Integer)
-        'On Error Resume Next
         '光伏、风电、蓄电池的保险费要单独计算
         '只计算出分项保险费金额数值，不写入EXCEL
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -58,7 +57,9 @@
         '10次投资年份序号列表，列表，长度10
         Dim tznf_list = GSBSJ(0)
         '计算10次投资，每次建设年份的投产月份数
-        Dim tcyf_list = 逐年投产月份数_10次投资(ExcelApp)(2)
+        Dim ans_month = 逐年投产月份数_10次投资(ExcelApp)
+        Dim month_10_list = ans_month(1)
+        Dim tcyf_list = ans_month(2)
         '分项折旧摊销计算
         Dim ans_zjtx = 分项逐年折旧摊销金额计算(ExcelApp, hscz, zbj_model, jsnx)
         '资产原值，列表长度10
@@ -124,7 +125,7 @@
         Dim kcbl_fd As Double
         Dim kcbl_cg As Double
         If kcje_bxf_model = 0 Then
-            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx)
+            Dim kcje_mr = 设备保险费计算基数扣除默认设置(jsnx, month_10_list)
             yynx_rj = kcje_mr(0)
             yynx_xdc = kcje_mr(1)
             yynx_nt = kcje_mr(2)
@@ -211,7 +212,10 @@
         ans(5) = bxfl_nt_list
         Return ans
     End Function
-    Function 设备保险费计算基数扣除默认设置(jsnx As Integer)
+    Function 设备保险费计算基数扣除默认设置(jsnx As Integer, month_10_list As Array)
+        'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
+        '————————————————————————————————————————————————————————————————————————————————————————       
         'yynx_rj：燃机每次投资运营年限数量（年）
         'yynx_xdc：蓄电池每次投资运营年限数量（年）
         'yynx_nt：暖通每次投资运营年限数量（年）
@@ -225,12 +229,13 @@
         'kcbl_fd：风电每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
         'kcbl_cg：常规设备每次投资运营年限结束后，上次投资计算修理费的扣除比例（%）
 
-        Dim yynx_rj As Integer = jsnx - 1
+        Dim yynx = 计算项目运营年限(jsnx, month_10_list)
+        Dim yynx_rj As Integer = yynx
         Dim yynx_xdc As Integer = 10
-        Dim yynx_nt As Integer = jsnx - 1
+        Dim yynx_nt As Integer = yynx
         Dim yynx_gf As Integer = 25
         Dim yynx_fd As Integer = 20
-        Dim yynx_cg As Integer = jsnx - 1
+        Dim yynx_cg As Integer = yynx
         Dim kcbl_rj As Double = 1
         Dim kcbl_xdc As Double = 1
         Dim kcbl_nt As Double = 1

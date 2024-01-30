@@ -1,7 +1,6 @@
 ﻿Public Class 设置建设期资金运用方式
     Sub 建设期默认资金运用模式(ZBJBL As Double, DKLL As Double)
         '每次投资的资本金比例和建设期贷款利率均相同，资本金比例为占动态投资比例
-        On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
@@ -77,7 +76,6 @@
     End Sub
 
     Private Sub 资本金比例为占静态投资比例_统一设置_Click(sender As Object, e As EventArgs) Handles 资本金比例为占静态投资比例_统一设置.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp        
@@ -153,7 +151,6 @@
     End Sub
 
     Private Sub 资本金比例为占动态投资比例_逐次计算_Click(sender As Object, e As EventArgs) Handles 资本金比例为占动态投资比例_逐次计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -194,7 +191,6 @@
     End Sub
 
     Private Sub 资本金比例为占静态投资比例_逐次计算_Click(sender As Object, e As EventArgs) Handles 资本金比例为占静态投资比例_逐次计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp       
@@ -235,7 +231,6 @@
     End Sub
 
     Private Sub 重置回默认计算模式_Click(sender As Object, e As EventArgs) Handles 重置回默认计算模式.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp        
@@ -287,7 +282,6 @@
     End Sub
 
     Private Sub 设置建设期资金运用方式_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -419,7 +413,6 @@
     End Sub
 
     Private Sub 写入参数_Click(sender As Object, e As EventArgs) Handles 写入参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Microsoft.Office.Interop.Excel.Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -428,36 +421,109 @@
         '定义局部变量
         Dim zbjbl1, zbjbl2, zbjbl3, zbjbl4, zbjbl5, zbjbl6, zbjbl7, zbjbl8, zbjbl9, zbjbl10 As Double '资本金比例
         Dim dkll1, dkll2, dkll3, dkll4, dkll5, dkll6, dkll7, dkll8, dkll9, dkll10 As Double '建设期贷款利率
-        '————————————————————————————————————————————————————————————————————————————————————————
-        '————————————————————————————————————————————————————————————————————————————————————————  
-        ''长期贷款计算方法需要采用方法三或者方法四
-        'If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法一" Or ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 11).Value = "方法二" Then
-        '    MsgBox("长期贷款计算方式，请选择计算方法三或者方法四，计算终止！")
-        '    Exit Sub
-        'End If
         '————————————————————————————————————————————————————————————————————————————————————————  
         '读取输入的资本金(动态)比例
-        zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
-        zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
-        zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
-        zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
-        zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
-        zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
-        zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
-        zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
-        zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
-        zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
+        If Me.zbjbl1.Text = "" Then
+            zbjbl1 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl1 = CType(Me.zbjbl1.Text, Double) / 100
+        End If
+        If Me.zbjbl2.Text = "" Then
+            zbjbl2 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl2 = CType(Me.zbjbl2.Text, Double) / 100
+        End If
+        If Me.zbjbl3.Text = "" Then
+            zbjbl3 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl3 = CType(Me.zbjbl3.Text, Double) / 100
+        End If
+        If Me.zbjbl4.Text = "" Then
+            zbjbl4 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl4 = CType(Me.zbjbl4.Text, Double) / 100
+        End If
+        If Me.zbjbl5.Text = "" Then
+            zbjbl5 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl5 = CType(Me.zbjbl5.Text, Double) / 100
+        End If
+        If Me.zbjbl6.Text = "" Then
+            zbjbl6 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl6 = CType(Me.zbjbl6.Text, Double) / 100
+        End If
+        If Me.zbjbl7.Text = "" Then
+            zbjbl7 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl7 = CType(Me.zbjbl7.Text, Double) / 100
+        End If
+        If Me.zbjbl8.Text = "" Then
+            zbjbl8 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl8 = CType(Me.zbjbl8.Text, Double) / 100
+        End If
+        If Me.zbjbl9.Text = "" Then
+            zbjbl9 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl9 = CType(Me.zbjbl9.Text, Double) / 100
+        End If
+        If Me.zbjbl10.Text = "" Then
+            zbjbl10 = CType(Me.zbjbl_a.Text, Double) / 100
+        Else
+            zbjbl10 = CType(Me.zbjbl10.Text, Double) / 100
+        End If
         '读取输入的建设期贷款利率
-        dkll1 = CType(Me.dkll1.Text, Double) / 100
-        dkll2 = CType(Me.dkll2.Text, Double) / 100
-        dkll3 = CType(Me.dkll3.Text, Double) / 100
-        dkll4 = CType(Me.dkll4.Text, Double) / 100
-        dkll5 = CType(Me.dkll5.Text, Double) / 100
-        dkll6 = CType(Me.dkll6.Text, Double) / 100
-        dkll7 = CType(Me.dkll7.Text, Double) / 100
-        dkll8 = CType(Me.dkll8.Text, Double) / 100
-        dkll9 = CType(Me.dkll9.Text, Double) / 100
-        dkll10 = CType(Me.dkll10.Text, Double) / 100
+        If Me.dkll1.Text = "" Then
+            dkll1 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll1 = CType(Me.dkll1.Text, Double) / 100
+        End If
+        If Me.dkll2.Text = "" Then
+            dkll2 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll2 = CType(Me.dkll2.Text, Double) / 100
+        End If
+        If Me.dkll3.Text = "" Then
+            dkll3 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll3 = CType(Me.dkll3.Text, Double) / 100
+        End If
+        If Me.dkll4.Text = "" Then
+            dkll4 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll4 = CType(Me.dkll4.Text, Double) / 100
+        End If
+        If Me.dkll5.Text = "" Then
+            dkll5 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll5 = CType(Me.dkll5.Text, Double) / 100
+        End If
+        If Me.dkll6.Text = "" Then
+            dkll6 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll6 = CType(Me.dkll6.Text, Double) / 100
+        End If
+        If Me.dkll7.Text = "" Then
+            dkll7 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll7 = CType(Me.dkll7.Text, Double) / 100
+        End If
+        If Me.dkll8.Text = "" Then
+            dkll8 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll8 = CType(Me.dkll8.Text, Double) / 100
+        End If
+        If Me.dkll9.Text = "" Then
+            dkll9 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll9 = CType(Me.dkll9.Text, Double) / 100
+        End If
+        If Me.dkll10.Text = "" Then
+            dkll10 = CType(Me.dkll_a.Text, Double) / 100
+        Else
+            dkll10 = CType(Me.dkll10.Text, Double) / 100
+        End If
         '建设期贷款计息次数
         Dim jsqdkjxcs = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(5, 9).Value
         '————————————————————————————————————————————————————————————————————————————————————————  

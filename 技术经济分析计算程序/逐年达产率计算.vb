@@ -19,7 +19,6 @@
     End Sub
 
     Sub 直接输入综合达产率(ExcelApp As Object, jsnx As Integer, month_10_list As Array)
-        On Error Resume Next
         'jsnx：计算年限
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -32,7 +31,6 @@
         ExcelApp.Calculate()
     End Sub
     Sub 分投资逐次输入达产率(ExcelApp As Object, jsnx As Integer, month_10_list As Array, tznf_list As Array, tcyf_list As Array)
-        On Error Resume Next
         'jsnx：计算年限
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'tznf_list：10次投资的年份序号，列表，长度10
@@ -85,8 +83,9 @@
             End If
         Next
     End Sub
-    Sub 接入费逐年达产率计算(ExcelApp As Object, jsnx As Integer, qtnf_list As List(Of Integer))
+    Sub 接入费逐年达产率计算(ExcelApp As Object, jsnx As Integer, month_10_list As Array, qtnf_list As List(Of Integer))
         'jsnx：计算年限
+        'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'qtnf_list：其它年份列表，根本列表中的年份序号，将对应年份的负荷率设置为0
         '————————————————————————————————————————————————————————————————————————————————————————       
         '读取基础负荷率
@@ -114,6 +113,14 @@
             For i = 1 To 31
                 If i <= jsnx Then
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i + 2).Value = fhl_base(i)
+                Else
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i + 2).Value = 0
+                End If
+            Next
+        ElseIf ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(41, 18).Value = "逐年投产月份比例" Then
+            For i = 1 To 31
+                If i <= jsnx Then
+                    ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i + 2).Value = 1 * month_10_list(1)(i) / 12
                 Else
                     ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(169, i + 2).Value = 0
                 End If
@@ -350,7 +357,6 @@
         Next
     End Sub
     Sub 光伏逐年综合达产率计算(ExcelApp As Object, fhl_base As Array, zs_set As Boolean)
-        On Error Resume Next
         'fhl_base：逐年负荷率，列表，长度31
         'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
         '————————————————————————————————————————————————————————————————————————————————————————       
@@ -385,7 +391,6 @@
         ExcelApp.Calculate()
     End Sub
     Sub 风电逐年综合达产率计算(ExcelApp As Object, fhl_base As Array, zs_set As Boolean)
-        On Error Resume Next
         'fhl_base：逐年负荷率，列表，长度31
         'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
         '————————————————————————————————————————————————————————————————————————————————————————        
@@ -420,7 +425,6 @@
         ExcelApp.Calculate()
     End Sub
     Sub 蓄电池逐年综合达产率计算(ExcelApp As Object, fhl_base As Array, jsms As String, zs_set As Boolean)
-        On Error Resume Next
         'fhl_base：逐年负荷率，列表，长度31
         'jsms：计算模式，“供电”、“购电”
         'zs_set：数值是否需要按照当年的（投产月份数/12）进行折算
@@ -466,7 +470,6 @@
         ExcelApp.Calculate()
     End Sub
     Sub 十次投资综合达产率计算(ExcelApp As Object, jsnx As Integer, month_10_list As Array, tznf_list As Array, tcyf_list As Array, zs_set As Boolean)
-        On Error Resume Next
         'jsnx：计算年限
         'month_10_list：10次投资，计算每次投资的逐年投产月份数，列表，长度10
         'tznf_list：10次投资的年份序号，列表，长度10

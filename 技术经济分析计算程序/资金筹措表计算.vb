@@ -1,7 +1,5 @@
 ﻿Module 资金筹措表计算
     Sub 投资计划与资金筹措表计算(ExcelApp As Object)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '读取输入数据
         Dim GSBSJ = 读取估算表数据(ExcelApp)
         'Dim GSBCL = 读取计算常量设置(ExcelApp)

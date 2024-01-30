@@ -1,7 +1,5 @@
 ﻿Module 计算前后基本处理
     Sub 计算前基本处理(ExcelApp As Object, jbcl_mode As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         '启动迭代计算
         ExcelApp.Application.Iteration = True
         '屏蔽ctrl+break
@@ -23,8 +21,6 @@
     End Sub
     Sub 计算后基本处理(ExcelApp As Object, js_mode As Integer, xlfl_cg_model As Integer, xlfl_qt_model As Integer, kcje_xlf_model As Integer, hscz As Boolean, zbj_model As Integer,
                        clfl_qtfl_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer, kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
-        '————————————————————————————————————————————————————————————————————————————————————————        
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'xlfl_qt_model：其它设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
         'kcje_xlf_model：设备修理费计算基数扣除计算模式，0：使用默认值，1：从Excel中读取已有的值

@@ -3,7 +3,6 @@ Module 敏感性分析计算
     Sub 静态投资敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -95,7 +94,6 @@ Module 敏感性分析计算
     Sub 收入敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                            clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                            kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -153,7 +151,6 @@ Module 敏感性分析计算
     Sub 成本敏感性分析计算(ExcelApp As Object, MGXFXBHL As Double, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                            clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                            kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -211,7 +208,6 @@ Module 敏感性分析计算
     Sub 年运行小时数敏感性分析(ExcelApp As Object, MGXFXBHL As Double, zbj_model As Integer, hscz As Boolean, xlfl_cg_model As Integer, xlfl_qt_model As Integer,
                                clfl_qtfl_model As Integer, sdsl_model As Integer, kcje_xlf_model As Integer, kcje_clf_qtf_model As Integer, ldzj_model As Integer,
                                kcje_ldzj_model As Integer, bxf_model As Integer, kcje_bxf_model As Integer)
-        On Error Resume Next
         'zbj_model：资本金计算模式，0：以动态投资为计算基础，1：以静态投资为计算基础，数据来自用户设置
         'hscy：计算期末，是否回收资产残值
         'xlfl_cg_model：常规设备修理费率的计算方式，0：使用默认值，1：从Excel中读取已有的值
@@ -332,7 +328,6 @@ Module 敏感性分析计算
         Form1.Close()
     End Sub
     Sub 绘制单因素敏感性分析图(ExcelApp As Object)
-        On Error Resume Next
         '————————————————————————————————————————————————————————————————————————————————————————
         '绘制单因素敏感性分析图
         ExcelApp.ThisWorkbook.Worksheets("指标数据").Shapes.AddChart.Name = "单因素敏感性分析图" '创建图表并重命名

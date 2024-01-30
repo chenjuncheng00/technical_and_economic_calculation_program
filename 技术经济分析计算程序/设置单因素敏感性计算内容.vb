@@ -2,7 +2,6 @@
 
 Public Class 设置单因素敏感性计算内容
     Private Sub 设置单因素敏感性计算内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -328,7 +327,6 @@ Public Class 设置单因素敏感性计算内容
     End Sub
 
     Private Sub 开始计算_Click(sender As Object, e As EventArgs) Handles 开始计算.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -494,8 +492,12 @@ Public Class 设置单因素敏感性计算内容
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("K7:L141").ClearContents
             ExcelApp.ThisWorkbook.Worksheets("指标数据").Range("H7:H136").ClearContents
             '删除敏感性分析图表
-            ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
-            ExcelApp.ActiveChart.Parent.Delete
+            Try
+                ExcelApp.ThisWorkbook.Worksheets("指标数据").ChartObjects("单因素敏感性分析图").Activate
+                ExcelApp.ActiveChart.Parent.Delete
+            Catch ex As Exception
+                '如果图标不存在，则不进行任何操作
+            End Try
             '输入敏感性分析每次的计算步长
             Dim BHL = CType(Me.mgxfxbhl.Text, Double)
             Dim MGXFXBHL As Double = BHL / 100 '敏感性分析变化率
@@ -568,7 +570,6 @@ Public Class 设置单因素敏感性计算内容
     End Sub
 
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -631,7 +632,6 @@ Public Class 设置单因素敏感性计算内容
     End Sub
 
     Private Sub 运行小时数敏感性分析设置_Click(sender As Object, e As EventArgs) Handles 运行小时数敏感性分析设置.Click
-        On Error Resume Next
         If Me.nyxxss_text.Text <> Nothing And Me.nyxxss_check.Checked = True Then
             Dim nyxxss_set As New 设置年运行小时数敏感性分析内容
             nyxxss_set.Show()

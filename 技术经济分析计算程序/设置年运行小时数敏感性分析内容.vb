@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 Public Class 设置年运行小时数敏感性分析内容
     Private Sub 设置年运行小时数敏感性分析内容_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -168,7 +167,6 @@ Public Class 设置年运行小时数敏感性分析内容
     End Sub
 
     Private Sub 清空输入_Click(sender As Object, e As EventArgs) Handles 清空输入.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
@@ -220,7 +218,6 @@ Public Class 设置年运行小时数敏感性分析内容
     End Sub
 
     Private Sub 确定参数_Click(sender As Object, e As EventArgs) Handles 确定参数.Click
-        On Error Resume Next
         '定义Excel对象
         Dim ExcelApp As Application '定义Excel对象
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
