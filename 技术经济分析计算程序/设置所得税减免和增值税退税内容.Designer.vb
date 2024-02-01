@@ -169,8 +169,31 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.Label60 = New System.Windows.Forms.Label()
         Me.重置默认 = New System.Windows.Forms.Button()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.Label61 = New System.Windows.Forms.Label()
         Me.Label62 = New System.Windows.Forms.Label()
+        Me.收入比例10 = New System.Windows.Forms.TextBox()
+        Me.Label61 = New System.Windows.Forms.Label()
+        Me.Label63 = New System.Windows.Forms.Label()
+        Me.投资10 = New System.Windows.Forms.TextBox()
+        Me.收入10 = New System.Windows.Forms.CheckBox()
+        Me.收入比例11 = New System.Windows.Forms.TextBox()
+        Me.Label64 = New System.Windows.Forms.Label()
+        Me.Label65 = New System.Windows.Forms.Label()
+        Me.投资11 = New System.Windows.Forms.TextBox()
+        Me.收入11 = New System.Windows.Forms.CheckBox()
+        Me.收入比例12 = New System.Windows.Forms.TextBox()
+        Me.Label66 = New System.Windows.Forms.Label()
+        Me.Label67 = New System.Windows.Forms.Label()
+        Me.投资12 = New System.Windows.Forms.TextBox()
+        Me.收入12 = New System.Windows.Forms.CheckBox()
+        Me.收入比例13 = New System.Windows.Forms.TextBox()
+        Me.Label68 = New System.Windows.Forms.Label()
+        Me.Label69 = New System.Windows.Forms.Label()
+        Me.投资13 = New System.Windows.Forms.TextBox()
+        Me.收入13 = New System.Windows.Forms.CheckBox()
+        Me.Label70 = New System.Windows.Forms.Label()
+        Me.成本比例12 = New System.Windows.Forms.TextBox()
+        Me.成本12 = New System.Windows.Forms.CheckBox()
+        Me.Label71 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         '收入1
@@ -213,7 +236,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.收入5.AutoSize = True
         Me.收入5.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.收入5.Location = New System.Drawing.Point(46, 281)
+        Me.收入5.Location = New System.Drawing.Point(46, 382)
         Me.收入5.Margin = New System.Windows.Forms.Padding(6)
         Me.收入5.Name = "收入5"
         Me.收入5.Size = New System.Drawing.Size(114, 32)
@@ -225,7 +248,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.收入6.AutoSize = True
         Me.收入6.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.收入6.Location = New System.Drawing.Point(46, 331)
+        Me.收入6.Location = New System.Drawing.Point(46, 432)
         Me.收入6.Margin = New System.Windows.Forms.Padding(6)
         Me.收入6.Name = "收入6"
         Me.收入6.Size = New System.Drawing.Size(114, 32)
@@ -237,7 +260,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.所得税减免.BackColor = System.Drawing.SystemColors.ControlLight
         Me.所得税减免.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.所得税减免.Location = New System.Drawing.Point(884, 635)
+        Me.所得税减免.Location = New System.Drawing.Point(883, 804)
         Me.所得税减免.Margin = New System.Windows.Forms.Padding(6)
         Me.所得税减免.Name = "所得税减免"
         Me.所得税减免.Size = New System.Drawing.Size(229, 82)
@@ -249,7 +272,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.清空选择.BackColor = System.Drawing.SystemColors.ControlLight
         Me.清空选择.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.清空选择.Location = New System.Drawing.Point(884, 986)
+        Me.清空选择.Location = New System.Drawing.Point(883, 1124)
         Me.清空选择.Margin = New System.Windows.Forms.Padding(6)
         Me.清空选择.Name = "清空选择"
         Me.清空选择.Size = New System.Drawing.Size(229, 82)
@@ -261,7 +284,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.收入7.AutoSize = True
         Me.收入7.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.收入7.Location = New System.Drawing.Point(46, 381)
+        Me.收入7.Location = New System.Drawing.Point(46, 482)
         Me.收入7.Margin = New System.Windows.Forms.Padding(6)
         Me.收入7.Name = "收入7"
         Me.收入7.Size = New System.Drawing.Size(114, 32)
@@ -273,7 +296,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.收入8.AutoSize = True
         Me.收入8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.收入8.Location = New System.Drawing.Point(46, 427)
+        Me.收入8.Location = New System.Drawing.Point(45, 640)
         Me.收入8.Margin = New System.Windows.Forms.Padding(6)
         Me.收入8.Name = "收入8"
         Me.收入8.Size = New System.Drawing.Size(114, 32)
@@ -285,7 +308,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.收入9.AutoSize = True
         Me.收入9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.收入9.Location = New System.Drawing.Point(46, 474)
+        Me.收入9.Location = New System.Drawing.Point(45, 687)
         Me.收入9.Margin = New System.Windows.Forms.Padding(6)
         Me.收入9.Name = "收入9"
         Me.收入9.Size = New System.Drawing.Size(114, 32)
@@ -322,7 +345,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '投资5
         '
-        Me.投资5.Location = New System.Drawing.Point(579, 279)
+        Me.投资5.Location = New System.Drawing.Point(579, 380)
         Me.投资5.Margin = New System.Windows.Forms.Padding(6)
         Me.投资5.Name = "投资5"
         Me.投资5.Size = New System.Drawing.Size(142, 35)
@@ -331,7 +354,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '投资6
         '
-        Me.投资6.Location = New System.Drawing.Point(579, 327)
+        Me.投资6.Location = New System.Drawing.Point(579, 428)
         Me.投资6.Margin = New System.Windows.Forms.Padding(6)
         Me.投资6.Name = "投资6"
         Me.投资6.Size = New System.Drawing.Size(142, 35)
@@ -340,7 +363,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '投资7
         '
-        Me.投资7.Location = New System.Drawing.Point(579, 379)
+        Me.投资7.Location = New System.Drawing.Point(579, 480)
         Me.投资7.Margin = New System.Windows.Forms.Padding(6)
         Me.投资7.Name = "投资7"
         Me.投资7.Size = New System.Drawing.Size(142, 35)
@@ -349,7 +372,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '投资8
         '
-        Me.投资8.Location = New System.Drawing.Point(579, 427)
+        Me.投资8.Location = New System.Drawing.Point(578, 640)
         Me.投资8.Margin = New System.Windows.Forms.Padding(6)
         Me.投资8.Name = "投资8"
         Me.投资8.Size = New System.Drawing.Size(142, 35)
@@ -358,7 +381,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '投资9
         '
-        Me.投资9.Location = New System.Drawing.Point(579, 475)
+        Me.投资9.Location = New System.Drawing.Point(578, 688)
         Me.投资9.Margin = New System.Windows.Forms.Padding(6)
         Me.投资9.Name = "投资9"
         Me.投资9.Size = New System.Drawing.Size(142, 35)
@@ -379,10 +402,10 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label10.Location = New System.Drawing.Point(41, 526)
+        Me.Label10.Location = New System.Drawing.Point(46, 739)
         Me.Label10.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(1096, 50)
+        Me.Label10.Size = New System.Drawing.Size(1090, 50)
         Me.Label10.TabIndex = 102
         Me.Label10.Text = "设置与成本相关的内容"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -391,7 +414,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本1.AutoSize = True
         Me.成本1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本1.Location = New System.Drawing.Point(46, 598)
+        Me.成本1.Location = New System.Drawing.Point(45, 811)
         Me.成本1.Margin = New System.Windows.Forms.Padding(6)
         Me.成本1.Name = "成本1"
         Me.成本1.Size = New System.Drawing.Size(114, 32)
@@ -403,7 +426,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本2.AutoSize = True
         Me.成本2.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本2.Location = New System.Drawing.Point(46, 650)
+        Me.成本2.Location = New System.Drawing.Point(45, 863)
         Me.成本2.Margin = New System.Windows.Forms.Padding(6)
         Me.成本2.Name = "成本2"
         Me.成本2.Size = New System.Drawing.Size(114, 32)
@@ -415,7 +438,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本3.AutoSize = True
         Me.成本3.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本3.Location = New System.Drawing.Point(46, 696)
+        Me.成本3.Location = New System.Drawing.Point(45, 909)
         Me.成本3.Margin = New System.Windows.Forms.Padding(6)
         Me.成本3.Name = "成本3"
         Me.成本3.Size = New System.Drawing.Size(114, 32)
@@ -427,7 +450,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本4.AutoSize = True
         Me.成本4.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本4.Location = New System.Drawing.Point(46, 834)
+        Me.成本4.Location = New System.Drawing.Point(45, 1100)
         Me.成本4.Margin = New System.Windows.Forms.Padding(6)
         Me.成本4.Name = "成本4"
         Me.成本4.Size = New System.Drawing.Size(114, 32)
@@ -439,7 +462,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本5.AutoSize = True
         Me.成本5.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本5.Location = New System.Drawing.Point(46, 883)
+        Me.成本5.Location = New System.Drawing.Point(45, 1149)
         Me.成本5.Margin = New System.Windows.Forms.Padding(6)
         Me.成本5.Name = "成本5"
         Me.成本5.Size = New System.Drawing.Size(114, 32)
@@ -451,7 +474,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本6.AutoSize = True
         Me.成本6.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本6.Location = New System.Drawing.Point(46, 932)
+        Me.成本6.Location = New System.Drawing.Point(45, 1198)
         Me.成本6.Margin = New System.Windows.Forms.Padding(6)
         Me.成本6.Name = "成本6"
         Me.成本6.Size = New System.Drawing.Size(114, 32)
@@ -463,7 +486,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本7.AutoSize = True
         Me.成本7.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本7.Location = New System.Drawing.Point(46, 982)
+        Me.成本7.Location = New System.Drawing.Point(45, 1248)
         Me.成本7.Margin = New System.Windows.Forms.Padding(6)
         Me.成本7.Name = "成本7"
         Me.成本7.Size = New System.Drawing.Size(114, 32)
@@ -475,7 +498,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本8.AutoSize = True
         Me.成本8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本8.Location = New System.Drawing.Point(45, 1074)
+        Me.成本8.Location = New System.Drawing.Point(44, 1340)
         Me.成本8.Margin = New System.Windows.Forms.Padding(6)
         Me.成本8.Name = "成本8"
         Me.成本8.Size = New System.Drawing.Size(114, 32)
@@ -486,7 +509,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label11.Location = New System.Drawing.Point(405, 580)
+        Me.Label11.Location = New System.Drawing.Point(404, 793)
         Me.Label11.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(248, 56)
@@ -496,7 +519,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例1
         '
-        Me.成本比例1.Location = New System.Drawing.Point(679, 589)
+        Me.成本比例1.Location = New System.Drawing.Point(678, 802)
         Me.成本比例1.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例1.Name = "成本比例1"
         Me.成本比例1.Size = New System.Drawing.Size(142, 35)
@@ -505,7 +528,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例2
         '
-        Me.成本比例2.Location = New System.Drawing.Point(679, 640)
+        Me.成本比例2.Location = New System.Drawing.Point(678, 853)
         Me.成本比例2.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例2.Name = "成本比例2"
         Me.成本比例2.Size = New System.Drawing.Size(142, 35)
@@ -514,7 +537,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例3
         '
-        Me.成本比例3.Location = New System.Drawing.Point(679, 686)
+        Me.成本比例3.Location = New System.Drawing.Point(678, 899)
         Me.成本比例3.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例3.Name = "成本比例3"
         Me.成本比例3.Size = New System.Drawing.Size(142, 35)
@@ -523,7 +546,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例4
         '
-        Me.成本比例4.Location = New System.Drawing.Point(679, 825)
+        Me.成本比例4.Location = New System.Drawing.Point(678, 1095)
         Me.成本比例4.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例4.Name = "成本比例4"
         Me.成本比例4.Size = New System.Drawing.Size(142, 35)
@@ -532,7 +555,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例5
         '
-        Me.成本比例5.Location = New System.Drawing.Point(679, 872)
+        Me.成本比例5.Location = New System.Drawing.Point(678, 1142)
         Me.成本比例5.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例5.Name = "成本比例5"
         Me.成本比例5.Size = New System.Drawing.Size(142, 35)
@@ -541,7 +564,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例6
         '
-        Me.成本比例6.Location = New System.Drawing.Point(679, 924)
+        Me.成本比例6.Location = New System.Drawing.Point(678, 1194)
         Me.成本比例6.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例6.Name = "成本比例6"
         Me.成本比例6.Size = New System.Drawing.Size(142, 35)
@@ -550,7 +573,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例7
         '
-        Me.成本比例7.Location = New System.Drawing.Point(679, 973)
+        Me.成本比例7.Location = New System.Drawing.Point(678, 1243)
         Me.成本比例7.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例7.Name = "成本比例7"
         Me.成本比例7.Size = New System.Drawing.Size(142, 35)
@@ -559,7 +582,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例8
         '
-        Me.成本比例8.Location = New System.Drawing.Point(679, 1075)
+        Me.成本比例8.Location = New System.Drawing.Point(678, 1345)
         Me.成本比例8.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例8.Name = "成本比例8"
         Me.成本比例8.Size = New System.Drawing.Size(142, 35)
@@ -568,7 +591,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例9
         '
-        Me.成本比例9.Location = New System.Drawing.Point(679, 1023)
+        Me.成本比例9.Location = New System.Drawing.Point(678, 1293)
         Me.成本比例9.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例9.Name = "成本比例9"
         Me.成本比例9.Size = New System.Drawing.Size(142, 35)
@@ -579,7 +602,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本9.AutoSize = True
         Me.成本9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本9.Location = New System.Drawing.Point(46, 1027)
+        Me.成本9.Location = New System.Drawing.Point(45, 1293)
         Me.成本9.Margin = New System.Windows.Forms.Padding(6)
         Me.成本9.Name = "成本9"
         Me.成本9.Size = New System.Drawing.Size(114, 32)
@@ -610,7 +633,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例10
         '
-        Me.成本比例10.Location = New System.Drawing.Point(679, 734)
+        Me.成本比例10.Location = New System.Drawing.Point(678, 947)
         Me.成本比例10.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例10.Name = "成本比例10"
         Me.成本比例10.Size = New System.Drawing.Size(142, 35)
@@ -621,7 +644,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本10.AutoSize = True
         Me.成本10.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本10.Location = New System.Drawing.Point(46, 740)
+        Me.成本10.Location = New System.Drawing.Point(45, 953)
         Me.成本10.Margin = New System.Windows.Forms.Padding(6)
         Me.成本10.Name = "成本10"
         Me.成本10.Size = New System.Drawing.Size(128, 32)
@@ -631,7 +654,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '成本比例11
         '
-        Me.成本比例11.Location = New System.Drawing.Point(679, 779)
+        Me.成本比例11.Location = New System.Drawing.Point(678, 1049)
         Me.成本比例11.Margin = New System.Windows.Forms.Padding(6)
         Me.成本比例11.Name = "成本比例11"
         Me.成本比例11.Size = New System.Drawing.Size(142, 35)
@@ -642,7 +665,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.成本11.AutoSize = True
         Me.成本11.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.成本11.Location = New System.Drawing.Point(46, 786)
+        Me.成本11.Location = New System.Drawing.Point(45, 1052)
         Me.成本11.Margin = New System.Windows.Forms.Padding(6)
         Me.成本11.Name = "成本11"
         Me.成本11.Size = New System.Drawing.Size(128, 32)
@@ -668,9 +691,9 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.专项投资1.Location = New System.Drawing.Point(1181, 834)
         Me.专项投资1.Margin = New System.Windows.Forms.Padding(6)
         Me.专项投资1.Name = "专项投资1"
-        Me.专项投资1.Size = New System.Drawing.Size(408, 32)
+        Me.专项投资1.Size = New System.Drawing.Size(352, 32)
         Me.专项投资1.TabIndex = 140
-        Me.专项投资1.Text = "是否减去内燃发电机静态投资"
+        Me.专项投资1.Text = "是否减去蓄电池静态投资"
         Me.专项投资1.UseVisualStyleBackColor = True
         '
         '专项投资2
@@ -680,9 +703,9 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.专项投资2.Location = New System.Drawing.Point(1181, 883)
         Me.专项投资2.Margin = New System.Windows.Forms.Padding(6)
         Me.专项投资2.Name = "专项投资2"
-        Me.专项投资2.Size = New System.Drawing.Size(492, 32)
+        Me.专项投资2.Size = New System.Drawing.Size(324, 32)
         Me.专项投资2.TabIndex = 141
-        Me.专项投资2.Text = "是否减去燃气蒸汽联合循环静态投资"
+        Me.专项投资2.Text = "是否减去燃机静态投资"
         Me.专项投资2.UseVisualStyleBackColor = True
         '
         '专项投资3
@@ -692,9 +715,9 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.专项投资3.Location = New System.Drawing.Point(1181, 934)
         Me.专项投资3.Margin = New System.Windows.Forms.Padding(6)
         Me.专项投资3.Name = "专项投资3"
-        Me.专项投资3.Size = New System.Drawing.Size(380, 32)
+        Me.专项投资3.Size = New System.Drawing.Size(324, 32)
         Me.专项投资3.TabIndex = 142
-        Me.专项投资3.Text = "是否减去冷热管网静态投资"
+        Me.专项投资3.Text = "是否减去暖通静态投资"
         Me.专项投资3.UseVisualStyleBackColor = True
         '
         '专项年量1
@@ -704,9 +727,9 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.专项年量1.Location = New System.Drawing.Point(1181, 985)
         Me.专项年量1.Margin = New System.Windows.Forms.Padding(6)
         Me.专项年量1.Name = "专项年量1"
-        Me.专项年量1.Size = New System.Drawing.Size(464, 32)
+        Me.专项年量1.Size = New System.Drawing.Size(380, 32)
         Me.专项年量1.TabIndex = 143
-        Me.专项年量1.Text = "是否减去内燃发电机全年发电总量"
+        Me.专项年量1.Text = "是否减去蓄电池总装机功率"
         Me.专项年量1.UseVisualStyleBackColor = True
         '
         '专项年量2
@@ -716,9 +739,9 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.专项年量2.Location = New System.Drawing.Point(1181, 1034)
         Me.专项年量2.Margin = New System.Windows.Forms.Padding(6)
         Me.专项年量2.Name = "专项年量2"
-        Me.专项年量2.Size = New System.Drawing.Size(520, 32)
+        Me.专项年量2.Size = New System.Drawing.Size(380, 32)
         Me.专项年量2.TabIndex = 144
-        Me.专项年量2.Text = "是否减去燃气蒸汽联合循环全年发电量"
+        Me.专项年量2.Text = "是否减去燃机全年发电总量"
         Me.专项年量2.UseVisualStyleBackColor = True
         '
         '专项年量3
@@ -921,7 +944,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.增值税退税.BackColor = System.Drawing.SystemColors.ControlLight
         Me.增值税退税.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.增值税退税.Location = New System.Drawing.Point(884, 753)
+        Me.增值税退税.Location = New System.Drawing.Point(883, 911)
         Me.增值税退税.Margin = New System.Windows.Forms.Padding(6)
         Me.增值税退税.Name = "增值税退税"
         Me.增值税退税.Size = New System.Drawing.Size(229, 82)
@@ -1188,13 +1211,13 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.Label46.Name = "Label46"
         Me.Label46.Size = New System.Drawing.Size(730, 50)
         Me.Label46.TabIndex = 191
-        Me.Label46.Text = "设置光伏发电和风力发电专项人员工资"
+        Me.Label46.Text = "设置光伏发电和风力发电专项人员工资单价"
         Me.Label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(405, 631)
+        Me.Label1.Location = New System.Drawing.Point(404, 844)
         Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(248, 56)
@@ -1205,7 +1228,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(405, 680)
+        Me.Label2.Location = New System.Drawing.Point(404, 893)
         Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(248, 56)
@@ -1216,7 +1239,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(405, 726)
+        Me.Label3.Location = New System.Drawing.Point(404, 939)
         Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(248, 56)
@@ -1227,7 +1250,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label5.Location = New System.Drawing.Point(405, 774)
+        Me.Label5.Location = New System.Drawing.Point(404, 1040)
         Me.Label5.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(248, 56)
@@ -1238,7 +1261,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(405, 822)
+        Me.Label6.Location = New System.Drawing.Point(404, 1088)
         Me.Label6.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(248, 56)
@@ -1249,7 +1272,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label7.Location = New System.Drawing.Point(405, 869)
+        Me.Label7.Location = New System.Drawing.Point(404, 1135)
         Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(248, 56)
@@ -1260,7 +1283,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label8.Location = New System.Drawing.Point(405, 916)
+        Me.Label8.Location = New System.Drawing.Point(404, 1182)
         Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(248, 56)
@@ -1271,7 +1294,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label9.Location = New System.Drawing.Point(405, 966)
+        Me.Label9.Location = New System.Drawing.Point(404, 1232)
         Me.Label9.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(248, 56)
@@ -1282,7 +1305,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label12
         '
         Me.Label12.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label12.Location = New System.Drawing.Point(405, 1014)
+        Me.Label12.Location = New System.Drawing.Point(404, 1280)
         Me.Label12.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(248, 56)
@@ -1293,7 +1316,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label14
         '
         Me.Label14.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label14.Location = New System.Drawing.Point(405, 1063)
+        Me.Label14.Location = New System.Drawing.Point(404, 1329)
         Me.Label14.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(248, 56)
@@ -1315,7 +1338,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label15
         '
         Me.Label15.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label15.Location = New System.Drawing.Point(405, 117)
+        Me.Label15.Location = New System.Drawing.Point(405, 122)
         Me.Label15.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(162, 56)
@@ -1348,7 +1371,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label18
         '
         Me.Label18.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label18.Location = New System.Drawing.Point(405, 269)
+        Me.Label18.Location = New System.Drawing.Point(405, 370)
         Me.Label18.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(162, 56)
@@ -1359,7 +1382,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label19
         '
         Me.Label19.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label19.Location = New System.Drawing.Point(405, 313)
+        Me.Label19.Location = New System.Drawing.Point(405, 414)
         Me.Label19.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(162, 56)
@@ -1370,7 +1393,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label20
         '
         Me.Label20.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label20.Location = New System.Drawing.Point(405, 365)
+        Me.Label20.Location = New System.Drawing.Point(405, 466)
         Me.Label20.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(162, 56)
@@ -1381,7 +1404,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label21
         '
         Me.Label21.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label21.Location = New System.Drawing.Point(405, 413)
+        Me.Label21.Location = New System.Drawing.Point(404, 626)
         Me.Label21.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(162, 56)
@@ -1392,7 +1415,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label22
         '
         Me.Label22.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label22.Location = New System.Drawing.Point(407, 461)
+        Me.Label22.Location = New System.Drawing.Point(406, 674)
         Me.Label22.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(162, 56)
@@ -1447,7 +1470,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label51
         '
         Me.Label51.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label51.Location = New System.Drawing.Point(737, 269)
+        Me.Label51.Location = New System.Drawing.Point(737, 370)
         Me.Label51.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label51.Name = "Label51"
         Me.Label51.Size = New System.Drawing.Size(248, 56)
@@ -1458,7 +1481,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label52
         '
         Me.Label52.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label52.Location = New System.Drawing.Point(737, 318)
+        Me.Label52.Location = New System.Drawing.Point(737, 419)
         Me.Label52.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label52.Name = "Label52"
         Me.Label52.Size = New System.Drawing.Size(248, 56)
@@ -1469,7 +1492,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label53
         '
         Me.Label53.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label53.Location = New System.Drawing.Point(737, 368)
+        Me.Label53.Location = New System.Drawing.Point(737, 469)
         Me.Label53.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label53.Name = "Label53"
         Me.Label53.Size = New System.Drawing.Size(248, 56)
@@ -1480,7 +1503,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label54
         '
         Me.Label54.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label54.Location = New System.Drawing.Point(737, 413)
+        Me.Label54.Location = New System.Drawing.Point(736, 626)
         Me.Label54.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label54.Name = "Label54"
         Me.Label54.Size = New System.Drawing.Size(248, 56)
@@ -1491,7 +1514,7 @@ Partial Class 设置所得税减免和增值税退税内容
         'Label55
         '
         Me.Label55.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label55.Location = New System.Drawing.Point(735, 463)
+        Me.Label55.Location = New System.Drawing.Point(734, 676)
         Me.Label55.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label55.Name = "Label55"
         Me.Label55.Size = New System.Drawing.Size(248, 56)
@@ -1537,7 +1560,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '收入比例5
         '
-        Me.收入比例5.Location = New System.Drawing.Point(997, 283)
+        Me.收入比例5.Location = New System.Drawing.Point(997, 384)
         Me.收入比例5.Margin = New System.Windows.Forms.Padding(6)
         Me.收入比例5.Name = "收入比例5"
         Me.收入比例5.Size = New System.Drawing.Size(142, 35)
@@ -1546,7 +1569,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '收入比例6
         '
-        Me.收入比例6.Location = New System.Drawing.Point(997, 330)
+        Me.收入比例6.Location = New System.Drawing.Point(997, 431)
         Me.收入比例6.Margin = New System.Windows.Forms.Padding(6)
         Me.收入比例6.Name = "收入比例6"
         Me.收入比例6.Size = New System.Drawing.Size(142, 35)
@@ -1555,7 +1578,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '收入比例7
         '
-        Me.收入比例7.Location = New System.Drawing.Point(995, 377)
+        Me.收入比例7.Location = New System.Drawing.Point(995, 478)
         Me.收入比例7.Margin = New System.Windows.Forms.Padding(6)
         Me.收入比例7.Name = "收入比例7"
         Me.收入比例7.Size = New System.Drawing.Size(142, 35)
@@ -1564,7 +1587,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '收入比例8
         '
-        Me.收入比例8.Location = New System.Drawing.Point(995, 426)
+        Me.收入比例8.Location = New System.Drawing.Point(994, 639)
         Me.收入比例8.Margin = New System.Windows.Forms.Padding(6)
         Me.收入比例8.Name = "收入比例8"
         Me.收入比例8.Size = New System.Drawing.Size(142, 35)
@@ -1573,7 +1596,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         '收入比例9
         '
-        Me.收入比例9.Location = New System.Drawing.Point(997, 475)
+        Me.收入比例9.Location = New System.Drawing.Point(996, 688)
         Me.收入比例9.Margin = New System.Windows.Forms.Padding(6)
         Me.收入比例9.Name = "收入比例9"
         Me.收入比例9.Size = New System.Drawing.Size(142, 35)
@@ -1695,7 +1718,7 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         Me.重置默认.BackColor = System.Drawing.SystemColors.ControlLight
         Me.重置默认.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.重置默认.Location = New System.Drawing.Point(884, 868)
+        Me.重置默认.Location = New System.Drawing.Point(883, 1019)
         Me.重置默认.Margin = New System.Windows.Forms.Padding(6)
         Me.重置默认.Name = "重置默认"
         Me.重置默认.Size = New System.Drawing.Size(229, 82)
@@ -1705,24 +1728,13 @@ Partial Class 设置所得税减免和增值税退税内容
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(45, 1126)
+        Me.RichTextBox1.Location = New System.Drawing.Point(883, 1234)
         Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(6)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(1094, 206)
+        Me.RichTextBox1.Size = New System.Drawing.Size(1169, 218)
         Me.RichTextBox1.TabIndex = 242
         Me.RichTextBox1.Text = ""
-        '
-        'Label61
-        '
-        Me.Label61.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label61.Location = New System.Drawing.Point(1179, 1245)
-        Me.Label61.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(873, 64)
-        Me.Label61.TabIndex = 243
-        Me.Label61.Text = "←←←←所得税减免和增值税退税计算结果显示(在左侧)"
-        Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label62
         '
@@ -1735,13 +1747,287 @@ Partial Class 设置所得税减免和增值税退税内容
         Me.Label62.Text = "设置风力发电所得税减免和增值税退税参数"
         Me.Label62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        '收入比例10
+        '
+        Me.收入比例10.Location = New System.Drawing.Point(996, 281)
+        Me.收入比例10.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入比例10.Name = "收入比例10"
+        Me.收入比例10.Size = New System.Drawing.Size(142, 35)
+        Me.收入比例10.TabIndex = 249
+        Me.收入比例10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label61
+        '
+        Me.Label61.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label61.Location = New System.Drawing.Point(736, 271)
+        Me.Label61.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(248, 56)
+        Me.Label61.TabIndex = 248
+        Me.Label61.Text = "收入减去比例(%)"
+        Me.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label63
+        '
+        Me.Label63.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label63.Location = New System.Drawing.Point(404, 275)
+        Me.Label63.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label63.Name = "Label63"
+        Me.Label63.Size = New System.Drawing.Size(162, 56)
+        Me.Label63.TabIndex = 247
+        Me.Label63.Text = "投资(万元)"
+        Me.Label63.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        '投资10
+        '
+        Me.投资10.Location = New System.Drawing.Point(578, 284)
+        Me.投资10.Margin = New System.Windows.Forms.Padding(6)
+        Me.投资10.Name = "投资10"
+        Me.投资10.Size = New System.Drawing.Size(142, 35)
+        Me.投资10.TabIndex = 246
+        Me.投资10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        '收入10
+        '
+        Me.收入10.AutoSize = True
+        Me.收入10.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.收入10.Location = New System.Drawing.Point(45, 284)
+        Me.收入10.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入10.Name = "收入10"
+        Me.收入10.Size = New System.Drawing.Size(128, 32)
+        Me.收入10.TabIndex = 245
+        Me.收入10.Text = "收入10"
+        Me.收入10.UseVisualStyleBackColor = True
+        '
+        '收入比例11
+        '
+        Me.收入比例11.Location = New System.Drawing.Point(996, 329)
+        Me.收入比例11.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入比例11.Name = "收入比例11"
+        Me.收入比例11.Size = New System.Drawing.Size(142, 35)
+        Me.收入比例11.TabIndex = 254
+        Me.收入比例11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label64
+        '
+        Me.Label64.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label64.Location = New System.Drawing.Point(736, 319)
+        Me.Label64.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label64.Name = "Label64"
+        Me.Label64.Size = New System.Drawing.Size(248, 56)
+        Me.Label64.TabIndex = 253
+        Me.Label64.Text = "收入减去比例(%)"
+        Me.Label64.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label65
+        '
+        Me.Label65.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label65.Location = New System.Drawing.Point(404, 323)
+        Me.Label65.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label65.Name = "Label65"
+        Me.Label65.Size = New System.Drawing.Size(162, 56)
+        Me.Label65.TabIndex = 252
+        Me.Label65.Text = "投资(万元)"
+        Me.Label65.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        '投资11
+        '
+        Me.投资11.Location = New System.Drawing.Point(578, 332)
+        Me.投资11.Margin = New System.Windows.Forms.Padding(6)
+        Me.投资11.Name = "投资11"
+        Me.投资11.Size = New System.Drawing.Size(142, 35)
+        Me.投资11.TabIndex = 251
+        Me.投资11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        '收入11
+        '
+        Me.收入11.AutoSize = True
+        Me.收入11.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.收入11.Location = New System.Drawing.Point(45, 332)
+        Me.收入11.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入11.Name = "收入11"
+        Me.收入11.Size = New System.Drawing.Size(128, 32)
+        Me.收入11.TabIndex = 250
+        Me.收入11.Text = "收入11"
+        Me.收入11.UseVisualStyleBackColor = True
+        '
+        '收入比例12
+        '
+        Me.收入比例12.Location = New System.Drawing.Point(995, 529)
+        Me.收入比例12.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入比例12.Name = "收入比例12"
+        Me.收入比例12.Size = New System.Drawing.Size(142, 35)
+        Me.收入比例12.TabIndex = 259
+        Me.收入比例12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label66
+        '
+        Me.Label66.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label66.Location = New System.Drawing.Point(737, 520)
+        Me.Label66.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label66.Name = "Label66"
+        Me.Label66.Size = New System.Drawing.Size(248, 56)
+        Me.Label66.TabIndex = 258
+        Me.Label66.Text = "收入减去比例(%)"
+        Me.Label66.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label67
+        '
+        Me.Label67.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label67.Location = New System.Drawing.Point(405, 520)
+        Me.Label67.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label67.Name = "Label67"
+        Me.Label67.Size = New System.Drawing.Size(162, 56)
+        Me.Label67.TabIndex = 257
+        Me.Label67.Text = "投资(万元)"
+        Me.Label67.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        '投资12
+        '
+        Me.投资12.Location = New System.Drawing.Point(579, 531)
+        Me.投资12.Margin = New System.Windows.Forms.Padding(6)
+        Me.投资12.Name = "投资12"
+        Me.投资12.Size = New System.Drawing.Size(142, 35)
+        Me.投资12.TabIndex = 256
+        Me.投资12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        '收入12
+        '
+        Me.收入12.AutoSize = True
+        Me.收入12.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.收入12.Location = New System.Drawing.Point(46, 533)
+        Me.收入12.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入12.Name = "收入12"
+        Me.收入12.Size = New System.Drawing.Size(128, 32)
+        Me.收入12.TabIndex = 255
+        Me.收入12.Text = "收入12"
+        Me.收入12.UseVisualStyleBackColor = True
+        '
+        '收入比例13
+        '
+        Me.收入比例13.Location = New System.Drawing.Point(995, 582)
+        Me.收入比例13.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入比例13.Name = "收入比例13"
+        Me.收入比例13.Size = New System.Drawing.Size(142, 35)
+        Me.收入比例13.TabIndex = 264
+        Me.收入比例13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label68
+        '
+        Me.Label68.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label68.Location = New System.Drawing.Point(737, 573)
+        Me.Label68.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label68.Name = "Label68"
+        Me.Label68.Size = New System.Drawing.Size(248, 56)
+        Me.Label68.TabIndex = 263
+        Me.Label68.Text = "收入减去比例(%)"
+        Me.Label68.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label69
+        '
+        Me.Label69.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label69.Location = New System.Drawing.Point(405, 573)
+        Me.Label69.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label69.Name = "Label69"
+        Me.Label69.Size = New System.Drawing.Size(162, 56)
+        Me.Label69.TabIndex = 262
+        Me.Label69.Text = "投资(万元)"
+        Me.Label69.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        '投资13
+        '
+        Me.投资13.Location = New System.Drawing.Point(579, 584)
+        Me.投资13.Margin = New System.Windows.Forms.Padding(6)
+        Me.投资13.Name = "投资13"
+        Me.投资13.Size = New System.Drawing.Size(142, 35)
+        Me.投资13.TabIndex = 261
+        Me.投资13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        '收入13
+        '
+        Me.收入13.AutoSize = True
+        Me.收入13.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.收入13.Location = New System.Drawing.Point(46, 586)
+        Me.收入13.Margin = New System.Windows.Forms.Padding(6)
+        Me.收入13.Name = "收入13"
+        Me.收入13.Size = New System.Drawing.Size(128, 32)
+        Me.收入13.TabIndex = 260
+        Me.收入13.Text = "收入13"
+        Me.收入13.UseVisualStyleBackColor = True
+        '
+        'Label70
+        '
+        Me.Label70.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label70.Location = New System.Drawing.Point(405, 988)
+        Me.Label70.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label70.Name = "Label70"
+        Me.Label70.Size = New System.Drawing.Size(248, 56)
+        Me.Label70.TabIndex = 267
+        Me.Label70.Text = "成本减去比例(%)"
+        Me.Label70.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        '成本比例12
+        '
+        Me.成本比例12.Location = New System.Drawing.Point(679, 996)
+        Me.成本比例12.Margin = New System.Windows.Forms.Padding(6)
+        Me.成本比例12.Name = "成本比例12"
+        Me.成本比例12.Size = New System.Drawing.Size(142, 35)
+        Me.成本比例12.TabIndex = 266
+        Me.成本比例12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        '成本12
+        '
+        Me.成本12.AutoSize = True
+        Me.成本12.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.成本12.Location = New System.Drawing.Point(46, 1001)
+        Me.成本12.Margin = New System.Windows.Forms.Padding(6)
+        Me.成本12.Name = "成本12"
+        Me.成本12.Size = New System.Drawing.Size(128, 32)
+        Me.成本12.TabIndex = 265
+        Me.成本12.Text = "成本12"
+        Me.成本12.UseVisualStyleBackColor = True
+        '
+        'Label71
+        '
+        Me.Label71.Font = New System.Drawing.Font("宋体", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label71.Location = New System.Drawing.Point(24, 1400)
+        Me.Label71.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Label71.Name = "Label71"
+        Me.Label71.Size = New System.Drawing.Size(830, 50)
+        Me.Label71.TabIndex = 268
+        Me.Label71.Text = "所得税减免和增值税退税计算结果显示(在右侧)→→→→→→"
+        Me.Label71.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         '设置所得税减免和增值税退税内容
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2098, 1350)
-        Me.Controls.Add(Me.Label62)
+        Me.ClientSize = New System.Drawing.Size(2098, 1476)
+        Me.Controls.Add(Me.Label71)
+        Me.Controls.Add(Me.Label70)
+        Me.Controls.Add(Me.成本比例12)
+        Me.Controls.Add(Me.成本12)
+        Me.Controls.Add(Me.收入比例13)
+        Me.Controls.Add(Me.Label68)
+        Me.Controls.Add(Me.Label69)
+        Me.Controls.Add(Me.投资13)
+        Me.Controls.Add(Me.收入13)
+        Me.Controls.Add(Me.收入比例12)
+        Me.Controls.Add(Me.Label66)
+        Me.Controls.Add(Me.Label67)
+        Me.Controls.Add(Me.投资12)
+        Me.Controls.Add(Me.收入12)
+        Me.Controls.Add(Me.收入比例11)
+        Me.Controls.Add(Me.Label64)
+        Me.Controls.Add(Me.Label65)
+        Me.Controls.Add(Me.投资11)
+        Me.Controls.Add(Me.收入11)
+        Me.Controls.Add(Me.收入比例10)
         Me.Controls.Add(Me.Label61)
+        Me.Controls.Add(Me.Label63)
+        Me.Controls.Add(Me.投资10)
+        Me.Controls.Add(Me.收入10)
+        Me.Controls.Add(Me.Label62)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.重置默认)
         Me.Controls.Add(Me.其它增值税退税年限)
@@ -2044,6 +2330,29 @@ Partial Class 设置所得税减免和增值税退税内容
     Friend WithEvents Label60 As System.Windows.Forms.Label
     Friend WithEvents 重置默认 As System.Windows.Forms.Button
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
-    Friend WithEvents Label61 As System.Windows.Forms.Label
     Friend WithEvents Label62 As System.Windows.Forms.Label
+    Friend WithEvents 收入比例10 As System.Windows.Forms.TextBox
+    Friend WithEvents Label61 As System.Windows.Forms.Label
+    Friend WithEvents Label63 As System.Windows.Forms.Label
+    Friend WithEvents 投资10 As System.Windows.Forms.TextBox
+    Friend WithEvents 收入10 As System.Windows.Forms.CheckBox
+    Friend WithEvents 收入比例11 As System.Windows.Forms.TextBox
+    Friend WithEvents Label64 As System.Windows.Forms.Label
+    Friend WithEvents Label65 As System.Windows.Forms.Label
+    Friend WithEvents 投资11 As System.Windows.Forms.TextBox
+    Friend WithEvents 收入11 As System.Windows.Forms.CheckBox
+    Friend WithEvents 收入比例12 As System.Windows.Forms.TextBox
+    Friend WithEvents Label66 As System.Windows.Forms.Label
+    Friend WithEvents Label67 As System.Windows.Forms.Label
+    Friend WithEvents 投资12 As System.Windows.Forms.TextBox
+    Friend WithEvents 收入12 As System.Windows.Forms.CheckBox
+    Friend WithEvents 收入比例13 As System.Windows.Forms.TextBox
+    Friend WithEvents Label68 As System.Windows.Forms.Label
+    Friend WithEvents Label69 As System.Windows.Forms.Label
+    Friend WithEvents 投资13 As System.Windows.Forms.TextBox
+    Friend WithEvents 收入13 As System.Windows.Forms.CheckBox
+    Friend WithEvents Label70 As System.Windows.Forms.Label
+    Friend WithEvents 成本比例12 As System.Windows.Forms.TextBox
+    Friend WithEvents 成本12 As System.Windows.Forms.CheckBox
+    Friend WithEvents Label71 As System.Windows.Forms.Label
 End Class

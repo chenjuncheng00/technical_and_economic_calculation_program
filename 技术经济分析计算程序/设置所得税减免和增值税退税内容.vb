@@ -109,24 +109,29 @@ Public Class 设置所得税减免和增值税退税内容
         Me.收入4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 2).Value, String) '工业蒸汽收入
         Me.收入1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 2).Value, String) '供电收入
         Me.收入2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 2).Value, String) '供冷收入
-        Me.收入3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 2).Value, String) '供热收入        
+        Me.收入3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 2).Value, String) '供热收入
+        Me.收入10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 2).Value, String) '生活热水收入
+        Me.收入11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 2).Value, String) '接入费收入
         Me.收入5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 2).Value, String) '光伏发电收入
         Me.收入6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 2).Value, String) '光伏补贴收入
         Me.收入7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 2).Value, String) '风力发电收入
+        Me.收入12.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 2).Value, String) '充电桩收入
+        Me.收入13.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 2).Value, String) '蓄电池供电收入
         Me.收入8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 2).Value, String) '垃圾处理补贴收入
         Me.收入9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 2).Value, String) '生物质补贴收入
         '成本
         Me.成本1.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 9).Value, String) '天然气成本
         Me.成本2.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 9).Value, String) '煤炭成本
         Me.成本3.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 9).Value, String) '购电成本
-        Me.成本10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 9).Value, String) '外购蒸汽
-        Me.成本11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String) '购电容量费
+        Me.成本10.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 9).Value, String) '外购蒸汽成本
+        Me.成本12.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 9).Value, String) '蓄电池购电成本
+        Me.成本11.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 9).Value, String) '购电容量费成本
         Me.成本4.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 9).Value, String) '补水成本
-        Me.成本5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 9).Value, String) '石灰石
-        Me.成本6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 9).Value, String) '生石灰
-        Me.成本7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 9).Value, String) '尿素
-        Me.成本9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String) '城市管廊
-        Me.成本8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 9).Value, String) '人员工资
+        Me.成本5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 9).Value, String) '石灰石成本
+        Me.成本6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 9).Value, String) '生石灰成本
+        Me.成本7.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 9).Value, String) '尿素成本
+        Me.成本9.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 9).Value, String) '城市管廊成本
+        Me.成本8.Text = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 9).Value, String) '人员工资成本
         '载入光伏发电和风力发电投资（如果有的话）
         Me.投资5.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
         Me.投资6.Text = CType(ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(50, 1).Value, String) '光伏发电
@@ -190,6 +195,26 @@ Public Class 设置所得税减免和增值税退税内容
             Me.投资3.Enabled = False
             Me.收入比例3.Enabled = False
         End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 7).Value > 0 Then
+            Me.收入10.Enabled = True
+            Me.投资10.Enabled = True
+            Me.收入比例10.Enabled = True
+            Me.收入比例10.Text = 100 '比例默认值
+        Else
+            Me.收入10.Enabled = False
+            Me.投资10.Enabled = False
+            Me.收入比例10.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 7).Value > 0 Then
+            Me.收入11.Enabled = True
+            Me.投资11.Enabled = True
+            Me.收入比例11.Enabled = True
+            Me.收入比例11.Text = 100 '比例默认值
+        Else
+            Me.收入11.Enabled = False
+            Me.投资11.Enabled = False
+            Me.收入比例11.Enabled = False
+        End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 7).Value > 0 Then
             Me.收入5.Enabled = True
             Me.投资5.Enabled = True
@@ -249,6 +274,26 @@ Public Class 设置所得税减免和增值税退税内容
             Me.风电增值税退税比例.Enabled = False
             Me.风电人员工资.Enabled = False
         End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 7).Value > 0 Then
+            Me.收入12.Enabled = True
+            Me.投资12.Enabled = True
+            Me.收入比例12.Enabled = True
+            Me.收入比例12.Text = 100 '比例默认值
+        Else
+            Me.收入12.Enabled = False
+            Me.投资12.Enabled = False
+            Me.收入比例12.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 7).Value > 0 Then
+            Me.收入13.Enabled = True
+            Me.投资13.Enabled = True
+            Me.收入比例13.Enabled = True
+            Me.收入比例13.Text = 100 '比例默认值
+        Else
+            Me.收入13.Enabled = False
+            Me.投资13.Enabled = False
+            Me.收入比例13.Enabled = False
+        End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 7).Value > 0 Then
             Me.收入8.Enabled = True
             Me.投资8.Enabled = True
@@ -301,6 +346,14 @@ Public Class 设置所得税减免和增值税退税内容
         Else
             Me.成本10.Enabled = False
             Me.成本比例10.Enabled = False
+        End If
+        If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 14).Value > 0 Then
+            Me.成本12.Enabled = True
+            Me.成本比例12.Enabled = True
+            Me.成本比例12.Text = 100 '比例默认值
+        Else
+            Me.成本12.Enabled = False
+            Me.成本比例12.Enabled = False
         End If
         If ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 14).Value > 0 Then
             Me.成本11.Enabled = True
@@ -432,81 +485,372 @@ Public Class 设置所得税减免和增值税退税内容
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————
+        '定义局部变量
+        Dim srtz1, srtz2, srtz3, srtz4, srtz5, srtz6, srtz7, srtz8, srtz9, srtz10, srtz11, srtz12, srtz13 As Double '输入的投资
+        Dim zxtzjqbl1, zxtzjqbl2, zxtzjqbl3 As Double '专项投资减去比例
+        Dim zxzljqbl1, zxzljqbl2, zxzljqbl3, zxzljqbl4, zxzljqbl5 As Double '专项年量减去比例
+        Dim srbl1, srbl2, srbl3, srbl4, srbl5, srbl6, srbl7, srbl8, srbl9, srbl10, srbl11, srbl12, srbl13 As Double '各个收入占比比例
+        Dim cbbl1, cbbl2, cbbl3, cbbl4, cbbl5, cbbl6, cbbl7, cbbl8, cbbl9, cbbl10, cbbl11, cbbl12 As Double '各个成本占比比例
+        '————————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的投资
-        Dim srtz1 As Double = CType(Me.投资1.Text, Double)
-        Dim srtz2 As Double = CType(Me.投资2.Text, Double)
-        Dim srtz3 As Double = CType(Me.投资3.Text, Double)
-        Dim srtz4 As Double = CType(Me.投资4.Text, Double)
-        Dim srtz5 As Double = CType(Me.投资5.Text, Double)
-        Dim srtz6 As Double = CType(Me.投资6.Text, Double)
-        Dim srtz7 As Double = CType(Me.投资7.Text, Double)
-        Dim srtz8 As Double = CType(Me.投资8.Text, Double)
-        Dim srtz9 As Double = CType(Me.投资9.Text, Double)
-        '读取输入的专项投资和年量减去比例
-        Dim zxtzjqbl1 As Double = CType(Me.专项投资减去比例1.Text, Double) / 100
-        Dim zxtzjqbl2 As Double = CType(Me.专项投资减去比例2.Text, Double) / 100
-        Dim zxtzjqbl3 As Double = CType(Me.专项投资减去比例3.Text, Double) / 100
-        Dim zxzljqbl1 As Double = CType(Me.专项年量减去比例1.Text, Double) / 100
-        Dim zxzljqbl2 As Double = CType(Me.专项年量减去比例2.Text, Double) / 100
-        Dim zxzljqbl3 As Double = CType(Me.专项年量减去比例3.Text, Double) / 100
-        Dim zxzljqbl4 As Double = CType(Me.专项年量减去比例4.Text, Double) / 100
-        Dim zxzljqbl5 As Double = CType(Me.专项年量减去比例5.Text, Double) / 100
+        If Me.投资1.Text = "" Then
+            srtz1 = 0
+        Else
+            srtz1 = CType(Me.投资1.Text, Double)
+        End If
+        If Me.投资2.Text = "" Then
+            srtz2 = 0
+        Else
+            srtz2 = CType(Me.投资2.Text, Double)
+        End If
+        If Me.投资3.Text = "" Then
+            srtz3 = 0
+        Else
+            srtz3 = CType(Me.投资3.Text, Double)
+        End If
+        If Me.投资4.Text = "" Then
+            srtz4 = 0
+        Else
+            srtz4 = CType(Me.投资4.Text, Double)
+        End If
+        If Me.投资5.Text = "" Then
+            srtz5 = 0
+        Else
+            srtz5 = CType(Me.投资5.Text, Double)
+        End If
+        If Me.投资6.Text = "" Then
+            srtz6 = 0
+        Else
+            srtz6 = CType(Me.投资6.Text, Double)
+        End If
+        If Me.投资7.Text = "" Then
+            srtz7 = 0
+        Else
+            srtz7 = CType(Me.投资7.Text, Double)
+        End If
+        If Me.投资8.Text = "" Then
+            srtz8 = 0
+        Else
+            srtz8 = CType(Me.投资8.Text, Double)
+        End If
+        If Me.投资9.Text = "" Then
+            srtz9 = 0
+        Else
+            srtz9 = CType(Me.投资9.Text, Double)
+        End If
+        If Me.投资10.Text = "" Then
+            srtz10 = 0
+        Else
+            srtz10 = CType(Me.投资10.Text, Double)
+        End If
+        If Me.投资11.Text = "" Then
+            srtz11 = 0
+        Else
+            srtz11 = CType(Me.投资11.Text, Double)
+        End If
+        If Me.投资12.Text = "" Then
+            srtz12 = 0
+        Else
+            srtz12 = CType(Me.投资12.Text, Double)
+        End If
+        If Me.投资13.Text = "" Then
+            srtz13 = 0
+        Else
+            srtz13 = CType(Me.投资13.Text, Double)
+        End If
+        '读取输入的专项投资减去比例
+        If Me.专项投资减去比例1.Text = "" Then
+            zxtzjqbl1 = 0
+        Else
+            zxtzjqbl1 = CType(Me.专项投资减去比例1.Text, Double) / 100
+        End If
+        If Me.专项投资减去比例2.Text = "" Then
+            zxtzjqbl2 = 0
+        Else
+            zxtzjqbl2 = CType(Me.专项投资减去比例2.Text, Double) / 100
+        End If
+        If Me.专项投资减去比例3.Text = "" Then
+            zxtzjqbl3 = 0
+        Else
+            zxtzjqbl3 = CType(Me.专项投资减去比例3.Text, Double) / 100
+        End If
+        '读取输入的专项年量减去比例
+        If Me.专项年量减去比例1.Text = "" Then
+            zxzljqbl1 = 0
+        Else
+            zxzljqbl1 = CType(Me.专项年量减去比例1.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例2.Text = "" Then
+            zxzljqbl2 = 0
+        Else
+            zxzljqbl2 = CType(Me.专项年量减去比例2.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例3.Text = "" Then
+            zxzljqbl3 = 0
+        Else
+            zxzljqbl3 = CType(Me.专项年量减去比例3.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例4.Text = "" Then
+            zxzljqbl4 = 0
+        Else
+            zxzljqbl4 = CType(Me.专项年量减去比例4.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例5.Text = "" Then
+            zxzljqbl5 = 0
+        Else
+            zxzljqbl5 = CType(Me.专项年量减去比例5.Text, Double) / 100
+        End If
         '读取输入的各个收入占比比例
-        Dim srbl1 As Double = CType(Me.收入比例1.Text, Double) / 100
-        Dim srbl2 As Double = CType(Me.收入比例2.Text, Double) / 100
-        Dim srbl3 As Double = CType(Me.收入比例3.Text, Double) / 100
-        Dim srbl4 As Double = CType(Me.收入比例4.Text, Double) / 100
-        Dim srbl5 As Double = CType(Me.收入比例5.Text, Double) / 100
-        Dim srbl6 As Double = CType(Me.收入比例6.Text, Double) / 100
-        Dim srbl7 As Double = CType(Me.收入比例7.Text, Double) / 100
-        Dim srbl8 As Double = CType(Me.收入比例8.Text, Double) / 100
-        Dim srbl9 As Double = CType(Me.收入比例9.Text, Double) / 100
+        If Me.收入比例1.Text = "" Then
+            srbl1 = 0
+        Else
+            srbl1 = CType(Me.收入比例1.Text, Double) / 100
+        End If
+        If Me.收入比例2.Text = "" Then
+            srbl2 = 0
+        Else
+            srbl2 = CType(Me.收入比例2.Text, Double) / 100
+        End If
+        If Me.收入比例3.Text = "" Then
+            srbl3 = 0
+        Else
+            srbl3 = CType(Me.收入比例3.Text, Double) / 100
+        End If
+        If Me.收入比例4.Text = "" Then
+            srbl4 = 0
+        Else
+            srbl4 = CType(Me.收入比例4.Text, Double) / 100
+        End If
+        If Me.收入比例5.Text = "" Then
+            srbl5 = 0
+        Else
+            srbl5 = CType(Me.收入比例5.Text, Double) / 100
+        End If
+        If Me.收入比例6.Text = "" Then
+            srbl6 = 0
+        Else
+            srbl6 = CType(Me.收入比例6.Text, Double) / 100
+        End If
+        If Me.收入比例7.Text = "" Then
+            srbl7 = 0
+        Else
+            srbl7 = CType(Me.收入比例7.Text, Double) / 100
+        End If
+        If Me.收入比例8.Text = "" Then
+            srbl8 = 0
+        Else
+            srbl8 = CType(Me.收入比例8.Text, Double) / 100
+        End If
+        If Me.收入比例9.Text = "" Then
+            srbl9 = 0
+        Else
+            srbl9 = CType(Me.收入比例9.Text, Double) / 100
+        End If
+        If Me.收入比例10.Text = "" Then
+            srbl10 = 0
+        Else
+            srbl10 = CType(Me.收入比例10.Text, Double) / 100
+        End If
+        If Me.收入比例11.Text = "" Then
+            srbl11 = 0
+        Else
+            srbl11 = CType(Me.收入比例11.Text, Double) / 100
+        End If
+        If Me.收入比例12.Text = "" Then
+            srbl12 = 0
+        Else
+            srbl12 = CType(Me.收入比例12.Text, Double) / 100
+        End If
+        If Me.收入比例13.Text = "" Then
+            srbl13 = 0
+        Else
+            srbl13 = CType(Me.收入比例13.Text, Double) / 100
+        End If
         '读取输入的各个成本占比比例
-        Dim cbbl1 As Double = CType(Me.成本比例1.Text, Double) / 100
-        Dim cbbl2 As Double = CType(Me.成本比例2.Text, Double) / 100
-        Dim cbbl3 As Double = CType(Me.成本比例3.Text, Double) / 100
-        Dim cbbl4 As Double = CType(Me.成本比例4.Text, Double) / 100
-        Dim cbbl5 As Double = CType(Me.成本比例5.Text, Double) / 100
-        Dim cbbl6 As Double = CType(Me.成本比例6.Text, Double) / 100
-        Dim cbbl7 As Double = CType(Me.成本比例7.Text, Double) / 100
-        Dim cbbl8 As Double = CType(Me.成本比例8.Text, Double) / 100
-        Dim cbbl9 As Double = CType(Me.成本比例9.Text, Double) / 100
-        Dim cbbl10 As Double = CType(Me.成本比例10.Text, Double) / 100
-        Dim cbbl11 As Double = CType(Me.成本比例11.Text, Double) / 100
+        If Me.成本比例1.Text = "" Then
+            cbbl1 = 0
+        Else
+            cbbl1 = CType(Me.成本比例1.Text, Double) / 100
+        End If
+        If Me.成本比例2.Text = "" Then
+            cbbl2 = 0
+        Else
+            cbbl2 = CType(Me.成本比例2.Text, Double) / 100
+        End If
+        If Me.成本比例3.Text = "" Then
+            cbbl3 = 0
+        Else
+            cbbl3 = CType(Me.成本比例3.Text, Double) / 100
+        End If
+        If Me.成本比例4.Text = "" Then
+            cbbl4 = 0
+        Else
+            cbbl4 = CType(Me.成本比例4.Text, Double) / 100
+        End If
+        If Me.成本比例5.Text = "" Then
+            cbbl5 = 0
+        Else
+            cbbl5 = CType(Me.成本比例5.Text, Double) / 100
+        End If
+        If Me.成本比例6.Text = "" Then
+            cbbl6 = 0
+        Else
+            cbbl6 = CType(Me.成本比例6.Text, Double) / 100
+        End If
+        If Me.成本比例7.Text = "" Then
+            cbbl7 = 0
+        Else
+            cbbl7 = CType(Me.成本比例7.Text, Double) / 100
+        End If
+        If Me.成本比例8.Text = "" Then
+            cbbl8 = 0
+        Else
+            cbbl8 = CType(Me.成本比例8.Text, Double) / 100
+        End If
+        If Me.成本比例9.Text = "" Then
+            cbbl9 = 0
+        Else
+            cbbl9 = CType(Me.成本比例9.Text, Double) / 100
+        End If
+        If Me.成本比例10.Text = "" Then
+            cbbl10 = 0
+        Else
+            cbbl10 = CType(Me.成本比例10.Text, Double) / 100
+        End If
+        If Me.成本比例11.Text = "" Then
+            cbbl11 = 0
+        Else
+            cbbl11 = CType(Me.成本比例11.Text, Double) / 100
+        End If
+        If Me.成本比例12.Text = "" Then
+            cbbl12 = 0
+        Else
+            cbbl12 = CType(Me.成本比例12.Text, Double) / 100
+        End If
         '读取设置的光伏和风力发电所得税减免参数、增值税退税参数等
-        Dim gfsdsmznx As Integer = CType(Me.光伏所得税免征年限.Text, Integer)
-        Dim gfsdsjsnx As Integer = CType(Me.光伏所得税减少年限.Text, Integer)
-        Dim gfsdsjsbl As Double = CType(Me.光伏所得税减少比例.Text, Double) / 100
-        Dim gfzzstsnx As Integer = CType(Me.光伏增值税退税年限.Text, Integer)
-        Dim gfzzstsbl As Double = CType(Me.光伏增值税退税比例.Text, Double) / 100
-        Dim gfrygz As Double = CType(Me.光伏人员工资.Text, Double)
-        Dim fdsdsmznx As Integer = CType(Me.风电所得税免征年限.Text, Integer)
-        Dim fdsdsjsnx As Integer = CType(Me.风电所得税减少年限.Text, Integer)
-        Dim fdsdsjsbl As Double = CType(Me.风电所得税减少比例.Text, Double) / 100
-        Dim fdzzstsnx As Integer = CType(Me.风电增值税退税年限.Text, Integer)
-        Dim fdzzstsbl As Double = CType(Me.风电增值税退税比例.Text, Double) / 100
-        Dim fdrygz As Double = CType(Me.风电人员工资.Text, Double)
+        Dim gfsdsmznx As Integer
+        If Me.光伏所得税免征年限.Text = "" Then
+            gfsdsmznx = 0
+        Else
+            gfsdsmznx = CType(Me.光伏所得税免征年限.Text, Integer)
+        End If
+        Dim gfsdsjsnx As Integer
+        If Me.光伏所得税减少年限.Text = "" Then
+            gfsdsjsnx = 0
+        Else
+            gfsdsjsnx = CType(Me.光伏所得税减少年限.Text, Integer)
+        End If
+        Dim gfsdsjsbl As Double
+        If Me.光伏所得税减少比例.Text = "" Then
+            gfsdsjsbl = 0
+        Else
+            gfsdsjsbl = CType(Me.光伏所得税减少比例.Text, Double) / 100
+        End If
+        Dim gfzzstsnx As Integer
+        If Me.光伏增值税退税年限.Text = "" Then
+            gfzzstsnx = 0
+        Else
+            gfzzstsnx = CType(Me.光伏增值税退税年限.Text, Integer)
+        End If
+        Dim gfzzstsbl As Double
+        If Me.光伏增值税退税比例.Text = "" Then
+            gfzzstsbl = 0
+        Else
+            gfzzstsbl = CType(Me.光伏增值税退税比例.Text, Double) / 100
+        End If
+        Dim gfrygz As Double
+        If Me.光伏人员工资.Text = "" Then
+            gfrygz = 0
+        Else
+            gfrygz = CType(Me.光伏人员工资.Text, Double)
+        End If
+        Dim fdsdsmznx As Integer
+        If Me.风电所得税免征年限.Text = "" Then
+            fdsdsmznx = 0
+        Else
+            fdsdsmznx = CType(Me.风电所得税免征年限.Text, Integer)
+        End If
+        Dim fdsdsjsnx As Integer
+        If Me.风电所得税减少年限.Text = "" Then
+            fdsdsjsnx = 0
+        Else
+            fdsdsjsnx = CType(Me.风电所得税减少年限.Text, Integer)
+        End If
+        Dim fdsdsjsbl As Double
+        If Me.风电所得税减少比例.Text = "" Then
+            fdsdsjsbl = 0
+        Else
+            fdsdsjsbl = CType(Me.风电所得税减少比例.Text, Double) / 100
+        End If
+        Dim fdzzstsnx As Integer
+        If Me.风电增值税退税年限.Text = "" Then
+            fdzzstsnx = 0
+        Else
+            fdzzstsnx = CType(Me.风电增值税退税年限.Text, Integer)
+        End If
+        Dim fdzzstsbl As Double
+        If Me.风电增值税退税比例.Text = "" Then
+            fdzzstsbl = 0
+        Else
+            fdzzstsbl = CType(Me.风电增值税退税比例.Text, Double) / 100
+        End If
+        Dim fdrygz As Double
+        If Me.风电人员工资.Text = "" Then
+            fdrygz = 0
+        Else
+            fdrygz = CType(Me.风电人员工资.Text, Double)
+        End If
         '读取输入的其它部分所得税减免和增值税退税参数
-        Dim qtsdsmznx As Integer = CType(Me.其它所得税免征年限.Text, Integer)
-        Dim qtsdsjsnx As Integer = CType(Me.其它所得税减少年限.Text, Integer)
-        Dim qtsdsjsbl As Double = CType(Me.其它所得税减少比例.Text, Double) / 100
-        Dim qtzzstsnx As Integer = CType(Me.其它增值税退税年限.Text, Integer)
-        Dim qtzzstsbl As Double = CType(Me.其它增值税退税比例.Text, Double) / 100
+        Dim qtsdsmznx As Integer
+        If Me.其它所得税免征年限.Text = "" Then
+            qtsdsmznx = 0
+        Else
+            qtsdsmznx = CType(Me.其它所得税免征年限.Text, Integer)
+        End If
+        Dim qtsdsjsnx As Integer
+        If Me.其它所得税减少年限.Text = "" Then
+            qtsdsjsnx = 0
+        Else
+            qtsdsjsnx = CType(Me.其它所得税减少年限.Text, Integer)
+        End If
+        Dim qtsdsjsbl As Double
+        If Me.其它所得税减少比例.Text = "" Then
+            qtsdsjsbl = 0
+        Else
+            qtsdsjsbl = CType(Me.其它所得税减少比例.Text, Double) / 100
+        End If
+        Dim qtzzstsnx As Integer
+        If Me.其它增值税退税年限.Text = "" Then
+            qtzzstsnx = 0
+        Else
+            qtzzstsnx = CType(Me.其它增值税退税年限.Text, Integer)
+        End If
+        Dim qtzzstsbl As Double
+        If Me.其它增值税退税比例.Text = "" Then
+            qtzzstsbl = 0
+        Else
+            qtzzstsbl = CType(Me.其它增值税退税比例.Text, Double) / 100
+        End If
         '记录目前各个收入的单价
         Dim srdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value, Double)
         Dim srdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value, Double)
         Dim srdj2 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value, Double)
         Dim srdj3 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value, Double)
+        Dim srdj10 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value, Double)
+        Dim srdj11 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value, Double)
         Dim srdj5 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value, Double)
         Dim srdj6 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value, Double)
         Dim srdj7 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value, Double)
+        Dim srdj12 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value, Double)
+        Dim srdj13 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value, Double)
         Dim srdj8 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value, Double)
-        Dim srdj9 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value, Double)
+        Dim srdj9 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value, Double)
         '记录目前各个成本的单价
         Dim cbdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value, Double)
         Dim cbdj2 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value, Double)
         Dim cbdj3 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value, Double)
         Dim cbdj10 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value, Double)
+        Dim cbdj12 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value, Double)
         Dim cbdj11 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value, Double)
         Dim cbdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value, Double)
         Dim cbdj5 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value, Double)
@@ -593,61 +937,25 @@ Public Class 设置所得税减免和增值税退税内容
                 ZNSDS_YSZ(i) = ExcelApp.ThisWorkbook.Worksheets("利润与利润分配表").Cells(32, i - 12).Value
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————
+            '读取估算表数据
+            Dim GSBSJ = 读取估算表数据(ExcelApp)
             '10次投资金额、可抵扣增值税额
-            Dim TZJE(50) As Double
-            Dim KDKZZS(50) As Double
+            Dim JTTZ = GSBSJ(1) '静态投资
+            Dim KDKZZS = GSBSJ(9) '可抵扣增值税
             '第一到第十次光伏和风电投资金额，光伏装机规模
-            Dim GFTZ(50) As Double '光伏投资
-            Dim GFZJ(50) As Double '光伏装机
-            Dim FDTZ(50) As Double '风电投资
-            Dim FDZJ(50) As Double '风电装机
+            Dim GFTZ = GSBSJ(16) '光伏投资
+            Dim GFZJ = GSBSJ(17) '光伏装机
+            Dim FDTZ = GSBSJ(18) '风电投资
+            Dim FDZJ = GSBSJ(19) '风电装机
             '第一到第十次投资专项投资和年量
-            Dim LHXHTZ(50) As Double '联合循环投资
-            Dim LHXHZL(50) As Double '联合循环总量
-            Dim NRJTZ(50) As Double '内燃机投资
-            Dim NRJZL(50) As Double '内燃机总量
-            Dim LRGWTZ(50) As Double '冷热管网投资
-            Dim GLGRZL(50) As Double '供冷供热总量
-            Dim RMFDZL(50) As Double '燃煤发电总量
-            Dim LJFDZL(50) As Double '垃圾发电总量
-            '第一到第十次投资
-            Dim JS As Integer = 0 '投资年份计数
-            For i = 30 To 73 Step 43 '估算表行号
-                For j = 3 To 11 Step 2 '估算表列号
-                    JS = JS + 1
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                        TZJE(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value
-                        KDKZZS(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value
-                        GFTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 20, j).Value
-                        GFZJ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 21, j).Value
-                        FDTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 23, j).Value
-                        FDZJ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 24, j).Value
-                        LHXHTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value
-                        LHXHZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value
-                        NRJTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value
-                        NRJZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value
-                        LRGWTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value
-                        GLGRZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 19, j).Value
-                        RMFDZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 22, j).Value
-                        LJFDZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 25, j).Value
-                    Else
-                        TZJE(JS) = 0
-                        KDKZZS(JS) = 0
-                        GFTZ(JS) = 0
-                        GFZJ(JS) = 0
-                        FDTZ(JS) = 0
-                        FDZJ(JS) = 0
-                        LHXHTZ(JS) = 0
-                        LHXHZL(JS) = 0
-                        NRJTZ(JS) = 0
-                        NRJZL(JS) = 0
-                        LRGWTZ(JS) = 0
-                        GLGRZL(JS) = 0
-                        RMFDZL(JS) = 0
-                        LJFDZL(JS) = 0
-                    End If
-                Next
-            Next
+            Dim RJTZ = GSBSJ(10) '燃机投资
+            Dim RJZL = GSBSJ(11) '燃机总量
+            Dim XDCTZ = GSBSJ(12) '蓄电池投资
+            Dim XDCZL = GSBSJ(13) '蓄电池总量
+            Dim NTTZ = GSBSJ(14) '暖通投资
+            Dim GLGRZL = GSBSJ(15) '供冷供热总量
+            Dim RMFDZL = GSBSJ(21) '燃煤发电总量
+            Dim LJFDZL = GSBSJ(20) '垃圾发电总量
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第一步，仅减去光伏发电的部分
@@ -660,8 +968,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_gftz = JS_gftz + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_gftz) * (1 - GFTZBL) '静态投资
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_gftz) * (1 - GFTZBL) '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_gftz) * (1 - GFTZBL) '可抵扣增值税
                         End If
                     Next
@@ -693,7 +1001,7 @@ Public Class 设置所得税减免和增值税退税内容
                 Dim GFSRBL As Double = Math.Max(srbl5, srbl6)
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 20, j).Value = GFTZ(JS_gftz） * (1 - GFTZBL_1)  '光伏投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 21, j).Value = GFZJ(JS_gftz) * (1 - GFSRBL) '光伏装机规模
                         End If
@@ -725,8 +1033,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_gf = JS_gf + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_gf)  '静态投资
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_gf)  '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_gf)  '可抵扣增值税
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 20, j).Value = GFTZ(JS_gf) '光伏投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 21, j).Value = GFZJ(JS_gf) '光伏装机规模
@@ -752,20 +1060,22 @@ Public Class 设置所得税减免和增值税退税内容
             Call 税收相关计算(ExcelApp, zbj_model, hscz, xlfl_cg_model, xlfl_qt_model, clfl_qtfl_model, sdsl_model, kcje_xlf_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
-            '第二步，仅减去风电的部分        
-            '投资和可抵扣增值税中减去这部分（按照逐次投资占静态投资的比例进行减去）
-            Dim FDTZBL As Double = srtz7 / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value '风电投资占总投资比例
-            If srtz7 > 0 Then
-                Dim JS_fdtz As Integer = 0 '投资年份计数
-                For i = 30 To 73 Step 43 '估算表行号
-                    For j = 3 To 11 Step 2 '估算表列号
-                        JS_fdtz = JS_fdtz + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_fdtz) * (1 - FDTZBL) '静态投资
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_fdtz) * (1 - FDTZBL) '可抵扣增值税
-                        End If
+            '第二步，仅减去风电的部分
+            If Me.收入7.Checked = True Then
+                '投资和可抵扣增值税中减去这部分（按照逐次投资占静态投资的比例进行减去）
+                Dim FDTZBL As Double = srtz7 / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value '风电投资占总投资比例
+                If srtz7 > 0 Then
+                    Dim JS_fdtz As Integer = 0 '投资年份计数
+                    For i = 30 To 73 Step 43 '估算表行号
+                        For j = 3 To 11 Step 2 '估算表列号
+                            JS_fdtz = JS_fdtz + 1
+                            If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_fdtz) * (1 - FDTZBL) '静态投资
+                                ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_fdtz) * (1 - FDTZBL) '可抵扣增值税
+                            End If
+                        Next
                     Next
-                Next
+                End If
             End If
             '————————————————————————————————————————————————————————————————————————————————————
             '减去风力发电的收入
@@ -788,7 +1098,7 @@ Public Class 设置所得税减免和增值税退税内容
                 Dim JS_fdtz As Integer = 0 '投资年份计数
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 23, j).Value = FDTZ(JS_fdtz) * (1 - FDTZBL_1) '风电投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 24, j).Value = FDZJ(JS_fdtz) * (1 - srbl7) '风电装机规模
                         End If
@@ -820,8 +1130,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_fd = JS_fd + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_fd)  '静态投资
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_fd)  '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_fd)  '可抵扣增值税
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 23, j).Value = FDTZ(JS_fd) '风电投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 24, j).Value = FDZJ(JS_fd) '风电装机规模
@@ -846,7 +1156,7 @@ Public Class 设置所得税减免和增值税退税内容
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
             '在静态投资中减去选择的部分的投资
-            Dim SRTZ_sum = srtz1 + srtz2 + srtz3 + srtz4 + srtz8 + srtz9 '(不包括光伏和风电投资)
+            Dim SRTZ_sum = srtz1 + srtz2 + srtz3 + srtz4 + srtz8 + srtz9 + srtz10 + srtz11 + srtz12 + srtz13 '(不包括光伏和风电投资)
             Dim SRTZBL_sum = SRTZ_sum / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value '需要减去的投资占总投资比例，可抵扣增值税也按照这个比例减去
             '投资和可抵扣增值税中减去这部分（按照逐次投资占静态投资的比例进行减去）
             If SRTZ_sum > 0 Then
@@ -854,14 +1164,19 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_tz = JS_tz + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_tz) * (1 - SRTZBL_sum) '静态投资
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_tz) * (1 - SRTZBL_sum) '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_tz) * (1 - SRTZBL_sum) '可抵扣增值税
                         End If
                     Next
                 Next
             End If
             '————————————————————————————————————————————————————————————————————————————————————
+            '收入4
+            If Me.收入4.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
+            End If
             '收入1
             If Me.收入1.Checked = True Then
                 '收入减小
@@ -877,10 +1192,25 @@ Public Class 设置所得税减免和增值税退税内容
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3 * (1 - srbl3)
             End If
-            '收入4
-            If Me.收入4.Checked = True Then
+            '收入10
+            If Me.收入10.Checked = True Then
                 '收入减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value = srdj10 * (1 - srbl10)
+            End If
+            '收入11
+            If Me.收入11.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value = srdj11 * (1 - srbl11)
+            End If
+            '收入12
+            If Me.收入12.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value = srdj12 * (1 - srbl12)
+            End If
+            '收入13
+            If Me.收入13.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value = srdj13 * (1 - srbl13)
             End If
             '收入8
             If Me.收入8.Checked = True Then
@@ -908,6 +1238,21 @@ Public Class 设置所得税减免和增值税退税内容
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3 * (1 - cbbl3)
             End If
+            '成本10
+            If Me.成本10.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
+            End If
+            '成本12
+            If Me.成本12.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value = cbdj12 * (1 - cbbl12)
+            End If
+            '成本11
+            If Me.成本11.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
+            End If
             '成本4
             If Me.成本4.Checked = True Then
                 '成本减小
@@ -928,25 +1273,15 @@ Public Class 设置所得税减免和增值税退税内容
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7 * (1 - cbbl7)
             End If
-            '成本8
-            If Me.成本8.Checked = True Then
-                '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
-            End If
             '成本9
             If Me.成本9.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9 * (1 - cbbl9)
             End If
-            '成本10
-            If Me.成本10.Checked = True Then
+            '成本8
+            If Me.成本8.Checked = True Then
                 '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
-            End If
-            '成本11
-            If Me.成本11.Checked = True Then
-                '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '减去专项投资和年总量
@@ -956,8 +1291,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz1 = JS_zxtz1 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = NRJTZ(JS_zxtz1) * (1 - zxtzjqbl1)
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = XDCTZ(JS_zxtz1) * (1 - zxtzjqbl1)
                         End If
                     Next
                 Next
@@ -967,8 +1302,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz2 = JS_zxtz2 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = LHXHTZ(JS_zxtz2) * (1 - zxtzjqbl2)
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = RJTZ(JS_zxtz2) * (1 - zxtzjqbl2)
                         End If
                     Next
                 Next
@@ -978,8 +1313,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz3 = JS_zxtz3 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = LRGWTZ(JS_zxtz3) * (1 - zxtzjqbl3)
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = NTTZ(JS_zxtz3) * (1 - zxtzjqbl3)
                         End If
                     Next
                 Next
@@ -990,8 +1325,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl1 = JS_zxzl1 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = NRJZL(JS_zxzl1) * (1 - zxzljqbl1)
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = XDCZL(JS_zxzl1) * (1 - zxzljqbl1)
                         End If
                     Next
                 Next
@@ -1001,8 +1336,8 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl2 = JS_zxzl2 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = LHXHZL(JS_zxzl2) * (1 - zxzljqbl2)
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = RJZL(JS_zxzl2) * (1 - zxzljqbl2)
                         End If
                     Next
                 Next
@@ -1012,7 +1347,7 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl3 = JS_zxzl3 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 19, j).Value = GLGRZL(JS_zxzl3) * (1 - zxzljqbl3)
                         End If
                     Next
@@ -1023,7 +1358,7 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl4 = JS_zxzl4 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 22, j).Value = RMFDZL(JS_zxzl4) * (1 - zxzljqbl4)
                         End If
                     Next
@@ -1034,7 +1369,7 @@ Public Class 设置所得税减免和增值税退税内容
                 For i = 30 To 73 Step 43 '估算表行号
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl5 = JS_zxzl5 + 1
-                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
+                        If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 25, j).Value = LJFDZL(JS_zxzl5) * (1 - zxzljqbl5)
                         End If
                     Next
@@ -1067,14 +1402,14 @@ Public Class 设置所得税减免和增值税退税内容
             For i = 30 To 73 Step 43 '估算表行号
                 For j = 3 To 11 Step 2 '估算表列号
                     JS_a = JS_a + 1
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_a)
+                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, j).Value > 0 Then
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = LHXHTZ(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = LHXHZL(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = NRJTZ(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = NRJZL(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = LRGWTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = RJTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = RJZL(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = XDCTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = XDCZL(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = NTTZ(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 19, j).Value = GLGRZL(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 22, j).Value = RMFDZL(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 25, j).Value = LJFDZL(JS_a)
@@ -1094,12 +1429,23 @@ Public Class 设置所得税减免和增值税退税内容
             If Me.收入3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3
             End If
+            If Me.收入10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value = srdj10
+            End If
+            If Me.收入11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value = srdj11
+            End If
+            If Me.收入12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value = srdj12
+            End If
+            If Me.收入13.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value = srdj13
+            End If
             If Me.收入8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8
             End If
-
             If Me.收入9.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value = srdj9
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value = srdj9
             End If
             '各项成本单价
             '成本1
@@ -1113,6 +1459,18 @@ Public Class 设置所得税减免和增值税退税内容
             '成本3
             If Me.成本3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3
+            End If
+            '成本10
+            If Me.成本10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
+            End If
+            '成本12
+            If Me.成本12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value = cbdj12
+            End If
+            '成本11
+            If Me.成本11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
             '成本4
             If Me.成本4.Checked = True Then
@@ -1130,21 +1488,13 @@ Public Class 设置所得税减免和增值税退税内容
             If Me.成本7.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7
             End If
-            '成本8
-            If Me.成本8.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
-            End If
             '成本9
             If Me.成本9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9
             End If
-            '成本10
-            If Me.成本10.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
-            End If
-            '成本11
-            If Me.成本11.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
+            '成本8
+            If Me.成本8.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
             End If
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿
@@ -1357,6 +1707,10 @@ Public Class 设置所得税减免和增值税退税内容
             Me.收入7.Checked = False
             Me.收入8.Checked = False
             Me.收入9.Checked = False
+            Me.收入10.Checked = False
+            Me.收入11.Checked = False
+            Me.收入12.Checked = False
+            Me.收入13.Checked = False
             '成本
             Me.成本1.Checked = False
             Me.成本2.Checked = False
@@ -1369,6 +1723,7 @@ Public Class 设置所得税减免和增值税退税内容
             Me.成本9.Checked = False
             Me.成本10.Checked = False
             Me.成本11.Checked = False
+            Me.成本12.Checked = False
             '专项投资和年量
             Me.专项投资1.Checked = False
             Me.专项投资2.Checked = False
@@ -1397,6 +1752,10 @@ Public Class 设置所得税减免和增值税退税内容
             Me.投资7.Text = Nothing
             Me.投资8.Text = Nothing
             Me.投资9.Text = Nothing
+            Me.投资10.Text = Nothing
+            Me.投资11.Text = Nothing
+            Me.投资12.Text = Nothing
+            Me.投资13.Text = Nothing
             '清空已有收入比例
             Me.收入比例1.Text = Nothing
             Me.收入比例2.Text = Nothing
@@ -1407,6 +1766,10 @@ Public Class 设置所得税减免和增值税退税内容
             Me.收入比例7.Text = Nothing
             Me.收入比例8.Text = Nothing
             Me.收入比例9.Text = Nothing
+            Me.收入比例10.Text = Nothing
+            Me.收入比例11.Text = Nothing
+            Me.收入比例12.Text = Nothing
+            Me.收入比例13.Text = Nothing
             '清空已有成本比例
             Me.成本比例1.Text = Nothing
             Me.成本比例2.Text = Nothing
@@ -1419,6 +1782,7 @@ Public Class 设置所得税减免和增值税退税内容
             Me.成本比例9.Text = Nothing
             Me.成本比例10.Text = Nothing
             Me.成本比例11.Text = Nothing
+            Me.成本比例12.Text = Nothing
             '光伏和风电所得税减免参数
             Me.光伏所得税免征年限.Text = Nothing
             Me.风电所得税免征年限.Text = Nothing
@@ -1452,81 +1816,372 @@ Public Class 设置所得税减免和增值税退税内容
         ExcelApp = GetObject(, "Excel.Application")    '当前EXCEL对象赋值给ExcelApp
         '————————————————————————————————————————————————————————————————————————————————————————————————
         '————————————————————————————————————————————————————————————————————————————————————————————————
+        '定义局部变量
+        Dim srtz1, srtz2, srtz3, srtz4, srtz5, srtz6, srtz7, srtz8, srtz9, srtz10, srtz11, srtz12, srtz13 As Double '输入的投资
+        Dim zxtzjqbl1, zxtzjqbl2, zxtzjqbl3 As Double '专项投资减去比例
+        Dim zxzljqbl1, zxzljqbl2, zxzljqbl3, zxzljqbl4, zxzljqbl5 As Double '专项年量减去比例
+        Dim srbl1, srbl2, srbl3, srbl4, srbl5, srbl6, srbl7, srbl8, srbl9, srbl10, srbl11, srbl12, srbl13 As Double '各个收入占比比例
+        Dim cbbl1, cbbl2, cbbl3, cbbl4, cbbl5, cbbl6, cbbl7, cbbl8, cbbl9, cbbl10, cbbl11, cbbl12 As Double '各个成本占比比例
+        '————————————————————————————————————————————————————————————————————————————————————————————————
         '读取输入的投资
-        Dim srtz1 As Double = CType(Me.投资1.Text, Double)
-        Dim srtz2 As Double = CType(Me.投资2.Text, Double)
-        Dim srtz3 As Double = CType(Me.投资3.Text, Double)
-        Dim srtz4 As Double = CType(Me.投资4.Text, Double)
-        Dim srtz5 As Double = CType(Me.投资5.Text, Double)
-        Dim srtz6 As Double = CType(Me.投资6.Text, Double)
-        Dim srtz7 As Double = CType(Me.投资7.Text, Double)
-        Dim srtz8 As Double = CType(Me.投资8.Text, Double)
-        Dim srtz9 As Double = CType(Me.投资9.Text, Double)
-        '读取输入的专项投资和年量减去比例
-        Dim zxtzjqbl1 As Double = CType(Me.专项投资减去比例1.Text, Double) / 100
-        Dim zxtzjqbl2 As Double = CType(Me.专项投资减去比例2.Text, Double) / 100
-        Dim zxtzjqbl3 As Double = CType(Me.专项投资减去比例3.Text, Double) / 100
-        Dim zxzljqbl1 As Double = CType(Me.专项年量减去比例1.Text, Double) / 100
-        Dim zxzljqbl2 As Double = CType(Me.专项年量减去比例2.Text, Double) / 100
-        Dim zxzljqbl3 As Double = CType(Me.专项年量减去比例3.Text, Double) / 100
-        Dim zxzljqbl4 As Double = CType(Me.专项年量减去比例4.Text, Double) / 100
-        Dim zxzljqbl5 As Double = CType(Me.专项年量减去比例5.Text, Double) / 100
+        If Me.投资1.Text = "" Then
+            srtz1 = 0
+        Else
+            srtz1 = CType(Me.投资1.Text, Double)
+        End If
+        If Me.投资2.Text = "" Then
+            srtz2 = 0
+        Else
+            srtz2 = CType(Me.投资2.Text, Double)
+        End If
+        If Me.投资3.Text = "" Then
+            srtz3 = 0
+        Else
+            srtz3 = CType(Me.投资3.Text, Double)
+        End If
+        If Me.投资4.Text = "" Then
+            srtz4 = 0
+        Else
+            srtz4 = CType(Me.投资4.Text, Double)
+        End If
+        If Me.投资5.Text = "" Then
+            srtz5 = 0
+        Else
+            srtz5 = CType(Me.投资5.Text, Double)
+        End If
+        If Me.投资6.Text = "" Then
+            srtz6 = 0
+        Else
+            srtz6 = CType(Me.投资6.Text, Double)
+        End If
+        If Me.投资7.Text = "" Then
+            srtz7 = 0
+        Else
+            srtz7 = CType(Me.投资7.Text, Double)
+        End If
+        If Me.投资8.Text = "" Then
+            srtz8 = 0
+        Else
+            srtz8 = CType(Me.投资8.Text, Double)
+        End If
+        If Me.投资9.Text = "" Then
+            srtz9 = 0
+        Else
+            srtz9 = CType(Me.投资9.Text, Double)
+        End If
+        If Me.投资10.Text = "" Then
+            srtz10 = 0
+        Else
+            srtz10 = CType(Me.投资10.Text, Double)
+        End If
+        If Me.投资11.Text = "" Then
+            srtz11 = 0
+        Else
+            srtz11 = CType(Me.投资11.Text, Double)
+        End If
+        If Me.投资12.Text = "" Then
+            srtz12 = 0
+        Else
+            srtz12 = CType(Me.投资12.Text, Double)
+        End If
+        If Me.投资13.Text = "" Then
+            srtz13 = 0
+        Else
+            srtz13 = CType(Me.投资13.Text, Double)
+        End If
+        '读取输入的专项投资减去比例
+        If Me.专项投资减去比例1.Text = "" Then
+            zxtzjqbl1 = 0
+        Else
+            zxtzjqbl1 = CType(Me.专项投资减去比例1.Text, Double) / 100
+        End If
+        If Me.专项投资减去比例2.Text = "" Then
+            zxtzjqbl2 = 0
+        Else
+            zxtzjqbl2 = CType(Me.专项投资减去比例2.Text, Double) / 100
+        End If
+        If Me.专项投资减去比例3.Text = "" Then
+            zxtzjqbl3 = 0
+        Else
+            zxtzjqbl3 = CType(Me.专项投资减去比例3.Text, Double) / 100
+        End If
+        '读取输入的专项年量减去比例
+        If Me.专项年量减去比例1.Text = "" Then
+            zxzljqbl1 = 0
+        Else
+            zxzljqbl1 = CType(Me.专项年量减去比例1.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例2.Text = "" Then
+            zxzljqbl2 = 0
+        Else
+            zxzljqbl2 = CType(Me.专项年量减去比例2.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例3.Text = "" Then
+            zxzljqbl3 = 0
+        Else
+            zxzljqbl3 = CType(Me.专项年量减去比例3.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例4.Text = "" Then
+            zxzljqbl4 = 0
+        Else
+            zxzljqbl4 = CType(Me.专项年量减去比例4.Text, Double) / 100
+        End If
+        If Me.专项年量减去比例5.Text = "" Then
+            zxzljqbl5 = 0
+        Else
+            zxzljqbl5 = CType(Me.专项年量减去比例5.Text, Double) / 100
+        End If
         '读取输入的各个收入占比比例
-        Dim srbl1 As Double = CType(Me.收入比例1.Text, Double) / 100
-        Dim srbl2 As Double = CType(Me.收入比例2.Text, Double) / 100
-        Dim srbl3 As Double = CType(Me.收入比例3.Text, Double) / 100
-        Dim srbl4 As Double = CType(Me.收入比例4.Text, Double) / 100
-        Dim srbl5 As Double = CType(Me.收入比例5.Text, Double) / 100
-        Dim srbl6 As Double = CType(Me.收入比例6.Text, Double) / 100
-        Dim srbl7 As Double = CType(Me.收入比例7.Text, Double) / 100
-        Dim srbl8 As Double = CType(Me.收入比例8.Text, Double) / 100
-        Dim srbl9 As Double = CType(Me.收入比例9.Text, Double) / 100
+        If Me.收入比例1.Text = "" Then
+            srbl1 = 0
+        Else
+            srbl1 = CType(Me.收入比例1.Text, Double) / 100
+        End If
+        If Me.收入比例2.Text = "" Then
+            srbl2 = 0
+        Else
+            srbl2 = CType(Me.收入比例2.Text, Double) / 100
+        End If
+        If Me.收入比例3.Text = "" Then
+            srbl3 = 0
+        Else
+            srbl3 = CType(Me.收入比例3.Text, Double) / 100
+        End If
+        If Me.收入比例4.Text = "" Then
+            srbl4 = 0
+        Else
+            srbl4 = CType(Me.收入比例4.Text, Double) / 100
+        End If
+        If Me.收入比例5.Text = "" Then
+            srbl5 = 0
+        Else
+            srbl5 = CType(Me.收入比例5.Text, Double) / 100
+        End If
+        If Me.收入比例6.Text = "" Then
+            srbl6 = 0
+        Else
+            srbl6 = CType(Me.收入比例6.Text, Double) / 100
+        End If
+        If Me.收入比例7.Text = "" Then
+            srbl7 = 0
+        Else
+            srbl7 = CType(Me.收入比例7.Text, Double) / 100
+        End If
+        If Me.收入比例8.Text = "" Then
+            srbl8 = 0
+        Else
+            srbl8 = CType(Me.收入比例8.Text, Double) / 100
+        End If
+        If Me.收入比例9.Text = "" Then
+            srbl9 = 0
+        Else
+            srbl9 = CType(Me.收入比例9.Text, Double) / 100
+        End If
+        If Me.收入比例10.Text = "" Then
+            srbl10 = 0
+        Else
+            srbl10 = CType(Me.收入比例10.Text, Double) / 100
+        End If
+        If Me.收入比例11.Text = "" Then
+            srbl11 = 0
+        Else
+            srbl11 = CType(Me.收入比例11.Text, Double) / 100
+        End If
+        If Me.收入比例12.Text = "" Then
+            srbl12 = 0
+        Else
+            srbl12 = CType(Me.收入比例12.Text, Double) / 100
+        End If
+        If Me.收入比例13.Text = "" Then
+            srbl13 = 0
+        Else
+            srbl13 = CType(Me.收入比例13.Text, Double) / 100
+        End If
         '读取输入的各个成本占比比例
-        Dim cbbl1 As Double = CType(Me.成本比例1.Text, Double) / 100
-        Dim cbbl2 As Double = CType(Me.成本比例2.Text, Double) / 100
-        Dim cbbl3 As Double = CType(Me.成本比例3.Text, Double) / 100
-        Dim cbbl4 As Double = CType(Me.成本比例4.Text, Double) / 100
-        Dim cbbl5 As Double = CType(Me.成本比例5.Text, Double) / 100
-        Dim cbbl6 As Double = CType(Me.成本比例6.Text, Double) / 100
-        Dim cbbl7 As Double = CType(Me.成本比例7.Text, Double) / 100
-        Dim cbbl8 As Double = CType(Me.成本比例8.Text, Double) / 100
-        Dim cbbl9 As Double = CType(Me.成本比例9.Text, Double) / 100
-        Dim cbbl10 As Double = CType(Me.成本比例10.Text, Double) / 100
-        Dim cbbl11 As Double = CType(Me.成本比例11.Text, Double) / 100
+        If Me.成本比例1.Text = "" Then
+            cbbl1 = 0
+        Else
+            cbbl1 = CType(Me.成本比例1.Text, Double) / 100
+        End If
+        If Me.成本比例2.Text = "" Then
+            cbbl2 = 0
+        Else
+            cbbl2 = CType(Me.成本比例2.Text, Double) / 100
+        End If
+        If Me.成本比例3.Text = "" Then
+            cbbl3 = 0
+        Else
+            cbbl3 = CType(Me.成本比例3.Text, Double) / 100
+        End If
+        If Me.成本比例4.Text = "" Then
+            cbbl4 = 0
+        Else
+            cbbl4 = CType(Me.成本比例4.Text, Double) / 100
+        End If
+        If Me.成本比例5.Text = "" Then
+            cbbl5 = 0
+        Else
+            cbbl5 = CType(Me.成本比例5.Text, Double) / 100
+        End If
+        If Me.成本比例6.Text = "" Then
+            cbbl6 = 0
+        Else
+            cbbl6 = CType(Me.成本比例6.Text, Double) / 100
+        End If
+        If Me.成本比例7.Text = "" Then
+            cbbl7 = 0
+        Else
+            cbbl7 = CType(Me.成本比例7.Text, Double) / 100
+        End If
+        If Me.成本比例8.Text = "" Then
+            cbbl8 = 0
+        Else
+            cbbl8 = CType(Me.成本比例8.Text, Double) / 100
+        End If
+        If Me.成本比例9.Text = "" Then
+            cbbl9 = 0
+        Else
+            cbbl9 = CType(Me.成本比例9.Text, Double) / 100
+        End If
+        If Me.成本比例10.Text = "" Then
+            cbbl10 = 0
+        Else
+            cbbl10 = CType(Me.成本比例10.Text, Double) / 100
+        End If
+        If Me.成本比例11.Text = "" Then
+            cbbl11 = 0
+        Else
+            cbbl11 = CType(Me.成本比例11.Text, Double) / 100
+        End If
+        If Me.成本比例12.Text = "" Then
+            cbbl12 = 0
+        Else
+            cbbl12 = CType(Me.成本比例12.Text, Double) / 100
+        End If
         '读取设置的光伏和风力发电所得税减免参数、增值税退税参数等
-        Dim gfsdsmznx As Integer = CType(Me.光伏所得税免征年限.Text, Integer)
-        Dim gfsdsjsnx As Integer = CType(Me.光伏所得税减少年限.Text, Integer)
-        Dim gfsdsjsbl As Double = CType(Me.光伏所得税减少比例.Text, Double) / 100
-        Dim gfzzstsnx As Integer = CType(Me.光伏增值税退税年限.Text, Integer)
-        Dim gfzzstsbl As Double = CType(Me.光伏增值税退税比例.Text, Double) / 100
-        Dim gfrygz As Double = CType(Me.光伏人员工资.Text, Double)
-        Dim fdsdsmznx As Integer = CType(Me.风电所得税免征年限.Text, Integer)
-        Dim fdsdsjsnx As Integer = CType(Me.风电所得税减少年限.Text, Integer)
-        Dim fdsdsjsbl As Double = CType(Me.风电所得税减少比例.Text, Double) / 100
-        Dim fdzzstsnx As Integer = CType(Me.风电增值税退税年限.Text, Integer)
-        Dim fdzzstsbl As Double = CType(Me.风电增值税退税比例.Text, Double) / 100
-        Dim fdrygz As Double = CType(Me.风电人员工资.Text, Double)
+        Dim gfsdsmznx As Integer
+        If Me.光伏所得税免征年限.Text = "" Then
+            gfsdsmznx = 0
+        Else
+            gfsdsmznx = CType(Me.光伏所得税免征年限.Text, Integer)
+        End If
+        Dim gfsdsjsnx As Integer
+        If Me.光伏所得税减少年限.Text = "" Then
+            gfsdsjsnx = 0
+        Else
+            gfsdsjsnx = CType(Me.光伏所得税减少年限.Text, Integer)
+        End If
+        Dim gfsdsjsbl As Double
+        If Me.光伏所得税减少比例.Text = "" Then
+            gfsdsjsbl = 0
+        Else
+            gfsdsjsbl = CType(Me.光伏所得税减少比例.Text, Double) / 100
+        End If
+        Dim gfzzstsnx As Integer
+        If Me.光伏增值税退税年限.Text = "" Then
+            gfzzstsnx = 0
+        Else
+            gfzzstsnx = CType(Me.光伏增值税退税年限.Text, Integer)
+        End If
+        Dim gfzzstsbl As Double
+        If Me.光伏增值税退税比例.Text = "" Then
+            gfzzstsbl = 0
+        Else
+            gfzzstsbl = CType(Me.光伏增值税退税比例.Text, Double) / 100
+        End If
+        Dim gfrygz As Double
+        If Me.光伏人员工资.Text = "" Then
+            gfrygz = 0
+        Else
+            gfrygz = CType(Me.光伏人员工资.Text, Double)
+        End If
+        Dim fdsdsmznx As Integer
+        If Me.风电所得税免征年限.Text = "" Then
+            fdsdsmznx = 0
+        Else
+            fdsdsmznx = CType(Me.风电所得税免征年限.Text, Integer)
+        End If
+        Dim fdsdsjsnx As Integer
+        If Me.风电所得税减少年限.Text = "" Then
+            fdsdsjsnx = 0
+        Else
+            fdsdsjsnx = CType(Me.风电所得税减少年限.Text, Integer)
+        End If
+        Dim fdsdsjsbl As Double
+        If Me.风电所得税减少比例.Text = "" Then
+            fdsdsjsbl = 0
+        Else
+            fdsdsjsbl = CType(Me.风电所得税减少比例.Text, Double) / 100
+        End If
+        Dim fdzzstsnx As Integer
+        If Me.风电增值税退税年限.Text = "" Then
+            fdzzstsnx = 0
+        Else
+            fdzzstsnx = CType(Me.风电增值税退税年限.Text, Integer)
+        End If
+        Dim fdzzstsbl As Double
+        If Me.风电增值税退税比例.Text = "" Then
+            fdzzstsbl = 0
+        Else
+            fdzzstsbl = CType(Me.风电增值税退税比例.Text, Double) / 100
+        End If
+        Dim fdrygz As Double
+        If Me.风电人员工资.Text = "" Then
+            fdrygz = 0
+        Else
+            fdrygz = CType(Me.风电人员工资.Text, Double)
+        End If
         '读取输入的其它部分所得税减免和增值税退税参数
-        Dim qtsdsmznx As Integer = CType(Me.其它所得税免征年限.Text, Integer)
-        Dim qtsdsjsnx As Integer = CType(Me.其它所得税减少年限.Text, Integer)
-        Dim qtsdsjsbl As Double = CType(Me.其它所得税减少比例.Text, Double) / 100
-        Dim qtzzstsnx As Integer = CType(Me.其它增值税退税年限.Text, Integer)
-        Dim qtzzstsbl As Double = CType(Me.其它增值税退税比例.Text, Double) / 100
+        Dim qtsdsmznx As Integer
+        If Me.其它所得税免征年限.Text = "" Then
+            qtsdsmznx = 0
+        Else
+            qtsdsmznx = CType(Me.其它所得税免征年限.Text, Integer)
+        End If
+        Dim qtsdsjsnx As Integer
+        If Me.其它所得税减少年限.Text = "" Then
+            qtsdsjsnx = 0
+        Else
+            qtsdsjsnx = CType(Me.其它所得税减少年限.Text, Integer)
+        End If
+        Dim qtsdsjsbl As Double
+        If Me.其它所得税减少比例.Text = "" Then
+            qtsdsjsbl = 0
+        Else
+            qtsdsjsbl = CType(Me.其它所得税减少比例.Text, Double) / 100
+        End If
+        Dim qtzzstsnx As Integer
+        If Me.其它增值税退税年限.Text = "" Then
+            qtzzstsnx = 0
+        Else
+            qtzzstsnx = CType(Me.其它增值税退税年限.Text, Integer)
+        End If
+        Dim qtzzstsbl As Double
+        If Me.其它增值税退税比例.Text = "" Then
+            qtzzstsbl = 0
+        Else
+            qtzzstsbl = CType(Me.其它增值税退税比例.Text, Double) / 100
+        End If
         '记录目前各个收入的单价
         Dim srdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value, Double)
         Dim srdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 5).Value, Double)
         Dim srdj2 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 5).Value, Double)
         Dim srdj3 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value, Double)
+        Dim srdj10 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value, Double)
+        Dim srdj11 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value, Double)
         Dim srdj5 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 5).Value, Double)
         Dim srdj6 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(20, 5).Value, Double)
         Dim srdj7 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 5).Value, Double)
+        Dim srdj12 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value, Double)
+        Dim srdj13 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value, Double)
         Dim srdj8 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value, Double)
-        Dim srdj9 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value, Double)
+        Dim srdj9 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value, Double)
         '记录目前各个成本的单价
         Dim cbdj1 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(14, 12).Value, Double)
         Dim cbdj2 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(15, 12).Value, Double)
         Dim cbdj3 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value, Double)
         Dim cbdj10 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value, Double)
+        Dim cbdj12 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value, Double)
         Dim cbdj11 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value, Double)
         Dim cbdj4 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(21, 12).Value, Double)
         Dim cbdj5 As Double = CType(ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 12).Value, Double)
@@ -1598,61 +2253,25 @@ Public Class 设置所得税减免和增值税退税内容
                 ZZS_YSZ(i) = ExcelApp.ThisWorkbook.Worksheets("收入税收表").Cells(43, i - 12).Value
             Next
             '————————————————————————————————————————————————————————————————————————————————————————————
+            '读取估算表数据
+            Dim GSBSJ = 读取估算表数据(ExcelApp)
             '10次投资金额、可抵扣增值税额
-            Dim TZJE(50) As Double
-            Dim KDKZZS(50) As Double
+            Dim JTTZ = GSBSJ(1) '静态投资
+            Dim KDKZZS = GSBSJ(9) '可抵扣增值税
             '第一到第十次光伏和风电投资金额，光伏装机规模
-            Dim GFTZ(50) As Double '光伏投资
-            Dim GFZJ(50) As Double '光伏装机
-            Dim FDTZ(50) As Double '风电投资
-            Dim FDZJ(50) As Double '风电装机
+            Dim GFTZ = GSBSJ(16) '光伏投资
+            Dim GFZJ = GSBSJ(17) '光伏装机
+            Dim FDTZ = GSBSJ(18) '风电投资
+            Dim FDZJ = GSBSJ(19) '风电装机
             '第一到第十次投资专项投资和年量
-            Dim LHXHTZ(50) As Double '联合循环投资
-            Dim LHXHZL(50) As Double '联合循环总量
-            Dim NRJTZ(50) As Double '内燃机投资
-            Dim NRJZL(50) As Double '内燃机总量
-            Dim LRGWTZ(50) As Double '冷热管网投资
-            Dim GLGRZL(50) As Double '供冷供热总量
-            Dim RMFDZL(50) As Double '燃煤发电总量
-            Dim LJFDZL(50) As Double '垃圾发电总量
-            '第一到第十次投资
-            Dim JS As Integer = 0 '投资年份计数
-            For i = 30 To 73 Step 43 '估算表行号
-                For j = 3 To 11 Step 2 '估算表列号
-                    JS = JS + 1
-                    If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                        TZJE(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value
-                        KDKZZS(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value
-                        GFTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 20, j).Value
-                        GFZJ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 21, j).Value
-                        FDTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 23, j).Value
-                        FDZJ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 24, j).Value
-                        LHXHTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value
-                        LHXHZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value
-                        NRJTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value
-                        NRJZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value
-                        LRGWTZ(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value
-                        GLGRZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 19, j).Value
-                        RMFDZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 22, j).Value
-                        LJFDZL(JS) = ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 25, j).Value
-                    Else
-                        TZJE(JS) = 0
-                        KDKZZS(JS) = 0
-                        GFTZ(JS) = 0
-                        GFZJ(JS) = 0
-                        FDTZ(JS) = 0
-                        FDZJ(JS) = 0
-                        LHXHTZ(JS) = 0
-                        LHXHZL(JS) = 0
-                        NRJTZ(JS) = 0
-                        NRJZL(JS) = 0
-                        LRGWTZ(JS) = 0
-                        GLGRZL(JS) = 0
-                        RMFDZL(JS) = 0
-                        LJFDZL(JS) = 0
-                    End If
-                Next
-            Next
+            Dim RJTZ = GSBSJ(10) '燃机投资
+            Dim RJZL = GSBSJ(11) '燃机总量
+            Dim XDCTZ = GSBSJ(12) '蓄电池投资
+            Dim XDCZL = GSBSJ(13) '蓄电池总量
+            Dim NTTZ = GSBSJ(14) '暖通投资
+            Dim GLGRZL = GSBSJ(15) '供冷供热总量
+            Dim RMFDZL = GSBSJ(21) '燃煤发电总量
+            Dim LJFDZL = GSBSJ(20) '垃圾发电总量
             '——————————————————————————————————————————————————————————————————————————————————————————
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第一步，仅减去光伏发电的部分
@@ -1666,7 +2285,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_gftz = JS_gftz + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_gftz) * (1 - GFTZBL) '静态投资
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_gftz) * (1 - GFTZBL) '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_gftz) * (1 - GFTZBL) '可抵扣增值税
                         End If
                     Next
@@ -1731,7 +2350,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_gf = JS_gf + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_gf)  '静态投资
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_gf)  '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_gf)  '可抵扣增值税
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 20, j).Value = GFTZ(JS_gf) '光伏投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 21, j).Value = GFZJ(JS_gf) '光伏装机规模
@@ -1766,7 +2385,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_fdtz = JS_fdtz + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_fdtz) * (1 - FDTZBL) '静态投资
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_fdtz) * (1 - FDTZBL) '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_fdtz) * (1 - FDTZBL) '可抵扣增值税
                         End If
                     Next
@@ -1826,7 +2445,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_fd = JS_fd + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_fd)  '静态投资
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_fd)  '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_fd)  '可抵扣增值税
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 23, j).Value = FDTZ(JS_fd) '风电投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 24, j).Value = FDZJ(JS_fd) '风电装机规模
@@ -1851,7 +2470,7 @@ Public Class 设置所得税减免和增值税退税内容
             '——————————————————————————————————————————————————————————————————————————————————————————
             '第三步，减去除了光伏和风电外的被勾选的部分
             '在静态投资中减去选择的部分的投资
-            Dim SRTZ_sum = srtz1 + srtz2 + srtz3 + srtz4 + srtz8 + srtz9 '(不包括光伏和风电投资)
+            Dim SRTZ_sum = srtz1 + srtz2 + srtz3 + srtz4 + srtz8 + srtz9 + srtz10 + srtz11 + srtz12 + srtz13 '(不包括光伏和风电投资)
             Dim SRTZBL_sum = SRTZ_sum / ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value '需要减去的投资占总投资比例，可抵扣增值税也按照这个比例减去
             '投资和可抵扣增值税中减去这部分（按照逐次投资占静态投资的比例进行减去）
             If SRTZ_sum > 0 Then
@@ -1860,13 +2479,18 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_tz = JS_tz + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_tz) * (1 - SRTZBL_sum) '静态投资
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_tz) * (1 - SRTZBL_sum) '静态投资
                             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_tz) * (1 - SRTZBL_sum) '可抵扣增值税
                         End If
                     Next
                 Next
             End If
             '————————————————————————————————————————————————————————————————————————————————————
+            '收入4
+            If Me.收入4.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
+            End If
             '收入1
             If Me.收入1.Checked = True Then
                 '收入减小
@@ -1882,10 +2506,25 @@ Public Class 设置所得税减免和增值税退税内容
                 '收入减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3 * (1 - srbl3)
             End If
-            '收入4
-            If Me.收入4.Checked = True Then
+            '收入10
+            If Me.收入10.Checked = True Then
                 '收入减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(13, 5).Value = srdj4 * (1 - srbl4)
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value = srdj10 * (1 - srbl10)
+            End If
+            '收入11
+            If Me.收入11.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value = srdj11 * (1 - srbl11)
+            End If
+            '收入12
+            If Me.收入12.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value = srdj12 * (1 - srbl12)
+            End If
+            '收入13
+            If Me.收入13.Checked = True Then
+                '收入减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value = srdj13 * (1 - srbl13)
             End If
             '收入8
             If Me.收入8.Checked = True Then
@@ -1913,6 +2552,21 @@ Public Class 设置所得税减免和增值税退税内容
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3 * (1 - cbbl3)
             End If
+            '成本10
+            If Me.成本10.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
+            End If
+            '成本12
+            If Me.成本12.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value = cbdj12 * (1 - cbbl12)
+            End If
+            '成本11
+            If Me.成本11.Checked = True Then
+                '成本减小
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
+            End If
             '成本4
             If Me.成本4.Checked = True Then
                 '成本减小
@@ -1933,25 +2587,15 @@ Public Class 设置所得税减免和增值税退税内容
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7 * (1 - cbbl7)
             End If
-            '成本8
-            If Me.成本8.Checked = True Then
-                '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
-            End If
             '成本9
             If Me.成本9.Checked = True Then
                 '成本减小
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9 * (1 - cbbl9)
             End If
-            '成本10
-            If Me.成本10.Checked = True Then
+            '成本8
+            If Me.成本8.Checked = True Then
                 '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10 * (1 - cbbl10)
-            End If
-            '成本11
-            If Me.成本11.Checked = True Then
-                '成本减小
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11 * (1 - cbbl11)
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8 * (1 - cbbl8)
             End If
             '——————————————————————————————————————————————————————————————————————————————————————————————
             '减去专项投资和年总量
@@ -1962,7 +2606,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz1 = JS_zxtz1 + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = NRJTZ(JS_zxtz1) * (1 - zxtzjqbl1)
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = XDCTZ(JS_zxtz1) * (1 - zxtzjqbl1)
                         End If
                     Next
                 Next
@@ -1973,7 +2617,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz2 = JS_zxtz2 + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = LHXHTZ(JS_zxtz2) * (1 - zxtzjqbl2)
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = RJTZ(JS_zxtz2) * (1 - zxtzjqbl2)
                         End If
                     Next
                 Next
@@ -1984,7 +2628,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxtz3 = JS_zxtz3 + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = LRGWTZ(JS_zxtz3) * (1 - zxtzjqbl3)
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = NTTZ(JS_zxtz3) * (1 - zxtzjqbl3)
                         End If
                     Next
                 Next
@@ -1996,7 +2640,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl1 = JS_zxzl1 + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = NRJZL(JS_zxzl1) * (1 - zxzljqbl1)
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = XDCZL(JS_zxzl1) * (1 - zxzljqbl1)
                         End If
                     Next
                 Next
@@ -2007,7 +2651,7 @@ Public Class 设置所得税减免和增值税退税内容
                     For j = 3 To 11 Step 2 '估算表列号
                         JS_zxzl2 = JS_zxzl2 + 1
                         If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = LHXHZL(JS_zxzl2) * (1 - zxzljqbl2)
+                            ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = RJZL(JS_zxzl2) * (1 - zxzljqbl2)
                         End If
                     Next
                 Next
@@ -2074,13 +2718,13 @@ Public Class 设置所得税减免和增值税退税内容
                 For j = 3 To 11 Step 2 '估算表列号
                     JS_a = JS_a + 1
                     If ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(30, 1).Value > 0 Then
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = TZJE(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i, j).Value = JTTZ(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 8, j).Value = KDKZZS(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = LHXHTZ(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = LHXHZL(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = NRJTZ(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = NRJZL(JS_a)
-                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = LRGWTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 14, j).Value = RJTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 15, j).Value = RJZL(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 16, j).Value = XDCTZ(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 17, j).Value = XDCZL(JS_a)
+                        ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 18, j).Value = NTTZ(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 19, j).Value = GLGRZL(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 22, j).Value = RMFDZL(JS_a)
                         ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(i + 25, j).Value = LJFDZL(JS_a)
@@ -2100,12 +2744,23 @@ Public Class 设置所得税减免和增值税退税内容
             If Me.收入3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 5).Value = srdj3
             End If
+            If Me.收入10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 5).Value = srdj10
+            End If
+            If Me.收入11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 5).Value = srdj11
+            End If
+            If Me.收入12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(22, 5).Value = srdj12
+            End If
+            If Me.收入13.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(23, 5).Value = srdj13
+            End If
             If Me.收入8.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 5).Value = srdj8
             End If
-
             If Me.收入9.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(29, 5).Value = srdj9
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 5).Value = srdj9
             End If
             '各项成本单价
             '成本1
@@ -2119,6 +2774,18 @@ Public Class 设置所得税减免和增值税退税内容
             '成本3
             If Me.成本3.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(16, 12).Value = cbdj3
+            End If
+            '成本10
+            If Me.成本10.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
+            End If
+            '成本12
+            If Me.成本12.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(18, 12).Value = cbdj12
+            End If
+            '成本11
+            If Me.成本11.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
             End If
             '成本4
             If Me.成本4.Checked = True Then
@@ -2136,21 +2803,13 @@ Public Class 设置所得税减免和增值税退税内容
             If Me.成本7.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(24, 12).Value = cbdj7
             End If
-            '成本8
-            If Me.成本8.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
-            End If
             '成本9
             If Me.成本9.Checked = True Then
                 ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(25, 12).Value = cbdj9
             End If
-            '成本10
-            If Me.成本10.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(17, 12).Value = cbdj10
-            End If
-            '成本11
-            If Me.成本11.Checked = True Then
-                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(19, 12).Value = cbdj11
+            '成本8
+            If Me.成本8.Checked = True Then
+                ExcelApp.ThisWorkbook.Worksheets("收入&成本输入").Cells(27, 12).Value = cbdj8
             End If
             '————————————————————————————————————————————————————————————————————————————————————————
             '计算一次工作簿
