@@ -124,15 +124,17 @@
         Dim error_sum As Double = 0
         '前15年
         For i = 1 To 15
-            error_list(i) = Math.Abs(ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(5, i + 4).Value - ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(15, i + 4).Value)
+            Dim error_tmp As Double = ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(5, i + 4).Value - ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(15, i + 4).Value
+            error_list(i) = Math.Abs(error_tmp)
             error_sum += error_list(i)
         Next
         '16~31年
         For i = 16 To 31
-            error_list(i) = Math.Abs(ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(34, i - 12).Value - ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(44, i - 12).Value)
+            Dim error_tmp As Double = ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(34, i - 12).Value - ExcelApp.ThisWorkbook.Worksheets("资产负债表").Cells(44, i - 12).Value
+            error_list(i) = Math.Abs(error_tmp)
             error_sum += error_list(i)
         Next
-        If error_sum < 1 Then
+        If error_sum < 0.5 Then
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 3).Value = "正确"
         Else
             ExcelApp.ThisWorkbook.Worksheets("估算表").Cells(12, 3).Value = "不正确"

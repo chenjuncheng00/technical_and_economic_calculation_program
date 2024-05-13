@@ -236,6 +236,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -267,6 +269,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -306,6 +310,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -362,6 +368,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
@@ -394,6 +402,8 @@
         '————————————————————————————————————————————————————————————————————————————————————————
         '计算流动资金，包括：材料费其它费+修理费+保险费
         Call 流动资金相关计算(ExcelApp, xlfl_cg_model, xlfl_qt_model, kcje_xlf_model, hscz, zbj_model, clfl_qtfl_model, kcje_clf_qtf_model, ldzj_model, kcje_ldzj_model, bxf_model, kcje_bxf_model)
+        '资产负债表计算
+        Call 资产负债表计算.资产负债表计算(ExcelApp)
         '重新计算投资收益率和投资回收期
         Call 投资收益率和投资回收期计算(ExcelApp)
         '————————————————————————————————————————————————————————————————————————————————————————
